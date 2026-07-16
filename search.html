@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kariyer Rehberi - Bölüm Arama</title>
+    <!-- FontAwesome kütüphanesi ikonlar için -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ================= GENEL VE GECE MODU TEMASI ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #020617, #1e293b);
+            background-size: 400% 400%;
+            animation: gradientBg 12s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Geri Dönüş ve Kilitli AI Butonu */
+        .top-bar {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            z-index: 10;
+        }
+
+        .back-btn {
+            color: #06b6d4;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            color: #22d3ee;
+            transform: translateX(-3px);
+        }
+
+        /* Kilitli AI Butonu */
+        .locked-ai-btn {
+            background-color: rgba(30, 41, 59, 0.6);
+            color: #94a3b8;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .locked-ai-btn:hover {
+            background-color: rgba(6, 182, 212, 0.1);
+            color: #06b6d4;
+            border-color: #06b6d4;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 36px;
+            text-align: center;
+        }
+
+        h1 span {
+            color: #06b6d4;
+            text-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+
+        p.subtitle {
+            color: #94a3b8;
+            margin-bottom: 40px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* ================= SEÇİM ALANI ================= */
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 40px;
+            z-index: 5;
+        }
+
+        /* Profesyonel Dropdown Seçim Kutusu */
+        .select-box {
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 18px;
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.4);
+            border-radius: 30px;
+            color: white;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            appearance: none; /* Varsayılan ok işaretini kaldırdık */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2306b6d4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 25px center;
+            background-size: 20px;
+        }
+
+        .select-box:focus {
+            border-color: #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Option menüleri için arka plan */
+        .select-box option {
+            background-color: #1e293b;
+            color: white;
+        }
+
+        /* ================= GENEL BÖLÜM BİLGİ PANELİ ================= */
+        .section-info-card {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(8px);
+            display: none; /* Seçim yapılınca açılacak */
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .info-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-header h2 {
+            color: #06b6d4;
+            font-size: 28px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-item i {
+            color: #06b6d4;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .section-desc {
+            line-height: 1.7;
+            color: #cbd5e1;
+        }
+
+        /* ================= MESLEK KARTLARI ALANI ================= */
+        .jobs-title {
+            width: 100%;
+            max-width: 900px;
+            color: #06b6d4;
+            margin-bottom: 20px;
+            font-size: 22px;
+            display: none;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .jobs-grid {
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .job-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: none; /* Seçim yapılınca açılacak */
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            border-color: #06b6d4;
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.15);
+            background: rgba(30, 41, 59, 0.7);
+        }
+
+        .job-card i {
+            color: #06b6d4;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .job-card h3 {
+            color: #ffffff;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .job-card p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* ================= AÇILIR DETAY PENCERESİ (MODAL) ================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #1e293b;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 25px;
+            width: 90%;
+            max-width: 550px;
+            padding: 35px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.8) translateY(-30px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #06b6d4;
+        }
+
+        .modal-box h2 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 26px;
+        }
+
+        .modal-box .job-category {
+            color: #06b6d4;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        /* Detay Listesi */
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item i {
+            color: #06b6d4;
+            font-size: 20px;
+            margin-top: 3px;
+        }
+
+        .detail-content h4 {
+            color: #ffffff;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .detail-content p {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .tech-tag {
+            background: rgba(6, 182, 212, 0.1);
+            color: #06b6d4;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        /* Animasyon */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ÜST BAR -->
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Ana Sayfaya Dön
+        </a>
+        <button class="locked-ai-btn" onclick="alert('🔒 Bu özellik sadece üyelere özeldir! Yapay zeka testiyle sana özel kariyer rotasını çizmek için hemen kayıt ol veya giriş yap.')">
+            <i class="fa-solid fa-robot"></i> Yapay Zeka Testi (Kilitli)
+        </button>
+    </div>
+
+    <h1>Kariyer Alanlarını <span>Keşfet</span> 🔍</h1>
+    <p class="subtitle">Aşağıdan bir bölüm seçerek detayları, mezun istatistiklerini ve popüler alt alanları hemen gör.</p>
+
+    <!-- Arama Çubuğu / Bölüm Seçim Dropdown'ı -->
+    <div class="search-container">
+        <select class="select-box" id="sectionSelector" onchange="loadSectionData()">
+            <option value="" disabled selected>Bir bölüm seçin...</option>
+            <option value="bilgisayar">Bilgisayar Mühendisliği</option>
+            <option value="tip">Tıp Fakültesi</option>
+            <option value="mimarlik">Mimarlık</option>
+        </select>
+    </div>
+
+    <!-- GENEL BÖLÜM BİLGİ PANELİ -->
+    <div class="section-info-card" id="sectionInfoCard">
+        <div class="info-header">
+            <h2 id="sectionName">Bilgisayar Mühendisliği</h2>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-item">
+                <i class="fa-solid fa-clock"></i>
+                <div class="stat-label">Eğitim Süresi</div>
+                <div class="stat-value" id="statDuration">4 Yıl</div>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <div class="stat-label">Yıllık Ortalama Mezun</div>
+                <div class="stat-value" id="statGrads">~12.000</div>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-briefcase"></i>
+                <div class="stat-label">Genel İş Bulma Oranı</div>
+                <div class="stat-value" id="statJobRate">%88</div>
+            </div>
+        </div>
+
+        <p class="section-desc" id="sectionDescription">
+            Bölüm açıklaması buraya gelecek...
+        </p>
+    </div>
+
+    <!-- ALT ALAN KARTLARI BAŞLIĞI -->
+    <h2 class="jobs-title" id="jobsTitle">Popüler Uzmanlık Alanları</h2>
+
+    <!-- MESLEK KARTLARI GRID'I -->
+    <div class="jobs-grid" id="jobsGrid">
+        <!-- Kartlar dinamik olarak JavaScript ile buraya eklenecek -->
+    </div>
+
+    <!-- ================= MESLEK DETAY MODAL PENCERESİ ================= -->
+    <div class="modal-overlay" id="jobDetailModal">
+        <div class="modal-box">
+            <span class="close-modal" onclick="closeDetailModal()">&times;</span>
+            <h2 id="modalJobTitle">Backend Developer</h2>
+            <span class="job-category" id="modalJobCategory">Bilgisayar Mühendisliği</span>
+            
+            <!-- Detay Listesi -->
+            <div class="detail-item">
+                <i class="fa-solid fa-wallet"></i>
+                <div class="detail-content">
+                    <h4>Başlangıç Maaşı Ortalama</h4>
+                    <p id="modalJobSalary">30.000 TL - 45.000 TL</p>
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <div class="detail-content">
+                    <h4>İş Bulma Kolaylığı / Talep</h4>
+                    <p id="modalJobDemand">Çok Yüksek (%92 İstihdam Oranı)</p>
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <i class="fa-solid fa-laptop-code"></i>
+                <div class="detail-content">
+                    <h4>Gerekli Teknolojiler / Beceriler</h4>
+                    <div class="tech-tags" id="modalJobTech">
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <i class="fa-solid fa-circle-info"></i>
+                <div class="detail-content">
+                    <h4>İş Tanımı ve Sorumluluklar</h4>
+                    <p id="modalJobDesc">Detaylı açıklama...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT VERİ VER TABANI VE KODLARI ================= -->
+    <script>
+        // TÜM BÖLÜM VE MESLEK VERİLERİMİZİ TUTTUĞUMUZ AKILLI VERİ TABANIMIZ
+        const careerDatabase = {
+            bilgisayar: {
+                name: "Bilgisayar Mühendisliği 💻",
+                duration: "4 Yıl",
+                grads: "~12.000 / Yıl",
+                jobRate: "%88",
+                desc: "Yazılım, donanım, veri tabanları ve bilgisayar ağlarının tasarımı ve geliştirilmesi süreçlerini kapsayan, günümüzün ve geleceğin en popüler mühendislik dallarından biridir. Sektördeki dijitalleşme hızı nedeniyle iş imkanları sınır tanımaz.",
+                jobs: [
+                    {
+                        title: "Backend Developer",
+                        shortDesc: "Sistemlerin beynini, sunucularını ve veritabanlarını tasarlar.",
+                        icon: "fa-solid fa-server",
+                        salary: "35.000 TL - 50.000 TL",
+                        demand: "Aşırı Yüksek (Sektörde en çok aranan rollerden biri)",
+                        techs: ["Java", "Python", "Node.js", "SQL", "Docker", "Go"],
+                        longDesc: "Backend geliştiriciler, kullanıcıların doğrudan görmediği arka plan mimarisini kurarlar. Veritabanı yönetiminden, API entegrasyonlarına, veri güvenliğinden sistem performansına kadar tüm beyni onlar kodlar."
+                    },
+                    {
+                        title: "Frontend Developer",
+                        shortDesc: "Kullanıcıların gördüğü, etkileşime girdiği ekranları tasarlar.",
+                        icon: "fa-solid fa-code",
+                        salary: "30.000 TL - 45.000 TL",
+                        demand: "Çok Yüksek (Her web ve mobil projenin olmazsa olmazı)",
+                        techs: ["HTML", "CSS", "JavaScript", "React", "Vue", "Tailwind"],
+                        longDesc: "Frontend geliştiriciler, tasarımcıların çizdiği görsel arayüzleri koda dökerek yaşayan web sitelerine ve uygulamalara dönüştürürler. Kullanıcı deneyimi, hız ve ekran uyumluluğu onların sorumluluğundadır."
+                    },
+                    {
+                        title: "Cyber Security Analyst",
+                        shortDesc: "Sistemlerin güvenliğini sağlar ve siber saldırıları önler.",
+                        icon: "fa-solid fa-shield-halved",
+                        salary: "38.000 TL - 55.000 TL",
+                        demand: "Sürekli Artıyor (Şirket verilerinin korunması hayati önemde)",
+                        techs: ["Linux", "Python", "Ethical Hacking", "Metasploit", "Cryptography"],
+                        longDesc: "Siber güvenlik uzmanları, şirketlerin dijital altyapısındaki güvenlik açıklarını saptar, sızma testleri yapar ve olası hacker saldırılarına karşı savunma duvarları örerler."
+                    }
+                ]
+            },
+            tip: {
+                name: "Tıp Fakültesi 🩺",
+                duration: "6 Yıl",
+                grads: "~14.000 / Yıl",
+                jobRate: "%99",
+                desc: "İnsan sağlığını koruma, hastalıkları teşhis ve tedavi etme amacıyla eğitim veren, 6 yıllık zorlu ama kutsal bir bölümdür. Mezuniyet sonrasında TUS sınavı ile uzmanlaşma imkanı bulunur.",
+                jobs: [
+                    {
+                        title: "Radyoloji Uzmanı",
+                        shortDesc: "Görüntüleme cihazlarını kullanarak hastalıkları teşhis eder.",
+                        icon: "fa-solid fa-x-ray",
+                        salary: "65.000 TL - 95.000 TL",
+                        demand: "Çok Yüksek (Teknolojik teşhisin kalbidir)",
+                        techs: ["MRI", "CT Scan", "Ultrason", "Analitik Düşünme"],
+                        longDesc: "Radyologlar; röntgen, MR, tomografi gibi tıbbi görüntüleme yöntemlerini inceleyerek hastaların vücudundaki anormallikleri saptar ve klinisyen hekimlere teşhis raporları hazırlarlar."
+                    },
+                    {
+                        title: "Genel Cerrah",
+                        shortDesc: "Ameliyat gerektiren hastalıkların tedavisini üstlenir.",
+                        icon: "fa-solid fa-scalpel",
+                        salary: "80.000 TL - 120.000 TL +",
+                        demand: "Yüksek (Büyük el becerisi ve soğukkanlılık gerektirir)",
+                        techs: ["Ameliyat Teknikleri", "Anatomi Bilgisi", "Kriz Yönetimi"],
+                        longDesc: "Vücuttaki yaralanmaları, tümörleri ve hastalıkları cerrahi operasyonlarla tedavi ederler. Yoğun çalışma temposu ve yüksek sorumluluk barındıran prestijli bir uzmanlık alanıdır."
+                    }
+                ]
+            },
+            mimarlik: {
+                name: "Mimarlık Bölümü 📐",
+                duration: "4 Yıl",
+                grads: "~8.000 / Yıl",
+                jobRate: "%72",
+                desc: "Binaların, şehirlerin ve yaşam alanlarının estetik, kullanışlılık ve mühendislik kurallarına uygun olarak tasarlanmasını sağlayan sanat ve fen disiplinidir.",
+                jobs: [
+                    {
+                        title: "Bina Tasarım Mimarı",
+                        shortDesc: "Konut, ofis ve ticari binaların dış ve iç projelerini çizer.",
+                        icon: "fa-solid fa-building",
+                        salary: "25.000 TL - 40.000 TL",
+                        demand: "Orta / Yüksek (İnşaat sektöründeki hareketliliğe bağlıdır)",
+                        techs: ["AutoCAD", "Revit", "3ds Max", "SketchUp", "Estetik Görüş"],
+                        longDesc: "İnşa edilecek her türlü yapının estetik görünümünü, odaların dağılımını ve bina işlevselliğini planlar. Projenin mühendisler tarafından doğru uygulanmasını denetler."
+                    },
+                    {
+                        title: "Peyzaj Mimarı",
+                        shortDesc: "Parklar, bahçeler ve açık yeşil alanların düzenlemesini yapar.",
+                        icon: "fa-solid fa-tree",
+                        salary: "24.000 TL - 38.000 TL",
+                        demand: "Orta (Çevre dostu yeşil şehir projeleriyle yükselişte)",
+                        techs: ["Peyzaj Tasarımı", "Botanik Bilgisi", "Lumion", "Photoshop"],
+                        longDesc: "Kent parkları, sitelerin ortak alanları veya bireysel bahçeleri tasarlarlar. Doğal bitki örtüsünün estetikle buluşmasını sağlayarak yaşanabilir açık alanlar üretirler."
+                    }
+                ]
+            }
+        };
+
+        // BÖLÜM SEÇİLDİĞİNDE VERİLERİ YÜKLEYEN SİHİRLİ JAVASCRIPT FONKSİYONU
+        function loadSectionData() {
+            const selectedVal = document.getElementById('sectionSelector').value;
+            const data = careerDatabase[selectedVal];
+
+            if (!data) return;
+
+            // 1. Genel Bilgi Panelini Doldur ve Görünür Yap
+            document.getElementById('sectionName').innerText = data.name;
+            document.getElementById('statDuration').innerText = data.duration;
+            document.getElementById('statGrads').innerText = data.grads;
+            document.getElementById('statJobRate').innerText = data.jobRate;
+            document.getElementById('sectionDescription').innerText = data.desc;
+            
+            document.getElementById('sectionInfoCard').style.display = 'block';
+            document.getElementById('jobsTitle').style.display = 'block';
+
+            // 2. Meslek Kartları Grid'ini Temizle ve Yeni Kartları Doldur
+            const jobsGrid = document.getElementById('jobsGrid');
+            jobsGrid.innerHTML = ''; // Eski kartları sil
+
+            data.jobs.forEach((job, index) => {
+                // Her meslek için dinamik bir HTML Kartı oluşturuyoruz
+                const card = document.createElement('div');
+                card.className = 'job-card';
+                card.style.display = 'block'; // Görünür yap
+                card.style.animationDelay = `${index * 0.1}s`; // Tatlı bir süzülme sırası
+                
+                // Kartın tıklandığında detay modalını açmasını sağlıyoruz
+                card.onclick = () => openDetailModal(job, data.name);
+
+                card.innerHTML = `
+                    <i class="${job.icon}"></i>
+                    <h3>${job.title}</h3>
+                    <p>${job.shortDesc}</p>
+                `;
+
+                jobsGrid.appendChild(card);
+            });
+        }
+
+        // MESLEK DETAY PENCERESİNİ (MODAL) AÇMA FONKSİYONU
+        function openDetailModal(job, categoryName) {
+            document.getElementById('modalJobTitle').innerText = job.title;
+            document.getElementById('modalJobCategory').innerText = categoryName;
+            document.getElementById('modalJobSalary').innerText = job.salary;
+            document.getElementById('modalJobDemand').innerText = job.demand;
+            document.getElementById('modalJobDesc').innerText = job.longDesc;
+
+            // Teknolojileri etiketler halinde ekleme
+            const techContainer = document.getElementById('modalJobTech');
+            techContainer.innerHTML = ''; // Eskileri temizle
+            job.techs.forEach(tech => {
+                const span = document.createElement('span');
+                span.className = 'tech-tag';
+                span.innerText = tech;
+                techContainer.appendChild(span);
+            });
+
+            // Modalı görünür yap
+            document.getElementById('jobDetailModal').classList.add('active');
+        }
+
+        // MODALI KAPATMA FONKSİYONU
+        function closeDetailModal() {
+            document.getElementById('jobDetailModal').classList.remove('active');
+        }
+    </script>
+
+</body>
+</html>
