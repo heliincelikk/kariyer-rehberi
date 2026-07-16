@@ -2,94 +2,278 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Kariyer Rehberi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kariyer Rehberi - Geleceğini Keşfet</title>
+    <!-- FontAwesome kütüphanesi ikonlar için -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        /* Genel Ayarlar ve Gece Modu (Dark/Turkuaz) Teması */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f4f7f6;
-        }
-        .header {
-            background-color: #e8b4bc;
-            padding: 60px 40px;
-            text-align: center;
-        }
-        .header h1 {
-            font-size: 26px;
-            color: #6b2d3c;
-            letter-spacing: 0.5px;
-            margin-bottom: 20px;
-        }
-        .header h2 {
-            font-size: 32px;
-            color: #6b2d3c;
-            font-weight: 500;
-            font-family: Georgia, 'Times New Roman', serif;
-        }
-        .cards {
+            /* Arka planı derin asil bir lacivert ve gece mavisi yaptık */
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #020617, #1e293b);
+            background-size: 400% 400%;
+            animation: gradientBg 12s ease infinite;
+            height: 100vh;
             display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Üst Menü (Navbar) */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(15, 23, 42, 0.6); /* Koyu transparan cam efekti */
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
+            animation: slideDown 0.8s ease forwards;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #06b6d4; /* Parlak Modern Turkuaz */
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+        }
+
+        .auth-buttons button {
+            padding: 10px 24px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .login-btn {
+            background-color: transparent;
+            color: #06b6d4;
+            border: 2px solid #06b6d4 !important;
+        }
+
+        .login-btn:hover {
+            background-color: #06b6d4;
+            color: #0f172a;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        }
+
+        .register-btn {
+            background-color: #06b6d4;
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .register-btn:hover {
+            background-color: #22d3ee;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+        }
+
+        /* ARKA PLANDA AKAN DAHA BELİRGİN VE TURKUAZ İKONLAR */
+        .marquee-container {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%) rotate(-5deg);
+            width: 120%;
+            overflow: hidden;
+            white-space: nowrap;
+            opacity: 0.15; /* Saydamlığı artırdık, artık çok daha belirginler! */
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 22s linear infinite; /* Biraz daha hızlandırdık */
+        }
+
+        .marquee-content i {
+            font-size: 110px;
+            margin: 0 50px;
+            color: #06b6d4; /* İkonlar da neon turkuaz parlıyor */
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Ana İçerik Alanı */
+        .hero-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
-            gap: 25px;
-            padding: 50px 40px 60px;
-            flex-wrap: wrap;
-        }
-        .card {
-            background-color: white;
-            border-radius: 14px;
-            padding: 28px;
-            width: 220px;
-            border: 2px solid #e8b4bc;
-            text-align: center;
-        }
-        .card h3 {
-            color: #6b2d3c;
-            margin-bottom: 10px;
-            font-size: 17px;
-        }
-        .card p {
-            font-size: 14px;
-            color: #7a8a89;
-            line-height: 1.5;
-        }
-        .footer {
+            align-items: center;
             text-align: center;
             padding: 20px;
-            color: #a0aeae;
-            font-size: 14px;
+            z-index: 5;
+        }
+
+        .hero-section h1 {
+            font-size: 58px;
+            color: #ffffff; /* Karanlıkta parlayan beyaz başlık */
+            margin-bottom: 20px;
+            font-weight: 800;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .hero-section h1 span {
+            color: #06b6d4; /* Başlığın can alıcı kelimesi turkuaz */
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+
+        /* İstediğin o aşırı çekici ve dert ortağı yeni açıklama kutusu */
+        .description-text {
+            font-size: 20px;
+            color: #cbd5e1; /* Göz yormayan açık gri/mavi tonu */
+            max-width: 800px;
+            line-height: 1.8;
+            margin-bottom: 45px;
+            background-color: rgba(30, 41, 59, 0.5); /* Koyu neon cam efekti */
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(6, 182, 212, 0.15); /* İncecik parlayan turkuaz kenarlık */
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.8s forwards;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Parlayan Akıllı Buton */
+        .cta-btn {
+            background-color: #06b6d4;
+            color: #0f172a;
+            padding: 20px 50px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.3s forwards, pulse 2s infinite 2.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            background-color: #22d3ee;
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.6);
+            transform: scale(1.02);
+        }
+
+        /* Misafir Linki */
+        .guest-link {
+            margin-top: 25px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.6s forwards;
+            transition: all 0.3s ease;
+            border-bottom: 1px dashed #94a3b8;
+            padding-bottom: 3px;
+            display: inline-block;
+        }
+
+        .guest-link:hover {
+            color: #06b6d4;
+            border-bottom-style: solid;
+            border-bottom-color: #06b6d4;
+            transform: translateY(-2px);
+        }
+
+        /* ================= ANIMASYONLAR ================= */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3); }
+            50% { transform: scale(1.04); box-shadow: 0 10px 40px rgba(6, 182, 212, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3); }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Kariyer Rehberi</h1>
-        <h2>Kariyerine Kendini Tanıyarak Başla</h2>
+
+    <!-- ARKA PLANDA AKAN DAHA BELİRGİN TURKUAZ İKONLAR -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <i class="fa-solid fa-laptop-code"></i>
+            <i class="fa-solid fa-microscope"></i>
+            <i class="fa-solid fa-compass-drafting"></i>
+            <i class="fa-solid fa-helmet-safety"></i>
+            <i class="fa-solid fa-stethoscope"></i>
+            <i class="fa-solid fa-tooth"></i>
+            <i class="fa-solid fa-chart-pie"></i>
+            <i class="fa-solid fa-palette"></i>
+            <i class="fa-solid fa-dna"></i>
+            <!-- Döngü pürüzsüzlüğü için ikileme -->
+            <i class="fa-solid fa-laptop-code"></i>
+            <i class="fa-solid fa-microscope"></i>
+            <i class="fa-solid fa-compass-drafting"></i>
+            <i class="fa-solid fa-helmet-safety"></i>
+            <i class="fa-solid fa-stethoscope"></i>
+            <i class="fa-solid fa-tooth"></i>
+            <i class="fa-solid fa-chart-pie"></i>
+            <i class="fa-solid fa-palette"></i>
+            <i class="fa-solid fa-dna"></i>
+        </div>
     </div>
 
-    <div class="cards">
-        <div class="card">
-            <h3>Yazılım Mühendisliği</h3>
-            <p>Backend, frontend veya sistem geliştirme alanlarında kariyer yolları.</p>
+    <!-- ÜST MENÜ (NAVBAR) -->
+    <header>
+        <div class="logo">Kariyer Rehberi</div>
+        <div class="auth-buttons">
+            <button class="login-btn" onclick="location.href='dashboard.html'">Giriş Yap</button>
+            <button class="register-btn" onclick="location.href='dashboard.html'">Kayıt Ol</button>
         </div>
-        <div class="card">
-            <h3>Tıp</h3>
-            <p>Hekimlik, uzmanlık alanları ve sağlık sektöründe kariyer seçenekleri.</p>
-        </div>
-        <div class="card">
-            <h3>Psikoloji</h3>
-            <p>Klinik psikoloji, danışmanlık ve araştırma alanlarında yönelimler.</p>
-        </div>
-        <div class="card">
-            <h3>Siber Güvenlik</h3>
-            <p>SOC analistliği, güvenlik mühendisliği gibi uzmanlık alanları.</p>
-        </div>
-    </div>
+    </header>
 
-    <div class="footer">
-        <p>&copy; 2026 Kariyer Rehberi</p>
-    </div>
+    <!-- KAPAK VE TANITIM ALANI -->
+    <main class="hero-section">
+        <h1>Geleceğini <span>Şansa Bırakma</span> 🎯</h1>
+        <div class="description-text">
+            "Hangi bölümü seçmeliyim? Seçtiğim bölümde hangi alanda ilerlemem lazım? Sektörde en çok nerede iş imkanı var ve başlangıç maaşları ne durumda?" diye düşünmekten yorulduysan doğru yerdesin. Kafandaki tüm belirsizlikleri silmek, yazılımdan sağlığa kadar tüm alt dalları keşfetmek ve yapay zeka desteğiyle kendi yolunu çizmek için aramıza katıl!
+        </div>
+        
+        <a href="dashboard.html" class="cta-btn">Hemen Keşfetmeye Başla 🚀</a>
+        <a href="search.html" class="guest-link">Üye Olmadan Keşfetmeye Devam Et ➔</a>
+    </main>
+
 </body>
 </html>
