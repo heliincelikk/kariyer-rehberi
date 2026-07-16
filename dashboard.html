@@ -2,94 +2,312 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Kariyer Rehberi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kariyer Rehberi - Öğrenci Paneli</title>
+    <!-- FontAwesome kütüphanesi ikonlar için -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ================= GENEL VE GECE MODU TEMASI ================= */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f4f7f6;
+            background: #020617; /* Derin uzay siyahı/laciverti */
+            color: #ffffff;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
         }
-        .header {
-            background-color: #e8b4bc;
-            padding: 60px 40px;
-            text-align: center;
+
+        /* ================= SOL MENÜ (SIDEBAR) ================= */
+        .sidebar {
+            width: 260px;
+            background-color: #0f172a;
+            border-right: 1px solid rgba(6, 182, 212, 0.15);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            z-index: 10;
         }
-        .header h1 {
-            font-size: 26px;
-            color: #6b2d3c;
-            letter-spacing: 0.5px;
+
+        .sidebar .brand {
+            font-size: 22px;
+            font-weight: bold;
+            color: #06b6d4;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 18px;
+            color: #94a3b8;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            color: #ffffff;
+            background-color: rgba(6, 182, 212, 0.1);
+            border-left: 4px solid #06b6d4;
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            color: #ef4444; /* Kırmızı çıkış butonu */
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+        }
+
+        /* ================= ANA İÇERİK ALANI ================= */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Üst Karşılama Barı */
+        .welcome-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 20px;
+        }
+
+        .welcome-bar h1 {
+            font-size: 28px;
+        }
+
+        .welcome-bar h1 span {
+            color: #06b6d4;
+        }
+
+        .user-badge {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #06b6d4;
+        }
+
+        /* Sekme İçerikleri (Başlangıçta biri açık olacak) */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ================= KART TASARIMLARI ================= */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .premium-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-5px);
+            border-color: #06b6d4;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #06b6d4;
+            font-size: 24px;
             margin-bottom: 20px;
         }
-        .header h2 {
-            font-size: 32px;
-            color: #6b2d3c;
-            font-weight: 500;
-            font-family: Georgia, 'Times New Roman', serif;
+
+        .premium-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #ffffff;
         }
-        .cards {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            padding: 50px 40px 60px;
-            flex-wrap: wrap;
-        }
-        .card {
-            background-color: white;
-            border-radius: 14px;
-            padding: 28px;
-            width: 220px;
-            border: 2px solid #e8b4bc;
-            text-align: center;
-        }
-        .card h3 {
-            color: #6b2d3c;
-            margin-bottom: 10px;
-            font-size: 17px;
-        }
-        .card p {
+
+        .premium-card p {
+            color: #94a3b8;
             font-size: 14px;
-            color: #7a8a89;
-            line-height: 1.5;
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #a0aeae;
+
+        .card-link {
+            color: #06b6d4;
+            text-decoration: none;
+            font-weight: bold;
             font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .card-link:hover {
+            color: #22d3ee;
+        }
+
+        /* Animasyon */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Kariyer Rehberi</h1>
-        <h2>Kariyerine Kendini Tanıyarak Başla</h2>
-    </div>
 
-    <div class="cards">
-        <div class="card">
-            <h3>Yazılım Mühendisliği</h3>
-            <p>Backend, frontend veya sistem geliştirme alanlarında kariyer yolları.</p>
+    <!-- SOL MENÜ (SIDEBAR) -->
+    <div class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-compass"></i> Kariyer Rehberi
         </div>
-        <div class="card">
-            <h3>Tıp</h3>
-            <p>Hekimlik, uzmanlık alanları ve sağlık sektöründe kariyer seçenekleri.</p>
-        </div>
-        <div class="card">
-            <h3>Psikoloji</h3>
-            <p>Klinik psikoloji, danışmanlık ve araştırma alanlarında yönelimler.</p>
-        </div>
-        <div class="card">
-            <h3>Siber Güvenlik</h3>
-            <p>SOC analistliği, güvenlik mühendisliği gibi uzmanlık alanları.</p>
+        <div class="menu-items">
+            <div class="menu-item active" id="menu-panel" onclick="switchTab('panel')">
+                <i class="fa-solid fa-chart-pie"></i> Kişiselleştirilmiş Panel
+            </div>
+            <div class="menu-item" id="menu-discover" onclick="switchTab('discover')">
+                <i class="fa-solid fa-globe"></i> Tüm Alanları Keşfet
+            </div>
+            
+            <!-- Çıkış yapınca ana sayfaya fırlatacak buton -->
+            <a href="index.html" class="menu-item logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
+            </a>
         </div>
     </div>
 
-    <div class="footer">
-        <p>&copy; 2026 Kariyer Rehberi</p>
+    <!-- ANA İÇERIK ALANI -->
+    <div class="main-content">
+        
+        <!-- ÜST KARŞILAMA BARI -->
+        <div class="welcome-bar">
+            <h1>Hoş Geldin, <span>Geleceğin Lideri!</span> 👋</h1>
+            <div class="user-badge">Premium Öğrenci Modu</div>
+        </div>
+
+        <!-- ================= SEKME 1: KİŞİSELLEŞTİRİLMİŞ PANEL ================= -->
+        <div class="tab-content active" id="content-panel">
+            <div class="dashboard-grid">
+                
+                <div class="premium-card">
+                    <div class="card-icon"><i class="fa-solid fa-route"></i></div>
+                    <h3>Sana Özel Yol Haritası</h3>
+                    <p>Seçtiğin hedeflere ve eğitim durumuna göre yapay zeka tarafından optimize edilmiş gelişim adımlarını incele.</p>
+                    <a href="#" class="card-link">Haritayı İncele ➔</a>
+                </div>
+
+                <div class="premium-card">
+                    <div class="card-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                    <h3>Önerilen Staj Fırsatları</h3>
+                    <p>Kendi alanında şu an aktif olan, öğrencilere açık güncel staj ve yetenek programı ilanlarını listele.</p>
+                    <a href="#" class="card-link">İlanları Gör ➔</a>
+                </div>
+
+                <div class="premium-card">
+                    <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h3>Akademi Kampüsü</h3>
+                    <p>Bölümünde öne çıkmanı sağlayacak, en çok talep gören ücretsiz sertifikasyon ve eğitim linkleri.</p>
+                    <a href="#" class="card-link">Eğitimlere Git ➔</a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= SEKME 2: TÜM ALANLARI KEŞFET ================= -->
+        <div class="tab-content" id="content-discover">
+            <div class="dashboard-grid">
+                
+                <div class="premium-card">
+                    <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                    <h3>Mühendislik ve Teknoloji</h3>
+                    <p>Yazılım, Yapay Zeka, Siber Güvenlik, İnşaat ve Makine gibi tüm teknik mühendislik dallarını keşfet.</p>
+                    <a href="search.html" class="card-link">Keşfetmeye Başla ➔</a>
+                </div>
+
+                <div class="premium-card">
+                    <div class="card-icon"><i class="fa-solid fa-stethoscope"></i></div>
+                    <h3>Sağlık ve Tıp Bilimleri</h3>
+                    <p>Tıp uzmanlıkları, Diş Hekimliği, Eczacılık ve Hemşirelik gibi sağlık sektörünün tüm alt dallarını incele.</p>
+                    <a href="search.html" class="card-link">Keşfetmeye Başla ➔</a>
+                </div>
+
+                <div class="premium-card">
+                    <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <h3>Sosyal ve İdari Bilimler</h3>
+                    <p>Hukuk, Psikoloji, İşletme ve Uluslararası İlişkiler gibi popüler sosyal bölümlerin iş imkanlarını gör.</p>
+                    <a href="search.html" class="card-link">Keşfetmeye Başla ➔</a>
+                </div>
+
+            </div>
+        </div>
+
     </div>
+
+    <!-- ================= SEKMELERİ YÖNETEN JAVASCRIPT BÜYÜSÜ ================= -->
+    <script>
+        function switchTab(tabName) {
+            // Önce tüm içerikleri gizle
+            document.getElementById('content-panel').classList.remove('active');
+            document.getElementById('content-discover').classList.remove('active');
+            
+            // Önce tüm menü butonlarının aktifliğini kaldır
+            document.getElementById('menu-panel').classList.remove('active');
+            document.getElementById('menu-discover').classList.remove('active');
+
+            // Şimdi tıklanan sekmeyi ve menüyü aktif yap!
+            if (tabName === 'panel') {
+                document.getElementById('content-panel').classList.add('active');
+                document.getElementById('menu-panel').classList.add('active');
+            } else if (tabName === 'discover') {
+                document.getElementById('content-discover').classList.add('active');
+                document.getElementById('menu-discover').classList.add('active');
+            }
+        }
+    </script>
+
 </body>
 </html>
