@@ -2,101 +2,231 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Kariyer Rehberi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kariyer Rehberi - Giriş Yap / Kayıt Ol</title>
+    <!-- style.css dosyamızı bu sayfaya bağlıyoruz. Böylece oradaki renkler ve ayarlar buraya aktarılıyor -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Giriş ve Kayıt formuna özel görselleri ve stilleri buraya yazıyoruz -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f4f7f6;
-        }
-        .header {
-            background-color: #e8b4bc;
-            padding: 60px 40px;
-            text-align: center;
-        }
-        .header h1 {
-            font-size: 26px;
-            color: #6b2d3c;
-            letter-spacing: 1.5px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-        .header h2 {
-            font-size: 30px;
-            color: #6b2d3c;
-            font-weight: 500;
-            font-family: 'Quicksand', sans-serif;
-        }
-        .cards {
+        .auth-wrapper {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            padding: 50px 40px 60px;
-            flex-wrap: wrap;
-        }
-        .card {
-            background-color: white;
-            border-radius: 14px;
-            padding: 28px;
-            width: 220px;
-            border: 2px solid #e8b4bc;
-            text-align: center;
-        }
-        .card h3 {
-            color: #6b2d3c;
-            margin-bottom: 10px;
-            font-size: 17px;
-        }
-        .card p {
-            font-size: 14px;
-            color: #7a8a89;
-            line-height: 1.5;
-        }
-        .footer {
-            text-align: center;
+            align-items: center;
+            min-height: 100vh; /* Ekranın tam yüksekliğini kapla */
             padding: 20px;
-            color: #a0aeae;
+        }
+
+        .auth-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Kutunun altına hafif gölge vererek havada duruyormuş hissi kazandırıyoruz */
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .auth-header p {
+            color: var(--text-muted);
             font-size: 14px;
+        }
+
+        /* Form Grupları: Label (başlık) ve Input (girdi kutusu) arasındaki mesafeyi ayarlar */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition); /* Odaklanınca yumuşak renk değişimi için */
+        }
+
+        /* Kullanıcı kutucuğa tıkladığında (odaklandığında - focus) kenarlık rengini ana rengimiz yapıyoruz */
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(107, 45, 60, 0.1);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* Butonun üzerine gelince rengini biraz açıyoruz (hover efekti) */
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px); /* Çok hafif yukarı kaydırma efekti */
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .auth-toggle a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-toggle a:hover {
+            text-decoration: underline;
+        }
+
+        /* JavaScript ile formları gizleyip göstermek için bu sınıfı kullanacağız */
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Kariyer Rehberi</h1>
-        <h2>Kariyerine Kendini Tanıyarak Başla</h2>
+
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            
+            <!-- GİRİŞ YAP FORMU -->
+            <div id="login-section">
+                <div class="auth-header">
+                    <h1>Hoş Geldiniz</h1>
+                    <p>Kariyer yolculuğunuza devam etmek için giriş yapın.</p>
+                </div>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">E-posta Adresi</label>
+                        <input type="email" id="login-email" required placeholder="ornek@gmail.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Şifre</label>
+                        <input type="password" id="login-password" required placeholder="••••••••">
+                    </div>
+                    
+                    <button type="submit" class="btn">Giriş Yap</button>
+                </form>
+                
+                <div class="auth-toggle">
+                    Hesabınız yok mu? <a href="#" id="show-register">Kayıt Olun</a>
+                </div>
+            </div>
+
+            <!-- KAYIT OL FORMU (Başlangıçta gizli olacak) -->
+            <div id="register-section" class="hidden">
+                <div class="auth-header">
+                    <h1>Kayıt Olun</h1>
+                    <p>Yeni bir kariyer profili oluşturun.</p>
+                </div>
+                
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="reg-name">Ad Soyad</label>
+                        <input type="text" id="reg-name" required placeholder="Ahmet Yılmaz">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-phone">Telefon Numarası</label>
+                        <input type="tel" id="reg-phone" required placeholder="0555 555 55 55">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-email">E-posta (Gmail)</label>
+                        <input type="email" id="reg-email" required placeholder="ornek@gmail.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-birthdate">Doğum Tarihi</label>
+                        <input type="date" id="reg-birthdate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-school">Okul</label>
+                        <input type="text" id="reg-school" required placeholder="İstanbul Üniversitesi">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-dept">Bölüm</label>
+                        <select id="reg-dept" required>
+                            <option value="" disabled selected>Bölümünüzü seçin</option>
+                            <option value="tip">Tıp Fakültesi</option>
+                            <option value="muhendislik">Mühendislik Fakültesi</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-password">Şifre</label>
+                        <input type="password" id="reg-password" required placeholder="••••••••">
+                    </div>
+                    
+                    <button type="submit" class="btn">Kayıt Ol</button>
+                </form>
+                
+                <div class="auth-toggle">
+                    Zaten hesabınız var mı? <a href="#" id="show-login">Giriş Yapın</a>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="cards">
-        <div class="card">
-            <h3>Backend Developer</h3>
-            <p>Sunucu tarafı sistemler, API'ler ve veritabanı yönetimi.</p>
-        </div>
-        <div class="card">
-            <h3>Frontend Developer</h3>
-            <p>Kullanıcı arayüzü tasarımı ve etkileşimli web deneyimleri.</p>
-        </div>
-        <div class="card">
-            <h3>Full Stack Developer</h3>
-            <p>Hem frontend hem backend tarafında uçtan uca geliştirme.</p>
-        </div>
-        <div class="card">
-            <h3>AI Engineer</h3>
-            <p>Yapay zeka modelleri geliştirme ve sistemlere entegre etme.</p>
-        </div>
-        <div class="card">
-            <h3>Makine Öğrenmesi Mühendisi</h3>
-            <p>Veriden öğrenen modeller tasarlama ve eğitme.</p>
-        </div>
-    </div>
+    <!-- Giriş ve Kayıt formları arasında geçişi sağlayan JavaScript kodumuz -->
+    <script>
+        const loginSection = document.getElementById('login-section');
+        const registerSection = document.getElementById('register-section');
+        
+        const showRegisterLink = document.getElementById('show-register');
+        const showLoginLink = document.getElementById('show-login');
 
-    <div class="footer">
-        <p>&copy; 2026 Kariyer Rehberi</p>
-    </div>
+        // "Kayıt Ol" linkine tıklandığında:
+        showRegisterLink.addEventListener('click', function(event) {
+            event.preventDefault(); // Sayfanın en üste zıplamasını engelle
+            loginSection.classList.add('hidden'); // Giriş formunu gizle (hidden sınıfı ekle)
+            registerSection.classList.remove('hidden'); // Kayıt formunu göster (hidden sınıfını kaldır)
+        });
+
+        // "Giriş Yap" linkine tıklandığında:
+        showLoginLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            registerSection.classList.add('hidden'); // Kayıt formunu gizle
+            loginSection.classList.remove('hidden'); // Giriş formunu göster
+        });
+    </script>
 </body>
 </html>
