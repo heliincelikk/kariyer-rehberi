@@ -2,48 +2,101 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>İlk Sayfam</title>
-           <body>
+    <title>Kariyer Rehberi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f7f6;
+        }
+        .header {
+            background-color: #e8b4bc;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 26px;
+            color: #6b2d3c;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .header h2 {
+            font-size: 30px;
+            color: #6b2d3c;
+            font-weight: 500;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            padding: 50px 40px 60px;
+            flex-wrap: wrap;
+        }
+        .card {
+            background-color: white;
+            border-radius: 14px;
+            padding: 28px;
+            width: 220px;
+            border: 2px solid #e8b4bc;
+            text-align: center;
+        }
+        .card h3 {
+            color: #6b2d3c;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+        .card p {
+            font-size: 14px;
+            color: #7a8a89;
+            line-height: 1.5;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #a0aeae;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
     <div class="header">
-        <h1>Merhaba, ben kod yazıyorum!</h1>
-        
-    <div class="menu">
-        <p>Ana Sayfa</p>
-        <p>Hakkımda</p>
-        <p>İletişim</p>
-    </div>
-</div>
+        <h1>Kariyer Rehberi</h1>
+        <h2>Kariyerine Kendini Tanıyarak Başla</h2>
     </div>
 
-    <div class="content">
-        <p>Bu benim ilk web sayfam. Web geliştirmeyi öğreniyorum.</p>
-        <img src="https://placekitten.com/300/200" alt="şirin bir kedi">
+    <div class="cards">
+        <div class="card">
+            <h3>Backend Developer</h3>
+            <p>Sunucu tarafı sistemler, API'ler ve veritabanı yönetimi.</p>
+        </div>
+        <div class="card">
+            <h3>Frontend Developer</h3>
+            <p>Kullanıcı arayüzü tasarımı ve etkileşimli web deneyimleri.</p>
+        </div>
+        <div class="card">
+            <h3>Full Stack Developer</h3>
+            <p>Hem frontend hem backend tarafında uçtan uca geliştirme.</p>
+        </div>
+        <div class="card">
+            <h3>AI Engineer</h3>
+            <p>Yapay zeka modelleri geliştirme ve sistemlere entegre etme.</p>
+        </div>
+        <div class="card">
+            <h3>Makine Öğrenmesi Mühendisi</h3>
+            <p>Veriden öğrenen modeller tasarlama ve eğitme.</p>
+        </div>
     </div>
 
     <div class="footer">
-        <p>© 2026 - Benim İlk Sitem</p>
+        <p>&copy; 2026 Kariyer Rehberi</p>
     </div>
 </body>
-<style>
-    .header {
-    background-color: #2c3e50;
-    color: white;
-    padding: 20px;
-}
-.content {
-    padding: 30px;
-}
-.footer {
-    background-color: #ecf0f1;
-    padding: 15px;
-    font-size: 14px;
-}
-.menu {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-    align-items: center;
-    height: 60px;
-}
-</style>
 </html>
