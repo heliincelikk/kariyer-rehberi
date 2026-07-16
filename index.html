@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kariyer Rehberi - Geleceğini Keşfet</title>
-    <!-- FontAwesome kütüphanesi ikonlar için -->
+    <!-- FontAwesome kütüphanesi -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Genel Ayarlar ve Gece Modu (Dark/Turkuaz) Teması */
+        /* ================= GENEL VE GECE MODU TEMASI ================= */
         * {
             margin: 0;
             padding: 0;
@@ -17,7 +17,6 @@
         }
 
         body {
-            /* Arka planı derin asil bir lacivert ve gece mavisi yaptık */
             background: linear-gradient(-45deg, #0f172a, #1e1b4b, #020617, #1e293b);
             background-size: 400% 400%;
             animation: gradientBg 12s ease infinite;
@@ -34,24 +33,23 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Üst Menü (Navbar) */
+        /* Navbar */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 50px;
-            background-color: rgba(15, 23, 42, 0.6); /* Koyu transparan cam efekti */
+            background-color: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(12px);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             z-index: 10;
-            animation: slideDown 0.8s ease forwards;
         }
 
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #06b6d4; /* Parlak Modern Turkuaz */
+            color: #06b6d4;
             text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
         }
 
@@ -90,7 +88,7 @@
             box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
         }
 
-        /* ARKA PLANDA AKAN DAHA BELİRGİN VE TURKUAZ İKONLAR */
+        /* Arka Plandaki İkonlar */
         .marquee-container {
             position: absolute;
             top: 50%;
@@ -99,20 +97,20 @@
             width: 120%;
             overflow: hidden;
             white-space: nowrap;
-            opacity: 0.15; /* Saydamlığı artırdık, artık çok daha belirginler! */
+            opacity: 0.15;
             pointer-events: none;
             z-index: 1;
         }
 
         .marquee-content {
             display: inline-block;
-            animation: marquee 22s linear infinite; /* Biraz daha hızlandırdık */
+            animation: marquee 22s linear infinite;
         }
 
         .marquee-content i {
             font-size: 110px;
             margin: 0 50px;
-            color: #06b6d4; /* İkonlar da neon turkuaz parlıyor */
+            color: #06b6d4;
             text-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
         }
 
@@ -121,7 +119,7 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* Ana İçerik Alanı */
+        /* Kahraman Alanı */
         .hero-section {
             flex: 1;
             display: flex;
@@ -135,7 +133,7 @@
 
         .hero-section h1 {
             font-size: 58px;
-            color: #ffffff; /* Karanlıkta parlayan beyaz başlık */
+            color: #ffffff;
             margin-bottom: 20px;
             font-weight: 800;
             opacity: 0;
@@ -143,28 +141,26 @@
         }
 
         .hero-section h1 span {
-            color: #06b6d4; /* Başlığın can alıcı kelimesi turkuaz */
+            color: #06b6d4;
             text-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
         }
 
-        /* İstediğin o aşırı çekici ve dert ortağı yeni açıklama kutusu */
         .description-text {
             font-size: 20px;
-            color: #cbd5e1; /* Göz yormayan açık gri/mavi tonu */
+            color: #cbd5e1;
             max-width: 800px;
             line-height: 1.8;
             margin-bottom: 45px;
-            background-color: rgba(30, 41, 59, 0.5); /* Koyu neon cam efekti */
+            background-color: rgba(30, 41, 59, 0.5);
             padding: 30px 40px;
             border-radius: 20px;
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(6, 182, 212, 0.15); /* İncecik parlayan turkuaz kenarlık */
+            border: 1px solid rgba(6, 182, 212, 0.15);
             opacity: 0;
             animation: fadeInUp 1s ease 0.8s forwards;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
-        /* Parlayan Akıllı Buton */
         .cta-btn {
             background-color: #06b6d4;
             color: #0f172a;
@@ -188,7 +184,6 @@
             transform: scale(1.02);
         }
 
-        /* Misafir Linki */
         .guest-link {
             margin-top: 25px;
             color: #94a3b8;
@@ -210,6 +205,132 @@
             transform: translateY(-2px);
         }
 
+        /* ================= AÇILIR PENCERE (MODAL) TASARIMI ================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #1e293b;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 25px;
+            width: 90%;
+            max-width: 500px;
+            padding: 35px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.8) translateY(-30px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #06b6d4;
+        }
+
+        .modal-box h2 {
+            color: #ffffff;
+            margin-bottom: 25px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .modal-box h2 span {
+            color: #06b6d4;
+        }
+
+        /* Form Elemanları */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(15, 23, 42, 0.6);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #06b6d4;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+
+        .dynamic-field {
+            display: none; 
+            animation: fadeInField 0.4s ease forwards;
+        }
+
+        @keyframes fadeInField {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #06b6d4;
+            color: #0f172a;
+            padding: 14px;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(6, 182, 212, 0.2);
+        }
+
+        .submit-btn:hover {
+            background-color: #22d3ee;
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+            transform: translateY(-2px);
+        }
+
         /* ================= ANIMASYONLAR ================= */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
@@ -222,15 +343,15 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3); }
-            50% { transform: scale(1.04); box-shadow: 0 10px 40px rgba(6, 182, 212, 0.6); }
-            100% { transform: scale(1); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <!-- ARKA PLANDA AKAN DAHA BELİRGİN TURKUAZ İKONLAR -->
+    <!-- ARKA PLANDA AKAN İKONLAR -->
     <div class="marquee-container">
         <div class="marquee-content">
             <i class="fa-solid fa-laptop-code"></i>
@@ -242,7 +363,7 @@
             <i class="fa-solid fa-chart-pie"></i>
             <i class="fa-solid fa-palette"></i>
             <i class="fa-solid fa-dna"></i>
-            <!-- Döngü pürüzsüzlüğü için ikileme -->
+            <!-- Döngü Pürüzsüzlüğü -->
             <i class="fa-solid fa-laptop-code"></i>
             <i class="fa-solid fa-microscope"></i>
             <i class="fa-solid fa-compass-drafting"></i>
@@ -255,25 +376,168 @@
         </div>
     </div>
 
-    <!-- ÜST MENÜ (NAVBAR) -->
+    <!-- NAVBAR -->
     <header>
         <div class="logo">Kariyer Rehberi</div>
         <div class="auth-buttons">
-            <button class="login-btn" onclick="location.href='dashboard.html'">Giriş Yap</button>
-            <button class="register-btn" onclick="location.href='dashboard.html'">Kayıt Ol</button>
+            <button class="login-btn" onclick="openModal('loginModal')">Giriş Yap</button>
+            <button class="register-btn" onclick="openModal('registerModal')">Kayıt Ol</button>
         </div>
     </header>
 
-    <!-- KAPAK VE TANITIM ALANI -->
+    <!-- KAHRAMAN ALANI -->
     <main class="hero-section">
         <h1>Geleceğini <span>Şansa Bırakma</span> 🎯</h1>
         <div class="description-text">
             "Hangi bölümü seçmeliyim? Seçtiğim bölümde hangi alanda ilerlemem lazım? Sektörde en çok nerede iş imkanı var ve başlangıç maaşları ne durumda?" diye düşünmekten yorulduysan doğru yerdesin. Kafandaki tüm belirsizlikleri silmek, yazılımdan sağlığa kadar tüm alt dalları keşfetmek ve yapay zeka desteğiyle kendi yolunu çizmek için aramıza katıl!
         </div>
         
-        <a href="dashboard.html" class="cta-btn">Hemen Keşfetmeye Başla 🚀</a>
+        <button onclick="openModal('registerModal')" class="cta-btn">Hemen Keşfetmeye Başla 🚀</button>
         <a href="search.html" class="guest-link">Üye Olmadan Keşfetmeye Devam Et ➔</a>
     </main>
+
+    <!-- ================= GİRİŞ YAP MODAL PENCERESİ ================= -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-box">
+            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Tekrar <span>Hoş Geldin!</span></h2>
+            <form onsubmit="event.preventDefault(); location.href='dashboard.html'">
+                <div class="form-group">
+                    <label>E-posta Adresi</label>
+                    <input type="email" placeholder="ornek@domain.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Şifre</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="submit-btn">Giriş Yap</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= KAYIT OL MODAL PENCERESİ ================= -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal-box">
+            <span class="close-modal" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Aramıza <span>Katıl!</span></h2>
+            <form onsubmit="event.preventDefault(); location.href='dashboard.html'">
+                
+                <!-- Ad Soyad -->
+                <div class="form-group">
+                    <label>Ad Soyad</label>
+                    <input type="text" placeholder="Helin Çelik" required>
+                </div>
+
+                <!-- Eğitim Durumu -->
+                <div class="form-group">
+                    <label>Eğitim Durumu</label>
+                    <select id="educationStatus" onchange="handleEducationChange()" required>
+                        <option value="" disabled selected>Seçiniz...</option>
+                        <option value="lise">Lise Öğrencisi</option>
+                        <option value="lise_mezun">Lise Mezunu</option>
+                        <option value="universite">Üniversite Öğrencisi</option>
+                        <option value="universite_mezun">Üniversite Mezunu</option>
+                    </select>
+                </div>
+
+                <!-- DİNAMİK ALANLAR (Sadece Lise seçilince) -->
+                <div id="liseFields" class="dynamic-field">
+                    <div class="form-group">
+                        <label>Sınıf</label>
+                        <select>
+                            <option value="9">9. Sınıf</option>
+                            <option value="10">10. Sınıf</option>
+                            <option value="11">11. Sınıf</option>
+                            <option value="12">12. Sınıf / YKS Hazırlık</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- DİNAMİK ALANLAR (Sadece Lise Mezunu seçilince) -->
+                <div id="liseMezunFields" class="dynamic-field">
+                    <div class="form-group">
+                        <label>Mezun Olduğun Lise (İsteğe Bağlı)</label>
+                        <input type="text" placeholder="Örn: Kadıköy Anadolu Lisesi">
+                    </div>
+                </div>
+
+                <!-- DİNAMİK ALANLAR (Üniversite seçilince - GÜNCELLENEN KISIM) -->
+                <div id="uniFields" class="dynamic-field">
+                    <div class="form-group">
+                        <label>Okuduğun Üniversite</label>
+                        <input type="text" placeholder="Örn: İstanbul Teknik Üniversitesi">
+                    </div>
+                    <div class="form-group">
+                        <label>Bölümün</label>
+                        <input type="text" placeholder="Örn: Tıp Fakültesi, Bilgisayar Mühendisliği">
+                    </div>
+                    <div class="form-group">
+                        <label>Sınıf</label>
+                        <select>
+                            <option value="hazirlik">Hazırlık</option>
+                            <option value="1">1. Sınıf</option>
+                            <option value="2">2. Sınıf</option>
+                            <option value="3">3. Sınıf</option>
+                            <option value="4">4. Sınıf</option>
+                            <!-- 6 Yıllık Bölümler İçin Eklenen Yeni Seçenekler -->
+                            <option value="5">5. Sınıf</option>
+                            <option value="6">6. Sınıf / İntern Doktor</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- DİNAMİK ALANLAR (Üniversite Mezunu seçilince) -->
+                <div id="uniMezunFields" class="dynamic-field">
+                    <div class="form-group">
+                        <label>Mezun Olduğun Üniversite</label>
+                        <input type="text" placeholder="Örn: Ege Üniversitesi">
+                    </div>
+                    <div class="form-group">
+                        <label>Mezun Olduğun Bölüm</label>
+                        <input type="text" placeholder="Örn: Yazılım Mühendisliği">
+                    </div>
+                </div>
+
+                <!-- Şifre -->
+                <div class="form-group">
+                    <label>Şifre Oluştur</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Kayıt İşlemini Tamamla 🚀</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT KODLARIMIZ ================= -->
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function handleEducationChange() {
+            const status = document.getElementById('educationStatus').value;
+            
+            document.getElementById('liseFields').style.display = 'none';
+            document.getElementById('liseMezunFields').style.display = 'none';
+            document.getElementById('uniFields').style.display = 'none';
+            document.getElementById('uniMezunFields').style.display = 'none';
+
+            if (status === 'lise') {
+                document.getElementById('liseFields').style.display = 'block';
+            } else if (status === 'lise_mezun') {
+                document.getElementById('liseMezunFields').style.display = 'block';
+            } else if (status === 'universite') {
+                document.getElementById('uniFields').style.display = 'block';
+            } else if (status === 'universite_mezun') {
+                document.getElementById('uniMezunFields').style.display = 'block';
+            }
+        }
+    </script>
 
 </body>
 </html>
