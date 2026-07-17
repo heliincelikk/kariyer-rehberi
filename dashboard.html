@@ -316,9 +316,15 @@
             <div class="menu-item" id="menu-quiz" onclick="switchTab('quiz')">
                 <i class="fa-solid fa-clipboard-question"></i> Kariyer Testi 🎯
             </div>
-            <a href="index.html" class="menu-item logout-btn">
+            <!-- YENİ PROFİL BÖLÜMÜ -->
+<div class="profile-section" style="margin-top: 30px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="alert('Profil düzenleme ekranı buraya eklenecek.')">
+    <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i> Profilim</h4>
+    <p id="userSchoolInfo" style="font-size: 12px; color: #94a3b8;">Üniversite / Sınıf</p>
+</div>
+            <a href="index.html" class="menu-item logout-btn" onclick="localStorage.clear()">
                 <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
             </a>
+
         </div>
     </div>
 
@@ -327,7 +333,7 @@
         
         <div class="welcome-bar">
             <h1>Hoş Geldin, <span id="userNameSpan">Geleceğin Lideri!</span> 👋</h1>
-            <div class="user-badge" id="userBadgeMode">Premium Öğrenci Modu</div>
+            <div class="user-badge" id="userBadgeMode">Yükleniyor...</div>
         </div>
 
         <!-- ================= SEKME 1: KİŞİSELLEŞTİRİLMİŞ PANEL ================= -->
@@ -420,7 +426,18 @@
         // 🚀 SAYFA YÜKLENDİĞİNDE DİSİPLİNE GÖRE PANELİ ÖZELLEŞTİR
         window.addEventListener('DOMContentLoaded', () => {
             const disiplin = localStorage.getItem('kullaniciDisiplin');
-            
+            const allMentors = document.querySelectorAll('.mentor-card');
+
+            allMentors.forEach(m => {
+                // Eğer disiplin 'med' ise tech olanları gizle
+                if (disiplin === 'med' && !m.classList.contains('med-mentor')) {
+                    m.style.display = 'none';
+                } 
+                // Eğer disiplin 'med' değilse (tech veya law ise) med olanları gizle
+                else if (disiplin !== 'med' && !m.classList.contains('tech-mentor')) {
+                    m.style.display = 'none';
+                }
+            });
             const cardTitle = document.getElementById('cardTitleText');
             const cardDesc = document.getElementById('cardDescText');
             const cardIcon = document.getElementById('cardIconStyle');
