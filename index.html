@@ -384,7 +384,6 @@
     <main class="hero-section">
         <h1>Geleceğini <span>Şansa Bırakma</span> 🎯</h1>
         
-        <!-- YENİ TANITIM YAZISI -->
         <div class="description-text">
             "Hangi bölümü seçmeliyim, hangi alanda ilerlemem gerek?" diye düşünen bir öğrenciysen de doğru yerdesin; sektördeki tecrübelerini aktarıp geleceğin yeteneklerine ışık tutmak isteyen bir profesyonelsen de! 
             <br><br>
@@ -400,14 +399,14 @@
         <div class="modal-box">
             <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
             <h2>Tekrar <span>Hoş Geldin!</span></h2>
-            <form onsubmit="event.preventDefault(); location.href='dashboard.html'">
+            <form id="loginForm">
                 <div class="form-group">
-                    <label>E-posta Adresi</label>
-                    <input type="email" placeholder="ornek@domain.com" required>
+                    <label>Kullanıcı Adı (Ad Soyad)</label>
+                    <input type="text" id="loginName" placeholder="Helin Çelik" required>
                 </div>
                 <div class="form-group">
                     <label>Şifre</label>
-                    <input type="password" placeholder="••••••••" required>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
                 </div>
                 <button type="submit" class="submit-btn">Giriş Yap</button>
             </form>
@@ -419,12 +418,12 @@
         <div class="modal-box">
             <span class="close-modal" onclick="closeModal('registerModal')">&times;</span>
             <h2>Aramıza <span>Katıl!</span></h2>
-            <form onsubmit="event.preventDefault(); location.href='dashboard.html'">
-                
+            
+            <form id="registerForm">
                 <!-- Ad Soyad -->
                 <div class="form-group">
                     <label>Ad Soyad</label>
-                    <input type="text" placeholder="Helin Çelik" required>
+                    <input type="text" id="regName" placeholder="Helin Çelik" required>
                 </div>
 
                 <!-- Eğitim / Profesyonel Durum -->
@@ -500,7 +499,7 @@
                 <!-- DİNAMİK ALANLAR (Sadece Mentör seçilince açılacak) -->
                 <div id="mentorFields" class="dynamic-field">
                     <div class="form-group">
-                        <label>Çalıştığın Şirket / Kurum</label>
+                        <label>Çallştığm Şirket / Kurum</label>
                         <input type="text" placeholder="Örn: Trendyol, Aselsan, Google">
                     </div>
                     <div class="form-group">
@@ -510,7 +509,6 @@
                     <div class="form-group">
                         <label>Deneyim Süren</label>
                         <select>
-                            <!-- YENİ SEÇENEK: 0-1 Yıl -->
                             <option value="0-1">0-1 Yıl</option>
                             <option value="1-2">1-2 Yıl</option>
                             <option value="3-5">3-5 Yıl</option>
@@ -523,7 +521,7 @@
                 <!-- Şifre -->
                 <div class="form-group">
                     <label>Şifre Oluştur</label>
-                    <input type="password" placeholder="••••••••" required>
+                    <input type="password" id="regPassword" placeholder="••••••••" required>
                 </div>
 
                 <button type="submit" class="submit-btn">Kayıt İşlemini Tamamla 🚀</button>
@@ -544,14 +542,12 @@
         function handleEducationChange() {
             const status = document.getElementById('educationStatus').value;
             
-            // Hepsini gizle
             document.getElementById('liseFields').style.display = 'none';
             document.getElementById('liseMezunFields').style.display = 'none';
             document.getElementById('uniFields').style.display = 'none';
             document.getElementById('uniMezunFields').style.display = 'none';
             document.getElementById('mentorFields').style.display = 'none';
 
-            // Seçilene göre göster
             if (status === 'lise') {
                 document.getElementById('liseFields').style.display = 'block';
             } else if (status === 'lise_mezun') {
@@ -564,7 +560,64 @@
                 document.getElementById('mentorFields').style.display = 'block';
             }
         }
-    </script>
 
+        // KAYIT OLMA KODU (Yönlendirme replace olarak güncellendi 🛡️)
+        document.getElementById('registerForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const adSoyad = document.getElementById('regName').value;
+            const sifre = document.getElementById('regPassword').value;
+
+            try {
+                const cevap = await fetch('http://127.0.0.1:3000/api/kayit-ol', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ kullanici_adi: adSoyad, sifre: sifre })
+                });
+
+                const sonuc = await cevap.json();
+
+                if (cevap.ok) {
+                    alert(sonuc.message);
+                    // 🛡️ Geçmişi silerek panele uçurur, geri tuşuyla index'e dönülmez!
+                    window.location.replace('dashboard.html');
+                } else {
+                    alert(sonuc.error);
+                }
+            } catch (hata) {
+                console.error("Hata: ", hata);
+                alert("Backend sunucusu açık mı aşkım? Kontrol et! ❌");
+            }
+        });
+
+        // GİRİŞ YAPMA KODU (Yönlendirme replace olarak güncellendi 🛡️)
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const adSoyad = document.getElementById('loginName').value;
+            const sifre = document.getElementById('loginPassword').value;
+
+            try {
+                const cevap = await fetch('http://127.0.0.1:3000/api/giris-yap', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ kullanici_adi: adSoyad, sifre: sifre })
+                });
+
+                const sonuc = await cevap.json();
+
+                if (cevap.ok) {
+                    alert(sonuc.message);
+                    // 🛡️ Geçmişi silerek panele uçurur, geri tuşuyla index'e dönülmez!
+                    window.location.replace('dashboard.html');
+                } else {
+                    alert(sonuc.error);
+                }
+            } catch (hata) {
+                console.error("Hata: ", hata);
+                alert("Backend sunucusu açık mı aşkım? Kontrol et! ❌");
+            }
+        });
+    </script>
 </body>
 </html>

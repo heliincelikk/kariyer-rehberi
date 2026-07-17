@@ -191,7 +191,7 @@
             color: #22d3ee;
         }
 
-        /* ================= MENTÖR KARTLARI TASARIMI (YENİ) ================= */
+        /* ================= MENTÖR KARTLARI TASARIMI ================= */
         .mentor-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -312,9 +312,13 @@
             <div class="menu-item" id="menu-discover" onclick="switchTab('discover')">
                 <i class="fa-solid fa-globe"></i> Tüm Alanları Keşfet
             </div>
-            <!-- YENİ MENÜ ELEMANI: MENTÖRLÜK AĞI -->
+            <!-- MENTÖRLÜK AĞI -->
             <div class="menu-item" id="menu-mentor" onclick="switchTab('mentor')">
                 <i class="fa-solid fa-users-rectangle"></i> Mentörlük Ağı 🤝
+            </div>
+            <!-- 🎯 KARİYER TESTİ BUTONU (EKLENDİ!) -->
+            <div class="menu-item" id="menu-quiz" onclick="switchTab('quiz')">
+                <i class="fa-solid fa-clipboard-question"></i> Kariyer Testi 🎯
             </div>
             
             <a href="index.html" class="menu-item logout-btn">
@@ -340,7 +344,7 @@
                     <div class="card-icon"><i class="fa-solid fa-route"></i></div>
                     <h3>Sana Özel Yol Haritası</h3>
                     <p>Seçtiğin hedeflere ve eğitim durumuna göre yapay zeka tarafından optimize edilmiş gelişim adımlarını incele.</p>
-                    <a href="#" class="card-link">Haritayı İncele ➔</a>
+                    <a href="quiz.html" class="card-link">Haritayı İncele ➔</a>
                 </div>
 
                 <div class="premium-card">
@@ -388,7 +392,7 @@
             </div>
         </div>
 
-        <!-- ================= SEKME 3: MENTÖRLÜK AĞI (YENİ) ================= -->
+        <!-- ================= SEKME 3: MENTÖRLÜK AĞI ================= -->
         <div class="tab-content" id="content-mentor">
             <div class="mentor-grid">
                 
@@ -430,15 +434,21 @@
     <!-- ================= JAVASCRIPT KODLARIMIZ ================= -->
     <script>
         function switchTab(tabName) {
+            // Kariyer Testine basıldığında doğrudan quiz.html sayfasına yönlendirir
+            if (tabName === 'quiz') {
+                window.location.href = 'quiz.html';
+                return;
+            }
+
             // Önce tüm içerikleri gizle
             document.getElementById('content-panel').classList.remove('active');
             document.getElementById('content-discover').classList.remove('active');
-            document.getElementById('content-mentor').classList.remove('active'); // Mentörü de gizle
+            document.getElementById('content-mentor').classList.remove('active');
             
             // Önce tüm menü butonlarının aktifliğini kaldır
             document.getElementById('menu-panel').classList.remove('active');
             document.getElementById('menu-discover').classList.remove('active');
-            document.getElementById('menu-mentor').classList.remove('active'); // Mentörü de kaldır
+            document.getElementById('menu-mentor').classList.remove('active');
 
             // Seçilen sekmeyi aktif yap
             if (tabName === 'panel') {
@@ -449,31 +459,22 @@
                 document.getElementById('menu-discover').classList.add('active');
             } else if (tabName === 'mentor') {
                 document.getElementById('content-mentor').classList.add('active');
-                document.getElementById('menu-mentor').classList.add('active'); // Mentör sekmesini aç!
+                document.getElementById('menu-mentor').classList.add('active');
             }
         }
 
-        // Tıklanan butonu anında güncelleyen tatlı istek gönderme fonksiyonu
         // İsteği Hem Gönderen Hem de Geri Çeken Akıllı Fonksiyon
         function sendMentorRequest(buttonElement) {
-            // Eğer zaten gönderilmişse (yani yeşil durumdaysa)
             if (buttonElement.classList.contains('sent')) {
-                // İsteği geri çekme işlemi
                 buttonElement.classList.remove('sent');
                 buttonElement.innerHTML = 'Mentörlük İsteği Gönder';
-                
-                // Küçük tatlı bir bilgilendirme kutusu (alert)
                 alert("✉️ Mentörlük talebini başarıyla geri çektiniz.");
             } else {
-                // İlk kez tıklandığında istek gönderme işlemi
                 buttonElement.classList.add('sent');
                 buttonElement.innerHTML = '<i class="fa-solid fa-circle-check"></i> İstek Gönderildi! | Geri Çek ✕';
-                
-                // Gönderildi bildirimi
                 alert("🎉 Harika! Mentörlük talebin başarıyla iletildi. Mentörün isteğini onayladığında LinkedIn ve e-posta üzerinden iletişime geçebileceksin.");
             }
         }
-        
     </script>
 
 </body>
