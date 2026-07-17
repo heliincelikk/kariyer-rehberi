@@ -368,10 +368,24 @@
             progressContainer.style.display = "none";
             geriTahtasi.innerHTML = "";
 
+            // localStorage'dan kullanıcının disiplinini çekiyoruz
+            const disiplin = localStorage.getItem('kullaniciDisiplin');
+            let ozelButonHTML = "";
+
+            if (disiplin === 'med') {
+                ozelButonHTML = `<button class="option-btn gate-btn" onclick="kulvarSec('ozel-tech')">🩺 Bölümüm Belli: Tıp / Sağlık (20 Soru)<br><span style="font-size:13px; color:#94a3b8; font-weight:normal;">Klinik uzmanlıklar ve sağlık rotanı bul.</span></button>`;
+            } else if (disiplin === 'law') {
+                ozelButonHTML = `<button class="option-btn gate-btn" onclick="kulvarSec('ozel-tech')">⚖️ Bölümüm Belli: Hukuk (20 Soru)<br><span style="font-size:13px; color:#94a3b8; font-weight:normal;">Hukuk dalları ve kariyer rotaları için başla.</span></button>`;
+            } else if (disiplin === 'business') {
+                ozelButonHTML = `<button class="option-btn gate-btn" onclick="kulvarSec('ozel-tech')">📊 Bölümüm Belli: İşletme / Finans (20 Soru)<br><span style="font-size:13px; color:#94a3b8; font-weight:normal;">Pazarlama mı finans mı? Alt alanını bul.</span></button>`;
+            } else {
+                ozelButonHTML = `<button class="option-btn gate-btn" onclick="kulvarSec('ozel-tech')">💻 Bölümüm Belli: Teknoloji / Yazılım (20 Soru)<br><span style="font-size:13px; color:#94a3b8; font-weight:normal;">Siber mi Backend mi? Doğrudan alt alanını bul.</span></button>`;
+            }
+
             tahta.innerHTML = `
                 <h3 id="question-text" style="margin-bottom: 35px;">Kariyer Yolculuğuna Nasıl Başlamak İstersin?</h3>
                 <button class="option-btn gate-btn" onclick="kulvarSec('genel')">🎯 Genel Profil Testine Başla (20 Soru)<br><span style="font-size:13px; color:#94a3b8; font-weight:normal;">Alanımı henüz bilmiyorum, keşfetmek istiyorum.</span></button>
-                <button class="option-btn gate-btn" onclick="kulvarSec('ozel-tech')">💻 Bölümüm Belli: Teknoloji / Yazılım (20 Soru)<br><span style="font-size:13px; color:#94a3b8; font-weight:normal;">Siber mi Backend mi? Doğrudan alt alanımı bul.</span></button>
+                ${ozelButonHTML}
             `;
         }
 

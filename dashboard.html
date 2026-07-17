@@ -282,16 +282,14 @@
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
         }
 
-        /* İstek Gönderildiğinde Aktif Olacak Sınıf */
         .request-btn.sent {
-            background-color: #10b981 !important; /* Yeşil */
+            background-color: #10b981 !important;
             color: white !important;
             border-color: #10b981 !important;
             cursor: default;
             box-shadow: none !important;
         }
 
-        /* Animasyon */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
@@ -312,15 +310,12 @@
             <div class="menu-item" id="menu-discover" onclick="switchTab('discover')">
                 <i class="fa-solid fa-globe"></i> Tüm Alanları Keşfet
             </div>
-            <!-- MENTÖRLÜK AĞI -->
             <div class="menu-item" id="menu-mentor" onclick="switchTab('mentor')">
                 <i class="fa-solid fa-users-rectangle"></i> Mentörlük Ağı 🤝
             </div>
-            <!-- 🎯 KARİYER TESTİ BUTONU (EKLENDİ!) -->
             <div class="menu-item" id="menu-quiz" onclick="switchTab('quiz')">
                 <i class="fa-solid fa-clipboard-question"></i> Kariyer Testi 🎯
             </div>
-            
             <a href="index.html" class="menu-item logout-btn">
                 <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
             </a>
@@ -330,21 +325,21 @@
     <!-- ANA İÇERİK ALANI -->
     <div class="main-content">
         
-        <!-- ÜST KARŞILAMA BARI -->
         <div class="welcome-bar">
-            <h1>Hoş Geldin, <span>Geleceğin Lideri!</span> 👋</h1>
-            <div class="user-badge">Premium Öğrenci Modu</div>
+            <h1>Hoş Geldin, <span id="userNameSpan">Geleceğin Lideri!</span> 👋</h1>
+            <div class="user-badge" id="userBadgeMode">Premium Öğrenci Modu</div>
         </div>
 
         <!-- ================= SEKME 1: KİŞİSELLEŞTİRİLMİŞ PANEL ================= -->
         <div class="tab-content active" id="content-panel">
             <div class="dashboard-grid">
                 
+                <!-- 🎯 DİNAMİK YOL HARİTASI KARTI -->
                 <div class="premium-card">
-                    <div class="card-icon"><i class="fa-solid fa-route"></i></div>
-                    <h3>Sana Özel Yol Haritası</h3>
-                    <p>Seçtiğin hedeflere ve eğitim durumuna göre yapay zeka tarafından optimize edilmiş gelişim adımlarını incele.</p>
-                    <a href="quiz.html" class="card-link">Haritayı İncele ➔</a>
+                    <div class="card-icon" id="cardIconStyle"><i class="fa-solid fa-route"></i></div>
+                    <h3 id="cardTitleText">Sana Özel Yol Haritası</h3>
+                    <p id="cardDescText">Seçtiğin hedeflere ve eğitim durumuna göre yapay zeka tarafından optimize edilmiş gelişim adımlarını incele.</p>
+                    <a href="quiz.html" class="card-link" id="cardLinkBtn">Haritayı İncele ➔</a>
                 </div>
 
                 <div class="premium-card">
@@ -367,36 +362,30 @@
         <!-- ================= SEKME 2: TÜM ALANLARI KEŞFET ================= -->
         <div class="tab-content" id="content-discover">
             <div class="dashboard-grid">
-                
                 <div class="premium-card">
                     <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
                     <h3>Mühendislik ve Teknoloji</h3>
                     <p>Yazılım, Yapay Zeka, Siber Güvenlik, İnşaat ve Makine gibi tüm teknik mühendislik dallarını keşfet.</p>
                     <a href="search.html" class="card-link">Keşfetmeye Başla ➔</a>
                 </div>
-
                 <div class="premium-card">
                     <div class="card-icon"><i class="fa-solid fa-stethoscope"></i></div>
                     <h3>Sağlık ve Tıp Bilimleri</h3>
                     <p>Tıp uzmanlıkları, Diş Hekimliği, Eczacılık ve Hemşirelik gibi sağlık sektörünün tüm alt dallarını incele.</p>
                     <a href="search.html" class="card-link">Keşfetmeye Başla ➔</a>
                 </div>
-
                 <div class="premium-card">
                     <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
                     <h3>Sosyal ve İdari Bilimler</h3>
                     <p>Hukuk, Psikoloji, İşletme ve Uluslararası İlişkiler gibi popüler sosyal bölümlerin iş imkanlarını gör.</p>
                     <a href="search.html" class="card-link">Keşfetmeye Başla ➔</a>
                 </div>
-
             </div>
         </div>
 
         <!-- ================= SEKME 3: MENTÖRLÜK AĞI ================= -->
         <div class="tab-content" id="content-mentor">
             <div class="mentor-grid">
-                
-                <!-- Mentör Kartı 1 -->
                 <div class="mentor-card">
                     <div class="mentor-avatar">HÇ</div>
                     <h3>Helin Çelik</h3>
@@ -405,8 +394,6 @@
                     <span class="mentor-badge">5 Yıl Deneyim</span>
                     <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
                 </div>
-
-                <!-- Mentör Kartı 2 -->
                 <div class="mentor-card">
                     <div class="mentor-avatar">AY</div>
                     <h3>Ahmet Yılmaz</h3>
@@ -415,8 +402,6 @@
                     <span class="mentor-badge">10+ Yıl Deneyim</span>
                     <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
                 </div>
-
-                <!-- Mentör Kartı 3 -->
                 <div class="mentor-card">
                     <div class="mentor-avatar">DB</div>
                     <h3>Didem Başar</h3>
@@ -425,7 +410,6 @@
                     <span class="mentor-badge">3-5 Yıl Deneyim</span>
                     <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
                 </div>
-
             </div>
         </div>
 
@@ -433,24 +417,47 @@
 
     <!-- ================= JAVASCRIPT KODLARIMIZ ================= -->
     <script>
+        // 🚀 SAYFA YÜKLENDİĞİNDE DİSİPLİNE GÖRE PANELİ ÖZELLEŞTİR
+        window.addEventListener('DOMContentLoaded', () => {
+            const disiplin = localStorage.getItem('kullaniciDisiplin');
+            
+            const cardTitle = document.getElementById('cardTitleText');
+            const cardDesc = document.getElementById('cardDescText');
+            const cardIcon = document.getElementById('cardIconStyle');
+            const badgeMode = document.getElementById('userBadgeMode');
+
+            if (disiplin === 'med') {
+                cardTitle.innerText = "Tıp & Sağlık Kariyer Yolculuğu";
+                cardDesc.innerText = "Tıp fakültesi aşamaları, TUS hazırlık stratejileri ve sağlık sektörüne özel uzmanlık rotalarını keşfet.";
+                cardIcon.innerHTML = '<i class="fa-solid fa-stethoscope"></i>';
+                badgeMode.innerText = "Tıp & Sağlık Modu";
+            } else if (disiplin === 'law') {
+                cardTitle.innerText = "Hukuk Kariyer Yolculuğu";
+                cardDesc.innerText = "Avukatlık stajı, hakim savcılık sınavları ve kurumsal hukuk büroları kariyer basamakları.";
+                cardIcon.innerHTML = '<i class="fa-solid fa-scale-balanced"></i>';
+                badgeMode.innerText = "Hukuk Modu";
+            } else {
+                cardTitle.innerText = "Teknoloji & Yazılım Yol Haritası";
+                cardDesc.innerText = "Yazılım alt alanları (Frontend, Backend, Yapay Zeka), staj imkanları ve GitHub portfolyo gelişim rehberi.";
+                cardIcon.innerHTML = '<i class="fa-solid fa-laptop-code"></i>';
+                badgeMode.innerText = "Teknoloji & Yazılım Modu";
+            }
+        });
+
         function switchTab(tabName) {
-            // Kariyer Testine basıldığında doğrudan quiz.html sayfasına yönlendirir
             if (tabName === 'quiz') {
                 window.location.href = 'quiz.html';
                 return;
             }
 
-            // Önce tüm içerikleri gizle
             document.getElementById('content-panel').classList.remove('active');
             document.getElementById('content-discover').classList.remove('active');
             document.getElementById('content-mentor').classList.remove('active');
             
-            // Önce tüm menü butonlarının aktifliğini kaldır
             document.getElementById('menu-panel').classList.remove('active');
             document.getElementById('menu-discover').classList.remove('active');
             document.getElementById('menu-mentor').classList.remove('active');
 
-            // Seçilen sekmeyi aktif yap
             if (tabName === 'panel') {
                 document.getElementById('content-panel').classList.add('active');
                 document.getElementById('menu-panel').classList.add('active');
@@ -463,7 +470,6 @@
             }
         }
 
-        // İsteği Hem Gönderen Hem de Geri Çeken Akıllı Fonksiyon
         function sendMentorRequest(buttonElement) {
             if (buttonElement.classList.contains('sent')) {
                 buttonElement.classList.remove('sent');

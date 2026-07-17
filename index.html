@@ -283,7 +283,7 @@
             font-size: 14px;
         }
 
-        .form-group input, .form-group select {
+        .form-group input {
             width: 100%;
             padding: 12px 18px;
             border-radius: 12px;
@@ -295,19 +295,9 @@
             transition: all 0.3s ease;
         }
 
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus {
             border-color: #06b6d4;
             box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-        }
-
-        .dynamic-field {
-            display: none; 
-            animation: fadeInField 0.4s ease forwards;
-        }
-
-        @keyframes fadeInField {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .submit-btn {
@@ -376,7 +366,7 @@
         <div class="logo">Kariyer Rehberi</div>
         <div class="auth-buttons">
             <button class="login-btn" onclick="openModal('loginModal')">Giriş Yap</button>
-            <button class="register-btn" onclick="openModal('registerModal')">Kayıt Ol</button>
+            <button class="register-btn" onclick="redirectToRegister()">Kayıt Ol</button>
         </div>
     </header>
 
@@ -390,7 +380,7 @@
             <strong>İster mentör ol, ister destek al;</strong> kafandaki tüm belirsizlikleri silmek, yazılımdan sağlığa tüm alt dalları keşfetmek ve bu benzersiz kariyer ağının bir parçası olmak için aramıza katıl! 🚀
         </div>
         
-        <button onclick="openModal('registerModal')" class="cta-btn">Hemen Keşfetmeye Başla 🚀</button>
+        <button onclick="redirectToRegister()" class="cta-btn">Hemen Keşfetmeye Başla 🚀</button>
         <a href="search.html" class="guest-link">Üye Olmadan Keşfetmeye Devam Et ➔</a>
     </main>
 
@@ -413,122 +403,6 @@
         </div>
     </div>
 
-    <!-- ================= KAYIT OL MODAL PENCERESİ ================= -->
-    <div class="modal-overlay" id="registerModal">
-        <div class="modal-box">
-            <span class="close-modal" onclick="closeModal('registerModal')">&times;</span>
-            <h2>Aramıza <span>Katıl!</span></h2>
-            
-            <form id="registerForm">
-                <!-- Ad Soyad -->
-                <div class="form-group">
-                    <label>Ad Soyad</label>
-                    <input type="text" id="regName" placeholder="Helin Çelik" required>
-                </div>
-
-                <!-- Eğitim / Profesyonel Durum -->
-                <div class="form-group">
-                    <label>Eğitim / Profesyonel Durum</label>
-                    <select id="educationStatus" onchange="handleEducationChange()" required>
-                        <option value="" disabled selected>Seçiniz...</option>
-                        <option value="lise">Lise Öğrencisi</option>
-                        <option value="lise_mezun">Lise Mezunu</option>
-                        <option value="universite">Üniversite Öğrencisi</option>
-                        <option value="universite_mezun">Üniversite Mezunu</option>
-                        <option value="mentor">Sektör Profesyoneli (Mentör olmak istiyorum)</option>
-                    </select>
-                </div>
-
-                <!-- DİNAMİK ALANLAR (Sadece Lise seçilince) -->
-                <div id="liseFields" class="dynamic-field">
-                    <div class="form-group">
-                        <label>Sınıf</label>
-                        <select>
-                            <option value="9">9. Sınıf</option>
-                            <option value="10">10. Sınıf</option>
-                            <option value="11">11. Sınıf</option>
-                            <option value="12">12. Sınıf / YKS Hazırlık</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- DİNAMİK ALANLAR (Sadece Lise Mezunu seçilince) -->
-                <div id="liseMezunFields" class="dynamic-field">
-                    <div class="form-group">
-                        <label>Mezun Olduğun Lise (İsteğe Bağlı)</label>
-                        <input type="text" placeholder="Örn: Kadıköy Anadolu Lisesi">
-                    </div>
-                </div>
-
-                <!-- DİNAMİK ALANLAR (Üniversite seçilince) -->
-                <div id="uniFields" class="dynamic-field">
-                    <div class="form-group">
-                        <label>Okuduğun Üniversite</label>
-                        <input type="text" placeholder="Örn: İstanbul Teknik Üniversitesi">
-                    </div>
-                    <div class="form-group">
-                        <label>Bölümün</label>
-                        <input type="text" placeholder="Örn: Tıp Fakültesi, Bilgisayar Mühendisliği">
-                    </div>
-                    <div class="form-group">
-                        <label>Sınıf</label>
-                        <select>
-                            <option value="hazirlik">Hazırlık</option>
-                            <option value="1">1. Sınıf</option>
-                            <option value="2">2. Sınıf</option>
-                            <option value="3">3. Sınıf</option>
-                            <option value="4">4. Sınıf</option>
-                            <option value="5">5. Sınıf</option>
-                            <option value="6">6. Sınıf / İntern Doktor</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- DİNAMİK ALANLAR (Üniversite Mezunu seçilince) -->
-                <div id="uniMezunFields" class="dynamic-field">
-                    <div class="form-group">
-                        <label>Mezun Olduğun Üniversite</label>
-                        <input type="text" placeholder="Örn: Ege Üniversitesi">
-                    </div>
-                    <div class="form-group">
-                        <label>Mezun Olduğun Bölüm</label>
-                        <input type="text" placeholder="Örn: Yazılım Mühendisliği">
-                    </div>
-                </div>
-
-                <!-- DİNAMİK ALANLAR (Sadece Mentör seçilince açılacak) -->
-                <div id="mentorFields" class="dynamic-field">
-                    <div class="form-group">
-                        <label>Çallştığm Şirket / Kurum</label>
-                        <input type="text" placeholder="Örn: Trendyol, Aselsan, Google">
-                    </div>
-                    <div class="form-group">
-                        <label>Pozisyonun / Unvanın</label>
-                        <input type="text" placeholder="Örn: Senior Frontend Developer, Diş Hekimi">
-                    </div>
-                    <div class="form-group">
-                        <label>Deneyim Süren</label>
-                        <select>
-                            <option value="0-1">0-1 Yıl</option>
-                            <option value="1-2">1-2 Yıl</option>
-                            <option value="3-5">3-5 Yıl</option>
-                            <option value="5-10">5-10 Yıl</option>
-                            <option value="10+">10+ Yıl</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Şifre -->
-                <div class="form-group">
-                    <label>Şifre Oluştur</label>
-                    <input type="password" id="regPassword" placeholder="••••••••" required>
-                </div>
-
-                <button type="submit" class="submit-btn">Kayıt İşlemini Tamamla 🚀</button>
-            </form>
-        </div>
-    </div>
-
     <!-- ================= JAVASCRIPT KODLARIMIZ ================= -->
     <script>
         function openModal(modalId) {
@@ -539,58 +413,12 @@
             document.getElementById(modalId).classList.remove('active');
         }
 
-        function handleEducationChange() {
-            const status = document.getElementById('educationStatus').value;
-            
-            document.getElementById('liseFields').style.display = 'none';
-            document.getElementById('liseMezunFields').style.display = 'none';
-            document.getElementById('uniFields').style.display = 'none';
-            document.getElementById('uniMezunFields').style.display = 'none';
-            document.getElementById('mentorFields').style.display = 'none';
-
-            if (status === 'lise') {
-                document.getElementById('liseFields').style.display = 'block';
-            } else if (status === 'lise_mezun') {
-                document.getElementById('liseMezunFields').style.display = 'block';
-            } else if (status === 'universite') {
-                document.getElementById('uniFields').style.display = 'block';
-            } else if (status === 'universite_mezun') {
-                document.getElementById('uniMezunFields').style.display = 'block';
-            } else if (status === 'mentor') {
-                document.getElementById('mentorFields').style.display = 'block';
-            }
+        // Kayıt sayfasına yönlendirme fonksiyonu
+        function redirectToRegister() {
+            window.location.href = 'register.html';
         }
 
-        // KAYIT OLMA KODU (Yönlendirme replace olarak güncellendi 🛡️)
-        document.getElementById('registerForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            const adSoyad = document.getElementById('regName').value;
-            const sifre = document.getElementById('regPassword').value;
-
-            try {
-                const cevap = await fetch('http://127.0.0.1:3000/api/kayit-ol', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ kullanici_adi: adSoyad, sifre: sifre })
-                });
-
-                const sonuc = await cevap.json();
-
-                if (cevap.ok) {
-                    alert(sonuc.message);
-                    // 🛡️ Geçmişi silerek panele uçurur, geri tuşuyla index'e dönülmez!
-                    window.location.replace('dashboard.html');
-                } else {
-                    alert(sonuc.error);
-                }
-            } catch (hata) {
-                console.error("Hata: ", hata);
-                alert("Backend sunucusu açık mı aşkım? Kontrol et! ❌");
-            }
-        });
-
-        // GİRİŞ YAPMA KODU (Yönlendirme replace olarak güncellendi 🛡️)
+        // GİRİŞ YAPMA KODU
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 
@@ -608,14 +436,13 @@
 
                 if (cevap.ok) {
                     alert(sonuc.message);
-                    // 🛡️ Geçmişi silerek panele uçurur, geri tuşuyla index'e dönülmez!
                     window.location.replace('dashboard.html');
                 } else {
                     alert(sonuc.error);
                 }
             } catch (hata) {
                 console.error("Hata: ", hata);
-                alert("Backend sunucusu açık mı aşkım? Kontrol et! ❌");
+                alert("Backend sunucusu açık mı? Kontrol et! ❌");
             }
         });
     </script>

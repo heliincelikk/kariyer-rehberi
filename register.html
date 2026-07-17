@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kariyer Rehberi - Gelişmiş Kayıt Ol</title>
+    <!-- FontAwesome kütüphanesi -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #020617, #1e293b);
+            background-size: 400% 400%;
+            animation: gradientBg 12s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            color: #ffffff;
+        }
+
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .back-home {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            color: #06b6d4;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .back-home:hover {
+            color: #22d3ee;
+            transform: translateX(-3px);
+        }
+
+        .register-container {
+            background: #1e293b;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 25px;
+            width: 100%;
+            max-width: 650px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .register-container h2 {
+            color: #ffffff;
+            margin-bottom: 25px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .register-container h2 span {
+            color: #06b6d4;
+            text-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(15, 23, 42, 0.6);
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #06b6d4;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .form-group select option {
+            background-color: #1e293b;
+            color: white;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(to right, #06b6d4, #10b981);
+            color: #ffffff;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 5px 20px rgba(6, 182, 212, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Ana Sayfaya Dön</a>
+
+    <div class="register-container">
+        <h2>Aramıza <span>Katıl & Keşfet!</span> 🚀</h2>
+        <form id="registerForm">
+            <!-- Ad Soyad ve E-posta -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Ad Soyad</label>
+                    <input type="text" id="regName" placeholder="Helin Çelik" required>
+                </div>
+                <div class="form-group">
+                    <label>E-posta Adresi</label>
+                    <input type="email" id="regEmail" placeholder="helin@universite.edu.tr" required>
+                </div>
+            </div>
+
+            <!-- Eğitim Durumu -->
+            <div class="form-group full-width">
+                <label>Eğitim / Profesyonel Durum</label>
+                <select id="regStatus" onchange="toggleFields()" required>
+                    <option value="" disabled selected>Seçiniz...</option>
+                    <option value="uni_ogrenci">Üniversite Öğrencisi</option>
+                    <option value="lise_hazirlik">Lise Mezunu / Üniversite Hazırlık</option>
+                    <option value="lise_ogrenci">Lise Öğrencisi</option>
+                    <option value="uni_mezun">Üniversite Mezunu</option>
+                    <option value="mentor">Mentörlük Yapmak İstiyorum</option>
+                </select>
+            </div>
+
+            <!-- Dinamik Alanlar Grubu -->
+
+            <!-- 1. Okul Adı -->
+            <div class="form-group full-width hidden" id="schoolGroup">
+                <label id="schoolLabel">Okul Adı</label>
+                <input type="text" id="regSchool" placeholder="Örn: Boğaziçi Üniversitesi">
+            </div>
+
+            <!-- 2. Bölüm Adı (Serbest Giriş) -->
+            <div class="form-group full-width hidden" id="departmentGroup">
+                <label id="departmentLabel">Bölüm</label>
+                <input type="text" id="regDepartment" placeholder="Örn: Tıp / Bilgisayar Mühendisliği">
+            </div>
+
+            <!-- 3. Seviye / Sınıf -->
+            <div class="form-group full-width hidden" id="levelGroup">
+                <label>Sınıf / Seviye</label>
+                <select id="regClassLevel">
+                    <option value="" disabled selected>Seviye Seç...</option>
+                    <option value="0">Hazırlık</option>
+                    <option value="1">1. Sınıf</option>
+                    <option value="2">2. Sınıf</option>
+                    <option value="3">3. Sınıf</option>
+                    <option value="4">4. Sınıf</option>
+                    <option value="5">5. Sınıf</option>
+                    <option value="6">6. Sınıf</option>
+                </select>
+            </div>
+
+            <!-- 4. Çalıştığınız İş Yeri (Sadece Mentör) -->
+            <div class="form-group full-width hidden" id="workplaceGroup">
+                <label>Çalıştığınız İş Yeri / Kurum (Opsiyonel)</label>
+                <input type="text" id="regWorkplace" placeholder="Örn: Tech Company / Hastane" oninput="checkExperienceField()">
+            </div>
+
+            <!-- 5. Deneyim Süresi (Güncellenmiş aralıklar) -->
+            <div class="form-group full-width hidden" id="experienceGroup">
+                <label>Deneyim Süresi</label>
+                <select id="regExperience">
+                    <option value="" disabled selected>Süre Seçiniz...</option>
+                    <option value="0-1">0 - 1 Yıl</option>
+                    <option value="1-3">1 - 3 Yıl</option>
+                    <option value="3-5">3 - 5 Yıl</option>
+                    <option value="5-10">5 - 10 Yıl</option>
+                    <option value="10+">10+ Yıl</option>
+                </select>
+            </div>
+
+            <!-- Şifre -->
+            <div class="form-group full-width">
+                <label>Şifre Oluştur</label>
+                <input type="password" id="regPassword" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Kayıt İşlemini Tamamla 🚀</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleFields() {
+            const status = document.getElementById('regStatus').value;
+            
+            const schoolGroup = document.getElementById('schoolGroup');
+            const schoolLabel = document.getElementById('schoolLabel');
+            const departmentGroup = document.getElementById('departmentGroup');
+            const departmentLabel = document.getElementById('departmentLabel');
+            const levelGroup = document.getElementById('levelGroup');
+            const workplaceGroup = document.getElementById('workplaceGroup');
+            const experienceGroup = document.getElementById('experienceGroup');
+
+            // Hepsini önce gizle ve zorunlulukları kaldır
+            schoolGroup.classList.add('hidden');
+            departmentGroup.classList.add('hidden');
+            levelGroup.classList.add('hidden');
+            workplaceGroup.classList.add('hidden');
+            experienceGroup.classList.add('hidden');
+
+            document.getElementById('regSchool').required = false;
+            document.getElementById('regDepartment').required = false;
+            document.getElementById('regClassLevel').required = false;
+            document.getElementById('regWorkplace').required = false;
+
+            if (status === 'uni_ogrenci') {
+                schoolGroup.classList.remove('hidden');
+                schoolLabel.innerText = "Okul Adı";
+                document.getElementById('regSchool').required = true;
+
+                departmentGroup.classList.remove('hidden');
+                departmentLabel.innerText = "Bölüm Adı";
+                document.getElementById('regDepartment').required = true;
+
+                levelGroup.classList.remove('hidden');
+                document.getElementById('regClassLevel').required = true;
+
+            } else if (status === 'uni_mezun') {
+                schoolGroup.classList.remove('hidden');
+                schoolLabel.innerText = "Mezun Olduğunuz Okul";
+                document.getElementById('regSchool').required = true;
+
+                departmentGroup.classList.remove('hidden');
+                departmentLabel.innerText = "Mezun Olduğunuz Bölüm";
+                document.getElementById('regDepartment').required = true;
+
+            } else if (status === 'mentor') {
+                schoolGroup.classList.remove('hidden');
+                schoolLabel.innerText = "Mezun Olduğunuz Okul";
+                document.getElementById('regSchool').required = true;
+
+                departmentGroup.classList.remove('hidden');
+                departmentLabel.innerText = "Mezun Olduğunuz Bölüm";
+                document.getElementById('regDepartment').required = true;
+
+                workplaceGroup.classList.remove('hidden');
+            }
+        }
+
+        function checkExperienceField() {
+            const workplaceVal = document.getElementById('regWorkplace').value.trim();
+            const experienceGroup = document.getElementById('experienceGroup');
+
+            if (workplaceVal.length > 0) {
+                experienceGroup.classList.remove('hidden');
+            } else {
+                experienceGroup.classList.add('hidden');
+                document.getElementById('regExperience').value = '';
+            }
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const adSoyad = document.getElementById('regName').value;
+            const eposta = document.getElementById('regEmail').value;
+            const durum = document.getElementById('regStatus').value;
+            const departmentInput = document.getElementById('regDepartment').value.toLowerCase();
+            const sifre = document.getElementById('regPassword').value;
+            
+            // 🎯 Girilen bölüme göre disiplini akıllıca eşleme
+            let department = 'tech';
+            if (departmentInput.includes('tıp') || departmentInput.includes('doktor') || departmentInput.includes('sağlık')) {
+                department = 'med';
+            } else if (departmentInput.includes('hukuk') || departmentInput.includes('adalet')) {
+                department = 'law';
+            } else if (departmentInput.includes('işletme') || departmentInput.includes('iktisat') || departmentInput.includes('finans')) {
+                department = 'business';
+            } else {
+                department = 'tech';
+            }
+
+            localStorage.setItem('kullaniciDisiplin', department);
+
+            try {
+                const cevap = await fetch('http://127.0.0.1:3000/api/kayit-ol', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ kullanici_adi: adSoyad, department: department, sifre: sifre })
+                });
+
+                const sonuc = await cevap.json();
+
+                if (cevap.ok) {
+                    alert(sonuc.message);
+                    window.location.replace('dashboard.html');
+                } else {
+                    alert(sonuc.error);
+                }
+            } catch (hata) {
+                console.error("Hata: ", hata);
+                alert("Backend sunucusu çalışmıyor mu? Kontrol et! ❌");
+            }
+        });
+    </script>
+</body>
+</html>
