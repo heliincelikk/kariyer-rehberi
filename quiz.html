@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kariyer Analiz Platformu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #1e1b4b, #020617);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.12;
+        }
+
+        .item {
+            position: absolute;
+            font-size: 24px;
+            font-weight: bold;
+            color: #06b6d4;
+            animation: yukariAkar 12s linear infinite;
+        }
+
+        .item:nth-child(1) { left: 10%; animation-duration: 14s; font-size: 32px; }
+        .item:nth-child(2) { left: 25%; animation-duration: 18s; animation-delay: 2s; }
+        .item:nth-child(3) { left: 40%; animation-duration: 12s; animation-delay: 5s; font-size: 28px; }
+        .item:nth-child(4) { left: 55%; animation-duration: 20s; }
+        .item:nth-child(5) { left: 70%; animation-duration: 15s; animation-delay: 3s; font-size: 35px; }
+        .item:nth-child(6) { left: 85%; animation-duration: 13s; animation-delay: 7s; }
+
+        @keyframes yukariAkar {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+        }
+
+        .main-wrapper {
+            width: 90%;
+            max-width: 650px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .top-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .main-title {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #06b6d4, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+
+        #question-counter {
+            font-size: 14px;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(6, 182, 212, 0.1);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #06b6d4, #10b981);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            transition: width 0.4s ease;
+        }
+
+        #back-link-container {
+            text-align: left;
+            min-height: 24px;
+        }
+
+        #back-link {
+            color: #94a3b8;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #back-link:hover { color: #06b6d4; }
+
+        #quiz-container {
+            background: rgba(30, 41, 59, 0.55);
+            border: 2px solid rgba(6, 182, 212, 0.25);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .tarama-animasyon {
+            animation: incelemeEfekti 0.4s ease forwards;
+        }
+
+        @keyframes incelemeEfekti {
+            0% { transform: scale(0.97); border-color: #06b6d4; }
+            100% { transform: scale(1); border-color: rgba(6, 182, 212, 0.25); }
+        }
+
+        #question-text {
+            font-size: 21px;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            color: #f8fafc;
+        }
+
+        .option-btn {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-btn:hover {
+            background: rgba(6, 182, 212, 0.15);
+            border-color: #06b6d4;
+            transform: translateX(5px);
+        }
+
+        .gate-btn {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(16, 185, 129, 0.1));
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            text-align: center;
+            padding: 24px;
+            font-size: 18px;
+        }
+        .gate-btn:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* YENİ: Alt teste yönlendiren neon fütüristik çağrı butonu */
+        .next-test-btn {
+            background: linear-gradient(to right, #06b6d4, #10b981);
+            border: none;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            margin-top: 20px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            text-align: center;
+        }
+
+        .next-test-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
+        }
+
+        .option-btn.secili {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .result-title { font-size: 24px; color: #10b981; margin-bottom: 8px; font-weight: 800; }
+        .section-subtitle { font-size: 16px; color: #06b6d4; font-weight: 700; margin: 25px 0 12px 0; text-align: left; border-left: 3px solid #06b6d4; padding-left: 10px; }
+        .mentor-list { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .mentor-card { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 16px; display: flex; align-items: center; gap: 15px; text-align: left; transition: all 0.3s; }
+        .mentor-card:hover { border-color: rgba(6, 182, 212, 0.4); background: rgba(15, 23, 42, 0.7); transform: translateY(-2px); }
+        .mentor-img { font-size: 36px; background: rgba(255,255,255,0.04); padding: 8px; border-radius: 50%; }
+        .mentor-info h4 { font-size: 16px; color: #f8fafc; font-weight: 700; }
+        .mentor-info span { font-size: 12px; color: #10b981; font-weight: 600; }
+        .mentor-info p { font-size: 13px; color: #94a3b8; margin-top: 4px; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="background-animation">
+        <div class="item">🔍</div><div class="item">📚</div><div class="item">🧬</div>
+        <div class="item">🔍</div><div class="item">💻</div><div class="item">📊</div>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="top-bar">
+            <div class="main-title">Kariyer Rehberi Platformu</div>
+            <div id="question-counter" style="display: none;">Soru 1</div>
+            <div id="progress-container" class="progress-bar-container" style="display: none;">
+                <div id="progress-fill" class="progress-bar-fill"></div>
+            </div>
+            <div id="back-link-container"></div>
+        </div>
+        <div id="quiz-container"></div>
+    </div>
+
+    <script>
+        let scores = { tech: 0, social: 0, health: 0, siber: 0, backend: 0 };
+        let cevapGecmisi = [];
+        let aktifSoruIndex = 0;
+        let altTestModu = false; 
+
+        // [Genel Sorular listesi ve Tech Alt Sorular listesi aynen korunuyor aşkım, kodun hacmi temiz kalsın]
+        const genelSorular = [
+            { soru: "Günde kaç saatini bilgisayar başında geçirmekten keyif alırsın?", secenekler: [{ metin: "5 saatten fazla! Dijital dünyayı keşfetmek harika.", alan: "tech" }, { metin: "En fazla 1-2 saat, insanlarla yüz yüze olmayı yeğlerim.", alan: "social" }] },
+            { soru: "Bir problemle karşılaştığında hangisini çözmek seni daha çok tatmin eder?", secenekler: [{ metin: "Bir yazılım hatasını veya teknik bir problemi çözmek.", alan: "tech" }, { metin: "İnsanlar arasındaki bir anlaşmazlığı konuşarak çözmek.", alan: "social" }] },
+            { soru: "Biyoloji, insan anatomisi veya laboratuvar araştırmaları ilgini çeker mi?", secenekler: [{ metin: "Evet, hastalıkların tedavisini ve bilimi incelemek heyecanlı.", alan: "health" }, { metin: "Pek sayılmaz, teknoloji veya sosyal dinamikler daha bana göre.", alan: "social" }] },
+            { soru: "Bir projede hangi rolde olmak seni daha çok motive eder?", secenekler: [{ metin: "Arka planda teknik altyapıyı ve lojistiği kurmak.", alan: "tech" }, { metin: "Ekibi koordine etmek, sunum yapmak ve motivasyon sağlamak.", alan: "social" }] },
+            { soru: "Boş zamanlarında hangisini araştırmak daha çok ilgini çeker?", secenekler: [{ metin: "Yeni çıkan yapay zeka araçlarını ve teknolojik cihazları.", alan: "tech" }, { metin: "İnsan psikolojisi, kişisel gelişim ve toplumsal trendleri.", alan: "social" }] },
+            { soru: "Hastane, klinik veya araştırma laboratuvarı gibi ortamlarda çalışmak sence nasıl?", secenekler: [{ metin: "Topluma ve sağlığa doğrudan dokunabileceğim kutsal bir ortam.", alan: "health" }, { metin: "Bana göre çok kasvetli, modern bir ofis veya ev konforu daha iyi.", alan: "tech" }] },
+            { soru: "Karmaşık veri tablolarını, grafikleri ve analiz sonuçlarını incelemekten sıkılır mısın?", secenekler: [{ metin: "Asla! O verilerin içindeki gizli örüntüleri bulmak çok keyifli.", alan: "tech" }, { metin: "Evet, veriler yerine doğrudan insan hikayelerine odaklanmak isterim.", alan: "social" }] },
+            { soru: "Bir yakınınız hastalandığında veya yaralandığında ilk tepkiniz ne olur?", secenekler: [{ metin: "Soğukkanlılıkla ne olduğunu anlamaya çalışır, tıbbi çözümlere odaklanırım.", alan: "health" }, { metin: "Ona duygusal olarak destek olur, sakinleştirmeye çalışırım.", alan: "social" }] },
+            { soru: "Yalnız başınıza derinlemesine odaklanarak çalışmak mı, yoksa kalabalık bir ekiple beyin fırtınası yapmak mı?", secenekler: [{ metin: "Sessizce kendi başıma teknik detaylara odaklanmak.", alan: "tech" }, { metin: "Sürekli iletişim halinde, dinamik bir ekiple çalışmak.", alan: "social" }] },
+            { soru: "İlaçların yapısı, genetik kodlar veya biyoteknolojik gelişmeler ilgini çekiyor mu?", secenekler: [{ metin: "Kesinlikle, geleceğin dünyasını biyoteknolojinin şekillendireceğini düşünüyorum.", alan: "health" }, { metin: "Teknik veya sosyal inovasyonlar kadar ilgimi çekmiyor.", alan: "tech" }] },
+            { soru: "Bir web sitesinin tasarımı ve arka planındaki algoritmalar sence ne kadar merak uyandırıcı?", secenekler: [{ metin: "Çok merak ediyorum, o sistemlerin nasıl çalıştığını çözmek isterim.", alan: "tech" }, { metin: "Sadece işlevsel olması yeterli, arkasındaki kodlarla pek ilgilenmem.", alan: "social" }] },
+            { soru: "İnsanlara mentorluk yapmak, bir şeyler öğretmek veya onlara rehberlik etmek sence nasıl bir deneyim?", secenekler: [{ metin: "İnanılmaz tatmin edici, birinin hayatına dokunmak harika.", alan: "social" }, { metin: "Güzel ama ben nesnelerle veya dijital sistemlerle uğraşmayı tercih ederim.", alan: "tech" }] },
+            { soru: "Gelecekte salgın hastalıkları önleyecek siber veya tıbbi bir sistemin parçası olmak ister miydin?", secenekler: [{ metin: "Evet, tıp og laboratuvar dünyasında aktif rol alarak.", alan: "health" }, { metin: "Evet ama sadece yazılımsal ve teknolojik altyapısını kurarak.", alan: "tech" }] },
+            { soru: "Bir kriz anında hangisini yönetmekte daha başarılısındır?", secenekler: [{ metin: "Teknik aksaklıkları ve sistem arızalarını hızlıca çözmekte.", alan: "tech" }, { metin: "Panik olmuş insanları sakinleştirip organize etmekte.", alan: "social" }] },
+            { soru: "Mikroskop altında hücreleri incelemek mi, yoksa kod editöründe satırları taramak mı?", secenekler: [{ metin: "Hücreleri ve biyolojik gizemleri keşfetmek.", alan: "health" }, { metin: "Kod dünyasındaki mantıksal hataları yakalamak.", alan: "tech" }] },
+            { soru: "Bir sosyal sorumluluk projesinde insanlarla birebir mülakat yapıp dertlerini dinlemek ister misin?", secenekler: [{ metin: "Evet, insanlara empatiyle yaklaşıp yardım etmek beni mutlu eder.", alan: "social" }, { metin: "Bunun yerine projenin dijital duyurularını ve sistemini yönetmek isterim.", alan: "tech" }] },
+            { soru: "Yapay zekanın insan sağlığı üzerindeki teşhis yeteneklerini araştırmak ilgini çeker mi?", secenekler: [{ metin: "Evet, sağlık ve teknolojinin bu muazzam kesişimi harika.", alan: "health" }, { metin: "Ben sadece yapay zekanın saf mühendislik ve kod kısmıyla ilgilenirim.", alan: "tech" }] },
+            { soru: "Bir topluluğun önünde etkili konuşmalar yapmak ve insanları ikna etmek senin için kolay mıdır?", secenekler: [{ metin: "Evet, kendimi ifade etmekte ve insanları etkilemekte iyiyimdir.", alan: "social" }, { metin: "Biraz çekinirim, fikirlerimi yazarak veya üreterek göstermeyi severim.", alan: "tech" }] },
+            { soru: "Doğadaki bitkilerin şifalı özlerini veya kimyasal bileşenleri laboratuvarda test etmek ister miydin?", secenekler: [{ metin: "Çok isterdim, bilimsel araştırmalar bana büyük heyecan veriyor.", alan: "health" }, { metin: "Sosyal projeler geliştirmek ya da dijital oyun tasarlamak daha cazip.", alan: "social" }] },
+            { soru: "Son olarak, seni en çok neyin takdir edilmesi mutlu eder?", secenekler: [{ metin: "Ürettiğim teknik bir sistemin veya çözümün kusursuz çalışması.", alan: "tech" }, { metin: "İnsanların hayatında yarattığım olumlu değişimin ve sevginin.", alan: "social" }] }
+        ];
+
+        const techAltSorular = [
+            { soru: "Sistemlerin açıklarını bulup sızma testleri yapmak mı, yoksa sıfırdan büyük veri tabanları kurup mimariyi yönetmek mi?", secenekler: [{ metin: "Açıkları yakalamak, defans ve ofans sistemleri kurmak!", alan: "siber" }, { metin: "Verileri organize etmek, API tasarlamak ve sunucu yönetmek!", alan: "backend" }] },
+            { soru: "Bir bilgisayar korsanının (hacker) saldırı stratejisini çözmek mi daha heyecanlı, yoksa saniyede binlerce istek alan bir sitenin çökmesini engellemek mi?", secenekler: [{ metin: "Kesinlikle hacker hamlelerini bozmak ve siber kalkan olmak!", alan: "siber" }, { metin: "Arka plan mimarisini optimize etmek ve sunucuyu uçurmak!", alan: "backend" }] },
+            { soru: "Linux terminal ekranında komutlar yazarak ağ trafiğini izlemek mi, yoksa SQL ile devasa tabloları birbirine bağlamak mı?", secenekler: [{ metin: "Terminalde Wireshark ile paket analizi yapmak.", alan: "siber" }, { metin: "SQLite veya PostgreSQL ile veri tabanı ilişkileri (ERD) kurmak.", alan: "backend" }] },
+            { soru: "Bir şirketette hangi olay seni daha çok alarma geçirir?", secenekler: [{ metin: "Veri tabanındaki şifrelerin dışarı sızdırılma ihtimali.", alan: "siber" }, { metin: "Kullanıcı kayıt sisteminin yavaşlaması ve çökmesi.", alan: "backend" }] },
+            { soru: "Kriptoloji (şifreleme bilimi) ve gizli mesajları çözmek mi, yoksa bir uygulamanın kayıt olma algoritmasını (Auth flow) sıfırdan yazmak mı?", secenekler: [{ metin: "Kriptografik algoritmalar ve şifre kırma yöntemleri.", alan: "siber" }, { metin: "Güvenli ve hızlı API uç noktaları (Endpoints) geliştirmek.", alan: "backend" }] },
+            { soru: "Bir cihazın arkasında çalışan 'görünmez' mekanizmaları kodlamak mı, yoksa o cihaza dışarıdan gelebilecek port saldırılarını engellemek mi?", secenekler: [{ metin: "Portları taramak, güvenlik duvarı (Firewall) kurmak.", alan: "siber" }, { metin: "Server-side mantığını kurup sistemi ayağa kaldırmak.", alan: "backend" }] },
+            { soru: "Sosyal mühendislik (insanları manipüle ederek bilgi sızdırma) yöntemlerini analiz etmek ilgini çeker mi?", secenekler: [{ metin: "Evet, siber güvenliğin en kritik insan faktörünü incelemek harika.", alan: "siber" }, { metin: "Pek değil, ben temiz kod yazmaya ve nesne yönelimli programlamaya (OOP) odaklanırım.", alan: "backend" }] },
+            { soru: "Bir uygulamanın bulut sistemlerde (AWS, Azure) güvenle izole edilmesi mi, yoksa mikroservislerin birbiriyle hızlıca haberleşmesi mi?", secenekler: [{ metin: "Siber saldırılara karşı bulut mimarisini kilitlemek.", alan: "siber" }, { metin: "Docker ve Kubernetes ile backend servislerini dağıtmak.", alan: "backend" }] },
+            { soru: "Hangisi kulağa daha çok bir dedektiflik hikayesi gibi geliyor?", secenekler: [{ metin: "Bir sisteme sızan zararlı yazılımın (malware) izini sürmek.", alan: "siber" }, { metin: "Sistem loglarını inceleyip hangi kod satırının performans darboğazı yarattığını bulmak.", alan: "backend" }] },
+            { soru: "Sızma testi raporu hazırlamak mı, yoksa teknik staj defterine backend mimarisini şemalarla dökmek mi?", secenekler: [{ metin: "Siber açıklık raporları ve sızma haritaları çıkarılma.", alan: "siber" }, { metin: "Sistem mimarisi, veri tabanı şemaları ve API dokümantasyonu.", alan: "backend" }] },
+            { soru: "Bir ağa bağlı tüm akıllı cihazları (IoT) hacklenmeye karşı test etmek mi, yoksa o cihazların verilerini toplayan merkezi sunucuyu kodlamak mı?", secenekler: [{ metin: "IoT cihazların firmware açıklarını aramak.", alan: "siber" }, { metin: "Merkezi IoT veri toplama backend'ini inşa etmek.", alan: "backend" }] },
+            { soru: "Siber istihbarat toplamak ve 'Dark Web' analizi yapmak mı, yoksa asenkron veri işleme mimarileri kurmak mı?", secenekler: [{ metin: "Tehdit aktörlerini ve dijital ayak izlerini takip etmek.", alan: "siber" }, { metin: "Redis veya RabbitMQ gibi kuyruk sistemleriyle veri akışı yönetmek.", alan: "backend" }] },
+            { soru: "Bir bankacılık uygulamasında hangisini denetlemek istersin?", secenekler: [{ metin: "Para transferi esnasında araya girme (Man-in-the-Middle) açıklarını.", alan: "siber" }, { metin: "Aynı anda 1 milyon kişinin para transferi yapabilmesini sağlayan altyapıyı.", alan: "backend" }] },
+            { soru: "Şifrelerin 'Hash'lenme yöntemlerini (MD5, SHA-256) incelemek mi, yoksa bir veriyi en hızlı şekilde cache'leme yöntemlerini bulmak mı?", secenekler: [{ metin: "Geri dönüştürülemeyen şifreleme ve hash mekanizmaları.", alan: "siber" }, { metin: "Performansı uçuracak caching stratejileri.", alan: "backend" }] },
+            { soru: "Bir siber savaş senaryosunda 'Kırmızı Takım' (Saldırı) mı yoksa 'Mavi Takım' (Savunma) mı olmak istersin?", secenekler: [{ metin: "Fark etmez, siber operasyonların tam kalbinde olmak heyecanlı.", alan: "siber" }, { metin: "Ben sistemi ayakta tutan lojistik ekibin, yani mimarların yanında olurum.", alan: "backend" }] },
+            { soru: "Web uygulamalarında XSS and SQL Injection açıklarını aramak mı, yoksa bu açıkları engelleyecek temiz kod standartlarıyla backend mimarisi kurmak mı?", secenekler: [{ metin: "Açığı bulup sömürmek (Exploit yapmak).", alan: "siber" }, { metin: "Sistemi en baştan güvenli kod mimarisiyle inşa etmek.", alan: "backend" }] },
+            { soru: "Bir sistem çöktüğünde ilk şüphen ne olur?", secenekler: [{ metin: "DDoS saldırısı mı alıyoruz acaba?", alan: "siber" }, { metin: "Bir yerlerde bellek sızıntısı (Memory leak) veya yanlış bir döngü mü var?", alan: "backend" }] },
+            { soru: "Blockchain teknolojisinin şifreleme zincirleri mi ilgini çekiyor, yoksa akıllı kontratların backend işleyişi mi?", secenekler: [{ metin: "Kırılamaz kriptografik zincir mantığı.", alan: "siber" }, { metin: "Dağıtık sistemlerin arka planda veri işleme hızı.", alan: "backend" }] },
+            { soru: "Ransomware (Fidye yazılımları) tarafından kilitlenen verileri kurtarma analizi mi, yoksa çöken bir veri tabanını yedekten ayağa kaldırmak mı?", secenekler: [{ metin: "Fidye yazılımı analizi ve tersine mühendislik.", alan: "siber" }, { metin: "Veri tabanı replikasyonu ve yedekleme sistemleri.", alan: "backend" }] },
+            { soru: "Son olarak, bir yazılım projesinde seni en karizmatik gösteren rol hangisidir?", secenekler: [{ metin: "Görünmez siber kalkanları ve sistem güvenliğini yöneten siber uzmanı.", alan: "siber" }, { metin: "Tüm sistemin yükünü sırtında taşıyan, motoru kuran backend mühendisi.", alan: "backend" }] }
+        ];
+
+        const uzmanlarDb = {
+            siber: [
+                { isim: "Okan Aslan", unvan: "Kıdemli Sızma Testi Uzmanı", avatar: "🥷", desc: "Siber güvenlik ekosisteminde yol almak, CTF yarışmalarına hazırlanmak ve defans stratejileri geliştirmek için yanındayım!" },
+                { isim: "Buse Demir", unvan: "SOC Güvenlik Analisti", avatar: "🛡️", desc: "Tehdit avcılığı, malware analizi ve siber istihbarat alanında birlikte tırmanalım." }
+            ],
+            backend: [
+                { isim: "Can Yılmaz", unvan: "Kıdemli Backend Mimarı", avatar: "👨‍💻", desc: "Node.js, Python, veri tabanı optimizasyonları ve mikroservis mimarileri konusunda projelerini uçuralım." },
+                { isim: "Murat Kaya", unvan: "DevOps Mühendisi", avatar: "☁️", desc: "Sunucu yönetimi, Docker ve Kubernetes süreçlerinde mentörlük için buradayım." }
+            ],
+            tech_genel: [
+                { isim: "Can Yılmaz", unvan: "Kıdemli Backend Mimarı", avatar: "👨‍💻", desc: "Teknoloji dünyasının kapılarını araladın! Yazılım ekosistemindeki tüm rolleri konuşmak için sabırsızlanıyorum." },
+                { isim: "Okan Aslan", unvan: "Siber Güvenlik Direktörü", avatar: "🛡️", desc: "Mühendislik dünyasındaki teknik uzmanlık alanlarını keşfetmek için yol arkadaşın olmaya hazırım." }
+            ],
+            social: [
+                { isim: "Selin Aktaş", unvan: "İK & Topluluk Yöneticisi", avatar: "👩‍💼", desc: "İletişim, liderlik, network büyütme ve insan kaynakları trendleri konusunda yol haritanı çizelim." }
+            ],
+            health: [
+                { isim: "Dr. Elif Arslan", unvan: "Sağlık Teknolojileri Araştırmacısı", avatar: "👩‍⚕️", desc: "Biyoteknoloji, veri analitiği destekli tıp çözümleri ve laboratuvar inovasyonlarını keşfedelim." }
+            ]
+        };
+
+        const tahta = document.getElementById("quiz-container");
+        const geriTahtasi = document.getElementById("back-link-container");
+        const sayacTahtasi = document.getElementById("question-counter");
+        const progressContainer = document.getElementById("progress-container");
+        const cubukDolgusu = document.getElementById("progress-fill");
+
+        function girisEkraniniGoster() {
+            sayacTahtasi.style.display = "none";
+            progressContainer.style.display = "none";
+            geriTahtasi.innerHTML = "";
+
+            tahta.innerHTML = `
+                <h3 id="question-text" style="margin-bottom: 35px;">Kariyer Yolculuğuna Nasıl Başlamak İstersin?</h3>
+                <button class="option-btn gate-btn" onclick="kulvarSec('genel')">🎯 Genel Profil Testine Başla (20 Soru)<br><span style="font-size:13px; color:#94a3b8; font-weight:normal;">Alanımı henüz bilmiyorum, keşfetmek istiyorum.</span></button>
+                <button class="option-btn gate-btn" onclick="kulvarSec('ozel-tech')">💻 Bölümüm Belli: Teknoloji / Yazılım (20 Soru)<br><span style="font-size:13px; color:#94a3b8; font-weight:normal;">Siber mi Backend mi? Doğrudan alt alanımı bul.</span></button>
+            `;
+        }
+
+        function kulvarSec(secim) {
+            scores = { tech: 0, social: 0, health: 0, siber: 0, backend: 0 };
+            cevapGecmisi = [];
+            aktifSoruIndex = 0;
+
+            sayacTahtasi.style.display = "block";
+            progressContainer.style.display = "block";
+
+            if (secim === 'genel') {
+                altTestModu = false;
+            } else if (secim === 'ozel-tech') {
+                altTestModu = true;
+                scores.tech = 99; 
+            }
+            soruyuGoster();
+        }
+
+        function soruyuGoster() {
+            let aktifSoruHavuzu = altTestModu ? techAltSorular : genelSorular;
+            let toplamSoru = aktifSoruHavuzu.length;
+            let gösterilenSoruNo = aktifSoruIndex + 1;
+
+            sayacTahtasi.innerText = altTestModu ? `Bilgisayar Bilimleri Analizi: Soru ${gösterilenSoruNo} / ${toplamSoru}` : `Genel Profil Analizi: Soru ${gösterilenSoruNo} / ${toplamSoru}`;
+            cubukDolgusu.style.width = (gösterilenSoruNo / toplamSoru) * 100 + "%";
+
+            geriTahtasi.innerHTML = `<span id="back-link" onclick="geriDon()">⬅️ Önceki Sayfaya / Soruya Dön</span>`;
+
+            let suAnkiSoru = aktifSoruHavuzu[aktifSoruIndex];
+            let dahaOncekiCevap = cevapGecmisi[aktifSoruIndex];
+
+            let aClass = "option-btn", bClass = "option-btn";
+            if (dahaOncekiCevap === suAnkiSoru.secenekler[0].alan) aClass = "option-btn secili";
+            if (dahaOncekiCevap === suAnkiSoru.secenekler[1].alan) bClass = "option-btn secili";
+
+            tahta.innerHTML = `
+                <div id="question-text">${suAnkiSoru.soru}</div>
+                <button class="${aClass}" onclick="cevapVer('${suAnkiSoru.secenekler[0].alan}')">A) ${suAnkiSoru.secenekler[0].metin}</button>
+                <button class="${bClass}" onclick="cevapVer('${suAnkiSoru.secenekler[1].alan}')">B) ${suAnkiSoru.secenekler[1].metin}</button>
+            `;
+
+            tahta.classList.remove("tarama-animasyon");
+            setTimeout(() => { tahta.classList.add("tarama-animasyon"); }, 10);
+        }
+
+        function cevapVer(secilenAlan) {
+            if (cevapGecmisi[aktifSoruIndex] !== undefined) {
+                let eskiCevap = cevapGecmisi[aktifSoruIndex];
+                scores[eskiCevap]--;
+                cevapGecmisi[aktifSoruIndex] = secilenAlan;
+            } else {
+                cevapGecmisi.push(secilenAlan);
+            }
+            scores[secilenAlan]++;
+
+            let aktifSoruHavuzu = altTestModu ? techAltSorular : genelSorular;
+
+            if (aktifSoruIndex < aktifSoruHavuzu.length - 1) {
+                aktifSoruIndex++;
+                soruyuGoster();
+            } else {
+                // ARTIK OTOMATİK GEÇİŞ YOK AŞKIM, DİREKT SONUÇ EKRANINA GİDİYOR
+                testiBitir();
+            }
+        }
+
+        function geriDon() {
+            if (aktifSoruIndex === 0) {
+                girisEkraniniGoster(); 
+            } else {
+                aktifSoruIndex--;
+                soruyuGoster();
+            }
+        }
+
+        // YENİ: Kullanıcı butona bastığında alt testi başlatan sihirli tetikleyici
+        function altTesteGecisiBaslat() {
+            altTestModu = true;
+            scores.tech = 99; 
+            cevapGecmisi = [];
+            aktifSoruIndex = 0;
+            sayacTahtasi.style.display = "block";
+            progressContainer.style.display = "block";
+            soruyuGoster();
+        }
+
+        function testiBitir() {
+            sayacTahtasi.innerText = "Analiz Raporu Hazır!";
+            cubukDolgusu.style.width = "100%";
+            geriTahtasi.innerHTML = `<span id="back-link" onclick="girisEkraniniGoster()">🔄 Ana Sayfaya Dön</span>`;
+
+            let finalAlani = "social";
+            let enYuksek = scores.social;
+
+            if (scores.health > enYuksek) finalAlani = "health";
+            if (scores.tech > scores.social && scores.tech > scores.health) {
+                // Eğer zaten alt test modundaysak siber mi backend mi seç
+                if (altTestModu) {
+                    finalAlani = scores.siber >= scores.backend ? "siber" : "backend";
+                } else {
+                    finalAlani = "tech_genel"; // Genel test bittiyse ve teknoloji kazandıysa
+                }
+            }
+
+            let unvanlar = {
+                tech_genel: { ad: "Geleceğin Teknoloji & Mühendislik Lideri", desc: "Algoritmik düşünme yapın, problem çözme hızın ve dijital sistemlere olan merakın en üst düzeyde! Mühendislik dünyası tam senin yerin." },
+                siber: { ad: "Siber Savunma & Güvenlik Uzmanı", desc: "Sistemlerin açıklarını yakalamakta, dijital kalkanlar örmekte ve siber dünyayı korumakta üstün bir yatkınlığın var!" },
+                backend: { ad: "Sistem & Veri Mimarisi Mühendisi (Backend)", desc: "Büyük sistemlerin arkasındaki gizli kahramansın. Güçlü API'ler, sunucu optimizasyonları ve veri yönetimi tam senin işin!" },
+                social: { ad: "Topluluk Dinamosu & Yönetici", desc: "Yüksek empati yeteneğin ve iletişim gücünle insanları yönlendirme ve bağ kurma rollerinde harikalar yaratabilirsin." },
+                health: { ad: "Yaşam Bilimleri & Teknoloji Araştırmacısı", desc: "Analitik kabiliyetlerini insan sağlığına, biyolojik verilere veya tıp dünyasındaki inovasyonlara adamaya yatkınsın." }
+            };
+
+            let uzmanKartlariHTML = "";
+            uzmanlarDb[finalAlani].forEach(uzman => {
+                uzmanKartlariHTML += `
+                    <div class="mentor-card">
+                        <div class="mentor-img">${uzman.avatar}</div>
+                        <div class="mentor-info">
+                            <span>${uzman.unvan}</span>
+                            <h4>${uzman.isim}</h4>
+                            <p>"${uzman.desc}"</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // YENİ SEÇENEK BUTONU: Eğer genel testte teknoloji çıktıysa alt test teklif et
+            let ozelAltTestButonuHTML = "";
+            if (finalAlani === "tech_genel" && !altTestModu) {
+                ozelAltTestButonuHTML = `
+                    <button class="next-test-btn" onclick="altTesteGecisiBaslat()">
+                        💻 Siber Güvenlik mi, Backend mi? Alt Alanını Bul! ➡️
+                    </button>
+                `;
+            }
+
+            tahta.innerHTML = `
+                <div style="text-align: left;">
+                    <div style="text-align:center; margin-bottom: 20px;">
+                        <h2 class="result-title">${unvanlar[finalAlani].ad}</h2>
+                        <p style="color: #cbd5e1; font-size: 14px; line-height: 1.5;">${unvanlar[finalAlani].desc}</p>
+                    </div>
+                    
+                    <div class="section-subtitle">Alanında Uzman İsimlerle Tanışıp Destek Almak İster Misin?</div>
+                    <div class="mentor-list">
+                        ${uzmanKartlariHTML}
+                    </div>
+
+                    ${ozelAltTestButonuHTML}
+                </div>
+            `;
+        }
+
+        girisEkraniniGoster();
+    </script>
+</body>
+</html>
