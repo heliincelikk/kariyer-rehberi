@@ -337,11 +337,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.04); }
@@ -388,8 +383,12 @@
     <!-- KAHRAMAN ALANI -->
     <main class="hero-section">
         <h1>Geleceğini <span>Şansa Bırakma</span> 🎯</h1>
+        
+        <!-- YENİ TANITIM YAZISI -->
         <div class="description-text">
-            "Hangi bölümü seçmeliyim? Seçtiğim bölümde hangi alanda ilerlemem lazım? Sektörde en çok nerede iş imkanı var ve başlangıç maaşları ne durumda?" diye düşünmekten yorulduysan doğru yerdesin. Kafandaki tüm belirsizlikleri silmek, yazılımdan sağlığa kadar tüm alt dalları keşfetmek ve yapay zeka desteğiyle kendi yolunu çizmek için aramıza katıl!
+            "Hangi bölümü seçmeliyim, hangi alanda ilerlemem gerek?" diye düşünen bir öğrenciysen de doğru yerdesin; sektördeki tecrübelerini aktarıp geleceğin yeteneklerine ışık tutmak isteyen bir profesyonelsen de! 
+            <br><br>
+            <strong>İster mentör ol, ister destek al;</strong> kafandaki tüm belirsizlikleri silmek, yazılımdan sağlığa tüm alt dalları keşfetmek ve bu benzersiz kariyer ağının bir parçası olmak için aramıza katıl! 🚀
         </div>
         
         <button onclick="openModal('registerModal')" class="cta-btn">Hemen Keşfetmeye Başla 🚀</button>
@@ -428,15 +427,16 @@
                     <input type="text" placeholder="Helin Çelik" required>
                 </div>
 
-                <!-- Eğitim Durumu -->
+                <!-- Eğitim / Profesyonel Durum -->
                 <div class="form-group">
-                    <label>Eğitim Durumu</label>
+                    <label>Eğitim / Profesyonel Durum</label>
                     <select id="educationStatus" onchange="handleEducationChange()" required>
                         <option value="" disabled selected>Seçiniz...</option>
                         <option value="lise">Lise Öğrencisi</option>
                         <option value="lise_mezun">Lise Mezunu</option>
                         <option value="universite">Üniversite Öğrencisi</option>
                         <option value="universite_mezun">Üniversite Mezunu</option>
+                        <option value="mentor">Sektör Profesyoneli (Mentör olmak istiyorum)</option>
                     </select>
                 </div>
 
@@ -461,7 +461,7 @@
                     </div>
                 </div>
 
-                <!-- DİNAMİK ALANLAR (Üniversite seçilince - GÜNCELLENEN KISIM) -->
+                <!-- DİNAMİK ALANLAR (Üniversite seçilince) -->
                 <div id="uniFields" class="dynamic-field">
                     <div class="form-group">
                         <label>Okuduğun Üniversite</label>
@@ -479,7 +479,6 @@
                             <option value="2">2. Sınıf</option>
                             <option value="3">3. Sınıf</option>
                             <option value="4">4. Sınıf</option>
-                            <!-- 6 Yıllık Bölümler İçin Eklenen Yeni Seçenekler -->
                             <option value="5">5. Sınıf</option>
                             <option value="6">6. Sınıf / İntern Doktor</option>
                         </select>
@@ -495,6 +494,29 @@
                     <div class="form-group">
                         <label>Mezun Olduğun Bölüm</label>
                         <input type="text" placeholder="Örn: Yazılım Mühendisliği">
+                    </div>
+                </div>
+
+                <!-- DİNAMİK ALANLAR (Sadece Mentör seçilince açılacak) -->
+                <div id="mentorFields" class="dynamic-field">
+                    <div class="form-group">
+                        <label>Çalıştığın Şirket / Kurum</label>
+                        <input type="text" placeholder="Örn: Trendyol, Aselsan, Google">
+                    </div>
+                    <div class="form-group">
+                        <label>Pozisyonun / Unvanın</label>
+                        <input type="text" placeholder="Örn: Senior Frontend Developer, Diş Hekimi">
+                    </div>
+                    <div class="form-group">
+                        <label>Deneyim Süren</label>
+                        <select>
+                            <!-- YENİ SEÇENEK: 0-1 Yıl -->
+                            <option value="0-1">0-1 Yıl</option>
+                            <option value="1-2">1-2 Yıl</option>
+                            <option value="3-5">3-5 Yıl</option>
+                            <option value="5-10">5-10 Yıl</option>
+                            <option value="10+">10+ Yıl</option>
+                        </select>
                     </div>
                 </div>
 
@@ -522,11 +544,14 @@
         function handleEducationChange() {
             const status = document.getElementById('educationStatus').value;
             
+            // Hepsini gizle
             document.getElementById('liseFields').style.display = 'none';
             document.getElementById('liseMezunFields').style.display = 'none';
             document.getElementById('uniFields').style.display = 'none';
             document.getElementById('uniMezunFields').style.display = 'none';
+            document.getElementById('mentorFields').style.display = 'none';
 
+            // Seçilene göre göster
             if (status === 'lise') {
                 document.getElementById('liseFields').style.display = 'block';
             } else if (status === 'lise_mezun') {
@@ -535,6 +560,8 @@
                 document.getElementById('uniFields').style.display = 'block';
             } else if (status === 'universite_mezun') {
                 document.getElementById('uniMezunFields').style.display = 'block';
+            } else if (status === 'mentor') {
+                document.getElementById('mentorFields').style.display = 'block';
             }
         }
     </script>

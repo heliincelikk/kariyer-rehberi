@@ -73,7 +73,7 @@
 
         .logout-btn {
             margin-top: auto;
-            color: #ef4444; /* Kırmızı çıkış butonu */
+            color: #ef4444; 
             border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
@@ -118,7 +118,7 @@
             color: #06b6d4;
         }
 
-        /* Sekme İçerikleri (Başlangıçta biri açık olacak) */
+        /* Sekme İçerikleri */
         .tab-content {
             display: none;
             animation: fadeIn 0.5s ease forwards;
@@ -191,6 +191,106 @@
             color: #22d3ee;
         }
 
+        /* ================= MENTÖR KARTLARI TASARIMI (YENİ) ================= */
+        .mentor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .mentor-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .mentor-card:hover {
+            border-color: #06b6d4;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.15);
+        }
+
+        /* Mentör Avatarı */
+        .mentor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4, #1e1b4b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 15px auto;
+            border: 3px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .mentor-card h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .mentor-company {
+            font-size: 13px;
+            color: #06b6d4;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .mentor-info {
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .mentor-badge {
+            background: rgba(6, 182, 212, 0.1);
+            color: #06b6d4;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* İstek Butonları */
+        .request-btn {
+            width: 100%;
+            background-color: transparent;
+            color: #06b6d4;
+            border: 2px solid #06b6d4;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .request-btn:hover {
+            background-color: #06b6d4;
+            color: #0f172a;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+
+        /* İstek Gönderildiğinde Aktif Olacak Sınıf */
+        .request-btn.sent {
+            background-color: #10b981 !important; /* Yeşil */
+            color: white !important;
+            border-color: #10b981 !important;
+            cursor: default;
+            box-shadow: none !important;
+        }
+
         /* Animasyon */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
@@ -212,15 +312,18 @@
             <div class="menu-item" id="menu-discover" onclick="switchTab('discover')">
                 <i class="fa-solid fa-globe"></i> Tüm Alanları Keşfet
             </div>
+            <!-- YENİ MENÜ ELEMANI: MENTÖRLÜK AĞI -->
+            <div class="menu-item" id="menu-mentor" onclick="switchTab('mentor')">
+                <i class="fa-solid fa-users-rectangle"></i> Mentörlük Ağı 🤝
+            </div>
             
-            <!-- Çıkış yapınca ana sayfaya fırlatacak buton -->
             <a href="index.html" class="menu-item logout-btn">
                 <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
             </a>
         </div>
     </div>
 
-    <!-- ANA İÇERIK ALANI -->
+    <!-- ANA İÇERİK ALANI -->
     <div class="main-content">
         
         <!-- ÜST KARŞILAMA BARI -->
@@ -285,28 +388,92 @@
             </div>
         </div>
 
+        <!-- ================= SEKME 3: MENTÖRLÜK AĞI (YENİ) ================= -->
+        <div class="tab-content" id="content-mentor">
+            <div class="mentor-grid">
+                
+                <!-- Mentör Kartı 1 -->
+                <div class="mentor-card">
+                    <div class="mentor-avatar">HÇ</div>
+                    <h3>Helin Çelik</h3>
+                    <span class="mentor-company">Trendyol</span>
+                    <p class="mentor-info">Senior Frontend Developer<br>"React ve CSS animasyonları konusunda uzmanım. Sektör sorularınızı bekliyorum!"</p>
+                    <span class="mentor-badge">5 Yıl Deneyim</span>
+                    <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
+                </div>
+
+                <!-- Mentör Kartı 2 -->
+                <div class="mentor-card">
+                    <div class="mentor-avatar">AY</div>
+                    <h3>Ahmet Yılmaz</h3>
+                    <span class="mentor-company">Google</span>
+                    <p class="mentor-info">Senior Software Engineer<br>"Algoritmalar, sistem mimarisi ve yurt dışı kariyer fırsatları hakkında mentorluk sağlıyorum."</p>
+                    <span class="mentor-badge">10+ Yıl Deneyim</span>
+                    <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
+                </div>
+
+                <!-- Mentör Kartı 3 -->
+                <div class="mentor-card">
+                    <div class="mentor-avatar">DB</div>
+                    <h3>Didem Başar</h3>
+                    <span class="mentor-company">Acıbadem Hastanesi</span>
+                    <p class="mentor-info">Çocuk Sağlığı Uzmanı (Pediatrist)<br>"Tıp fakültesi ders çalışma taktikleri ve uzmanlık (TUS) süreci hakkında yol gösteriyorum."</p>
+                    <span class="mentor-badge">3-5 Yıl Deneyim</span>
+                    <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
-    <!-- ================= SEKMELERİ YÖNETEN JAVASCRIPT BÜYÜSÜ ================= -->
+    <!-- ================= JAVASCRIPT KODLARIMIZ ================= -->
     <script>
         function switchTab(tabName) {
             // Önce tüm içerikleri gizle
             document.getElementById('content-panel').classList.remove('active');
             document.getElementById('content-discover').classList.remove('active');
+            document.getElementById('content-mentor').classList.remove('active'); // Mentörü de gizle
             
             // Önce tüm menü butonlarının aktifliğini kaldır
             document.getElementById('menu-panel').classList.remove('active');
             document.getElementById('menu-discover').classList.remove('active');
+            document.getElementById('menu-mentor').classList.remove('active'); // Mentörü de kaldır
 
-            // Şimdi tıklanan sekmeyi ve menüyü aktif yap!
+            // Seçilen sekmeyi aktif yap
             if (tabName === 'panel') {
                 document.getElementById('content-panel').classList.add('active');
                 document.getElementById('menu-panel').classList.add('active');
             } else if (tabName === 'discover') {
                 document.getElementById('content-discover').classList.add('active');
                 document.getElementById('menu-discover').classList.add('active');
+            } else if (tabName === 'mentor') {
+                document.getElementById('content-mentor').classList.add('active');
+                document.getElementById('menu-mentor').classList.add('active'); // Mentör sekmesini aç!
             }
         }
+
+        // Tıklanan butonu anında güncelleyen tatlı istek gönderme fonksiyonu
+        // İsteği Hem Gönderen Hem de Geri Çeken Akıllı Fonksiyon
+        function sendMentorRequest(buttonElement) {
+            // Eğer zaten gönderilmişse (yani yeşil durumdaysa)
+            if (buttonElement.classList.contains('sent')) {
+                // İsteği geri çekme işlemi
+                buttonElement.classList.remove('sent');
+                buttonElement.innerHTML = 'Mentörlük İsteği Gönder';
+                
+                // Küçük tatlı bir bilgilendirme kutusu (alert)
+                alert("✉️ Mentörlük talebini başarıyla geri çektiniz.");
+            } else {
+                // İlk kez tıklandığında istek gönderme işlemi
+                buttonElement.classList.add('sent');
+                buttonElement.innerHTML = '<i class="fa-solid fa-circle-check"></i> İstek Gönderildi! | Geri Çek ✕';
+                
+                // Gönderildi bildirimi
+                alert("🎉 Harika! Mentörlük talebin başarıyla iletildi. Mentörün isteğini onayladığında LinkedIn ve e-posta üzerinden iletişime geçebileceksin.");
+            }
+        }
+        
     </script>
 
 </body>
