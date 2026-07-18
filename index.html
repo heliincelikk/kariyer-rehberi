@@ -418,33 +418,35 @@
             window.location.href = 'register.html';
         }
 
-        // GİRİŞ YAPMA KODU
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            const adSoyad = document.getElementById('loginName').value;
-            const sifre = document.getElementById('loginPassword').value;
+    const adSoyad = document.getElementById('loginName').value;
+    const sifre = document.getElementById('loginPassword').value;
 
-            try {
-                const cevap = await fetch('http://127.0.0.1:3000/api/giris-yap', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ kullanici_adi: adSoyad, sifre: sifre })
-                });
-
-                const sonuc = await cevap.json();
-
-                if (cevap.ok) {
-                    alert(sonuc.message);
-                    window.location.replace('dashboard.html');
-                } else {
-                    alert(sonuc.error);
-                }
-            } catch (hata) {
-                console.error("Hata: ", hata);
-                alert("Backend sunucusu açık mı? Kontrol et! ❌");
-            }
+    try {
+        const cevap = await fetch('http://127.0.0.1:3000/api/giris-yap', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ kullanici_adi: adSoyad, sifre: sifre })
         });
+
+        const sonuc = await cevap.json();
+
+        if (cevap.ok) {
+            alert(sonuc.message);
+            localStorage.setItem('kullaniciDisiplin', sonuc.department);
+            localStorage.setItem('kullaniciRolu', sonuc.rol);
+            // 🎯 YENİ: role göre yönlendirme
+            window.location.replace(sonuc.rol === 'mentor' ? 'dashboard-mentor.html' : 'dashboard-ogrenci.html');
+        } else {
+            alert(sonuc.error);
+        }
+    } catch (hata) {
+        console.error("Hata: ", hata);
+        alert("Backend sunucusu açık mı? Kontrol et! ❌");
+    }
+});
     </script>
 </body>
 </html>

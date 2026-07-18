@@ -22,22 +22,23 @@ const db = new sqlite3.Database('./kariyer_rehberi.db', (err) => {
     }
 });
 
-// 📌 Tablo oluşturma (department sütunu eklendi 🎯)
+// 📌 Tablo oluşturma (rol sütunu eklendi 🎯)
 db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS kullanicilar (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         kullanici_adi TEXT,
         department TEXT,
+        rol TEXT,
         sifre TEXT
     )`);
 });
 
-// 🤵 KAYIT OL API KURALI (department bilgisi karşılanıyor 📦)
+// 🤵 KAYIT OL API KURALI (rol bilgisi de karşılanıyor 📦)
 app.post('/api/kayit-ol', (req, res) => {
-    const { kullanici_adi, department, sifre } = req.body;
-    const sorgu = `INSERT INTO kullanicilar (kullanici_adi, department, sifre) VALUES (?, ?, ?)`;
-    
-    db.run(sorgu, [kullanici_adi, department, sifre], function(err) {
+    const { kullanici_adi, department, rol, sifre } = req.body;
+    const sorgu = `INSERT INTO kullanicilar (kullanici_adi, department, rol, sifre) VALUES (?, ?, ?, ?)`;
+
+    db.run(sorgu, [kullanici_adi, department, rol, sifre], function(err) {
         if (err) {
             return res.status(400).json({ error: "Bu kullanıcı adı zaten kapılmış aşkım! ❌" });
         }
@@ -45,11 +46,11 @@ app.post('/api/kayit-ol', (req, res) => {
     });
 });
 
-// 🔑 GİRİŞ YAP API KURALI (department bilgisi frontend için dışarı aktarılıyor 🚀)
+// 🔑 GİRİŞ YAP API KURALI (rol bilgisi de dışarı aktarılıyor 🚀)
 app.post('/api/giris-yap', (req, res) => {
     const { kullanici_adi, sifre } = req.body;
     const sorgu = `SELECT * FROM kullanicilar WHERE kullanici_adi = ?`;
-    
+
     db.get(sorgu, [kullanici_adi], (err, row) => {
         if (err) {
             return res.status(500).json({ error: "Deftere bakarken hata çıktı aşkım! ❌" });
@@ -60,17 +61,18 @@ app.post('/api/giris-yap', (req, res) => {
         if (row.sifre !== sifre) {
             return res.status(400).json({ error: "Şifreni yanlış girdin aşkım, tekrar dene! ❌" });
         }
-        // Giriş başarılı olduğunda department bilgisini de gönderiyoruz
-        res.json({ 
+        // Giriş başarılı olduğunda department ve rol bilgisini de gönderiyoruz
+        res.json({
             message: `Harika! Tekrar hoş geldin ${kullanici_adi}! Girişin onaylandı. 🔑✨`,
-            department: row.department
+            department: row.department,
+            rol: row.rol
         });
     });
 });
 
 app.listen(PORT, () => {
     console.log(`Backend sunucumuz ${PORT} portu üzerinde dinamik olarak çalışıyor! 🚀🌐`);
-    
+
     setInterval(() => {
         // Sunucunun kapanmasını önleyen sihirli döngü
     }, 3600000);

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kariyer Rehberi - Gelişmiş Kayıt Ol</title>
-    <!-- FontAwesome kütüphanesi -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -151,7 +150,6 @@
     <div class="register-container">
         <h2>Aramıza <span>Katıl & Keşfet!</span> 🚀</h2>
         <form id="registerForm">
-            <!-- Ad Soyad ve E-posta -->
             <div class="form-row">
                 <div class="form-group">
                     <label>Ad Soyad</label>
@@ -163,7 +161,6 @@
                 </div>
             </div>
 
-            <!-- Eğitim Durumu -->
             <div class="form-group full-width">
                 <label>Eğitim / Profesyonel Durum</label>
                 <select id="regStatus" onchange="toggleFields()" required>
@@ -176,21 +173,16 @@
                 </select>
             </div>
 
-            <!-- Dinamik Alanlar Grubu -->
-
-            <!-- 1. Okul Adı -->
             <div class="form-group full-width hidden" id="schoolGroup">
                 <label id="schoolLabel">Okul Adı</label>
                 <input type="text" id="regSchool" placeholder="Örn: Boğaziçi Üniversitesi">
             </div>
 
-            <!-- 2. Bölüm Adı (Serbest Giriş) -->
             <div class="form-group full-width hidden" id="departmentGroup">
                 <label id="departmentLabel">Bölüm</label>
                 <input type="text" id="regDepartment" placeholder="Örn: Tıp / Bilgisayar Mühendisliği">
             </div>
 
-            <!-- 3. Seviye / Sınıf -->
             <div class="form-group full-width hidden" id="levelGroup">
                 <label>Sınıf / Seviye</label>
                 <select id="regClassLevel">
@@ -205,13 +197,11 @@
                 </select>
             </div>
 
-            <!-- 4. Çalıştığınız İş Yeri (Sadece Mentör) -->
             <div class="form-group full-width hidden" id="workplaceGroup">
                 <label>Çalıştığınız İş Yeri / Kurum (Opsiyonel)</label>
                 <input type="text" id="regWorkplace" placeholder="Örn: Tech Company / Hastane" oninput="checkExperienceField()">
             </div>
 
-            <!-- 5. Deneyim Süresi (Güncellenmiş aralıklar) -->
             <div class="form-group full-width hidden" id="experienceGroup">
                 <label>Deneyim Süresi</label>
                 <select id="regExperience">
@@ -224,7 +214,6 @@
                 </select>
             </div>
 
-            <!-- Şifre -->
             <div class="form-group full-width">
                 <label>Şifre Oluştur</label>
                 <input type="password" id="regPassword" placeholder="••••••••" required>
@@ -246,7 +235,6 @@
             const workplaceGroup = document.getElementById('workplaceGroup');
             const experienceGroup = document.getElementById('experienceGroup');
 
-            // Hepsini önce gizle ve zorunlulukları kaldır
             schoolGroup.classList.add('hidden');
             departmentGroup.classList.add('hidden');
             levelGroup.classList.add('hidden');
@@ -325,20 +313,24 @@
                 department = 'tech';
             }
 
+            // 🎯 YENİ: durum "mentor" ise rol mentor, değilse öğrenci
+            const rol = (durum === 'mentor') ? 'mentor' : 'ogrenci';
+
             localStorage.setItem('kullaniciDisiplin', department);
+            localStorage.setItem('kullaniciRolu', rol);
 
             try {
                 const cevap = await fetch('http://127.0.0.1:3000/api/kayit-ol', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ kullanici_adi: adSoyad, department: department, sifre: sifre })
+                    body: JSON.stringify({ kullanici_adi: adSoyad, department: department, rol: rol, sifre: sifre })
                 });
 
                 const sonuc = await cevap.json();
 
                 if (cevap.ok) {
                     alert(sonuc.message);
-                    window.location.replace('dashboard.html');
+                    window.location.replace(rol === 'mentor' ? 'dashboard-mentor.html' : 'dashboard-ogrenci.html');
                 } else {
                     alert(sonuc.error);
                 }

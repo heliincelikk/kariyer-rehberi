@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kariyer Rehberi - Öğrenci Paneli</title>
-    <!-- FontAwesome kütüphanesi ikonlar için -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ================= GENEL VE GECE MODU TEMASI ================= */
         * {
             margin: 0;
             padding: 0;
@@ -16,14 +14,13 @@
         }
 
         body {
-            background: #020617; /* Derin uzay siyahı/laciverti */
+            background: #020617;
             color: #ffffff;
             display: flex;
             height: 100vh;
             overflow: hidden;
         }
 
-        /* ================= SOL MENÜ (SIDEBAR) ================= */
         .sidebar {
             width: 260px;
             background-color: #0f172a;
@@ -82,7 +79,6 @@
             color: #f87171;
         }
 
-        /* ================= ANA İÇERİK ALANI ================= */
         .main-content {
             flex: 1;
             padding: 40px;
@@ -90,7 +86,6 @@
             position: relative;
         }
 
-        /* Üst Karşılama Barı */
         .welcome-bar {
             display: flex;
             justify-content: space-between;
@@ -118,7 +113,6 @@
             color: #06b6d4;
         }
 
-        /* Sekme İçerikleri */
         .tab-content {
             display: none;
             animation: fadeIn 0.5s ease forwards;
@@ -128,7 +122,6 @@
             display: block;
         }
 
-        /* ================= KART TASARIMLARI ================= */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -191,7 +184,34 @@
             color: #22d3ee;
         }
 
-        /* ================= MENTÖR KARTLARI TASARIMI ================= */
+        /* ================= MENTÖRLÜK ALT-SEKME (YENİ) ================= */
+        .mentor-subnav {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .subnav-btn {
+            background: transparent;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: #94a3b8;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subnav-btn:hover {
+            color: #ffffff;
+        }
+
+        .subnav-btn.active {
+            background-color: #06b6d4;
+            color: #0f172a;
+            border-color: #06b6d4;
+        }
+
         .mentor-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -214,7 +234,6 @@
             box-shadow: 0 10px 25px rgba(6, 182, 212, 0.15);
         }
 
-        /* Mentör Avatarı */
         .mentor-avatar {
             width: 80px;
             height: 80px;
@@ -263,7 +282,6 @@
             margin-bottom: 20px;
         }
 
-        /* İstek Butonları */
         .request-btn {
             width: 100%;
             background-color: transparent;
@@ -298,7 +316,6 @@
 </head>
 <body>
 
-    <!-- SOL MENÜ (SIDEBAR) -->
     <div class="sidebar">
         <div class="brand">
             <i class="fa-solid fa-compass"></i> Kariyer Rehberi
@@ -316,11 +333,15 @@
             <div class="menu-item" id="menu-quiz" onclick="switchTab('quiz')">
                 <i class="fa-solid fa-clipboard-question"></i> Kariyer Testi 🎯
             </div>
-            <!-- YENİ PROFİL BÖLÜMÜ -->
-<div class="profile-section" style="margin-top: 30px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="alert('Profil düzenleme ekranı buraya eklenecek.')">
-    <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i> Profilim</h4>
-    <p id="userSchoolInfo" style="font-size: 12px; color: #94a3b8;">Üniversite / Sınıf</p>
-</div>
+            <!-- YENİ: Yapay Zeka Asistanı -->
+            <div class="menu-item" id="menu-ai" onclick="switchTab('ai')">
+                <i class="fa-solid fa-robot"></i> Yapay Zeka Asistanı 🤖
+            </div>
+
+            <div class="profile-section" style="margin-top: 80px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="alert('Profil düzenleme ekranı buraya eklenecek.')">
+                <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i> Profilim</h4>
+                <p id="userSchoolInfo" style="font-size: 12px; color: #94a3b8;">Üniversite / Sınıf</p>
+            </div>
             <a href="index.html" class="menu-item logout-btn" onclick="localStorage.clear()">
                 <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
             </a>
@@ -328,7 +349,6 @@
         </div>
     </div>
 
-    <!-- ANA İÇERİK ALANI -->
     <div class="main-content">
         
         <div class="welcome-bar">
@@ -336,11 +356,10 @@
             <div class="user-badge" id="userBadgeMode">Yükleniyor...</div>
         </div>
 
-        <!-- ================= SEKME 1: KİŞİSELLEŞTİRİLMİŞ PANEL ================= -->
+        <!-- SEKME 1: KİŞİSELLEŞTİRİLMİŞ PANEL -->
         <div class="tab-content active" id="content-panel">
             <div class="dashboard-grid">
                 
-                <!-- 🎯 DİNAMİK YOL HARİTASI KARTI -->
                 <div class="premium-card">
                     <div class="card-icon" id="cardIconStyle"><i class="fa-solid fa-route"></i></div>
                     <h3 id="cardTitleText">Sana Özel Yol Haritası</h3>
@@ -365,7 +384,7 @@
             </div>
         </div>
 
-        <!-- ================= SEKME 2: TÜM ALANLARI KEŞFET ================= -->
+        <!-- SEKME 2: TÜM ALANLARI KEŞFET -->
         <div class="tab-content" id="content-discover">
             <div class="dashboard-grid">
                 <div class="premium-card">
@@ -389,9 +408,14 @@
             </div>
         </div>
 
-        <!-- ================= SEKME 3: MENTÖRLÜK AĞI ================= -->
+        <!-- SEKME 3: MENTÖRLÜK AĞI -->
         <div class="tab-content" id="content-mentor">
+            <div class="mentor-subnav">
+                <button class="subnav-btn active" id="subnav-all" onclick="switchMentorView('all')">Mentörler</button>
+                <button class="subnav-btn" id="subnav-mine" onclick="switchMentorView('mine')">Mentörlerim</button>
+            </div>
             <div class="mentor-grid">
+                <p id="mineEmptyMsg" style="display:none; grid-column: 1 / -1; color: #94a3b8; text-align:center;">Henüz bir mentöre istek göndermedin. "Mentörler" sekmesinden birini seçebilirsin.</p>
                 <div class="mentor-card">
                     <div class="mentor-avatar">HÇ</div>
                     <h3>Helin Çelik</h3>
@@ -419,21 +443,26 @@
             </div>
         </div>
 
+        <!-- SEKME 4: YAPAY ZEKA ASİSTANI (YENİ) -->
+        <div class="tab-content" id="content-ai">
+            <div class="premium-card" style="max-width: 500px;">
+                <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+                <h3>Yapay Zeka Kariyer Asistanı</h3>
+                <p>Bu bölüm yakında aktif olacak. İleride buraya, sorularını yanıtlayan ve sana özel öneriler sunan bir yapay zeka asistanı entegre edeceğiz.</p>
+            </div>
+        </div>
+
     </div>
 
-    <!-- ================= JAVASCRIPT KODLARIMIZ ================= -->
     <script>
-        // 🚀 SAYFA YÜKLENDİĞİNDE DİSİPLİNE GÖRE PANELİ ÖZELLEŞTİR
         window.addEventListener('DOMContentLoaded', () => {
             const disiplin = localStorage.getItem('kullaniciDisiplin');
             const allMentors = document.querySelectorAll('.mentor-card');
 
             allMentors.forEach(m => {
-                // Eğer disiplin 'med' ise tech olanları gizle
                 if (disiplin === 'med' && !m.classList.contains('med-mentor')) {
                     m.style.display = 'none';
                 } 
-                // Eğer disiplin 'med' değilse (tech veya law ise) med olanları gizle
                 else if (disiplin !== 'med' && !m.classList.contains('tech-mentor')) {
                     m.style.display = 'none';
                 }
@@ -453,11 +482,16 @@
                 cardDesc.innerText = "Avukatlık stajı, hakim savcılık sınavları ve kurumsal hukuk büroları kariyer basamakları.";
                 cardIcon.innerHTML = '<i class="fa-solid fa-scale-balanced"></i>';
                 badgeMode.innerText = "Hukuk Modu";
-            } else {
+            } else if (disiplin) {
                 cardTitle.innerText = "Teknoloji & Yazılım Yol Haritası";
                 cardDesc.innerText = "Yazılım alt alanları (Frontend, Backend, Yapay Zeka), staj imkanları ve GitHub portfolyo gelişim rehberi.";
                 cardIcon.innerHTML = '<i class="fa-solid fa-laptop-code"></i>';
                 badgeMode.innerText = "Teknoloji & Yazılım Modu";
+            } else {
+                cardTitle.innerText = "Sana Özel Yol Haritası";
+                cardDesc.innerText = "İlgi alanlarını ve hedeflerini seçtikçe burası tamamen sana özel içeriklerle dolacak.";
+                cardIcon.innerHTML = '<i class="fa-solid fa-route"></i>';
+                badgeMode.innerText = "Henüz Alan Seçilmedi";
             }
         });
 
@@ -470,10 +504,12 @@
             document.getElementById('content-panel').classList.remove('active');
             document.getElementById('content-discover').classList.remove('active');
             document.getElementById('content-mentor').classList.remove('active');
-            
+            document.getElementById('content-ai').classList.remove('active');
+
             document.getElementById('menu-panel').classList.remove('active');
             document.getElementById('menu-discover').classList.remove('active');
             document.getElementById('menu-mentor').classList.remove('active');
+            document.getElementById('menu-ai').classList.remove('active');
 
             if (tabName === 'panel') {
                 document.getElementById('content-panel').classList.add('active');
@@ -484,7 +520,35 @@
             } else if (tabName === 'mentor') {
                 document.getElementById('content-mentor').classList.add('active');
                 document.getElementById('menu-mentor').classList.add('active');
+            } else if (tabName === 'ai') {
+                document.getElementById('content-ai').classList.add('active');
+                document.getElementById('menu-ai').classList.add('active');
             }
+        }
+
+        // YENİ: Mentörler / Mentörlerim geçişi
+        function switchMentorView(view) {
+            document.getElementById('subnav-all').classList.remove('active');
+            document.getElementById('subnav-mine').classList.remove('active');
+            document.getElementById('subnav-' + view).classList.add('active');
+
+            const cards = document.querySelectorAll('#content-mentor .mentor-card');
+            let anySent = false;
+
+            cards.forEach(card => {
+                const btn = card.querySelector('.request-btn');
+                const isSent = btn.classList.contains('sent');
+                if (isSent) anySent = true;
+
+                if (view === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = isSent ? 'block' : 'none';
+                }
+            });
+
+            const emptyMsg = document.getElementById('mineEmptyMsg');
+            emptyMsg.style.display = (view === 'mine' && !anySent) ? 'block' : 'none';
         }
 
         function sendMentorRequest(buttonElement) {
@@ -496,6 +560,11 @@
                 buttonElement.classList.add('sent');
                 buttonElement.innerHTML = '<i class="fa-solid fa-circle-check"></i> İstek Gönderildi! | Geri Çek ✕';
                 alert("🎉 Harika! Mentörlük talebin başarıyla iletildi. Mentörün isteğini onayladığında LinkedIn ve e-posta üzerinden iletişime geçebileceksin.");
+            }
+
+            // Eğer "Mentörlerim" görünümündeysek listeyi güncelle
+            if (document.getElementById('subnav-mine').classList.contains('active')) {
+                switchMentorView('mine');
             }
         }
     </script>

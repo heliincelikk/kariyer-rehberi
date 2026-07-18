@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kariyer Rehberi - Mentör Paneli</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #020617;
+            color: #ffffff;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #0f172a;
+            border-right: 1px solid rgba(6, 182, 212, 0.15);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            z-index: 10;
+        }
+
+        .sidebar .brand {
+            font-size: 22px;
+            font-weight: bold;
+            color: #06b6d4;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 18px;
+            color: #94a3b8;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            color: #ffffff;
+            background-color: rgba(6, 182, 212, 0.1);
+            border-left: 4px solid #06b6d4;
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            color: #ef4444; 
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .welcome-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 20px;
+        }
+
+        .welcome-bar h1 {
+            font-size: 28px;
+        }
+
+        .welcome-bar h1 span {
+            color: #06b6d4;
+        }
+
+        .user-badge {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #06b6d4;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .premium-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-5px);
+            border-color: #06b6d4;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #06b6d4;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .premium-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .premium-card p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* ================= ALT SEKME (SUBNAV) ================= */
+        .subnav {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .subnav-btn {
+            background: transparent;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: #94a3b8;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subnav-btn:hover {
+            color: #ffffff;
+        }
+
+        .subnav-btn.active {
+            background-color: #06b6d4;
+            color: #0f172a;
+            border-color: #06b6d4;
+        }
+
+        /* ================= İSTEK KARTLARI (Öğrenciler) ================= */
+        .request-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .student-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .student-card:hover {
+            border-color: #06b6d4;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.15);
+        }
+
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4, #1e1b4b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 15px auto;
+            border: 3px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .student-card h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .student-school {
+            font-size: 13px;
+            color: #06b6d4;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .student-info {
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .action-btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .accept-btn, .reject-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid;
+        }
+
+        .accept-btn {
+            background-color: transparent;
+            color: #10b981;
+            border-color: #10b981;
+        }
+
+        .accept-btn:hover {
+            background-color: #10b981;
+            color: #0f172a;
+        }
+
+        .reject-btn {
+            background-color: transparent;
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .reject-btn:hover {
+            background-color: #ef4444;
+            color: #0f172a;
+        }
+
+        .accepted-badge {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            padding: 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .empty-msg {
+            grid-column: 1 / -1;
+            color: #94a3b8;
+            text-align: center;
+            padding: 30px;
+        }
+
+        /* ================= HABERLER ================= */
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .news-item {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .news-icon {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #06b6d4;
+            font-size: 18px;
+        }
+
+        .news-text p {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .news-text span {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        /* ================= PROFİL ================= */
+        .profile-card {
+            max-width: 600px;
+        }
+
+        .profile-field {
+            margin-bottom: 18px;
+        }
+
+        .profile-field label {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .profile-field p {
+            color: #f1f5f9;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .profile-note {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #64748b;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 15px;
+        }
+
+        /* Sidebar profil kutusu */
+        .profile-section {
+            margin-top: 150px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .profile-section:hover {
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-compass"></i> Kariyer Rehberi
+        </div>
+        <div class="menu-items">
+            <div class="menu-item active" id="menu-network" onclick="switchTab('network')">
+                <i class="fa-solid fa-users-rectangle"></i> Mentörlük Ağım 🤝
+            </div>
+            <div class="menu-item" id="menu-others" onclick="switchTab('others')">
+                <i class="fa-solid fa-user-group"></i> Diğer Mentörler
+            </div>
+            <div class="menu-item" id="menu-news" onclick="switchTab('news')">
+                <i class="fa-solid fa-newspaper"></i> Haberler 📰
+            </div>
+            <div class="menu-item" id="menu-ai" onclick="switchTab('ai')">
+                <i class="fa-solid fa-robot"></i> Yapay Zeka Asistanı 🤖
+            </div>
+
+            <div class="profile-section" id="menu-profile" onclick="switchTab('profile')">
+                <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-id-badge"></i> Profilim</h4>
+                <p style="font-size: 12px; color: #94a3b8;">Okul / Deneyim Bilgilerim</p>
+            </div>
+            <a href="index.html" class="menu-item logout-btn" onclick="localStorage.clear()">
+                <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <div class="welcome-bar">
+            <h1>Hoş Geldin, <span id="userNameSpan">Değerli Mentör!</span> 👋</h1>
+            <div class="user-badge">Mentör Modu</div>
+        </div>
+
+        <!-- SEKME 1: MENTÖRLÜK AĞIM -->
+        <div class="tab-content active" id="content-network">
+            <div class="subnav">
+                <button class="subnav-btn active" id="subnav-pending" onclick="switchNetworkView('pending')">Gelen İstekler</button>
+                <button class="subnav-btn" id="subnav-accepted" onclick="switchNetworkView('accepted')">Kabul Edilenler</button>
+            </div>
+
+            <div class="request-grid" id="pendingGrid"></div>
+            <div class="request-grid" id="acceptedGrid" style="display:none;"></div>
+        </div>
+
+        <!-- SEKME 2: DİĞER MENTÖRLER -->
+        <div class="tab-content" id="content-others">
+            <div class="request-grid">
+                <div class="student-card">
+                    <div class="student-avatar">AY</div>
+                    <h3>Ahmet Yılmaz</h3>
+                    <span class="student-school">Google · Senior Software Engineer</span>
+                    <p class="student-info">Algoritmalar ve sistem mimarisi konusunda 12 öğrenciye mentörlük yapıyor.</p>
+                </div>
+                <div class="student-card">
+                    <div class="student-avatar">BD</div>
+                    <h3>Buse Demir</h3>
+                    <span class="student-school">SOC Güvenlik Analisti</span>
+                    <p class="student-info">Siber güvenlik ve tehdit analizi alanında 7 öğrenciye mentörlük yapıyor.</p>
+                </div>
+                <div class="student-card">
+                    <div class="student-avatar">MK</div>
+                    <h3>Murat Kaya</h3>
+                    <span class="student-school">DevOps Mühendisi</span>
+                    <p class="student-info">Sunucu yönetimi ve altyapı süreçlerinde 5 öğrenciye mentörlük yapıyor.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEKME 3: HABERLER -->
+        <div class="tab-content" id="content-news">
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                    <div class="news-text">
+                        <p><strong>Ahmet Yılmaz</strong> artık toplamda <strong>12 öğrenciye</strong> mentörlük yapıyor.</p>
+                        <span>2 gün önce</span>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <div class="news-icon"><i class="fa-solid fa-user-plus"></i></div>
+                    <div class="news-text">
+                        <p>Ağa bu hafta <strong>34 yeni öğrenci</strong> katıldı.</p>
+                        <span>4 gün önce</span>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <div class="news-icon"><i class="fa-solid fa-star"></i></div>
+                    <div class="news-text">
+                        <p><strong>Didem Başar</strong>, en çok istek alan mentörler arasına girdi.</p>
+                        <span>1 hafta önce</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEKME 4: YAPAY ZEKA ASİSTANI -->
+        <div class="tab-content" id="content-ai">
+            <div class="premium-card" style="max-width: 500px;">
+                <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+                <h3>Yapay Zeka Mentörlük Asistanı</h3>
+                <p>Bu bölüm yakında aktif olacak. İleride buraya, öğrenci sorularını yanıtlamana ve mentörlük sürecini kolaylaştırmana yardımcı olacak bir yapay zeka asistanı entegre edeceğiz.</p>
+            </div>
+        </div>
+
+        <!-- SEKME 5: PROFİLİM -->
+        <div class="tab-content" id="content-profile">
+            <div class="premium-card profile-card">
+                <div class="card-icon"><i class="fa-solid fa-id-badge"></i></div>
+                <h3>Profilim</h3>
+
+                <div class="profile-field">
+                    <label>Mezun Olunan Okul</label>
+                    <p id="profSchool">—</p>
+                </div>
+                <div class="profile-field">
+                    <label>Bölüm</label>
+                    <p id="profDepartment">—</p>
+                </div>
+                <div class="profile-field">
+                    <label>Çalıştığı Kurum</label>
+                    <p id="profWorkplace">—</p>
+                </div>
+                <div class="profile-field">
+                    <label>Deneyim Süresi</label>
+                    <p id="profExperience">—</p>
+                </div>
+
+                <p class="profile-note">
+                    ⚠️ Bu bilgiler şu an örnek/placeholder olarak gösteriliyor. Gerçek profil verilerinin
+                    (okul, iş yeri, deneyim) kalıcı olarak görünmesi için backend'in kayıt sırasında bu
+                    alanları da veritabanına kaydetmesi gerekiyor — bu, bir sonraki geliştirme adımımız olabilir.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 🔸 ÖRNEK VERİ: Gelen istekler (öğrenciler) — normalde backend'den gelecek
+        let pendingStudents = [
+            { id: 1, isim: "Zeynep Kılıç", okul: "İTÜ · Bilgisayar Mühendisliği, 2. Sınıf", not: "Backend alanında kariyer yapmak istiyor, API tasarımı hakkında sorular soracak." },
+            { id: 2, isim: "Emre Şahin", okul: "ODTÜ · Bilgisayar Mühendisliği, 3. Sınıf", not: "Staj öncesi teknik mülakat hazırlığı için destek istiyor." }
+        ];
+
+        let acceptedStudents = [];
+
+        function renderPending() {
+            const grid = document.getElementById('pendingGrid');
+            if (pendingStudents.length === 0) {
+                grid.innerHTML = `<p class="empty-msg">Şu an bekleyen bir mentörlük isteği yok.</p>`;
+                return;
+            }
+            grid.innerHTML = pendingStudents.map(s => `
+                <div class="student-card">
+                    <div class="student-avatar">${initials(s.isim)}</div>
+                    <h3>${s.isim}</h3>
+                    <span class="student-school">${s.okul}</span>
+                    <p class="student-info">${s.not}</p>
+                    <div class="action-btn-group">
+                        <button class="accept-btn" onclick="respondRequest(${s.id}, true)">Kabul Et</button>
+                        <button class="reject-btn" onclick="respondRequest(${s.id}, false)">Reddet</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+    function renderAccepted() {
+    const grid = document.getElementById('acceptedGrid');
+    if (acceptedStudents.length === 0) {
+        grid.innerHTML = `<p class="empty-msg">Henüz kabul ettiğin bir öğrenci yok.</p>`;
+        return;
+    }
+    grid.innerHTML = acceptedStudents.map(s => `
+        <div class="student-card">
+            <div class="student-avatar">${initials(s.isim)}</div>
+            <h3>${s.isim}</h3>
+            <span class="student-school">${s.okul}</span>
+            <p class="student-info">${s.not}</p>
+            <div class="accepted-badge"><i class="fa-solid fa-circle-check"></i> Ağınızda</div>
+            <button class="reject-btn" style="width:100%; margin-top:10px;" onclick="removeFromNetwork(${s.id})">Ağdan Çıkar</button>
+        </div>
+    `).join('');
+}    
+
+        function initials(isim) {
+            return isim.split(' ').map(k => k[0]).join('').toUpperCase();
+        }
+
+        function respondRequest(id, kabulEdildi) {
+            const ogrenci = pendingStudents.find(s => s.id === id);
+            pendingStudents = pendingStudents.filter(s => s.id !== id);
+
+            if (kabulEdildi) {
+                acceptedStudents.push(ogrenci);
+                alert(`✅ ${ogrenci.isim} artık mentörlük ağında!`);
+            } else {
+                alert(`${ogrenci.isim} isteği reddedildi.`);
+            }
+            renderPending();
+            renderAccepted();
+        }
+        function removeFromNetwork(id) {
+    const ogrenci = acceptedStudents.find(s => s.id === id);
+    const onay = confirm(`${ogrenci.isim} adlı öğrenciyi mentörlük ağından çıkarmak istediğine emin misin?`);
+    
+    if (onay) {
+        acceptedStudents = acceptedStudents.filter(s => s.id !== id);
+        renderAccepted();
+        alert(`${ogrenci.isim} ağdan çıkarıldı.`);
+    }
+}
+
+        function switchNetworkView(view) {
+            document.getElementById('subnav-pending').classList.remove('active');
+            document.getElementById('subnav-accepted').classList.remove('active');
+            document.getElementById('subnav-' + view).classList.add('active');
+
+            document.getElementById('pendingGrid').style.display = view === 'pending' ? 'grid' : 'none';
+            document.getElementById('acceptedGrid').style.display = view === 'accepted' ? 'grid' : 'none';
+        }
+
+        function switchTab(tabName) {
+            const tabs = ['network', 'others', 'news', 'ai', 'profile'];
+            tabs.forEach(t => {
+                document.getElementById('content-' + t).classList.remove('active');
+                const menuEl = document.getElementById('menu-' + t);
+                if (menuEl) menuEl.classList.remove('active');
+            });
+
+            document.getElementById('content-' + tabName).classList.add('active');
+            const activeMenuEl = document.getElementById('menu-' + tabName);
+            if (activeMenuEl) activeMenuEl.classList.add('active');
+        }
+
+        // Placeholder profil verisi (backend henüz bu alanları saklamıyor)
+        function loadProfilePlaceholder() {
+            document.getElementById('profSchool').innerText = "— (henüz kayıtlı değil)";
+            document.getElementById('profDepartment').innerText = "— (henüz kayıtlı değil)";
+            document.getElementById('profWorkplace').innerText = "— (henüz kayıtlı değil)";
+            document.getElementById('profExperience').innerText = "— (henüz kayıtlı değil)";
+        }
+
+        renderPending();
+        renderAccepted();
+        loadProfilePlaceholder();
+    </script>
+
+</body>
+</html>
