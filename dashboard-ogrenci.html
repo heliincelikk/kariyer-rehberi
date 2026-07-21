@@ -338,10 +338,10 @@
                 <i class="fa-solid fa-robot"></i> Yapay Zeka Asistanı 🤖
             </div>
 
-            <div class="profile-section" style="margin-top: 80px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="alert('Profil düzenleme ekranı buraya eklenecek.')">
-                <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i> Profilim</h4>
-                <p id="userSchoolInfo" style="font-size: 12px; color: #94a3b8;">Üniversite / Sınıf</p>
-            </div>
+            <div class="profile-section" id="menu-profile" style="margin-top: 80px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="switchTab('profile')">
+    <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i> Profilim</h4>
+    <p id="userSchoolInfo" style="font-size: 12px; color: #94a3b8;">Üniversite / Sınıf</p>
+</div>
             <a href="index.html" class="menu-item logout-btn" onclick="localStorage.clear()">
                 <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
             </a>
@@ -363,7 +363,7 @@
                 <div class="premium-card">
                     <div class="card-icon" id="cardIconStyle"><i class="fa-solid fa-route"></i></div>
                     <h3 id="cardTitleText">Sana Özel Yol Haritası</h3>
-                    <p id="cardDescText">Seçtiğin hedeflere ve eğitim durumuna göre yapay zeka tarafından optimize edilmiş gelişim adımlarını incele.</p>
+<p id="cardDescText">Seçtiğin hedeflere ve eğitim durumuna göre yapay zeka tarafından optimize edilmiş gelişim adımlarını incele.</p>
                     <a href="quiz.html" class="card-link" id="cardLinkBtn">Haritayı İncele ➔</a>
                 </div>
 
@@ -451,49 +451,55 @@
                 <p>Bu bölüm yakında aktif olacak. İleride buraya, sorularını yanıtlayan ve sana özel öneriler sunan bir yapay zeka asistanı entegre edeceğiz.</p>
             </div>
         </div>
+        <!-- SEKME 5: PROFİLİM -->
+        <div class="tab-content" id="content-profile">
+            <div class="premium-card" style="max-width: 500px;">
+                <div class="card-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                <h3>Profilim</h3>
+
+                <div style="margin-bottom: 18px;">
+                    <label style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Okul</label>
+                    <p id="profOkul" style="color:#f1f5f9; font-size:16px; font-weight:500;">—</p>
+                </div>
+                <div style="margin-bottom: 18px;">
+                    <label style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Bölüm</label>
+                    <p id="profBolum" style="color:#f1f5f9; font-size:16px; font-weight:500;">—</p>
+                </div>
+                <div style="margin-bottom: 18px;">
+                    <label style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Sınıf / Seviye</label>
+                    <p id="profSinif" style="color:#f1f5f9; font-size:16px; font-weight:500;">—</p>
+                </div>
+            </div>
+        </div>
 
     </div>
 
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const disiplin = localStorage.getItem('kullaniciDisiplin');
-            const allMentors = document.querySelectorAll('.mentor-card');
-
-            allMentors.forEach(m => {
-                if (disiplin === 'med' && !m.classList.contains('med-mentor')) {
-                    m.style.display = 'none';
-                } 
-                else if (disiplin !== 'med' && !m.classList.contains('tech-mentor')) {
-                    m.style.display = 'none';
-                }
-            });
             const cardTitle = document.getElementById('cardTitleText');
             const cardDesc = document.getElementById('cardDescText');
             const cardIcon = document.getElementById('cardIconStyle');
             const badgeMode = document.getElementById('userBadgeMode');
+            const bolum = localStorage.getItem('kullaniciBolum');
 
-            if (disiplin === 'med') {
-                cardTitle.innerText = "Tıp & Sağlık Kariyer Yolculuğu";
-                cardDesc.innerText = "Tıp fakültesi aşamaları, TUS hazırlık stratejileri ve sağlık sektörüne özel uzmanlık rotalarını keşfet.";
-                cardIcon.innerHTML = '<i class="fa-solid fa-stethoscope"></i>';
-                badgeMode.innerText = "Tıp & Sağlık Modu";
-            } else if (disiplin === 'law') {
-                cardTitle.innerText = "Hukuk Kariyer Yolculuğu";
-                cardDesc.innerText = "Avukatlık stajı, hakim savcılık sınavları ve kurumsal hukuk büroları kariyer basamakları.";
-                cardIcon.innerHTML = '<i class="fa-solid fa-scale-balanced"></i>';
-                badgeMode.innerText = "Hukuk Modu";
-            } else if (disiplin) {
-                cardTitle.innerText = "Teknoloji & Yazılım Yol Haritası";
-                cardDesc.innerText = "Yazılım alt alanları (Frontend, Backend, Yapay Zeka), staj imkanları ve GitHub portfolyo gelişim rehberi.";
-                cardIcon.innerHTML = '<i class="fa-solid fa-laptop-code"></i>';
-                badgeMode.innerText = "Teknoloji & Yazılım Modu";
+            let ikonHTML = '<i class="fa-solid fa-route"></i>';
+            if (disiplin === 'med') ikonHTML = '<i class="fa-solid fa-stethoscope"></i>';
+            else if (disiplin === 'law') ikonHTML = '<i class="fa-solid fa-scale-balanced"></i>';
+            else if (disiplin) ikonHTML = '<i class="fa-solid fa-laptop-code"></i>';
+            cardIcon.innerHTML = ikonHTML;
+
+            if (bolum && bolum.trim() !== '') {
+                cardTitle.innerText = bolum + " Kariyer Yolculuğu";
+                cardDesc.innerText = bolum + " alanına özel güncel gelişim adımlarını, staj imkanlarını ve kariyer rotalarını keşfet.";
             } else {
                 cardTitle.innerText = "Sana Özel Yol Haritası";
                 cardDesc.innerText = "İlgi alanlarını ve hedeflerini seçtikçe burası tamamen sana özel içeriklerle dolacak.";
-                cardIcon.innerHTML = '<i class="fa-solid fa-route"></i>';
-                badgeMode.innerText = "Henüz Alan Seçilmedi";
             }
+
+            badgeMode.innerText = "Öğrenci Modu";
         });
+        
 
         function switchTab(tabName) {
             if (tabName === 'quiz') {
@@ -501,29 +507,26 @@
                 return;
             }
 
-            document.getElementById('content-panel').classList.remove('active');
-            document.getElementById('content-discover').classList.remove('active');
-            document.getElementById('content-mentor').classList.remove('active');
-            document.getElementById('content-ai').classList.remove('active');
+            const tabs = ['panel', 'discover', 'mentor', 'ai', 'profile'];
+            tabs.forEach(t => {
+                document.getElementById('content-' + t).classList.remove('active');
+                const menuEl = document.getElementById('menu-' + t);
+                if (menuEl) menuEl.classList.remove('active');
+            });
 
-            document.getElementById('menu-panel').classList.remove('active');
-            document.getElementById('menu-discover').classList.remove('active');
-            document.getElementById('menu-mentor').classList.remove('active');
-            document.getElementById('menu-ai').classList.remove('active');
+            document.getElementById('content-' + tabName).classList.add('active');
+            const activeMenuEl = document.getElementById('menu-' + tabName);
+            if (activeMenuEl) activeMenuEl.classList.add('active');
 
-            if (tabName === 'panel') {
-                document.getElementById('content-panel').classList.add('active');
-                document.getElementById('menu-panel').classList.add('active');
-            } else if (tabName === 'discover') {
-                document.getElementById('content-discover').classList.add('active');
-                document.getElementById('menu-discover').classList.add('active');
-            } else if (tabName === 'mentor') {
-                document.getElementById('content-mentor').classList.add('active');
-                document.getElementById('menu-mentor').classList.add('active');
-            } else if (tabName === 'ai') {
-                document.getElementById('content-ai').classList.add('active');
-                document.getElementById('menu-ai').classList.add('active');
+            if (tabName === 'profile') {
+                loadProfile();
             }
+        }
+
+        function loadProfile() {
+            document.getElementById('profOkul').innerText = localStorage.getItem('kullaniciOkul') || "— (girilmemiş)";
+            document.getElementById('profBolum').innerText = localStorage.getItem('kullaniciBolum') || "— (girilmemiş)";
+            document.getElementById('profSinif').innerText = localStorage.getItem('kullaniciSinif') || "— (girilmemiş)";
         }
 
         // YENİ: Mentörler / Mentörlerim geçişi

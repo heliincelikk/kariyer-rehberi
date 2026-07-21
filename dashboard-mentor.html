@@ -640,16 +640,16 @@
         }
 
         // Placeholder profil verisi (backend henüz bu alanları saklamıyor)
-        function loadProfilePlaceholder() {
-            document.getElementById('profSchool').innerText = "— (henüz kayıtlı değil)";
-            document.getElementById('profDepartment').innerText = "— (henüz kayıtlı değil)";
-            document.getElementById('profWorkplace').innerText = "— (henüz kayıtlı değil)";
-            document.getElementById('profExperience').innerText = "— (henüz kayıtlı değil)";
-        }
+        function loadProfile() {
+    document.getElementById('profSchool').innerText = localStorage.getItem('kullaniciOkul') || "— (girilmemiş)";
+    document.getElementById('profDepartment').innerText = localStorage.getItem('kullaniciBolum') || "— (girilmemiş)";
+    document.getElementById('profWorkplace').innerText = localStorage.getItem('kullaniciIsYeri') || "— (girilmemiş)";
+    document.getElementById('profExperience').innerText = localStorage.getItem('kullaniciDeneyim') || "— (girilmemiş)";
+}
 
         renderPending();
         renderAccepted();
-        loadProfilePlaceholder();
+        loadProfile();
     </script>
 
 </body>

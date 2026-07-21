@@ -292,53 +292,73 @@
             }
         }
 
-        document.getElementById('registerForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+       document.getElementById('registerForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-            const adSoyad = document.getElementById('regName').value;
-            const eposta = document.getElementById('regEmail').value;
-            const durum = document.getElementById('regStatus').value;
-            const departmentInput = document.getElementById('regDepartment').value.toLowerCase();
-            const sifre = document.getElementById('regPassword').value;
-            
-            // 🎯 Girilen bölüme göre disiplini akıllıca eşleme
-            let department = 'tech';
-            if (departmentInput.includes('tıp') || departmentInput.includes('doktor') || departmentInput.includes('sağlık')) {
-                department = 'med';
-            } else if (departmentInput.includes('hukuk') || departmentInput.includes('adalet')) {
-                department = 'law';
-            } else if (departmentInput.includes('işletme') || departmentInput.includes('iktisat') || departmentInput.includes('finans')) {
-                department = 'business';
-            } else {
-                department = 'tech';
-            }
+    const adSoyad = document.getElementById('regName').value;
+    const eposta = document.getElementById('regEmail').value;
+    const durum = document.getElementById('regStatus').value;
+    const departmentInput = document.getElementById('regDepartment').value.toLowerCase();
+    const sifre = document.getElementById('regPassword').value;
 
-            // 🎯 YENİ: durum "mentor" ise rol mentor, değilse öğrenci
-            const rol = (durum === 'mentor') ? 'mentor' : 'ogrenci';
+    const okul = document.getElementById('regSchool').value || null;
+    const bolum = document.getElementById('regDepartment').value || null;
+    const sinif = document.getElementById('regClassLevel').value || null;
+    const isYeri = document.getElementById('regWorkplace').value || null;
+    const deneyim = document.getElementById('regExperience').value || null;
 
-            localStorage.setItem('kullaniciDisiplin', department);
-            localStorage.setItem('kullaniciRolu', rol);
+    let department = 'tech';
+    if (departmentInput.includes('tıp') || departmentInput.includes('doktor') || departmentInput.includes('sağlık')) {
+        department = 'med';
+    } else if (departmentInput.includes('hukuk') || departmentInput.includes('adalet')) {
+        department = 'law';
+    } else if (departmentInput.includes('işletme') || departmentInput.includes('iktisat') || departmentInput.includes('finans')) {
+        department = 'business';
+    } else {
+        department = 'tech';
+    }
 
-            try {
-                const cevap = await fetch('http://127.0.0.1:3000/api/kayit-ol', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ kullanici_adi: adSoyad, department: department, rol: rol, sifre: sifre })
-                });
+    const rol = (durum === 'mentor') ? 'mentor' : 'ogrenci';
 
-                const sonuc = await cevap.json();
+    localStorage.setItem('kullaniciDisiplin', department);
+    localStorage.setItem('kullaniciRolu', rol);
+    localStorage.setItem('kullaniciAdi', adSoyad);
+    localStorage.setItem('kullaniciOkul', okul || '');
+    localStorage.setItem('kullaniciBolum', bolum || '');
+    localStorage.setItem('kullaniciSinif', sinif || '');
+    localStorage.setItem('kullaniciIsYeri', isYeri || '');
+    localStorage.setItem('kullaniciDeneyim', deneyim || '');
 
-                if (cevap.ok) {
-                    alert(sonuc.message);
-                    window.location.replace(rol === 'mentor' ? 'dashboard-mentor.html' : 'dashboard-ogrenci.html');
-                } else {
-                    alert(sonuc.error);
-                }
-            } catch (hata) {
-                console.error("Hata: ", hata);
-                alert("Backend sunucusu çalışmıyor mu? Kontrol et! ❌");
-            }
+    try {
+        const cevap = await fetch('http://127.0.0.1:3000/api/kayit-ol', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                kullanici_adi: adSoyad,
+                department: department,
+                rol: rol,
+                okul: okul,
+                bolum: bolum,
+                sinif: sinif,
+                is_yeri: isYeri,
+                deneyim: deneyim,
+                sifre: sifre
+            })
         });
+
+        const sonuc = await cevap.json();
+
+        if (cevap.ok) {
+            alert(sonuc.message);
+            window.location.replace(rol === 'mentor' ? 'dashboard-mentor.html' : 'dashboard-ogrenci.html');
+        } else {
+            alert(sonuc.error);
+        }
+    } catch (hata) {
+        console.error("Hata: ", hata);
+        alert("Backend sunucusu çalışmıyor mu? Kontrol et! ❌");
+    }
+});
     </script>
 </body>
 </html>

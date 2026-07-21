@@ -437,7 +437,12 @@
             alert(sonuc.message);
             localStorage.setItem('kullaniciDisiplin', sonuc.department);
             localStorage.setItem('kullaniciRolu', sonuc.rol);
-            // 🎯 YENİ: role göre yönlendirme
+            localStorage.setItem('kullaniciAdi', adSoyad);
+            localStorage.setItem('kullaniciOkul', sonuc.okul || '');
+            localStorage.setItem('kullaniciBolum', sonuc.bolum || '');
+            localStorage.setItem('kullaniciSinif', sonuc.sinif || '');
+            localStorage.setItem('kullaniciIsYeri', sonuc.is_yeri || '');
+            localStorage.setItem('kullaniciDeneyim', sonuc.deneyim || '');
             window.location.replace(sonuc.rol === 'mentor' ? 'dashboard-mentor.html' : 'dashboard-ogrenci.html');
         } else {
             alert(sonuc.error);

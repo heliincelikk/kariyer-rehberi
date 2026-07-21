@@ -22,50 +22,62 @@ const db = new sqlite3.Database('./kariyer_rehberi.db', (err) => {
     }
 });
 
-// 📌 Tablo oluşturma (rol sütunu eklendi 🎯)
+// 📌 Tablo oluşturma (profil sütunları eklendi 🎯)
 db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS kullanicilar (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         kullanici_adi TEXT,
         department TEXT,
         rol TEXT,
+        okul TEXT,
+        bolum TEXT,
+        sinif TEXT,
+        is_yeri TEXT,
+        deneyim TEXT,
         sifre TEXT
     )`);
 });
 
-// 🤵 KAYIT OL API KURALI (rol bilgisi de karşılanıyor 📦)
+// 🤵 KAYIT OL API KURALI (profil bilgileri de karşılanıyor 📦)
 app.post('/api/kayit-ol', (req, res) => {
-    const { kullanici_adi, department, rol, sifre } = req.body;
-    const sorgu = `INSERT INTO kullanicilar (kullanici_adi, department, rol, sifre) VALUES (?, ?, ?, ?)`;
+    const { kullanici_adi, department, rol, okul, bolum, sinif, is_yeri, deneyim, sifre } = req.body;
+    const sorgu = `INSERT INTO kullanicilar 
+        (kullanici_adi, department, rol, okul, bolum, sinif, is_yeri, deneyim, sifre) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    db.run(sorgu, [kullanici_adi, department, rol, sifre], function(err) {
+    db.run(sorgu, [kullanici_adi, department, rol, okul, bolum, sinif, is_yeri, deneyim, sifre], function(err) {
         if (err) {
-            return res.status(400).json({ error: "Bu kullanıcı adı zaten kapılmış aşkım! ❌" });
+            return res.status(400).json({ error: "Bu kullanıcı adı zaten kapılmış! ❌" });
         }
-        res.json({ message: "Harika! Başarıyla kayıt oldun aşkım. Deftere yazıldın! 💾✨" });
+        res.json({ message: "Harika! Başarıyla kayıt oldun! 💾✨" });
     });
 });
 
-// 🔑 GİRİŞ YAP API KURALI (rol bilgisi de dışarı aktarılıyor 🚀)
+// 🔑 GİRİŞ YAP API KURALI (profil bilgileri de dışarı aktarılıyor 🚀)
 app.post('/api/giris-yap', (req, res) => {
     const { kullanici_adi, sifre } = req.body;
     const sorgu = `SELECT * FROM kullanicilar WHERE kullanici_adi = ?`;
 
     db.get(sorgu, [kullanici_adi], (err, row) => {
         if (err) {
-            return res.status(500).json({ error: "Deftere bakarken hata çıktı aşkım! ❌" });
+            return res.status(500).json({ error: "Deftere bakarken hata çıktı! ❌" });
         }
         if (!row) {
-            return res.status(400).json({ error: "Böyle bir kullanıcı bulamadım aşkım, önce kayıt ol! ❌" });
+            return res.status(400).json({ error: "Böyle bir kullanıcı bulamadım, önce kayıt ol! ❌" });
         }
         if (row.sifre !== sifre) {
-            return res.status(400).json({ error: "Şifreni yanlış girdin aşkım, tekrar dene! ❌" });
+            return res.status(400).json({ error: "Şifreni yanlış girdin , tekrar dene! ❌" });
         }
-        // Giriş başarılı olduğunda department ve rol bilgisini de gönderiyoruz
+        // Giriş başarılı olduğunda tüm profil bilgilerini de gönderiyoruz
         res.json({
             message: `Harika! Tekrar hoş geldin ${kullanici_adi}! Girişin onaylandı. 🔑✨`,
             department: row.department,
-            rol: row.rol
+            rol: row.rol,
+            okul: row.okul,
+            bolum: row.bolum,
+            sinif: row.sinif,
+            is_yeri: row.is_yeri,
+            deneyim: row.deneyim
         });
     });
 });
