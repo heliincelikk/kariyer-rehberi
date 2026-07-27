@@ -1,201 +1,207 @@
-<!DOCTYPE html>
-<html lang="tr">
+<!DOCTYPE html> <!--en son html5 sürümü oldugu belirtilir.-->
+<html lang="tr"> <!--sayfanın tr oldugu belirtme-->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kariyer Rehberi - Geleceğini Keşfet</title>
-    <!-- FontAwesome kütüphanesi -->
+    <meta charset="UTF-8"> <!--karakter kodlamasını UTF-8 ayarlar böylece ğ ş vs kullanılabilir-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--syafanın mobil uyumlu/response olmasıiçin önemlidir.-->
+    <title>Kariyer Rehberi - Geleceğini Keşfet</title> <!--Sayfanın tarayıcıda görünen adıdır.-->
+    <!-- FontAwesome kütüphanesi -->  <!--Büyüteç tarzı simgeler burdan.Bir css sayfası cagrıldı.-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* ================= GENEL VE GECE MODU TEMASI ================= */
-        * {
+        * {  /*Sayfadaki tüm etiketleri seçer yıldız işareti*/
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 0;  /*Margin ve padding sayfada tarayıcıda varsayılan olan boşlukları sfıırlar.*/
+            box-sizing: border-box;   /*Kutuların içine bişey yazınca otomatik büyütür, tasarım bozulmaz. */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;   /*Yazı tipi*/
         }
 
         body {
-            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #020617, #1e293b);
-            background-size: 400% 400%;
-            animation: gradientBg 12s ease infinite;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #020617, #1e293b); /*Background arka plan, linear gradient geçiş demek, ..deg açı, hangi yöne gidicek yani. Geri kalan kısım da renkler */
+            background-size: 400% 400%; /*Bu boyut, normalde 100 olmalı ama biz geçişler rahat görünsün diye büyük yaptık.*/
+            animation: gradientBg 12s ease infinite; /*Hangi animasyon, kaç saniye sürsün, hangi hızla, ne kadar süre */
+            height: 100vh; /*Ekranın yüksekliği*/
+            display: flex;  /* flex aktif */ 
+            flex-direction: column;   /*Ana eksen dikey. */
+            overflow: hidden; /*Taşmaları sakla */
+            position: relative;  /* position: relative; Bu elementi referans noktası yapar. İçindeki position:absolute elemanlar artık bu kutuya göre konumlanır. Tek başına görünürde bir değişiklik oluşturmayabilir.
+*/
         }
 
         @keyframes gradientBg {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
-        }
+        }     /* @keyframes Animasyonun nasıl hareket edeceğini tanımlar.0% = başlangıç 50% = orta 100% = bitiş Burada arka plan soldan sağa kayıp tekrar sola dönüyor.Yani @keyframes aslında bir zaman çizelgesidir. Sen CSS'e "animasyonun şu anında bunu yap, sonra şunu yap" diye talimat veriyorsun.*/
 
         /* Navbar */
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background-color: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            z-index: 10;
+            display: flex; /* İçindeki elemanları Flexbox sistemiyle düzenler. Tek başına hizalama yapmaz, Flex'i aktif eder.*/
+            justify-content: space-between; /* Ana eksende elemanları dağıtır. İlk eleman sola, son eleman sağa gider.*/
+            align-items: center; /* Elemanları çapraz eksende ortalar.Böylece hepsi aynı hizada görünür.*/
+            padding: 20px 50px;/* İç boşluk bırakır. 20px üst-alt  50px sağ-sol*/
+            background-color: rgba(15, 23, 42, 0.6); /* Header'ın arka plan rengini belirler. rgba kullanıldığı için yarı saydam görünür. Böylece arkadaki hareketli gradient hafifçe görünmeye devam eder.*/
+            backdrop-filter: blur(12px); /* Navbar'ın arkasındaki görüntüyü bulanıklaştırır. Cam (Glassmorphism) efekti oluşturur.*/
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);/* Navbar'a yumuşak gölge ekler. Daha derin ve şık görünmesini sağlar.*/
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);/* Navbar'ın altına ince bir çizgi ekler. Sayfadan daha belirgin ayrılmasını sağlar.*/
+            z-index: 10;/* Elemanın hangi katmanda olacağını belirler. Sayı büyüdükçe öne gelir.z-index'in çalışması için elementin genellikle bir position değeri olması gerekir (relative, absolute, fixed veya sticky).*/
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #06b6d4;
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+        .logo { /*class'ı logo olan HTML elemanını etkiler */
+            font-size: 24px; /* Yazının boyutunu belirler. Değer büyüdükçe yazı büyür.*/
+            font-weight: bold; /* Yazının kalınlığını belirler. bold = kalın yazı (yaklaşık 700).*/
+            color: #06b6d4;/* Yazının rengini belirler. Sadece metni etkiler.*/
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);/* Yazıya gölge/parlama efekti verir. İlk değer = sağ-sol kayma İkinci değer = yukarı-aşağı kayma Üçüncü değer = bulanıklık (parlama miktarı) Son kısım = gölgenin rengi*/
         }
 
-        .auth-buttons button {
-            padding: 10px 24px;
-            margin-left: 10px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .auth-buttons button { /*auth-buttons class'ının içindeki tüm button elemanlarını seç. */
+            padding: 10px 24px; /* Butonun içine boşluk ekler. 10px üst-alt 24px sağ-sol*/
+            margin-left: 10px;/* Sol tarafta dış boşluk bırakır. Butonların birbirine yapışmasını önler.*/
+            border: none;/* Butonun kenarlığını kaldırır. */
+            border-radius: 25px;/* Butonun köşelerini yuvarlatır. Değer büyüdükçe köşeler daha yuvarlak olur.*/
+            cursor: pointer; /* Fare butonun üzerine gelince imleci el işaretine çevirir.*/
+            font-weight: 600; /* Yazıyı orta kalın yapar. */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Özellikler değiştiğinde geçişi yumuşatır. all = tüm özellikler 0.3s = geçiş süresi cubic-bezier = geçişin hız şekli*/
         }
 
-        .login-btn {
-            background-color: transparent;
-            color: #06b6d4;
-            border: 2px solid #06b6d4 !important;
+        .login-btn {  /*Class'ı login-btn olan elementi seç.*/
+            background-color: transparent; /* Butonun arka planını şeffaf yapar. */
+            color: #06b6d4;/* Buton yazısının rengini belirler. */
+            border: 2px solid #06b6d4 !important; /* Butona 2px kalınlığında mavi kenarlık ekler. !important bu kuralın öncelikli uygulanmasını sağlar.*/
         }
 
-        .login-btn:hover {
-            background-color: #06b6d4;
-            color: #0f172a;
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        .login-btn:hover { /*Fare butonun üzerine geldiğinde..." */
+            background-color: #06b6d4; /*Normalde buton şeffaftı. Fare gelince mavi oluyor. */
+            color: #0f172a; /*Şimdi yazı rengi değişiyor. Çünkü arka plan mavi oldu */
+            transform: translateY(-2px); /* Butonu 2px yukarı taşır. Hover sırasında hareket efekti verir.*/
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4); /* Butona mavi gölge/parlama ekler. Hover sırasında daha dikkat çekici görünmesini sağlar.*/
         }
 
         .register-btn {
             background-color: #06b6d4;
             color: #0f172a;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3); .register-btn {
+            background-color: #06b6d4;
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3); /* box-shadow 1. değer = X ekseni (sağ-sol) 2. değer = Y ekseni (yukarı-aşağı) 3. değer = Bulanıklık 4. değer = Gölgenin rengi*/
         }
 
         .register-btn:hover {
             background-color: #22d3ee;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+        
         }
+    }
 
         /* Arka Plandaki İkonlar */
         .marquee-container {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%) rotate(-5deg);
-            width: 120%;
-            overflow: hidden;
-            white-space: nowrap;
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: 1;
+            position: absolute; /* Elemanı normal akıştan çıkarır. top, left gibi özelliklerle istediğimiz yere yerleştirebiliriz.*/
+            top: 50%; /* Üstten başlayarak ekranın %50'sine git.*/
+            left: 0; /*Sol kenardan başla. */
+            transform: translateY(-50%) rotate(-5deg); /* translateY(-50%) Elemanı kendi yüksekliğinin yarısı kadar yukarı taşır. Böylece tam ortalanır. rotate(-5deg) Elemanı 5 derece sola doğru döndürür.*/
+            width: 120%; /* Konteyneri ekranın %120'si kadar geniş yapar. Kayma animasyonunda boşluk oluşmasını önler.*/
+            overflow: hidden; /* Kutunun dışına taşan kısmı gizler. */
+            white-space: nowrap; /* İçerik tek satırda kalır. Alt satıra geçmez.*/
+            opacity: 0.15; /* Elemanı yarı saydam yapar. 0 = görünmez 1 = tamamen görünür*/
+            pointer-events: none; /* Fare tıklamalarını engeller. Kullanıcı ikonlara değil, arkadaki butonlara tıklayabilir.*/
+            z-index: 1; /*Bu ikonlar arkada duracak. */
         }
 
         .marquee-content {
-            display: inline-block;
-            animation: marquee 22s linear infinite;
+            display: inline-block; /*Bu satırın amacı: İçeriğin tek parça gibi davranmasını sağlamak. Animasyon yapılırken bütün ikonlar birlikte hareket ediyor. */
+            animation: marquee 22s linear infinite; /*22 saniye sürsün, düz gitsin, sonsuz olsun */
         }
 
-        .marquee-content i {
-            font-size: 110px;
-            margin: 0 50px;
+        .marquee-content i { /* <i>/i/> etiketlerini seçer */
+            font-size: 110px; /*İkonları çok büyük yapıyor. */
+            margin: 0 50px; /*Birbirlerine yapışmasınlar diye */
             color: #06b6d4;
-            text-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.2); /*Rengin saydamlığını ayarlar. rgba */
         }
 
         @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
+            0% { transform: translateX(0%); }   /* Animasyonun başlangıcı.Eleman ilk konumunda durur.*/
+            100% { transform: translateX(-50%); } /* Animasyon sonunda ikonlar kendi genişliğinin %50'si kadar sola kayar.*/
         }
 
         /* Kahraman Alanı */
-        .hero-section {
-            flex: 1;
+        .hero-section { /*Frontend bilgisi: Bir web sitesinin kullanıcıya ilk gösterdiği büyük tanıtım alanına "Hero Section" denir. */
+            flex: 1; /* Flex kutusunda kalan boş alanı doldurur. */
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            z-index: 5;
+            flex-direction: column; /*Dikey eksen ana eksen */
+            justify-content: center; /*Dilkey ekseni ortala en üst orta en alt */
+            align-items: center; /*Yatay ekseni ortala */
+            text-align: center; /*sadece metni ortala */
+            padding: 20px; /*iç boşluk */
+            z-index: 5; /*navbar-hero-ikonlar sırasıya katmanlar böyle */
         }
 
-        .hero-section h1 {
-            font-size: 58px;
-            color: #ffffff;
-            margin-bottom: 20px;
-            font-weight: 800;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.3s forwards;
+        .hero-section h1 { /*<h1>/</h1> seçer */
+            font-size: 58px; /* Büyük başlık*/
+            color: #ffffff; /* beyaz renk */
+            margin-bottom: 20px; /*Boşluk bırakıyor paragraf ve başlık yapışmıyor */
+            font-weight: 800; /*kalın yazı */
+            opacity: 0; /*saydam */
+            animation: fadeInUp 1s ease 0.3s forwards; /* Başlığı görünmez başlatır. fadeInUp animasyonunu uygular. 0.3 saniye bekler. 1 saniyede tamamlanır. Son hali korunur.*/
         }
 
-        .hero-section h1 span {
+        .hero-section h1 span {  /* h1 in içinden bir kısım seçmiş, rengini mavi yapıp gölgelendirmiş*/
             color: #06b6d4;
             text-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
         }
 
         .description-text {
             font-size: 20px;
-            color: #cbd5e1;
-            max-width: 800px;
-            line-height: 1.8;
+            color: #cbd5e1; /*yazının rengi */
+            max-width: 800px;/* Kutunun en fazla 800px genişliğinde olmasını sağlar.Büyük ekranlarda yazının çok uzamasını önler.*/
+            line-height: 1.8; /* Satırlar arasındaki boşluğu ayarlar. Büyük değer = daha ferah görünüm.*/
             margin-bottom: 45px;
             background-color: rgba(30, 41, 59, 0.5);
             padding: 30px 40px;
             border-radius: 20px;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(6, 182, 212, 0.15);
+            backdrop-filter: blur(8px);/* Kutunun arkasındaki görüntüyü bulanıklaştırır. Cam efekti oluşturur.*/
+            border: 1px solid rgba(6, 182, 212, 0.15); /*solid düz çizgi */
             opacity: 0;
             animation: fadeInUp 1s ease 0.8s forwards;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
-        .cta-btn {
+        .cta-btn { /*Call To Action: eylem çağırma butonu, kullanıcıyı birşey yapmaya teşvik eden buton */
             background-color: #06b6d4;
             color: #0f172a;
-            padding: 20px 50px;
+            padding: 20px 50px; /*20 üst alt, 50 sağ sol */
             font-size: 20px;
             font-weight: bold;
             border: none;
             border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
+            cursor: pointer; /*cursor el işareti */
+            text-decoration: none; /* Yazının varsayılan süslemesini kaldırır. Linklerde alt çizgiyi kaldırmak için sık kullanılır.*/
             opacity: 0;
-            animation: fadeInUp 1s ease 1.3s forwards, pulse 2s infinite 2.3s;
-            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 1.3s forwards, pulse 2s infinite 2.3s; /*İki animasyon var */
+            transition: all 0.3s ease; /*hover değişimlerini yumuşatıyor. */
             box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
-            display: inline-block;
+            display: inline-block;/* Eleman içerik kadar yer kaplar. Ama width, height, padding gibi özellikleri kullanabiliriz.*/
         }
 
         .cta-btn:hover {
             background-color: #22d3ee;
             box-shadow: 0 15px 40px rgba(6, 182, 212, 0.6);
-            transform: scale(1.02);
+            transform: scale(1.02); /*fare üstüne gelince boyutu büyütür */
         }
 
-        .guest-link {
-            margin-top: 25px;
+        .guest-link { /*guest link class ına sahip eleman */
+            margin-top: 25px; /*linkin üstüne 25 px dış boşluk ekeledik */
             color: #94a3b8;
-            text-decoration: none;
+            text-decoration: none; /*Linklerin varsayılan alt yazısını kaldırır */
             font-size: 16px;
             font-weight: 600;
             opacity: 0;
-            animation: fadeInUp 1s ease 1.6s forwards;
+            animation: fadeInUp 1s ease 1.6s forwards; /*forwards → Animasyon bitince son halinde kalır. */
             transition: all 0.3s ease;
-            border-bottom: 1px dashed #94a3b8;
-            padding-bottom: 3px;
-            display: inline-block;
+            border-bottom: 1px dashed #94a3b8; /*1px → Çizginin kalınlığı dashed → Kesik çizgi #94a3b8 → Çizginin rengi */
+            padding-bottom: 3px; /*Yazı ile alt çizgi arasında 3px iç boşluk bırakır. */
+            display: inline-block; /*Link sadece içeriği kadar yer kaplar ama padding, transform gibi özellikler düzgün çalışır. */
         }
 
         .guest-link:hover {
@@ -207,23 +213,23 @@
 
         /* ================= AÇILIR PENCERE (MODAL) TASARIMI ================= */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; /* Elemanı ekranın kendisine sabitler. Sayfa kaydırılsa bile yerini değiştirmez. relative → Normal yerinde durur, referans olur. absolute → Bir elemana göre konumlanır. fixed → Ekrana sabitlenir.*/
+            top: 0; /*Ekranın en üstünden başla */
+            left: 0; /*Ekran sol kenardan başla */
+            width: 100%; /*Ekranı tamamen kapla */
+            height: 100%; /*Yüksekliği de ekran kadar olsun */ 
             background-color: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px); /*Arkadaki sayfa flu oluyor. */
             z-index: 100;
-            display: flex;
+            display: flex; 
             justify-content: center;
             align-items: center;
             opacity: 0;
-            pointer-events: none;
+            pointer-events: none; /*Kullanıcı modal kapalıyken buna tıklayamaz. */
             transition: all 0.4s ease;
         }
 
-        .modal-overlay.active {
+        .modal-overlay.active { /*Görünür oluyor. Tıklanabilir oluyor. */
             opacity: 1;
             pointer-events: auto;
         }
@@ -232,90 +238,94 @@
             background: #1e293b;
             border: 2px solid rgba(6, 182, 212, 0.3);
             border-radius: 25px;
-            width: 90%;
+            width: 90%; 
             max-width: 500px;
+            /*Küçük ekranlarda genişler, büyük ekranlarda ise en fazla 500px olur. */
             padding: 35px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            transform: scale(0.8) translateY(-30px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
+            transform: scale(0.8) translateY(-30px); /*Burada iki transform aynı anda uygulanıyor. */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /*cubic-bezier(...) = Animasyonun hızını çok daha ayrıntılı kontrol eder. */
+            position: relative; 
         }
 
-        .modal-overlay.active .modal-box {
-            transform: scale(1) translateY(0);
+        .modal-overlay.active .modal-box { /*Eğer modal-overlay aktifse, içindeki modal-box için şu kuralları uygula */
+           /* Modal açılınca */
+            transform: scale(1) /* Normal boyutuna gelir. */
+            translateY(0);/* Tam yerine iner. */
         }
 
-        .close-modal {
+        .close-modal { /*kapatma tuşunu tasarlıyor */
             position: absolute;
             top: 20px;
             right: 25px;
             font-size: 28px;
             color: #94a3b8;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease; /* Sadece renk değişimini yumuşak yapar. */
         }
 
         .close-modal:hover {
             color: #06b6d4;
         }
 
-        .modal-box h2 {
-            color: #ffffff;
-            margin-bottom: 25px;
+        .modal-box h2 { /*Modal kutusunun içindeki h2 başlığını seç.*/
+            color: #ffffff; 
+            margin-bottom: 25px; /*Başlığın altına boşluk bırakıyor. */
             font-size: 28px;
-            text-align: center;
+            text-align: center; /*Başlığı ortaya hizalıyor. */
         }
 
-        .modal-box h2 span {
+        .modal-box h2 span { /*Bu CSS sadece <span> içindeki yazıyı seçer. */
             color: #06b6d4;
         }
 
         /* Form Elemanları */
-        .form-group {
-            margin-bottom: 20px;
+        .form-group { /*form-group class'ına sahip her elemanı seçer.*/
+            margin-bottom: 20px; /*Alt tarafa 20px dış boşluk bırakır. */
         }
 
-        .form-group label {
-            display: block;
+        .form-group label { /*form-group'un içindeki bütün label etiketlerini seç. */
+            display: block; /*Label tek satırı kaplar. Input da alt satıra geçer. */
             color: #94a3b8;
-            font-weight: 600;
+            font-weight: 600; /*yazı kalınlığı. */
             margin-bottom: 8px;
             font-size: 14px;
         }
 
-        .form-group input {
-            width: 100%;
-            padding: 12px 18px;
+        .form-group input { /*form-group içindeki input kutularını seçer. */
+            width: 100%;/*Input bulunduğu alanın tamamını kaplasın. */
+            padding: 12px 18px; /*köşe yuvarlaklığı. */
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             background-color: rgba(15, 23, 42, 0.6);
             color: white;
             font-size: 16px;
-            outline: none;
+            outline: none; /* Tarayıcının varsayılan odak çerçevesini kaldırır.*/
             transition: all 0.3s ease;
         }
+        /*div, label ve inputu aynı grup içinde tutar. Form, kullanıcıdan bilgi almak için kullanılan yapıdır. */
 
-        .form-group input:focus {
+        .form-group input:focus { /* Kullanıcı input kutusuna tıkladığında çalışır.*/
             border-color: #06b6d4;
             box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
         }
 
-        .submit-btn {
-            width: 100%;
-            background-color: #06b6d4;
+        .submit-btn { /*submit-btn genellikle formu gönderen butondur. Yani formun en altındaki gönderme butonu. */
+            width: 100%; /*Bulunduğu kutunun (parent/div'in) tamamını kaplar. */
+            background-color: #06b6d4 ;
             color: #0f172a;
-            padding: 14px;
+            padding: 14px; /*butonun içindeki yazıyla kenarlar arasındaki mesafe. */
             border: none;
             border-radius: 15px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 15px;
+            margin-top: 15px; /*Butonun üstüne 15px dış boşluk bırakır. */
             box-shadow: 0 5px 15px rgba(6, 182, 212, 0.2);
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover { /*hover = Mouse üzerine geldiğinde. tıklamada active */
             background-color: #22d3ee;
             box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
             transform: translateY(-2px);
@@ -325,9 +335,10 @@
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
+            /* fadeInUp animasyonu Eleman aşağıdan yukarı gelirken aynı anda görünür hale gelir.*/
         }
 
-        @keyframes pulse {
+        @keyframes pulse { /* pulse animasyonu Elemanı hafif büyütüp tekrar eski boyutuna getirir.*/
             0% { transform: scale(1); }
             50% { transform: scale(1.04); }
             100% { transform: scale(1); }
@@ -337,9 +348,9 @@
 <body>
 
     <!-- ARKA PLANDA AKAN İKONLAR -->
-    <div class="marquee-container">
+    <div class="marquee-container"> <!--marquee-container isimli bir kutu oluştur.-->
         <div class="marquee-content">
-            <i class="fa-solid fa-laptop-code"></i>
+            <i class="fa-solid fa-laptop-code"></i> <!--<i> ne? Eskiden italic (eğik yazı) için kullanılırdı. Ama günümüzde çok sık ikon göstermek için kullanılır.fa-solid İkonun stilini belirler. -->
             <i class="fa-solid fa-microscope"></i>
             <i class="fa-solid fa-compass-drafting"></i>
             <i class="fa-solid fa-helmet-safety"></i>
@@ -363,79 +374,97 @@
 
     <!-- NAVBAR -->
     <header>
-        <div class="logo">Kariyer Rehberi</div>
-        <div class="auth-buttons">
-            <button class="login-btn" onclick="openModal('loginModal')">Giriş Yap</button>
+        <div class="logo">Kariyer Rehberi</div> <!--logo yazısını tutan kutudur -->
+        <div class="auth-buttons"><!--Bu divin görevi iki butonu aynı kutuya koymaktır.-->
+            <button class="login-btn" onclick="openModal('loginModal')">Giriş Yap</button> <!--Bu butona tıklanınca openModal isimli fonksiyonu çalıştır.-->
             <button class="register-btn" onclick="redirectToRegister()">Kayıt Ol</button>
         </div>
     </header>
 
     <!-- KAHRAMAN ALANI -->
-    <main class="hero-section">
-        <h1>Geleceğini <span>Şansa Bırakma</span> 🎯</h1>
+    <main class="hero-section"> <!--main sayfanın ana içeriğini tutar-->
+        <h1>Geleceğini <span>Şansa Bırakma</span> 🎯</h1> <!--h1,sayfanın ana başlığıdır. Span yazının sadece belirli kısmına stil vermek için kullanılır-->
         
-        <div class="description-text">
+        <div class="description-text"> <!--Büyük açıklama kutusudur-->
             "Hangi bölümü seçmeliyim, hangi alanda ilerlemem gerek?" diye düşünen bir öğrenciysen de doğru yerdesin; sektördeki tecrübelerini aktarıp geleceğin yeteneklerine ışık tutmak isteyen bir profesyonelsen de! 
-            <br><br>
-            <strong>İster mentör ol, ister destek al;</strong> kafandaki tüm belirsizlikleri silmek, yazılımdan sağlığa tüm alt dalları keşfetmek ve bu benzersiz kariyer ağının bir parçası olmak için aramıza katıl! 🚀
+            <br><br>  <!--break,br satır sonudur-->
+            <strong>İster mentör ol, ister destek al;</strong> kafandaki tüm belirsizlikleri silmek, yazılımdan sağlığa tüm alt dalları keşfetmek ve bu benzersiz kariyer ağının bir parçası olmak için aramıza katıl! 🚀  <!--strong,st yazıyı güçlü, kalın göstermek için kullanılır-->
         </div>
         
-        <button onclick="redirectToRegister()" class="cta-btn">Hemen Keşfetmeye Başla 🚀</button>
-        <a href="search.html" class="guest-link">Üye Olmadan Keşfetmeye Devam Et ➔</a>
+        <button onclick="redirectToRegister()" class="cta-btn">Hemen Keşfetmeye Başla 🚀</button> <!--CTA Button → Kullanıcıyı işlem yapmaya yönlendiren ana butondur.-->
+        <a href="search.html" class="guest-link">Üye Olmadan Keşfetmeye Devam Et ➔</a> <!--<a> → Başka bir sayfaya gitmek için kullanılan bağlantıdır.href → Gidilecek adresi belirtir.-->
     </main>
 
     <!-- ================= GİRİŞ YAP MODAL PENCERESİ ================= -->
     <div class="modal-overlay" id="loginModal">
         <div class="modal-box">
-            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span> <!--times, x karakterini gösterir-->
             <h2>Tekrar <span>Hoş Geldin!</span></h2>
             <form id="loginForm">
                 <div class="form-group">
                     <label>Kullanıcı Adı (Ad Soyad)</label>
-                    <input type="text" id="loginName" placeholder="Helin Çelik" required>
+                    <input type="text" id="loginName" placeholder="Helin Çelik" required> <!--input type, text-harf harf girilmesini yani yazı olarak girilmesini sağlar, placeholder varsayılan yazıdır. required alanın boş bırakılmasını engeller-->
                 </div>
                 <div class="form-group">
                     <label>Şifre</label>
-                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required> <!--type password, şifrenin ****** şeklinde girilmesini sağlar-->
                 </div>
-                <button type="submit" class="submit-btn">Giriş Yap</button>
+                <button type="submit" class="submit-btn">Giriş Yap</button> <!--submit,Formu gönderen butondur.-->
             </form>
         </div>
     </div>
 
     <!-- ================= JAVASCRIPT KODLARIMIZ ================= -->
     <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
+        function openModal(modalId) { /* Modal açma fonksiyonu */
+            document.getElementById(modalId).classList.add('active'); //document html sayfasını temsil eder.
+             /* Verilen id'ye sahip HTML elemanını bulur */
+            /* Bulduğu elemana "active" classını ekler */
+           /* Böylece CSS'deki .active özellikleri uygulanır ve modal görünür */
         }
 
-        function closeModal(modalId) {
+        function closeModal(modalId) { /* Modal kapatma fonksiyonu */
             document.getElementById(modalId).classList.remove('active');
+            /* Verilen id'ye sahip modalı bulur */
+            /* "active" classını kaldırır */
+            /* CSS tekrar eski haline döner ve modal gizlenir */
         }
 
         // Kayıt sayfasına yönlendirme fonksiyonu
         function redirectToRegister() {
-            window.location.href = 'register.html';
+            window.location.href = 'register.html';  /* Tarayıcıyı register.html sayfasına yönlendirir */
         }
-
+        /* Login (Giriş Yap) formunu seçer */
+       /* Form gönderilmeye çalışıldığında aşağıdaki fonksiyon çalışır */
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
-    event.preventDefault();
+    
+    event.preventDefault(); /* Formun sayfayı yenilemesini engeller */
+    
+    const adSoyad = document.getElementById('loginName').value; /* Kullanıcının yazdığı adı input kutusundan alır */
+    const sifre = document.getElementById('loginPassword').value; /* Kullanıcının yazdığı şifreyi input kutusundan alır */
 
-    const adSoyad = document.getElementById('loginName').value;
-    const sifre = document.getElementById('loginPassword').value;
-
-    try {
-        const cevap = await fetch('http://127.0.0.1:3000/api/giris-yap', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ kullanici_adi: adSoyad, sifre: sifre })
+    try { /* Hata oluşursa programın çökmesini önlemek için try bloğu kullanılır */
+        const cevap = await fetch('http://127.0.0.1:3000/api/giris-yap', {  /* Backend(API)'ye giriş isteği gönderir */
+            method: 'POST', /* İstek türü POST olduğu için sunucuya veri gönderilir */
+            headers: { 'Content-Type': 'application/json' },  /* Gönderilen verinin JSON formatında olduğunu belirtir */
+            body: JSON.stringify({ kullanici_adi: adSoyad, sifre: sifre })  /* Ad Soyad ve Şifre bilgilerini JSON formatına çevirip gönderir */
         });
+        //addEventListener() Belirtilen olayı dinler ve gerçekleşince çalışır 
+        //async İnternetten gelecek cevabı bekleyebilen fonksiyon oluşturur 
+        //function(event) Olay bilgisi. Butona mı basıldı form mu gönderildi gibi bilgiler
+        //const sabit değişken, bilgi tutmak. ad soyad gibi
+        // .value inputun içindeki değeri alır. 
+        // fetch sunucuya istek gönderir
+        // await, işlem tamamlanana kadar bekler, sunucudan cevap bekler.
+        //sunucuya veri göndermek için post methodu kullanılır
+        //headers sunucuya "Bunu JSON olarak yolluyorum." demek
+        //JSON.stringify() JS nesnesini JSON formatına çevirir.
 
-        const sonuc = await cevap.json();
+        const sonuc = await cevap.json(); /* Sunucudan (backend) gelen cevabı JSON formatına çevirir */
 
-        if (cevap.ok) {
-            alert(sonuc.message);
-            localStorage.setItem('kullaniciDisiplin', sonuc.department);
+        if (cevap.ok) { /* Eğer giriş işlemi başarılıysa */
+            alert(sonuc.message); /* Backend'den gelen başarı mesajını ekranda gösterir */
+            localStorage.setItem('kullaniciDisiplin', sonuc.department);   /* Kullanıcının bölüm/disiplin bilgisini tarayıcı hafızasına kaydeder */
             localStorage.setItem('kullaniciRolu', sonuc.rol);
             localStorage.setItem('kullaniciAdi', adSoyad);
             localStorage.setItem('kullaniciOkul', sonuc.okul || '');
@@ -443,13 +472,15 @@
             localStorage.setItem('kullaniciSinif', sonuc.sinif || '');
             localStorage.setItem('kullaniciIsYeri', sonuc.is_yeri || '');
             localStorage.setItem('kullaniciDeneyim', sonuc.deneyim || '');
-            window.location.replace(sonuc.rol === 'mentor' ? 'dashboard-mentor.html' : 'dashboard-ogrenci.html');
+            window.location.replace(sonuc.rol === 'mentor' ? 'dashboard-mentor.html' : 'dashboard-ogrenci.html');     /* Kullanıcının rolüne göre uygun panele yönlendirir */
         } else {
-            alert(sonuc.error);
+            alert(sonuc.error); /* Giriş başarısız olursa backend'den gelen hata mesajını gösterir */
         }
-    } catch (hata) {
-        console.error("Hata: ", hata);
-        alert("Backend sunucusu açık mı? Kontrol et! ❌");
+    } catch (hata) {/* Eğer sunucuya bağlanırken hata oluşursa */
+        console.error("Hata: ", hata);    /* Hatayı geliştirici konsoluna yazdırır */
+
+        alert("Backend sunucusu açık mı? Kontrol et! ❌"); 
+    /* Kullanıcıya uyarı mesajı gösterir */
     }
 });
     </script>
