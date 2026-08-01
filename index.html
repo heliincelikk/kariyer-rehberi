@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8"> <!--karakter kodlamasını UTF-8 ayarlar böylece ğ ş vs kullanılabilir-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--syafanın mobil uyumlu/response olmasıiçin önemlidir.-->
-    <title>Kariyer Rehberi - Geleceğini Keşfet</title> <!--Sayfanın tarayıcıda görünen adıdır.-->
+    <title>EngineersPath - Mühendislik Kariyer Rehberi</title> <!--Sayfanın tarayıcıda görünen adıdır.-->
     <!-- FontAwesome kütüphanesi -->  <!--Büyüteç tarzı simgeler burdan.Bir css sayfası cagrıldı.-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* ================= GENEL VE GECE MODU TEMASI ================= */
-        * {  /*Sayfadaki tüm etiketleri seçer yıldız işareti*/
+         html, body {
+            overflow-x: hidden;
+        }
+
+        * 
+
+        {  /*Sayfadaki tüm etiketleri seçer yıldız işareti*/
             margin: 0;
             padding: 0;  /*Margin ve padding sayfada tarayıcıda varsayılan olan boşlukları sfıırlar.*/
             box-sizing: border-box;   /*Kutuların içine bişey yazınca otomatik büyütür, tasarım bozulmaz. */
@@ -20,10 +26,10 @@
             background: linear-gradient(-45deg, #0f172a, #1e1b4b, #020617, #1e293b); /*Background arka plan, linear gradient geçiş demek, ..deg açı, hangi yöne gidicek yani. Geri kalan kısım da renkler */
             background-size: 400% 400%; /*Bu boyut, normalde 100 olmalı ama biz geçişler rahat görünsün diye büyük yaptık.*/
             animation: gradientBg 12s ease infinite; /*Hangi animasyon, kaç saniye sürsün, hangi hızla, ne kadar süre */
-            height: 100vh; /*Ekranın yüksekliği*/
+            min-height: 100vh; /*Ekranın yüksekliği*/
             display: flex;  /* flex aktif */ 
             flex-direction: column;   /*Ana eksen dikey. */
-            overflow: hidden; /*Taşmaları sakla */
+             overflow-y: auto; /*Taşmaları sakla */
             position: relative;  /* position: relative; Bu elementi referans noktası yapar. İçindeki position:absolute elemanlar artık bu kutuya göre konumlanır. Tek başına görünürde bir değişiklik oluşturmayabilir.
 */
         }
@@ -77,22 +83,18 @@
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.4); /* Butona mavi gölge/parlama ekler. Hover sırasında daha dikkat çekici görünmesini sağlar.*/
         }
 
-        .register-btn {
-            background-color: #06b6d4;
-            color: #0f172a;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3); .register-btn {
-            background-color: #06b6d4;
-            color: #0f172a;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3); /* box-shadow 1. değer = X ekseni (sağ-sol) 2. değer = Y ekseni (yukarı-aşağı) 3. değer = Bulanıklık 4. değer = Gölgenin rengi*/
-        }
-
-        .register-btn:hover {
-            background-color: #22d3ee;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
         
-        }
-    }
+    .register-btn {
+    background-color: #06b6d4;
+    color: #0f172a;
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+}
+
+.register-btn:hover {
+    background-color: #22d3ee;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+}
 
         /* Arka Plandaki İkonlar */
         .marquee-container {
@@ -374,7 +376,7 @@
 
     <!-- NAVBAR -->
     <header>
-        <div class="logo">Kariyer Rehberi</div> <!--logo yazısını tutan kutudur -->
+        <div class="logo">EngineersPath</div> <!--logo yazısını tutan kutudur -->
         <div class="auth-buttons"><!--Bu divin görevi iki butonu aynı kutuya koymaktır.-->
             <button class="login-btn" onclick="openModal('loginModal')">Giriş Yap</button> <!--Bu butona tıklanınca openModal isimli fonksiyonu çalıştır.-->
             <button class="register-btn" onclick="redirectToRegister()">Kayıt Ol</button>
@@ -383,13 +385,13 @@
 
     <!-- KAHRAMAN ALANI -->
     <main class="hero-section"> <!--main sayfanın ana içeriğini tutar-->
-        <h1>Geleceğini <span>Şansa Bırakma</span> 🎯</h1> <!--h1,sayfanın ana başlığıdır. Span yazının sadece belirli kısmına stil vermek için kullanılır-->
+        <h1>Mühendislik Kariyerini <span>Şansa Bırakma</span> 🎯</h1><!--h1,sayfanın ana başlığıdır. Span yazının sadece belirli kısmına stil vermek için kullanılır-->
         
-        <div class="description-text"> <!--Büyük açıklama kutusudur-->
-            "Hangi bölümü seçmeliyim, hangi alanda ilerlemem gerek?" diye düşünen bir öğrenciysen de doğru yerdesin; sektördeki tecrübelerini aktarıp geleceğin yeteneklerine ışık tutmak isteyen bir profesyonelsen de! 
-            <br><br>  <!--break,br satır sonudur-->
-            <strong>İster mentör ol, ister destek al;</strong> kafandaki tüm belirsizlikleri silmek, yazılımdan sağlığa tüm alt dalları keşfetmek ve bu benzersiz kariyer ağının bir parçası olmak için aramıza katıl! 🚀  <!--strong,st yazıyı güçlü, kalın göstermek için kullanılır-->
-        </div>
+       <div class="description-text">
+    <strong>EngineersPath</strong>, mühendislik öğrencileri ve mezunları için kurulmuş bir kariyer rehberliği platformudur. Yazılımdan makineye, elektrik-elektronikten inşaata, kimyadan havacılığa kadar tüm mühendislik dallarında "hangi alana yönelmeliyim?" sorusuna cevap arıyorsan doğru yerdesin.
+    <br><br>
+    <strong>İster mentör ol, ister destek al;</strong> sektördeki deneyimli mühendislerle bağlantı kur, kariyer testiyle sana en uygun alanı keşfet, ve mühendislik dünyasındaki yolculuğuna kendini tanıyarak başla! 🚀
+</div>
         
         <button onclick="redirectToRegister()" class="cta-btn">Hemen Keşfetmeye Başla 🚀</button> <!--CTA Button → Kullanıcıyı işlem yapmaya yönlendiren ana butondur.-->
         <a href="search.html" class="guest-link">Üye Olmadan Keşfetmeye Devam Et ➔</a> <!--<a> → Başka bir sayfaya gitmek için kullanılan bağlantıdır.href → Gidilecek adresi belirtir.-->

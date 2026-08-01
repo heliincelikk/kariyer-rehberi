@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kariyer Rehberi - Gelişmiş Kayıt Ol</title>
+    <title>EngineersPath - Mühendislik Kariyer Rehberi - Gelişmiş Kayıt Ol</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -166,8 +166,7 @@
                 <select id="regStatus" onchange="toggleFields()" required>
                     <option value="" disabled selected>Seçiniz...</option>
                     <option value="uni_ogrenci">Üniversite Öğrencisi</option>
-                    <option value="lise_hazirlik">Lise Mezunu / Üniversite Hazırlık</option>
-                    <option value="lise_ogrenci">Lise Öğrencisi</option>
+                    <option value="lise_ogrenci">Lise Öğrencisi/mezunu</option>
                     <option value="uni_mezun">Üniversite Mezunu</option>
                     <option value="mentor">Mentörlük Yapmak İstiyorum</option>
                 </select>
@@ -180,7 +179,7 @@
 
             <div class="form-group full-width hidden" id="departmentGroup">
                 <label id="departmentLabel">Bölüm</label>
-                <input type="text" id="regDepartment" placeholder="Örn: Tıp / Bilgisayar Mühendisliği">
+                <input type="text" id="regDepartment" placeholder="Örn: Bilgisayar Mühendisliği">
             </div>
 
             <div class="form-group full-width hidden" id="levelGroup">
@@ -192,8 +191,6 @@
                     <option value="2">2. Sınıf</option>
                     <option value="3">3. Sınıf</option>
                     <option value="4">4. Sınıf</option>
-                    <option value="5">5. Sınıf</option>
-                    <option value="6">6. Sınıf</option>
                 </select>
             </div>
 
@@ -224,73 +221,66 @@
     </div>
 
     <script>
-        function toggleFields() {
-            const status = document.getElementById('regStatus').value;
-            
-            const schoolGroup = document.getElementById('schoolGroup');
-            const schoolLabel = document.getElementById('schoolLabel');
-            const departmentGroup = document.getElementById('departmentGroup');
-            const departmentLabel = document.getElementById('departmentLabel');
-            const levelGroup = document.getElementById('levelGroup');
-            const workplaceGroup = document.getElementById('workplaceGroup');
-            const experienceGroup = document.getElementById('experienceGroup');
+       function toggleFields() {
+    const status = document.getElementById('regStatus').value;
+    
+    const schoolGroup = document.getElementById('schoolGroup');
+    const schoolLabel = document.getElementById('schoolLabel');
+    const departmentGroup = document.getElementById('departmentGroup');
+    const departmentLabel = document.getElementById('departmentLabel');
+    const levelGroup = document.getElementById('levelGroup');
+    const workplaceGroup = document.getElementById('workplaceGroup');
+    const experienceGroup = document.getElementById('experienceGroup');
 
-            schoolGroup.classList.add('hidden');
-            departmentGroup.classList.add('hidden');
-            levelGroup.classList.add('hidden');
-            workplaceGroup.classList.add('hidden');
-            experienceGroup.classList.add('hidden');
+    schoolGroup.classList.add('hidden');
+    departmentGroup.classList.add('hidden');
+    levelGroup.classList.add('hidden');
+    workplaceGroup.classList.add('hidden');
+    experienceGroup.classList.add('hidden');
 
-            document.getElementById('regSchool').required = false;
-            document.getElementById('regDepartment').required = false;
-            document.getElementById('regClassLevel').required = false;
-            document.getElementById('regWorkplace').required = false;
+    document.getElementById('regSchool').required = false;
+    document.getElementById('regDepartment').required = false;
+    document.getElementById('regClassLevel').required = false;
+    document.getElementById('regWorkplace').required = false;
 
-            if (status === 'uni_ogrenci') {
-                schoolGroup.classList.remove('hidden');
-                schoolLabel.innerText = "Okul Adı";
-                document.getElementById('regSchool').required = true;
+    if (status === 'uni_ogrenci') {
+        schoolGroup.classList.remove('hidden');
+        schoolLabel.innerText = "Okul Adı";
+        document.getElementById('regSchool').required = true;
 
-                departmentGroup.classList.remove('hidden');
-                departmentLabel.innerText = "Bölüm Adı";
-                document.getElementById('regDepartment').required = true;
+        departmentGroup.classList.remove('hidden');
+        departmentLabel.innerText = "Bölüm Adı";
+        document.getElementById('regDepartment').required = true;
 
-                levelGroup.classList.remove('hidden');
-                document.getElementById('regClassLevel').required = true;
+        levelGroup.classList.remove('hidden');
+        document.getElementById('regClassLevel').required = true;
 
-            } else if (status === 'uni_mezun') {
-                schoolGroup.classList.remove('hidden');
-                schoolLabel.innerText = "Mezun Olduğunuz Okul";
-                document.getElementById('regSchool').required = true;
+    } else if (status === 'lise_ogrenci') {
+        schoolGroup.classList.remove('hidden');
+        schoolLabel.innerText = "Lise / Mezun Olunan Lise";
+        document.getElementById('regSchool').required = true;
 
-                departmentGroup.classList.remove('hidden');
-                departmentLabel.innerText = "Mezun Olduğunuz Bölüm";
-                document.getElementById('regDepartment').required = true;
+    } else if (status === 'uni_mezun') {
+        schoolGroup.classList.remove('hidden');
+        schoolLabel.innerText = "Mezun Olduğunuz Okul";
+        document.getElementById('regSchool').required = true;
 
-            } else if (status === 'mentor') {
-                schoolGroup.classList.remove('hidden');
-                schoolLabel.innerText = "Mezun Olduğunuz Okul";
-                document.getElementById('regSchool').required = true;
+        departmentGroup.classList.remove('hidden');
+        departmentLabel.innerText = "Mezun Olduğunuz Bölüm";
+        document.getElementById('regDepartment').required = true;
 
-                departmentGroup.classList.remove('hidden');
-                departmentLabel.innerText = "Mezun Olduğunuz Bölüm";
-                document.getElementById('regDepartment').required = true;
+    } else if (status === 'mentor') {
+        schoolGroup.classList.remove('hidden');
+        schoolLabel.innerText = "Mezun Olduğunuz Okul";
+        document.getElementById('regSchool').required = true;
 
-                workplaceGroup.classList.remove('hidden');
-            }
-        }
+        departmentGroup.classList.remove('hidden');
+        departmentLabel.innerText = "Mezun Olduğunuz Bölüm";
+        document.getElementById('regDepartment').required = true;
 
-        function checkExperienceField() {
-            const workplaceVal = document.getElementById('regWorkplace').value.trim();
-            const experienceGroup = document.getElementById('experienceGroup');
-
-            if (workplaceVal.length > 0) {
-                experienceGroup.classList.remove('hidden');
-            } else {
-                experienceGroup.classList.add('hidden');
-                document.getElementById('regExperience').value = '';
-            }
-        }
+        workplaceGroup.classList.remove('hidden');
+    }
+}
 
        document.getElementById('registerForm').addEventListener('submit', async function(event) {
     event.preventDefault();

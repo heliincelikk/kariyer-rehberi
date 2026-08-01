@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kariyer Rehberi - Öğrenci Paneli</title>
+    <title>EngineersPath - Mühendislik Kariyer Rehberi</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -29,7 +29,11 @@
             flex-direction: column;
             padding: 30px 20px;
             z-index: 10;
+             overflow-y: auto;
         }
+        .sidebar::-webkit-scrollbar {
+    width: 0px;
+}
 
         .sidebar .brand {
             font-size: 22px;
@@ -312,13 +316,63 @@
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .alan-modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.alan-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.alan-modal-box {
+    background: #1e293b;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 550px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 40px;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.alan-modal-overlay.active .alan-modal-box {
+    transform: scale(1);
+}
+
+.alan-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 28px;
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.alan-modal-close:hover {
+    color: #06b6d4;
+}
     </style>
 </head>
 <body>
 
     <div class="sidebar">
         <div class="brand">
-            <i class="fa-solid fa-compass"></i> Kariyer Rehberi
+            <i class="fa-solid fa-compass"></i> EngineersPath - Mühendislik Kariyer Rehberi
         </div>
         <div class="menu-items">
             <div class="menu-item active" id="menu-panel" onclick="switchTab('panel')">
@@ -352,7 +406,7 @@
     <div class="main-content">
         
         <div class="welcome-bar">
-            <h1>Hoş Geldin, <span id="userNameSpan">Geleceğin Lideri!</span> 👋</h1>
+            <h1>Hoş Geldin, <span id="userNameSpan">Mühendis Adayı!</span> 👋</h1>
             <div class="user-badge" id="userBadgeMode">Yükleniyor...</div>
         </div>
 
@@ -384,29 +438,60 @@
             </div>
         </div>
 
+        
         <!-- SEKME 2: TÜM ALANLARI KEŞFET -->
-        <div class="tab-content" id="content-discover">
-            <div class="dashboard-grid">
-                <div class="premium-card">
-                    <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
-                    <h3>Mühendislik ve Teknoloji</h3>
-                    <p>Yazılım, Yapay Zeka, Siber Güvenlik, İnşaat ve Makine gibi tüm teknik mühendislik dallarını keşfet.</p>
-                    <a href="search.html" class="card-link">Keşfetmeye Başla ➔</a>
-                </div>
-                <div class="premium-card">
-                    <div class="card-icon"><i class="fa-solid fa-stethoscope"></i></div>
-                    <h3>Sağlık ve Tıp Bilimleri</h3>
-                    <p>Tıp uzmanlıkları, Diş Hekimliği, Eczacılık ve Hemşirelik gibi sağlık sektörünün tüm alt dallarını incele.</p>
-                    <a href="search.html" class="card-link">Keşfetmeye Başla ➔</a>
-                </div>
-                <div class="premium-card">
-                    <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
-                    <h3>Sosyal ve İdari Bilimler</h3>
-                    <p>Hukuk, Psikoloji, İşletme ve Uluslararası İlişkiler gibi popüler sosyal bölümlerin iş imkanlarını gör.</p>
-                    <a href="search.html" class="card-link">Keşfetmeye Başla ➔</a>
-                </div>
-            </div>
+<div class="tab-content" id="content-discover">
+    <div class="dashboard-grid">
+            <div class="premium-card" onclick="alanGoster('bilgisayar')" style="cursor:pointer;">
+            <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <h3>Yazılım / Bilgisayar-Yazılım Mühendisliği</h3>
+            <p>Backend, Frontend, Yapay Zeka, Siber Güvenlik gibi yazılım tabanlı kariyer yollarını keşfet.</p>
+           
         </div>
+            <div class="premium-card" onclick="alanGoster('elektrik')" style="cursor:pointer;">
+            <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+            <h3>Elektrik-Elektronik Mühendisliği</h3>
+            <p>Devre tasarımı, gömülü sistemler, enerji sistemleri ve otomasyon alanlarını incele.</p>
+           
+        </div>
+            <div class="premium-card" onclick="alanGoster('makine')" style="cursor:pointer;">
+            <div class="card-icon"><i class="fa-solid fa-gears"></i></div>
+            <h3>Makine Mühendisliği</h3>
+            <p>Tasarım, üretim, robotik ve termodinamik gibi alt alanlarda kariyer fırsatlarını gör.</p>
+        </div>
+            <div class="premium-card" onclick="alanGoster('endustri')" style="cursor:pointer;">
+            <div class="card-icon"><i class="fa-solid fa-sitemap"></i></div>
+            <h3>Endüstri Mühendisliği</h3>
+            <p>Süreç optimizasyonu, lojistik, veri analitiği ve üretim yönetimi alanlarını keşfet.</p>
+        </div>
+            <div class="premium-card" onclick="alanGoster('insaat')" style="cursor:pointer;">
+            <div class="card-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+            <h3>İnşaat Mühendisliği</h3>
+            <p>Yapı, altyapı, deprem mühendisliği ve proje yönetimi gibi alanları incele.</p>
+        </div>
+            <div class="premium-card" onclick="alanGoster('kimya')" style="cursor:pointer;">
+            <div class="card-icon"><i class="fa-solid fa-flask"></i></div>
+            <h3>Kimya Mühendisliği</h3>
+            <p>Süreç mühendisliği, malzeme geliştirme ve üretim sistemleri alanlarını keşfet.</p>
+        </div>
+            <div class="premium-card" onclick="alanGoster('biyomedikal')" style="cursor:pointer;">
+            <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+            <h3>Biyomedikal Mühendislik</h3>
+            <p>Tıbbi cihaz tasarımı, biyomekanik ve sağlık teknolojileri alanlarını incele.</p>
+        </div>
+
+            <div class="premium-card" onclick="alanGoster('havacilik')" style="cursor:pointer;">
+            <div class="card-icon"><i class="fa-solid fa-plane"></i></div>
+            <h3>Havacılık ve Uzay Mühendisliği</h3>
+            <p>Uçak tasarımı, uzay sistemleri ve havacılık teknolojileri alanlarını keşfet.</p>
+        </div>
+            <div class="premium-card" onclick="alanGoster('gemi')" style="cursor:pointer;">
+            <div class="card-icon"><i class="fa-solid fa-ship"></i></div>
+            <h3>Gemi ve Deniz Teknolojisi Mühendisliği</h3>
+            <p>Gemi tasarımı, deniz araçları işletmesi ve denizcilik teknolojilerini incele.</p>
+        </div>
+    </div>
+</div>
 
         <!-- SEKME 3: MENTÖRLÜK AĞI -->
         <div class="tab-content" id="content-mentor">
@@ -570,7 +655,54 @@
                 switchMentorView('mine');
             }
         }
-    </script>
+   const alanVerileri = {
+    bilgisayar: { baslik: "Yazılım / Bilgisayar Mühendisliği", icerik: "Bu alan, sistemlerin ve uygulamaların tasarlanıp geliştirilmesini kapsar. Backend, frontend, yapay zeka ve siber güvenlik gibi birçok alt dala ayrılır.", beceriler: "Node.js, Python, Java, SQL, Git", isImkanlari: "Yazılım Geliştirici, Backend/Frontend Developer, AI Engineer, Siber Güvenlik Uzmanı", maas: "25.000 - 90.000 TL (deneyime göre değişir)" },
+    elektrik: { baslik: "Elektrik-Elektronik Mühendisliği", icerik: "Devre tasarımı, enerji sistemleri, gömülü sistemler ve otomasyon bu alanın temel konularıdır.", beceriler: "MATLAB, PLC programlama, devre analizi", isImkanlari: "Elektronik Tasarım Mühendisi, Enerji Sistemleri Uzmanı, Otomasyon Mühendisi", maas: "22.000 - 70.000 TL (deneyime göre değişir)" },
+    makine: { baslik: "Makine Mühendisliği", icerik: "Tasarım, üretim, termodinamik ve robotik gibi konuları kapsar.", beceriler: "SolidWorks, AutoCAD, CAM yazılımları", isImkanlari: "Tasarım Mühendisi, Üretim Mühendisi, Robotik Mühendisi", maas: "22.000 - 65.000 TL (deneyime göre değişir)" },
+    endustri: { baslik: "Endüstri Mühendisliği", icerik: "Süreç optimizasyonu, lojistik, üretim yönetimi ve veri analitiği bu alanın odak noktalarıdır.", beceriler: "Excel/Power BI, süreç modelleme, istatistik", isImkanlari: "Süreç Mühendisi, Lojistik Uzmanı, İş Analisti", maas: "20.000 - 60.000 TL (deneyime göre değişir)" },
+    insaat: { baslik: "İnşaat Mühendisliği", icerik: "Yapı, altyapı, deprem mühendisliği ve proje yönetimi bu alanın temelini oluşturur.", beceriler: "AutoCAD, statik hesap, proje yönetimi", isImkanlari: "Şantiye Mühendisi, Statik Proje Mühendisi, Altyapı Uzmanı", maas: "20.000 - 60.000 TL (deneyime göre değişir)" },
+    kimya: { baslik: "Kimya Mühendisliği", icerik: "Süreç mühendisliği, malzeme geliştirme ve üretim sistemleri bu alanın konularıdır.", beceriler: "Laboratuvar teknikleri, süreç simülasyonu", isImkanlari: "Süreç Mühendisi, Kalite Kontrol Uzmanı, Ar-Ge Mühendisi", maas: "20.000 - 60.000 TL (deneyime göre değişir)" },
+    biyomedikal: { baslik: "Biyomedikal Mühendislik", icerik: "Tıbbi cihaz tasarımı, biyomekanik ve sağlık teknolojileri bu alanın odağıdır.", beceriler: "Sinyal işleme, cihaz tasarımı, biyomekanik", isImkanlari: "Tıbbi Cihaz Mühendisi, Ar-Ge Uzmanı, Klinik Mühendis", maas: "20.000 - 55.000 TL (deneyime göre değişir)" },
+    havacilik: { baslik: "Havacılık ve Uzay Mühendisliği", icerik: "Uçak tasarımı, uzay sistemleri ve havacılık teknolojileri bu alanın temel konularıdır.", beceriler: "Aerodinamik analiz, CAD, uçuş sistemleri", isImkanlari: "Tasarım Mühendisi, Uçuş Test Mühendisi, Sistem Mühendisi", maas: "25.000 - 75.000 TL (deneyime göre değişir)" },
+    gemi: { baslik: "Gemi ve Deniz Teknolojisi Mühendisliği", icerik: "Gemi tasarımı, deniz araçları işletmesi ve denizcilik teknolojileri bu alanın odağıdır.", beceriler: "Gemi tasarımı, hidrodinamik, denizcilik mevzuatı", isImkanlari: "Gemi İnşa Mühendisi, Deniz Araçları Uzmanı", maas: "20.000 - 55.000 TL (deneyime göre değişir)" }
+};
 
+function alanGoster(alan) {
+    const veri = alanVerileri[alan];
+    document.getElementById('alanModalBaslik').innerText = veri.baslik;
+    document.getElementById('alanModalIcerik').innerText = veri.icerik;
+    document.getElementById('alanModalBeceriler').innerText = veri.beceriler;
+    document.getElementById('alanModalIsImkanlari').innerText = veri.isImkanlari;
+    document.getElementById('alanModalMaas').innerText = veri.maas;
+    document.getElementById('alanModal').classList.add('active');
+}
+
+function alanModalKapat() {
+    document.getElementById('alanModal').classList.remove('active');
+}
+    </script>
+<div class="alan-modal-overlay" id="alanModal">
+    <div class="alan-modal-box">
+        <span class="alan-modal-close" onclick="alanModalKapat()">&times;</span>
+        <div class="card-icon" style="margin-bottom:20px;"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h2 id="alanModalBaslik" style="color:#fff; font-size:26px; margin-bottom:16px;"></h2>
+        <p id="alanModalIcerik" style="color:#cbd5e1; font-size:15px; line-height:1.7; margin-bottom:20px;"></p>
+
+        <div style="margin-bottom:16px;">
+            <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Aranan Beceriler</span>
+            <p id="alanModalBeceriler" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İş İmkanları</span>
+            <p id="alanModalIsImkanlari" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+        </div>
+
+        <div>
+            <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Maaş Aralığı</span>
+            <p id="alanModalMaas" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+        </div>
+    </div>
+</div>
 </body>
 </html>
