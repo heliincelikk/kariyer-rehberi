@@ -475,7 +475,13 @@
             localStorage.setItem('kullaniciSinif', sonuc.sinif || '');
             localStorage.setItem('kullaniciIsYeri', sonuc.is_yeri || '');
             localStorage.setItem('kullaniciDeneyim', sonuc.deneyim || '');
-            window.location.replace(sonuc.rol === 'mentor' ? 'dashboard-mentor.html' : 'dashboard-ogrenci.html');     /* Kullanıcının rolüne göre uygun panele yönlendirir */
+            let hedefSayfa = 'dashboard-ogrenci.html';
+if (sonuc.rol === 'mentor') {
+    hedefSayfa = 'dashboard-mentor.html';
+} else if (sonuc.durum === 'lise_ogrenci') {
+    hedefSayfa = 'dashboard-aday.html';
+}
+window.location.replace(hedefSayfa);     /* Kullanıcının rolüne ve durumuna göre uygun panele yönlendirir */    /* Kullanıcının rolüne göre uygun panele yönlendirir */
         } else {
             alert(sonuc.error); /* Giriş başarısız olursa backend'den gelen hata mesajını gösterir */
         }

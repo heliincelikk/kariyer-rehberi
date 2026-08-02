@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EngineersPath - Aday Paneli</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #020617;
+            color: #ffffff;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #0f172a;
+            border-right: 1px solid rgba(6, 182, 212, 0.15);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .sidebar .brand {
+            font-size: 22px;
+            font-weight: bold;
+            color: #06b6d4;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 18px;
+            color: #94a3b8;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            color: #ffffff;
+            background-color: rgba(6, 182, 212, 0.1);
+            border-left: 4px solid #06b6d4;
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+        }
+
+        .profile-section {
+            margin-top: 12px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .profile-section:hover {
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .welcome-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 20px;
+        }
+
+        .welcome-bar h1 {
+            font-size: 28px;
+        }
+
+        .welcome-bar h1 span {
+            color: #06b6d4;
+        }
+
+        .user-badge {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #06b6d4;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .premium-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-5px);
+            border-color: #06b6d4;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #06b6d4;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .premium-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .premium-card p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .subnav {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .subnav-btn {
+            background: transparent;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: #94a3b8;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subnav-btn:hover {
+            color: #ffffff;
+        }
+
+        .subnav-btn.active {
+            background-color: #06b6d4;
+            color: #0f172a;
+            border-color: #06b6d4;
+        }
+
+        .mentor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .mentor-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .mentor-card:hover {
+            border-color: #06b6d4;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.15);
+        }
+
+        .mentor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4, #1e1b4b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 15px auto;
+            border: 3px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .mentor-card h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .mentor-company {
+            font-size: 13px;
+            color: #06b6d4;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .mentor-info {
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .mentor-badge {
+            background: rgba(6, 182, 212, 0.1);
+            color: #06b6d4;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .request-btn {
+            width: 100%;
+            background-color: transparent;
+            color: #06b6d4;
+            border: 2px solid #06b6d4;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .request-btn:hover {
+            background-color: #06b6d4;
+            color: #0f172a;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .request-btn.sent {
+            background-color: #10b981 !important;
+            color: white !important;
+            border-color: #10b981 !important;
+            cursor: default;
+            box-shadow: none !important;
+        }
+
+        .empty-msg {
+            grid-column: 1 / -1;
+            color: #94a3b8;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .profile-card {
+            max-width: 500px;
+        }
+
+        .profile-field {
+            margin-bottom: 18px;
+        }
+
+        .profile-field label {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .profile-field p {
+            color: #f1f5f9;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Alan detay modalı */
+        .alan-modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .alan-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .alan-modal-box {
+            background: #1e293b;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 40px;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .alan-modal-overlay.active .alan-modal-box {
+            transform: scale(1);
+        }
+
+        .alan-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
+            color: #94a3b8;
+            cursor: pointer;
+        }
+
+        .alan-modal-close:hover {
+            color: #06b6d4;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-compass"></i> EngineersPath
+        </div>
+        <div class="menu-items">
+            <div class="menu-item active" id="menu-panel" onclick="switchTab('panel')">
+                <i class="fa-solid fa-chart-pie"></i> Kişiselleştirilmiş Panel
+            </div>
+            <div class="menu-item" id="menu-discover" onclick="switchTab('discover')">
+                <i class="fa-solid fa-globe"></i> Tüm Alanları Keşfet
+            </div>
+            <div class="menu-item" id="menu-uni" onclick="switchTab('uni')">
+                <i class="fa-solid fa-user-graduate"></i> Üniversiteli Öğrenciler 🎓
+            </div>
+            <div class="menu-item" id="menu-quiz" onclick="switchTab('quiz')">
+                <i class="fa-solid fa-clipboard-question"></i> Kariyer Testi 🎯
+            </div>
+            <div class="menu-item" id="menu-ai" onclick="switchTab('ai')">
+                <i class="fa-solid fa-robot"></i> Yapay Zeka Asistanı 🤖
+            </div>
+
+            <div class="profile-section" id="menu-profile" onclick="switchTab('profile')">
+                <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user"></i> Profilim</h4>
+                <p style="font-size: 12px; color: #94a3b8;">Lise Bilgim</p>
+            </div>
+            <a href="index.html" class="menu-item logout-btn" onclick="localStorage.clear()">
+                <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <div class="welcome-bar">
+            <h1>Hoş Geldin, <span id="userNameSpan">Geleceğin Mühendisi!</span> 👋</h1>
+            <div class="user-badge">Aday Modu</div>
+        </div>
+
+        <!-- SEKME 1: KİŞİSELLEŞTİRİLMİŞ PANEL -->
+        <div class="tab-content active" id="content-panel">
+            <div class="dashboard-grid">
+                <div class="premium-card">
+                    <div class="card-icon"><i class="fa-solid fa-route"></i></div>
+                    <h3>Mühendisliğe İlk Adımın</h3>
+                    <p>Hangi mühendislik dalının sana uygun olduğunu keşfetmek için kariyer testini çöz, ya da üniversiteli öğrencilerle konuş.</p>
+                    <a href="quiz.html" class="card-link" style="color:#06b6d4; text-decoration:none; font-weight:bold; font-size:14px;">Teste Başla ➔</a>
+                </div>
+                <div class="premium-card">
+                    <div class="card-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    <h3>Üniversiteli Öğrencilerle Konuş</h3>
+                    <p>Bölüm seçimi, üniversite hayatı ve sınav süreci hakkında gerçek üniversite öğrencilerinden bilgi al.</p>
+                </div>
+                <div class="premium-card">
+                    <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h3>Mühendislik Dallarını Keşfet</h3>
+                    <p>Yazılımdan inşaata, tüm mühendislik dallarını incele, hangisinin sana uygun olduğunu gör.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEKME 2: TÜM ALANLARI KEŞFET -->
+        <div class="tab-content" id="content-discover">
+            <div class="dashboard-grid">
+                <div class="premium-card" onclick="alanGoster('yazilim')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                    <h3>Yazılım / Bilgisayar Mühendisliği</h3>
+                    <p>Backend, Frontend, Yapay Zeka, Siber Güvenlik gibi yazılım tabanlı kariyer yollarını keşfet.</p>
+                </div>
+                <div class="premium-card" onclick="alanGoster('elektrik')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <h3>Elektrik-Elektronik Mühendisliği</h3>
+                    <p>Devre tasarımı, gömülü sistemler, enerji sistemleri ve otomasyon alanlarını incele.</p>
+                </div>
+                <div class="premium-card" onclick="alanGoster('makine')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-gears"></i></div>
+                    <h3>Makine Mühendisliği</h3>
+                    <p>Tasarım, üretim, robotik ve termodinamik gibi alt alanlarda kariyer fırsatlarını gör.</p>
+                </div>
+                <div class="premium-card" onclick="alanGoster('endustri')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-sitemap"></i></div>
+                    <h3>Endüstri Mühendisliği</h3>
+                    <p>Süreç optimizasyonu, lojistik, veri analitiği ve üretim yönetimi alanlarını keşfet.</p>
+                </div>
+                <div class="premium-card" onclick="alanGoster('insaat')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+                    <h3>İnşaat Mühendisliği</h3>
+                    <p>Yapı, altyapı, deprem mühendisliği ve proje yönetimi gibi alanları incele.</p>
+                </div>
+                <div class="premium-card" onclick="alanGoster('kimya')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-flask"></i></div>
+                    <h3>Kimya Mühendisliği</h3>
+                    <p>Süreç mühendisliği, malzeme geliştirme ve üretim sistemleri alanlarını keşfet.</p>
+                </div>
+                <div class="premium-card" onclick="alanGoster('biyomedikal')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <h3>Biyomedikal Mühendislik</h3>
+                    <p>Tıbbi cihaz tasarımı, biyomekanik ve sağlık teknolojileri alanlarını incele.</p>
+                </div>
+                <div class="premium-card" onclick="alanGoster('havacilik')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-plane"></i></div>
+                    <h3>Havacılık ve Uzay Mühendisliği</h3>
+                    <p>Uçak tasarımı, uzay sistemleri ve havacılık teknolojileri alanlarını keşfet.</p>
+                </div>
+                <div class="premium-card" onclick="alanGoster('gemi')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-ship"></i></div>
+                    <h3>Gemi ve Deniz Teknolojisi Mühendisliği</h3>
+                    <p>Gemi tasarımı, deniz araçları işletmesi ve denizcilik teknolojilerini incele.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEKME 3: ÜNİVERSİTELİ ÖĞRENCİLER -->
+        <div class="tab-content" id="content-uni">
+            <div class="subnav">
+                <button class="subnav-btn active" id="subnav-all" onclick="switchUniView('all')">Üniversiteliler</button>
+                <button class="subnav-btn" id="subnav-mine" onclick="switchUniView('mine')">İsteklerim</button>
+            </div>
+            <div class="mentor-grid">
+                <p id="mineEmptyMsg" style="display:none; grid-column: 1 / -1; color: #94a3b8; text-align:center;">Henüz bir üniversiteliye istek göndermedin.</p>
+                <div class="mentor-card">
+                    <div class="mentor-avatar">CB</div>
+                    <h3>Ceren Bulut</h3>
+                    <span class="mentor-company">İTÜ · Bilgisayar Mühendisliği, 3. Sınıf</span>
+                    <p class="mentor-info">"Bölüm seçimi, ilk sene dersleri ve staj süreci hakkında sorularını cevaplayabilirim!"</p>
+                    <span class="mentor-badge">Üniversite Öğrencisi</span>
+                    <button class="request-btn" onclick="sendUniRequest(this)">İstek Gönder</button>
+                </div>
+                <div class="mentor-card">
+                    <div class="mentor-avatar">BK</div>
+                    <h3>Berk Kaya</h3>
+                    <span class="mentor-company">ODTÜ · Makine Mühendisliği, 2. Sınıf</span>
+                    <p class="mentor-info">"Üniversite hayatı, ders yükü ve bölüm değişikliği süreci hakkında deneyimlerimi paylaşabilirim."</p>
+                    <span class="mentor-badge">Üniversite Öğrencisi</span>
+                    <button class="request-btn" onclick="sendUniRequest(this)">İstek Gönder</button>
+                </div>
+                <div class="mentor-card">
+                    <div class="mentor-avatar">NY</div>
+                    <h3>Nil Yıldız</h3>
+                    <span class="mentor-company">Boğaziçi · Elektrik-Elektronik Mühendisliği, 4. Sınıf</span>
+                    <p class="mentor-info">"Sınav sistemi, YKS sonrası tercih süreci ve üniversite yaşamı hakkında yardımcı olabilirim."</p>
+                    <span class="mentor-badge">Üniversite Öğrencisi</span>
+                    <button class="request-btn" onclick="sendUniRequest(this)">İstek Gönder</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEKME 4: YAPAY ZEKA ASİSTANI -->
+        <div class="tab-content" id="content-ai">
+            <div class="premium-card" style="max-width: 500px;">
+                <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+                <h3>Yapay Zeka Kariyer Asistanı</h3>
+                <p>Bu bölüm yakında aktif olacak. İleride buraya, mühendislik dalları hakkında sorularını yanıtlayan bir yapay zeka asistanı entegre edeceğiz.</p>
+            </div>
+        </div>
+
+        <!-- SEKME 5: PROFİLİM -->
+        <div class="tab-content" id="content-profile">
+            <div class="premium-card profile-card">
+                <div class="card-icon"><i class="fa-solid fa-user"></i></div>
+                <h3>Profilim</h3>
+                <div class="profile-field">
+                    <label>Lise / Mezun Olunan Lise</label>
+                    <p id="profOkul">—</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Alan Detay Modalı -->
+    <div class="alan-modal-overlay" id="alanModal">
+        <div class="alan-modal-box">
+            <span class="alan-modal-close" onclick="alanModalKapat()">&times;</span>
+            <div class="card-icon" style="margin-bottom:20px;"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h2 id="alanModalBaslik" style="color:#fff; font-size:26px; margin-bottom:16px;"></h2>
+            <p id="alanModalIcerik" style="color:#cbd5e1; font-size:15px; line-height:1.7; margin-bottom:20px;"></p>
+            <div style="margin-bottom:16px;">
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Aranan Beceriler</span>
+                <p id="alanModalBeceriler" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
+            <div style="margin-bottom:16px;">
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İş İmkanları</span>
+                <p id="alanModalIsImkanlari" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
+            <div style="margin-bottom:16px;">
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Maaş Aralığı</span>
+                <p id="alanModalMaas" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
+            <div>
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İstihdam Oranı</span>
+                <p id="alanModalIstihdam" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('profOkul').innerText = localStorage.getItem('kullaniciOkul') || "— (girilmemiş)";
+        });
+
+        function switchTab(tabName) {
+            if (tabName === 'quiz') {
+                window.location.href = 'quiz.html';
+                return;
+            }
+            const tabs = ['panel', 'discover', 'uni', 'ai', 'profile'];
+            tabs.forEach(t => {
+                document.getElementById('content-' + t).classList.remove('active');
+                const menuEl = document.getElementById('menu-' + t);
+                if (menuEl) menuEl.classList.remove('active');
+            });
+            document.getElementById('content-' + tabName).classList.add('active');
+            const activeMenuEl = document.getElementById('menu-' + tabName);
+            if (activeMenuEl) activeMenuEl.classList.add('active');
+        }
+
+        function switchUniView(view) {
+            document.getElementById('subnav-all').classList.remove('active');
+            document.getElementById('subnav-mine').classList.remove('active');
+            document.getElementById('subnav-' + view).classList.add('active');
+
+            const cards = document.querySelectorAll('#content-uni .mentor-card');
+            let anySent = false;
+
+            cards.forEach(card => {
+                const btn = card.querySelector('.request-btn');
+                const isSent = btn.classList.contains('sent');
+                if (isSent) anySent = true;
+
+                if (view === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = isSent ? 'block' : 'none';
+                }
+            });
+
+            const emptyMsg = document.getElementById('mineEmptyMsg');
+            emptyMsg.style.display = (view === 'mine' && !anySent) ? 'block' : 'none';
+        }
+
+        function sendUniRequest(buttonElement) {
+            if (buttonElement.classList.contains('sent')) {
+                buttonElement.classList.remove('sent');
+                buttonElement.innerHTML = 'İstek Gönder';
+                alert("✉️ İsteğini geri çektin.");
+            } else {
+                buttonElement.classList.add('sent');
+                buttonElement.innerHTML = '<i class="fa-solid fa-circle-check"></i> İstek Gönderildi!';
+                alert("🎉 İstek gönderildi! Üniversiteli öğrenci onayladığında bağlantı kurulacak.");
+            }
+            if (document.getElementById('subnav-mine').classList.contains('active')) {
+                switchUniView('mine');
+            }
+        }
+
+        const alanVerileri = {
+            yazilim: { baslik: "Yazılım / Bilgisayar Mühendisliği", icerik: "Bu alan, sistemlerin ve uygulamaların tasarlanıp geliştirilmesini kapsar. Backend, frontend, yapay zeka ve siber güvenlik gibi birçok alt dala ayrılır.", beceriler: "Node.js, Python, Java, SQL, Git", isImkanlari: "Yazılım Geliştirici, Backend/Frontend Developer, AI Engineer, Siber Güvenlik Uzmanı", maas: "25.000 - 90.000 TL (deneyime göre değişir)", istihdam: "Yüksek — sektörde talep sürekli artıyor" },
+            elektrik: { baslik: "Elektrik-Elektronik Mühendisliği", icerik: "Devre tasarımı, enerji sistemleri, gömülü sistemler ve otomasyon bu alanın temel konularıdır.", beceriler: "MATLAB, PLC programlama, devre analizi", isImkanlari: "Elektronik Tasarım Mühendisi, Enerji Sistemleri Uzmanı, Otomasyon Mühendisi", maas: "22.000 - 70.000 TL (deneyime göre değişir)", istihdam: "Yüksek — enerji ve otomasyon sektörlerinde istikrarlı talep" },
+            makine: { baslik: "Makine Mühendisliği", icerik: "Tasarım, üretim, termodinamik ve robotik gibi konuları kapsar.", beceriler: "SolidWorks, AutoCAD, CAM yazılımları", isImkanlari: "Tasarım Mühendisi, Üretim Mühendisi, Robotik Mühendisi", maas: "22.000 - 65.000 TL (deneyime göre değişir)", istihdam: "Orta-Yüksek — üretim sektörüne bağlı, sanayi bölgelerinde güçlü" },
+            endustri: { baslik: "Endüstri Mühendisliği", icerik: "Süreç optimizasyonu, lojistik, üretim yönetimi ve veri analitiği bu alanın odak noktalarıdır.", beceriler: "Excel/Power BI, süreç modelleme, istatistik", isImkanlari: "Süreç Mühendisi, Lojistik Uzmanı, İş Analisti", maas: "20.000 - 60.000 TL (deneyime göre değişir)", istihdam: "Yüksek — hemen her sektörde aranıyor" },
+            insaat: { baslik: "İnşaat Mühendisliği", icerik: "Yapı, altyapı, deprem mühendisliği ve proje yönetimi bu alanın temelini oluşturur.", beceriler: "AutoCAD, statik hesap, proje yönetimi", isImkanlari: "Şantiye Mühendisi, Statik Proje Mühendisi, Altyapı Uzmanı", maas: "20.000 - 60.000 TL (deneyime göre değişir)", istihdam: "Orta — inşaat sektörünün ekonomik dalgalanmalarına duyarlı" },
+            kimya: { baslik: "Kimya Mühendisliği", icerik: "Süreç mühendisliği, malzeme geliştirme ve üretim sistemleri bu alanın konularıdır.", beceriler: "Laboratuvar teknikleri, süreç simülasyonu", isImkanlari: "Süreç Mühendisi, Kalite Kontrol Uzmanı, Ar-Ge Mühendisi", maas: "20.000 - 60.000 TL (deneyime göre değişir)", istihdam: "Orta — kimya/ilaç/gıda sektörlerinde istikrarlı" },
+            biyomedikal: { baslik: "Biyomedikal Mühendislik", icerik: "Tıbbi cihaz tasarımı, biyomekanik ve sağlık teknolojileri bu alanın odağıdır.", beceriler: "Sinyal işleme, cihaz tasarımı, biyomekanik", isImkanlari: "Tıbbi Cihaz Mühendisi, Ar-Ge Uzmanı, Klinik Mühendis", maas: "20.000 - 55.000 TL (deneyime göre değişir)", istihdam: "Orta — gelişmekte olan, büyüme potansiyeli yüksek bir alan" },
+            havacilik: { baslik: "Havacılık ve Uzay Mühendisliği", icerik: "Uçak tasarımı, uzay sistemleri ve havacılık teknolojileri bu alanın temel konularıdır.", beceriler: "Aerodinamik analiz, CAD, uçuş sistemleri", isImkanlari: "Tasarım Mühendisi, Uçuş Test Mühendisi, Sistem Mühendisi", maas: "25.000 - 75.000 TL (deneyime göre değişir)", istihdam: "Orta — sınırlı sayıda büyük firma, rekabet yüksek" },
+            gemi: { baslik: "Gemi ve Deniz Teknolojisi Mühendisliği", icerik: "Gemi tasarımı, deniz araçları işletmesi ve denizcilik teknolojileri bu alanın odağıdır.", beceriler: "Gemi tasarımı, hidrodinamik, denizcilik mevzuatı", isImkanlari: "Gemi İnşa Mühendisi, Deniz Araçları Uzmanı", maas: "20.000 - 55.000 TL (deneyime göre değişir)", istihdam: "Orta — kıyı bölgelerinde ve tersanelerde yoğunlaşmış" }
+        };
+
+        function alanGoster(alan) {
+            const veri = alanVerileri[alan];
+            document.getElementById('alanModalBaslik').innerText = veri.baslik;
+            document.getElementById('alanModalIcerik').innerText = veri.icerik;
+            document.getElementById('alanModalBeceriler').innerText = veri.beceriler;
+            document.getElementById('alanModalIsImkanlari').innerText = veri.isImkanlari;
+            document.getElementById('alanModalMaas').innerText = veri.maas;
+            document.getElementById('alanModalIstihdam').innerText = veri.istihdam;
+            document.getElementById('alanModal').classList.add('active');
+        }
+
+        function alanModalKapat() {
+            document.getElementById('alanModal').classList.remove('active');
+        }
+    </script>
+
+</body>
+</html>

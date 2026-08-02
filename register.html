@@ -339,13 +339,18 @@
         });
 
         const sonuc = await cevap.json();
-
-        if (cevap.ok) {
-            alert(sonuc.message);
-            window.location.replace(rol === 'mentor' ? 'dashboard-mentor.html' : 'dashboard-ogrenci.html');
-        } else {
-            alert(sonuc.error);
+if (cevap.ok) {
+        alert(sonuc.message);
+        let hedefSayfa = 'dashboard-ogrenci.html';
+        if (rol === 'mentor') {
+            hedefSayfa = 'dashboard-mentor.html';
+        } else if (durum === 'lise_ogrenci') {
+            hedefSayfa = 'dashboard-aday.html';
         }
+        window.location.replace(hedefSayfa);
+    } else {
+        alert(sonuc.error);
+    }
     } catch (hata) {
         console.error("Hata: ", hata);
         alert("Backend sunucusu çalışmıyor mu? Kontrol et! ❌");

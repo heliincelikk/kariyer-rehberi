@@ -496,9 +496,9 @@
         <!-- SEKME 3: MENTÖRLÜK AĞI -->
         <div class="tab-content" id="content-mentor">
             <div class="mentor-subnav">
-                <button class="subnav-btn active" id="subnav-all" onclick="switchMentorView('all')">Mentörler</button>
-                <button class="subnav-btn" id="subnav-mine" onclick="switchMentorView('mine')">Mentörlerim</button>
-            </div>
+    <button class="subnav-btn active" id="subnav-all" onclick="switchMentorView('all')">Mentörler</button>
+    <button class="subnav-btn" id="subnav-mine" onclick="switchMentorView('mine')">Mentörlerim</button>
+</div>
             <div class="mentor-grid">
                 <p id="mineEmptyMsg" style="display:none; grid-column: 1 / -1; color: #94a3b8; text-align:center;">Henüz bir mentöre istek göndermedin. "Mentörler" sekmesinden birini seçebilirsin.</p>
                 <div class="mentor-card">
@@ -616,28 +616,32 @@
 
         // YENİ: Mentörler / Mentörlerim geçişi
         function switchMentorView(view) {
-            document.getElementById('subnav-all').classList.remove('active');
-            document.getElementById('subnav-mine').classList.remove('active');
-            document.getElementById('subnav-' + view).classList.add('active');
+    document.getElementById('subnav-all').classList.remove('active');
+    document.getElementById('subnav-mine').classList.remove('active');
+    document.getElementById('subnav-' + view).classList.add('active');
 
-            const cards = document.querySelectorAll('#content-mentor .mentor-card');
-            let anySent = false;
+    const cards = document.querySelectorAll('#content-mentor .mentor-card');
+    let anySent = false;
 
-            cards.forEach(card => {
-                const btn = card.querySelector('.request-btn');
-                const isSent = btn.classList.contains('sent');
-                if (isSent) anySent = true;
+    cards.forEach(card => {
+        const btn = card.querySelector('.request-btn');
+        const isSent = btn.classList.contains('sent');
+        if (isSent) anySent = true;
 
-                if (view === 'all') {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = isSent ? 'block' : 'none';
-                }
-            });
+        if (view === 'all') {
+            card.style.display = 'block';
+        } else {
+            card.style.display = isSent ? 'block' : 'none';
+        }
+    });
+
+    const emptyMsg = document.getElementById('mineEmptyMsg');
+    emptyMsg.style.display = (view === 'mine' && !anySent) ? 'block' : 'none';
+};
 
             const emptyMsg = document.getElementById('mineEmptyMsg');
             emptyMsg.style.display = (view === 'mine' && !anySent) ? 'block' : 'none';
-        }
+        
 
         function sendMentorRequest(buttonElement) {
             if (buttonElement.classList.contains('sent')) {
