@@ -468,6 +468,7 @@
             alert(sonuc.message); /* Backend'den gelen başarı mesajını ekranda gösterir */
             localStorage.setItem('kullaniciDisiplin', sonuc.department);   /* Kullanıcının bölüm/disiplin bilgisini tarayıcı hafızasına kaydeder */
             localStorage.setItem('kullaniciRolu', sonuc.rol);
+            localStorage.setItem('kullaniciDurumu', sonuc.durum);
             localStorage.setItem('kullaniciAdi', adSoyad);
             localStorage.setItem('kullaniciOkul', sonuc.okul || '');
             localStorage.setItem('kullaniciBolum', sonuc.bolum || '');

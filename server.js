@@ -29,6 +29,7 @@ db.serialize(() => {
         kullanici_adi TEXT,
         department TEXT,
         rol TEXT,
+        durum TEXT,
         okul TEXT,
         bolum TEXT,
         sinif TEXT,
@@ -40,19 +41,18 @@ db.serialize(() => {
 
 // 🤵 KAYIT OL API KURALI (profil bilgileri de karşılanıyor 📦)
 app.post('/api/kayit-ol', (req, res) => {
-    const { kullanici_adi, department, rol, okul, bolum, sinif, is_yeri, deneyim, sifre } = req.body;
+    const { kullanici_adi, department, rol, durum, okul, bolum, sinif, is_yeri, deneyim, sifre } = req.body;
     const sorgu = `INSERT INTO kullanicilar 
-        (kullanici_adi, department, rol, okul, bolum, sinif, is_yeri, deneyim, sifre) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        (kullanici_adi, department, rol, durum, okul, bolum, sinif, is_yeri, deneyim, sifre) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    db.run(sorgu, [kullanici_adi, department, rol, okul, bolum, sinif, is_yeri, deneyim, sifre], function(err) {
+    db.run(sorgu, [kullanici_adi, department, rol, durum, okul, bolum, sinif, is_yeri, deneyim, sifre], function(err) {
         if (err) {
-            return res.status(400).json({ error: "Bu kullanıcı adı zaten kapılmış! ❌" });
+            return res.status(400).json({ error: "Bu kullanıcı adı zaten kapılmış ! ❌" });
         }
-        res.json({ message: "Harika! Başarıyla kayıt oldun! 💾✨" });
+        res.json({ message: "Harika! Başarıyla kayıt oldun. Aramıza hoşgeldin! 💾✨" });
     });
 });
-
 // 🔑 GİRİŞ YAP API KURALI (profil bilgileri de dışarı aktarılıyor 🚀)
 app.post('/api/giris-yap', (req, res) => {
     const { kullanici_adi, sifre } = req.body;
@@ -70,15 +70,16 @@ app.post('/api/giris-yap', (req, res) => {
         }
         // Giriş başarılı olduğunda tüm profil bilgilerini de gönderiyoruz
         res.json({
-            message: `Harika! Tekrar hoş geldin ${kullanici_adi}! Girişin onaylandı. 🔑✨`,
-            department: row.department,
-            rol: row.rol,
-            okul: row.okul,
-            bolum: row.bolum,
-            sinif: row.sinif,
-            is_yeri: row.is_yeri,
-            deneyim: row.deneyim
-        });
+    message: `Harika! Tekrar hoş geldin ${kullanici_adi}! Girişin onaylandı. 🔑✨`,
+    department: row.department,
+    rol: row.rol,
+    durum: row.durum,
+    okul: row.okul,
+    bolum: row.bolum,
+    sinif: row.sinif,
+    is_yeri: row.is_yeri,
+    deneyim: row.deneyim
+});
     });
 });
 

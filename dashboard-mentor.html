@@ -448,30 +448,35 @@
             <div class="request-grid" id="pendingGrid"></div>
             <div class="request-grid" id="acceptedGrid" style="display:none;"></div>
         </div>
-
-        <!-- SEKME 2: DİĞER MENTÖRLER -->
-        <div class="tab-content" id="content-others">
-            <div class="request-grid">
-                <div class="student-card">
-                    <div class="student-avatar">AY</div>
-                    <h3>Ahmet Yılmaz</h3>
-                    <span class="student-school">Google · Senior Software Engineer</span>
-                    <p class="student-info">Algoritmalar ve sistem mimarisi konusunda 12 öğrenciye mentörlük yapıyor.</p>
-                </div>
-                <div class="student-card">
-                    <div class="student-avatar">BD</div>
-                    <h3>Buse Demir</h3>
-                    <span class="student-school">SOC Güvenlik Analisti</span>
-                    <p class="student-info">Siber güvenlik ve tehdit analizi alanında 7 öğrenciye mentörlük yapıyor.</p>
-                </div>
-                <div class="student-card">
-                    <div class="student-avatar">MK</div>
-                    <h3>Murat Kaya</h3>
-                    <span class="student-school">DevOps Mühendisi</span>
-                    <p class="student-info">Sunucu yönetimi ve altyapı süreçlerinde 5 öğrenciye mentörlük yapıyor.</p>
-                </div>
-            </div>
+<!-- SEKME 2: DİĞER MENTÖRLER -->
+<div class="tab-content" id="content-others">
+    <div class="request-grid">
+        <div class="student-card">
+            <div class="student-avatar">AY</div>
+            <h3>Ahmet Yılmaz</h3>
+            <span class="student-school">Google · Senior Software Engineer</span>
+            <p class="student-info">Yazılım mühendisliği ve sistem mimarisi konusunda 12 öğrenciye mentörlük yapıyor.</p>
         </div>
+        <div class="student-card">
+            <div class="student-avatar">EK</div>
+            <h3>Elif Kara</h3>
+            <span class="student-school">Tesla · Makine Mühendisi</span>
+            <p class="student-info">Ürün tasarımı ve üretim süreçlerinde 9 öğrenciye mentörlük yapıyor.</p>
+        </div>
+        <div class="student-card">
+            <div class="student-avatar">MK</div>
+            <h3>Murat Kaya</h3>
+            <span class="student-school">Enerjisa · Elektrik-Elektronik Mühendisi</span>
+            <p class="student-info">Enerji sistemleri ve otomasyon alanında 6 öğrenciye mentörlük yapıyor.</p>
+        </div>
+        <div class="student-card">
+            <div class="student-avatar">SÖ</div>
+            <h3>Selin Öztürk</h3>
+            <span class="student-school">Rönesans Holding · İnşaat Mühendisi</span>
+            <p class="student-info">Yapı projeleri ve şantiye yönetiminde 8 öğrenciye mentörlük yapıyor.</p>
+        </div>
+    </div>
+</div>
 
         <!-- SEKME 3: HABERLER -->
         <div class="tab-content" id="content-news">
@@ -545,9 +550,10 @@
     <script>
         // 🔸 ÖRNEK VERİ: Gelen istekler (öğrenciler) — normalde backend'den gelecek
         let pendingStudents = [
-            { id: 1, isim: "Zeynep Kılıç", okul: "İTÜ · Bilgisayar Mühendisliği, 2. Sınıf", not: "Backend alanında kariyer yapmak istiyor, API tasarımı hakkında sorular soracak." },
-            { id: 2, isim: "Emre Şahin", okul: "ODTÜ · Bilgisayar Mühendisliği, 3. Sınıf", not: "Staj öncesi teknik mülakat hazırlığı için destek istiyor." }
-        ];
+    { id: 1, isim: "Zeynep Kılıç", okul: "İTÜ · Bilgisayar Mühendisliği, 2. Sınıf", not: "Yazılım alanında kariyer yapmak istiyor, staj sürecine dair sorular soracak." },
+    { id: 2, isim: "Emre Şahin", okul: "ODTÜ · Makine Mühendisliği, 3. Sınıf", not: "Üretim sektöründe kariyer hedefliyor, staj öncesi mülakat hazırlığı istiyor." },
+    { id: 3, isim: "Deniz Aydın", okul: "Boğaziçi · Elektrik-Elektronik Mühendisliği, 4. Sınıf", not: "Enerji sistemleri alanında iş görüşmelerine hazırlanıyor." }
+];
 
         let acceptedStudents = [];
 
