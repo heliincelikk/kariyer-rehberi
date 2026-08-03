@@ -384,6 +384,9 @@
             <div class="menu-item" id="menu-mentor" onclick="switchTab('mentor')">
                 <i class="fa-solid fa-users-rectangle"></i> Mentörlük Ağı 🤝
             </div>
+            <div class="menu-item" id="menu-gelenistekler" onclick="switchTab('gelenistekler')">
+    <i class="fa-solid fa-inbox"></i> Gelen İstekler 📥
+</div>
             <div class="menu-item" id="menu-quiz" onclick="switchTab('quiz')">
                 <i class="fa-solid fa-clipboard-question"></i> Kariyer Testi 🎯
             </div>
@@ -527,6 +530,15 @@
                 </div>
             </div>
         </div>
+        <!-- SEKME: GELEN İSTEKLER (Adaylardan) -->
+<div class="tab-content" id="content-gelenistekler">
+    <div class="mentor-subnav">
+        <button class="subnav-btn active" id="subnav-gi-pending" onclick="switchGelenIstekView('pending')">Bekleyen İstekler</button>
+        <button class="subnav-btn" id="subnav-gi-accepted" onclick="switchGelenIstekView('accepted')">Kabul Ettiklerim</button>
+    </div>
+    <div class="mentor-grid" id="giPendingGrid"></div>
+    <div class="mentor-grid" id="giAcceptedGrid" style="display:none;"></div>
+</div>
 
         <!-- SEKME 4: YAPAY ZEKA ASİSTANI (YENİ) -->
         <div class="tab-content" id="content-ai">
@@ -585,28 +597,30 @@
             badgeMode.innerText = "Öğrenci Modu";
         });
         
+function switchTab(tabName) {
+    if (tabName === 'quiz') {
+        window.location.href = 'quiz.html';
+        return;
+    }
 
-        function switchTab(tabName) {
-            if (tabName === 'quiz') {
-                window.location.href = 'quiz.html';
-                return;
-            }
+    const tabs = ['panel', 'discover', 'mentor', 'gelenistekler', 'ai', 'profile'];
+    tabs.forEach(t => {
+        document.getElementById('content-' + t).classList.remove('active');
+        const menuEl = document.getElementById('menu-' + t);
+        if (menuEl) menuEl.classList.remove('active');
+    });
 
-            const tabs = ['panel', 'discover', 'mentor', 'ai', 'profile'];
-            tabs.forEach(t => {
-                document.getElementById('content-' + t).classList.remove('active');
-                const menuEl = document.getElementById('menu-' + t);
-                if (menuEl) menuEl.classList.remove('active');
-            });
+    document.getElementById('content-' + tabName).classList.add('active');
+    const activeMenuEl = document.getElementById('menu-' + tabName);
+    if (activeMenuEl) activeMenuEl.classList.add('active');
 
-            document.getElementById('content-' + tabName).classList.add('active');
-            const activeMenuEl = document.getElementById('menu-' + tabName);
-            if (activeMenuEl) activeMenuEl.classList.add('active');
-
-            if (tabName === 'profile') {
-                loadProfile();
-            }
-        }
+    if (tabName === 'profile') {
+        loadProfile();
+    }
+    if (tabName === 'gelenistekler') {
+        renderGelenIstekler();
+    }
+}
 
         function loadProfile() {
             document.getElementById('profOkul').innerText = localStorage.getItem('kullaniciOkul') || "— (girilmemiş)";
@@ -639,9 +653,6 @@
     emptyMsg.style.display = (view === 'mine' && !anySent) ? 'block' : 'none';
 };
 
-            const emptyMsg = document.getElementById('mineEmptyMsg');
-            emptyMsg.style.display = (view === 'mine' && !anySent) ? 'block' : 'none';
-        
 
         function sendMentorRequest(buttonElement) {
             if (buttonElement.classList.contains('sent')) {
@@ -684,6 +695,82 @@ function alanGoster(alan) {
 
 function alanModalKapat() {
     document.getElementById('alanModal').classList.remove('active');
+}
+// 🔸 ÖRNEK VERİ: Adaylardan gelen istekler
+let pendingAdayIstekleri = [
+    { id: 1, isim: "Ayşe Demir", okul: "Kadıköy Anadolu Lisesi, 12. Sınıf", not: "Bilgisayar mühendisliğine ilgi duyuyor, bölüm hakkında sorular soracak." },
+    { id: 2, isim: "Kerem Öz", okul: "Fen Lisesi Mezunu", not: "YKS sonrası tercih sürecinde destek arıyor." }
+];
+
+let acceptedAdaylar = [];
+
+function renderGelenIstekler() {
+    renderGiPending();
+    renderGiAccepted();
+}
+
+function renderGiPending() {
+    const grid = document.getElementById('giPendingGrid');
+    if (pendingAdayIstekleri.length === 0) {
+        grid.innerHTML = `<p class="empty-msg">Şu an bekleyen bir istek yok.</p>`;
+        return;
+    }
+    grid.innerHTML = pendingAdayIstekleri.map(a => `
+        <div class="mentor-card">
+            <div class="mentor-avatar">${giInitials(a.isim)}</div>
+            <h3>${a.isim}</h3>
+            <span class="mentor-company">${a.okul}</span>
+            <p class="mentor-info">${a.not}</p>
+            <div style="display:flex; gap:10px;">
+                <button class="request-btn" style="border-color:#10b981; color:#10b981;" onclick="giYanitla(${a.id}, true)">Kabul Et</button>
+                <button class="request-btn" style="border-color:#ef4444; color:#ef4444;" onclick="giYanitla(${a.id}, false)">Reddet</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderGiAccepted() {
+    const grid = document.getElementById('giAcceptedGrid');
+    if (acceptedAdaylar.length === 0) {
+        grid.innerHTML = `<p class="empty-msg">Henüz kabul ettiğin bir aday yok.</p>`;
+        return;
+    }
+    grid.innerHTML = acceptedAdaylar.map(a => `
+        <div class="mentor-card">
+            <div class="mentor-avatar">${giInitials(a.isim)}</div>
+            <h3>${a.isim}</h3>
+            <span class="mentor-company">${a.okul}</span>
+            <p class="mentor-info">${a.not}</p>
+            <span class="mentor-badge" style="background: rgba(16, 185, 129, 0.1); color:#10b981;">Bağlantı Kuruldu</span>
+        </div>
+    `).join('');
+}
+
+function giInitials(isim) {
+    return isim.split(' ').map(k => k[0]).join('').toUpperCase();
+}
+
+function giYanitla(id, kabul) {
+    const aday = pendingAdayIstekleri.find(a => a.id === id);
+    pendingAdayIstekleri = pendingAdayIstekleri.filter(a => a.id !== id);
+
+    if (kabul) {
+        acceptedAdaylar.push(aday);
+        alert(`✅ ${aday.isim} ile bağlantın kuruldu!`);
+    } else {
+        alert(`${aday.isim} isteği reddedildi.`);
+    }
+    renderGiPending();
+    renderGiAccepted();
+}
+
+function switchGelenIstekView(view) {
+    document.getElementById('subnav-gi-pending').classList.remove('active');
+    document.getElementById('subnav-gi-accepted').classList.remove('active');
+    document.getElementById('subnav-gi-' + view).classList.add('active');
+
+    document.getElementById('giPendingGrid').style.display = view === 'pending' ? 'grid' : 'none';
+    document.getElementById('giAcceptedGrid').style.display = view === 'accepted' ? 'grid' : 'none';
 }
     </script>
 <div class="alan-modal-overlay" id="alanModal">
