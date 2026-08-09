@@ -12,6 +12,8 @@ app.use((req, res, next) => {
 
 // Gelen verileri sunucunun anlayabilmesi için mutfak ayarı
 app.use(express.json());
+// HTML, CSS ve JS dosyalarını tarayıcıda sunabilmek için statik dosya ayarı 🌐
+app.use(express.static(__dirname));
 
 // VERİ TABANI BAĞLANTISI
 const db = new sqlite3.Database('./kariyer_rehberi.db', (err) => {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,7 +68,8 @@
             transition: all 0.3s ease;
         }
 
-        .menu-item:hover, .menu-item.active {
+        .menu-item:hover,
+        .menu-item.active {
             color: #ffffff;
             background-color: rgba(6, 182, 212, 0.1);
             border-left: 4px solid #06b6d4;
@@ -85,7 +87,7 @@
         }
 
         .profile-section {
-            margin-top: 70px;
+            margin-top: 140px;
             padding: 15px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
@@ -152,7 +154,7 @@
             border-radius: 20px;
             padding: 30px;
             backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease;
         }
 
@@ -342,8 +344,10 @@
         /* Alan detay modalı */
         .alan-modal-overlay {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-color: rgba(2, 6, 23, 0.85);
             backdrop-filter: blur(8px);
             z-index: 200;
@@ -392,11 +396,19 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="sidebar">
@@ -405,23 +417,21 @@
         </div>
         <div class="menu-items">
             <div class="menu-item active" id="menu-panel" onclick="switchTab('panel')">
-                <i class="fa-solid fa-chart-pie"></i> Kişiselleştirilmiş Panel
+                <i class="fa-solid fa-chart-pie"></i> Aday Paneli
             </div>
             <div class="menu-item" id="menu-discover" onclick="switchTab('discover')">
-                <i class="fa-solid fa-globe"></i> Tüm Alanları Keşfet
+                <i class="fa-solid fa-graduation-cap"></i> Mühendislik Bölümleri
             </div>
             <div class="menu-item" id="menu-uni" onclick="switchTab('uni')">
                 <i class="fa-solid fa-user-graduate"></i> Üniversiteli Öğrenciler 🎓
             </div>
-            <div class="menu-item" id="menu-quiz" onclick="switchTab('quiz')">
-                <i class="fa-solid fa-clipboard-question"></i> Kariyer Testi 🎯
-            </div>
             <div class="menu-item" id="menu-ai" onclick="switchTab('ai')">
-                <i class="fa-solid fa-robot"></i> Yapay Zeka Asistanı 🤖
+                <i class="fa-solid fa-robot"></i> AI Mühendislik Danışmanı 🤖
             </div>
 
             <div class="profile-section" id="menu-profile" onclick="switchTab('profile')">
-                <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user"></i> Profilim</h4>
+                <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user"></i> Profilim
+                </h4>
                 <p style="font-size: 12px; color: #94a3b8;">Lise Bilgim</p>
             </div>
             <a href="index.html" class="menu-item logout-btn" onclick="localStorage.clear()">
@@ -437,24 +447,35 @@
             <div class="user-badge">Aday Modu</div>
         </div>
 
-        <!-- SEKME 1: KİŞİSELLEŞTİRİLMİŞ PANEL -->
+        <!-- SEKME 1: KİŞİSELLEŞTİRİLMİŞ ADAY PANALİ -->
         <div class="tab-content active" id="content-panel">
             <div class="dashboard-grid">
                 <div class="premium-card">
-                    <div class="card-icon"><i class="fa-solid fa-route"></i></div>
-                    <h3>Mühendisliğe İlk Adımın</h3>
-                    <p>Hangi mühendislik dalının sana uygun olduğunu keşfetmek için kariyer testini çöz, ya da üniversiteli öğrencilerle konuş.</p>
-                    <a href="quiz.html" class="card-link" style="color:#06b6d4; text-decoration:none; font-weight:bold; font-size:14px;">Teste Başla ➔</a>
-                </div>
-                <div class="premium-card">
-                    <div class="card-icon"><i class="fa-solid fa-user-graduate"></i></div>
-                    <h3>Üniversiteli Öğrencilerle Konuş</h3>
-                    <p>Bölüm seçimi, üniversite hayatı ve sınav süreci hakkında gerçek üniversite öğrencilerinden bilgi al.</p>
+                    <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+                    <h3>AI Mühendislik Danışmanı 🤖</h3>
+                    <p>Hangi mühendislik dalının ilgi alanlarına ve hedeflerine uygun olduğunu yapay zeka ile sohbet
+                        ederek keşfet.</p>
+                    <a href="#" onclick="switchTab('ai')" class="card-link"
+                        style="color:#06b6d4; text-decoration:none; font-weight:bold; font-size:14px;">Danışmana Sor
+                        ➔</a>
                 </div>
                 <div class="premium-card">
                     <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                    <h3>Mühendislik Dallarını Keşfet</h3>
-                    <p>Yazılımdan inşaata, tüm mühendislik dallarını incele, hangisinin sana uygun olduğunu gör.</p>
+                    <h3>Mühendislik Dallarını İncele</h3>
+                    <p>Yazılım, Bilgisayar, Elektrik-Elektronik, Makine ve Endüstri gibi tüm mühendislik dallarını
+                        detaylıca keşfet.</p>
+                    <a href="#" onclick="switchTab('discover')" class="card-link"
+                        style="color:#06b6d4; text-decoration:none; font-weight:bold; font-size:14px;">Bölümleri Keşfet
+                        ➔</a>
+                </div>
+                <div class="premium-card">
+                    <div class="card-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    <h3>Üniversiteli öğrenciler ile Konuş 🎓</h3>
+                    <p>Üniversite tercihi, YKS süreci ve kampüs hayatı hakkında mühendislik öğrencilerinden tavsiyeler
+                        al.</p>
+                    <a href="#" onclick="switchTab('uni')" class="card-link"
+                        style="color:#06b6d4; text-decoration:none; font-weight:bold; font-size:14px;">Öğrencilere Ulaş
+                        ➔</a>
                 </div>
             </div>
         </div>
@@ -513,16 +534,19 @@
         <!-- SEKME 3: ÜNİVERSİTELİ ÖĞRENCİLER -->
         <div class="tab-content" id="content-uni">
             <div class="subnav">
-                <button class="subnav-btn active" id="subnav-all" onclick="switchUniView('all')">Üniversiteliler</button>
+                <button class="subnav-btn active" id="subnav-all"
+                    onclick="switchUniView('all')">Üniversiteliler</button>
                 <button class="subnav-btn" id="subnav-mine" onclick="switchUniView('mine')">İsteklerim</button>
             </div>
             <div class="mentor-grid">
-                <p id="mineEmptyMsg" style="display:none; grid-column: 1 / -1; color: #94a3b8; text-align:center;">Henüz bir üniversiteliye istek göndermedin.</p>
+                <p id="mineEmptyMsg" style="display:none; grid-column: 1 / -1; color: #94a3b8; text-align:center;">Henüz
+                    bir üniversiteliye istek göndermedin.</p>
                 <div class="mentor-card">
                     <div class="mentor-avatar">CB</div>
                     <h3>Ceren Bulut</h3>
                     <span class="mentor-company">İTÜ · Bilgisayar Mühendisliği, 3. Sınıf</span>
-                    <p class="mentor-info">"Bölüm seçimi, ilk sene dersleri ve staj süreci hakkında sorularını cevaplayabilirim!"</p>
+                    <p class="mentor-info">"Bölüm seçimi, ilk sene dersleri ve staj süreci hakkında sorularını
+                        cevaplayabilirim!"</p>
                     <span class="mentor-badge">Üniversite Öğrencisi</span>
                     <button class="request-btn" onclick="sendUniRequest(this)">İstek Gönder</button>
                 </div>
@@ -530,7 +554,8 @@
                     <div class="mentor-avatar">BK</div>
                     <h3>Berk Kaya</h3>
                     <span class="mentor-company">ODTÜ · Makine Mühendisliği, 2. Sınıf</span>
-                    <p class="mentor-info">"Üniversite hayatı, ders yükü ve bölüm değişikliği süreci hakkında deneyimlerimi paylaşabilirim."</p>
+                    <p class="mentor-info">"Üniversite hayatı, ders yükü ve bölüm değişikliği süreci hakkında
+                        deneyimlerimi paylaşabilirim."</p>
                     <span class="mentor-badge">Üniversite Öğrencisi</span>
                     <button class="request-btn" onclick="sendUniRequest(this)">İstek Gönder</button>
                 </div>
@@ -538,19 +563,59 @@
                     <div class="mentor-avatar">NY</div>
                     <h3>Nil Yıldız</h3>
                     <span class="mentor-company">Boğaziçi · Elektrik-Elektronik Mühendisliği, 4. Sınıf</span>
-                    <p class="mentor-info">"Sınav sistemi, YKS sonrası tercih süreci ve üniversite yaşamı hakkında yardımcı olabilirim."</p>
+                    <p class="mentor-info">"Sınav sistemi, YKS sonrası tercih süreci ve üniversite yaşamı hakkında
+                        yardımcı olabilirim."</p>
                     <span class="mentor-badge">Üniversite Öğrencisi</span>
                     <button class="request-btn" onclick="sendUniRequest(this)">İstek Gönder</button>
                 </div>
             </div>
         </div>
 
-        <!-- SEKME 4: YAPAY ZEKA ASİSTANI -->
+        <!-- SEKME 4: YAPAY ZEKA MÜHENDİSLİK DANIŞMANI -->
         <div class="tab-content" id="content-ai">
-            <div class="premium-card" style="max-width: 500px;">
-                <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
-                <h3>Yapay Zeka Kariyer Asistanı</h3>
-                <p>Bu bölüm yakında aktif olacak. İleride buraya, mühendislik dalları hakkında sorularını yanıtlayan bir yapay zeka asistanı entegre edeceğiz.</p>
+            <div class="premium-card" style="max-width: 850px; margin: 0 auto;">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                    <div class="card-icon" style="margin-bottom:0;"><i class="fa-solid fa-robot"></i></div>
+                    <div>
+                        <h3 style="margin-bottom: 4px;">AI Mühendislik Danışmanı 🤖</h3>
+                        <p style="margin-bottom:0; font-size:13px; color:#94a3b8;">Lise & YKS mühendis adaylarına özel
+                            akıllı kariyer rehberi</p>
+                    </div>
+                </div>
+
+                <!-- Hızlı Sorular -->
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+                    <button class="subnav-btn" onclick="aiSoruSor('Hangi mühendislik dalı benim için en uygun?')">💡
+                        Hangi mühendislik bana uygun?</button>
+                    <button class="subnav-btn"
+                        onclick="aiSoruSor('Yazılım Mühendisliği ile Bilgisayar Mühendisliği arasındaki fark nedir?')">💻
+                        Yazılım vs Bilgisayar Farkı?</button>
+                    <button class="subnav-btn"
+                        onclick="aiSoruSor('Lisede yazılım öğrenmek için nereden başlamalıyım?')">🚀 Lisede Kodlama
+                        Öğrenmek</button>
+                </div>
+
+                <!-- Chat Mesajları -->
+                <div id="aiChatBox"
+                    style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 16px; padding: 20px; min-height: 260px; max-height: 400px; overflow-y: auto; margin-bottom: 20px; display:flex; flex-direction:column; gap:15px;">
+                    <div
+                        style="background: rgba(6, 182, 212, 0.1); border-left: 3px solid #06b6d4; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.6;">
+                        <strong style="color: #06b6d4;">🤖 AI Danışman:</strong> Merhaba! Ben geleceğin mühendisleri
+                        için özel tasarlanmış AI Kariyer Danışmanıyım. 🎯 Sevdiğin dersleri, ilgi alanlarını veya merak
+                        ettiğin mühendislik bölümlerini bana sorabilirsin!
+                    </div>
+                </div>
+
+                <!-- Input alanı -->
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="aiInput"
+                        placeholder="Mühendislik ve üniversite hakkında merak ettiğin her şeyi sor..."
+                        style="flex:1; padding:12px 18px; background:#0f172a; border:1px solid rgba(6, 182, 212, 0.3); border-radius:12px; color:#fff; font-size:14px; outline:none;"
+                        onkeypress="if(event.key==='Enter') aiMesajGonder()">
+                    <button onclick="aiMesajGonder()"
+                        style="padding:12px 24px; background:#06b6d4; color:#0f172a; border:none; border-radius:12px; font-weight:bold; cursor:pointer; transition:0.3s;"><i
+                            class="fa-solid fa-paper-plane"></i> Sor</button>
+                </div>
             </div>
         </div>
 
@@ -576,19 +641,23 @@
             <h2 id="alanModalBaslik" style="color:#fff; font-size:26px; margin-bottom:16px;"></h2>
             <p id="alanModalIcerik" style="color:#cbd5e1; font-size:15px; line-height:1.7; margin-bottom:20px;"></p>
             <div style="margin-bottom:16px;">
-                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Aranan Beceriler</span>
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Aranan
+                    Beceriler</span>
                 <p id="alanModalBeceriler" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
             </div>
             <div style="margin-bottom:16px;">
-                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İş İmkanları</span>
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İş
+                    İmkanları</span>
                 <p id="alanModalIsImkanlari" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
             </div>
             <div style="margin-bottom:16px;">
-                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Maaş Aralığı</span>
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Maaş
+                    Aralığı</span>
                 <p id="alanModalMaas" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
             </div>
             <div>
-                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İstihdam Oranı</span>
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İstihdam
+                    Oranı</span>
                 <p id="alanModalIstihdam" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
             </div>
         </div>
@@ -600,19 +669,56 @@
         });
 
         function switchTab(tabName) {
-            if (tabName === 'quiz') {
-                window.location.href = 'quiz.html';
-                return;
-            }
             const tabs = ['panel', 'discover', 'uni', 'ai', 'profile'];
             tabs.forEach(t => {
-                document.getElementById('content-' + t).classList.remove('active');
+                const contentEl = document.getElementById('content-' + t);
+                if (contentEl) contentEl.classList.remove('active');
                 const menuEl = document.getElementById('menu-' + t);
                 if (menuEl) menuEl.classList.remove('active');
             });
             document.getElementById('content-' + tabName).classList.add('active');
             const activeMenuEl = document.getElementById('menu-' + tabName);
             if (activeMenuEl) activeMenuEl.classList.add('active');
+        }
+
+        function aiSoruSor(soruText) {
+            document.getElementById('aiInput').value = soruText;
+            aiMesajGonder();
+        }
+
+        function aiMesajGonder() {
+            const input = document.getElementById('aiInput');
+            const mesaj = input.value.trim();
+            if (!mesaj) return;
+
+            const chatBox = document.getElementById('aiChatBox');
+
+            const userDiv = document.createElement('div');
+            userDiv.style.cssText = 'background: rgba(255, 255, 255, 0.08); align-self: flex-end; padding: 12px 16px; border-radius: 12px; font-size: 14px; max-width: 80%; line-height: 1.6; border: 1px solid rgba(255,255,255,0.1);';
+            userDiv.innerHTML = `<strong style="color:#ffffff;">👤 Sen:</strong> ${mesaj}`;
+            chatBox.appendChild(userDiv);
+
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            setTimeout(() => {
+                const aiDiv = document.createElement('div');
+                aiDiv.style.cssText = 'background: rgba(6, 182, 212, 0.1); border-left: 3px solid #06b6d4; padding: 12px 16px; border-radius: 12px; font-size: 14px; max-width: 85%; line-height: 1.6; align-self: flex-start;';
+
+                let yanıt = "Mühendislik harika bir seçim! Sevdiğin derslere (Matematik, Fizik veya Mantık) göre Bilgisayar, Yazılım, Elektrik-Elektronik veya Endüstri Mühendisliği branşlarından birine yönelebilirsin. Bölüm ve Üniversiteliler sekmemizden öğrencilerin yorumlarını okumayı unutma!";
+
+                if (mesaj.toLowerCase().includes('uygun') || mesaj.toLowerCase().includes('hangi')) {
+                    yanıt = "💡 **Sana Uygun Bölümü Bulalım:**\n\n• **Analitik ve Kodlama seviyorsan:** Bilgisayar veya Yazılım Mühendisliği\n• **Fizik, Devreler ve Donanım ilgini çekiyorsa:** Elektrik-Elektronik Mühendisliği\n• **Tasarım, Makineler ve Üretim merakın varsa:** Makine Mühendisliği\n• **Yönetim, Mantık ve Veri ilgini çekiyorsa:** Endüstri Mühendisliği!";
+                } else if (mesaj.toLowerCase().includes('fark') || mesaj.toLowerCase().includes('bilgisayar')) {
+                    yanıt = "💻 **Yazılım vs Bilgisayar Mühendisliği:**\n\n• **Bilgisayar Mühendisliği:** Donanım + Yazılım + Sistem mimarisini bir arada öğretir.\n• **Yazılım Mühendisliği:** Saf kodlama, yazılım mimarisi, test ve proje yönetimi odaklıdır.\nHer ikisi de sektörde benzer iş imkanlarına sahiptir!";
+                } else if (mesaj.toLowerCase().includes('lise') || mesaj.toLowerCase().includes('öğren')) {
+                    yanıt = "🚀 **Lisede Kodlama Başlangıç Tavsiyeleri:**\n\n1. **Python veya JavaScript:** Öğrenmesi en kolay ve eğlenceli dillerdir.\n2. **Mantık ve Problem Çözme:** Algoritma temellerini öğren.\n3. **İngilizce:** Yazılım kaynaklarının %90'ı İngilizcedir, bol bol okuma yap!";
+                }
+
+                aiDiv.innerHTML = `<strong style="color:#06b6d4;">🤖 AI Danışman:</strong> ${yanıt.replace(/\n/g, '<br>')}`;
+                chatBox.appendChild(aiDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 600);
         }
 
         function switchUniView(view) {
@@ -683,4 +789,5 @@
     </script>
 
 </body>
+
 </html>
