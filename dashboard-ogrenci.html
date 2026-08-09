@@ -23,18 +23,28 @@
         }
 
         .sidebar {
-            width: 260px;
+            width: 270px;
             background-color: #0f172a;
             border-right: 1px solid rgba(6, 182, 212, 0.15);
             display: flex;
             flex-direction: column;
-            padding: 30px 20px;
+            padding: 25px 18px 45px 18px;
             z-index: 10;
             overflow-y: auto;
+            max-height: 100vh;
         }
 
         .sidebar::-webkit-scrollbar {
-            width: 0px;
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(6, 182, 212, 0.25);
+            border-radius: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
         }
 
         .sidebar .brand {
@@ -42,7 +52,7 @@
             font-weight: bold;
             color: #06b6d4;
             text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -51,9 +61,11 @@
         .menu-items {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             flex: 1;
+            margin-bottom: 25px;
         }
+
 
         .menu-item {
             display: flex;
@@ -76,7 +88,7 @@
         }
 
         .logout-btn {
-            margin-top: auto;
+            margin-top: 0;
             color: #ef4444;
             border: 1px solid rgba(239, 68, 68, 0.2);
         }
@@ -85,6 +97,12 @@
             background-color: rgba(239, 68, 68, 0.1);
             color: #f87171;
         }
+
+        .profile-section {
+            margin-top: auto;
+            margin-bottom: 8px;
+        }
+
 
         .main-content {
             flex: 1;
@@ -178,18 +196,21 @@
 
         .card-link {
             color: #06b6d4;
-            text-decoration: none;
+            text-decoration: none !important;
             font-weight: bold;
             font-size: 14px;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             transition: color 0.3s ease;
         }
 
         .card-link:hover {
-            color: #22d3ee;
+            color: #22d3ee !important;
+            text-decoration: none !important;
         }
+
+
 
         /* ================= MENTÖRLÜK ALT-SEKME (YENİ) ================= */
         .mentor-subnav {
@@ -398,15 +419,22 @@
             <div class="menu-item" id="menu-mentor" onclick="switchTab('mentor')">
                 <i class="fa-solid fa-users-rectangle"></i> Sektör Mentörleri 🤝
             </div>
+            <div class="menu-item" id="menu-companies" onclick="switchTab('companies')">
+                <i class="fa-solid fa-building"></i> Revaçta Şirketler 🏢
+            </div>
             <div class="menu-item" id="menu-gelenistekler" onclick="switchTab('gelenistekler')">
                 <i class="fa-solid fa-inbox"></i> Aday İstekleri 📥
+            </div>
+
+            <div class="menu-item" id="menu-chat" onclick="switchTab('chat')">
+                <i class="fa-solid fa-comments"></i> Mesajlar 💬
             </div>
             <div class="menu-item" id="menu-ai" onclick="switchTab('ai')">
                 <i class="fa-solid fa-robot"></i> AI Öğrenci Danışmanı 🤖
             </div>
 
             <div class="profile-section" id="menu-profile"
-                style="margin-top: 80px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; transition: 0.3s;"
+                style="margin-top: 40px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; transition: 0.3s;"
                 onclick="switchTab('profile')">
                 <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i>
                     Profilim</h4>
@@ -470,14 +498,19 @@
         <!-- SEKME 2: BÖLÜME ÖZEL KARİYER YOLLARI VE ALAN KEŞFİ -->
         <div class="tab-content" id="content-discover">
             <!-- Bölüm Seçim Başlığı & Filtre -->
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:25px; background:rgba(30,41,59,0.5); padding:18px 24px; border-radius:16px; border:1px solid rgba(6,182,212,0.2);">
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:25px; background:rgba(30,41,59,0.5); padding:18px 24px; border-radius:16px; border:1px solid rgba(6,182,212,0.2);">
                 <div>
-                    <h2 id="discoverHeaderTitle" style="font-size:22px; color:#fff;">Kariyer Rotaları & Alt Uzmanlık Alanları</h2>
-                    <p id="discoverHeaderSub" style="color:#94a3b8; font-size:13px; margin-top:4px;">Seçtiğin mühendislik disiplinine özel uzmanlık yollarını ve gerekli yetkinlikleri incele.</p>
+                    <h2 id="discoverHeaderTitle" style="font-size:22px; color:#fff;">Kariyer Rotaları & Alt Uzmanlık
+                        Alanları</h2>
+                    <p id="discoverHeaderSub" style="color:#94a3b8; font-size:13px; margin-top:4px;">Seçtiğin
+                        mühendislik disiplinine özel uzmanlık yollarını ve gerekli yetkinlikleri incele.</p>
                 </div>
                 <div style="display:flex; align-items:center; gap:10px;">
-                    <label style="color:#06b6d4; font-size:13px; font-weight:600;"><i class="fa-solid fa-filter"></i> Bölüm Değiştir:</label>
-                    <select id="bolumSecici" onchange="bolumKariyerYollariniGuncelle(this.value)" style="padding:10px 16px; background:#0f172a; border:1px solid rgba(6,182,212,0.4); border-radius:12px; color:#fff; font-size:14px; font-weight:600; outline:none; cursor:pointer;">
+                    <label style="color:#06b6d4; font-size:13px; font-weight:600;"><i class="fa-solid fa-filter"></i>
+                        Bölüm Değiştir:</label>
+                    <select id="bolumSecici" onchange="bolumKariyerYollariniGuncelle(this.value)"
+                        style="padding:10px 16px; background:#0f172a; border:1px solid rgba(6,182,212,0.4); border-radius:12px; color:#fff; font-size:14px; font-weight:600; outline:none; cursor:pointer;">
                         <option value="bilgisayar">Bilgisayar / Yazılım Mühendisliği</option>
                         <option value="elektrik">Elektrik-Elektronik Mühendisliği</option>
                         <option value="makine">Makine Mühendisliği</option>
@@ -503,37 +536,138 @@
             <div class="mentor-grid">
                 <p id="mineEmptyMsg" style="display:none; grid-column: 1 / -1; color: #94a3b8; text-align:center;">Henüz
                     bir mentöre istek göndermedin. "Mentörler" sekmesinden birini seçebilirsin.</p>
-                <div class="mentor-card">
-                    <div class="mentor-avatar">HÇ</div>
-                    <h3>Helin Çelik</h3>
-                    <span class="mentor-company">Trendyol</span>
-                    <p class="mentor-info">Senior Frontend Developer<br>"React ve CSS animasyonları konusunda uzmanım.
-                        Sektör sorularınızı bekliyorum!"</p>
-                    <span class="mentor-badge">5 Yıl Deneyim</span>
-                    <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
+                <div class="mentor-card"
+                    style="display:flex; flex-direction:column; justify-content:space-between; padding:22px; text-align:center;">
+                    <div>
+                        <div class="mentor-avatar" style="margin: 0 auto 12px auto;">HÇ</div>
+                        <h3 style="font-size:18px; color:#fff; margin-bottom:4px;">Helin Çelik</h3>
+                        <span class="mentor-company"
+                            style="color:#06b6d4; font-size:13px; font-weight:bold; display:block; margin-bottom:4px;">Trendyol
+                            • Senior Frontend Dev</span>
+                        <span class="mentor-badge" style="display:inline-block; margin-bottom:12px;">5 Yıl
+                            Deneyim</span>
+                        <p class="mentor-info"
+                            style="color:#cbd5e1; font-size:13px; line-height:1.5; background:rgba(15,23,42,0.5); padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.05); text-align:left; margin-bottom:15px;">
+                            "React ve CSS animasyonları konusunda uzmanım. Sektör sorularınızı bekliyorum!"
+                        </p>
+                    </div>
+
+                    <div style="display:flex; gap:10px;">
+                        <button
+                            onclick="openSectorMentorModal('Helin Çelik', 'Trendyol • Senior Frontend Dev', 'React ve CSS animasyonları konusunda uzmanım. Sektör sorularınızı bekliyorum!', 'HÇ')"
+                            style="flex:1; padding:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;"
+                            onmouseover="this.style.borderColor='#06b6d4'; this.style.color='#fff';"
+                            onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#cbd5e1';">
+                            👤 İncele
+                        </button>
+                        <button class="request-btn" onclick="sendMentorRequest(this)"
+                            style="flex:1; padding:10px; background:rgba(6,182,212,0.12); border:1px solid #06b6d4; color:#06b6d4; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer; transition:0.3s;">
+                            📩 İstek Gönder
+                        </button>
+                    </div>
                 </div>
-                <div class="mentor-card">
-                    <div class="mentor-avatar">AY</div>
-                    <h3>Ahmet Yılmaz</h3>
-                    <span class="mentor-company">Google</span>
-                    <p class="mentor-info">Senior Software Engineer<br>"Algoritmalar, sistem mimarisi ve yurt dışı
-                        kariyer fırsatları hakkında mentorluk sağlıyorum."</p>
-                    <span class="mentor-badge">10+ Yıl Deneyim</span>
-                    <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
+
+                <div class="mentor-card"
+                    style="display:flex; flex-direction:column; justify-content:space-between; padding:22px; text-align:center;">
+                    <div>
+                        <div class="mentor-avatar" style="margin: 0 auto 12px auto;">AY</div>
+                        <h3 style="font-size:18px; color:#fff; margin-bottom:4px;">Ahmet Yılmaz</h3>
+                        <span class="mentor-company"
+                            style="color:#06b6d4; font-size:13px; font-weight:bold; display:block; margin-bottom:4px;">Google
+                            • Senior Software Engineer</span>
+                        <span class="mentor-badge" style="display:inline-block; margin-bottom:12px;">10+ Yıl
+                            Deneyim</span>
+                        <p class="mentor-info"
+                            style="color:#cbd5e1; font-size:13px; line-height:1.5; background:rgba(15,23,42,0.5); padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.05); text-align:left; margin-bottom:15px;">
+                            "Algoritmalar, sistem mimarisi ve yurt dışı kariyer fırsatları hakkında mentorluk
+                            sağlıyorum."
+                        </p>
+                    </div>
+
+                    <div style="display:flex; gap:10px;">
+                        <button
+                            onclick="openSectorMentorModal('Ahmet Yılmaz', 'Google • Senior Software Engineer', 'Algoritmalar, sistem mimarisi ve yurt dışı kariyer fırsatları hakkında mentorluk sağlıyorum.', 'AY')"
+                            style="flex:1; padding:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;"
+                            onmouseover="this.style.borderColor='#06b6d4'; this.style.color='#fff';"
+                            onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#cbd5e1';">
+                            👤 İncele
+                        </button>
+                        <button class="request-btn" onclick="sendMentorRequest(this)"
+                            style="flex:1; padding:10px; background:rgba(6,182,212,0.12); border:1px solid #06b6d4; color:#06b6d4; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer; transition:0.3s;">
+                            📩 İstek Gönder
+                        </button>
+                    </div>
                 </div>
-                <div class="mentor-card">
-                    <div class="mentor-avatar">DB</div>
-                    <h3>Didem Başar</h3>
-                    <span class="mentor-company">Acıbadem Hastanesi</span>
-                    <p class="mentor-info">Çocuk Sağlığı Uzmanı (Pediatrist)<br>"Tıp fakültesi ders çalışma taktikleri
-                        ve uzmanlık (TUS) süreci hakkında yol gösteriyorum."</p>
-                    <span class="mentor-badge">3-5 Yıl Deneyim</span>
-                    <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
+
+                <div class="mentor-card"
+                    style="display:flex; flex-direction:column; justify-content:space-between; padding:22px; text-align:center;">
+                    <div>
+                        <div class="mentor-avatar" style="margin: 0 auto 12px auto;">DB</div>
+                        <h3 style="font-size:18px; color:#fff; margin-bottom:4px;">Didem Başar</h3>
+                        <span class="mentor-company"
+                            style="color:#06b6d4; font-size:13px; font-weight:bold; display:block; margin-bottom:4px;">Acıbadem
+                            • Çocuk Sağlığı Uzmanı</span>
+                        <span class="mentor-badge" style="display:inline-block; margin-bottom:12px;">3-5 Yıl
+                            Deneyim</span>
+                        <p class="mentor-info"
+                            style="color:#cbd5e1; font-size:13px; line-height:1.5; background:rgba(15,23,42,0.5); padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.05); text-align:left; margin-bottom:15px;">
+                            "Tıp fakültesi ders çalışma taktikleri ve uzmanlık (TUS) süreci hakkında yol gösteriyorum."
+                        </p>
+                    </div>
+
+                    <div style="display:flex; gap:10px;">
+                        <button
+                            onclick="openSectorMentorModal('Didem Başar', 'Acıbadem • Çocuk Sağlığı Uzmanı', 'Tıp fakültesi ders çalışma taktikleri ve uzmanlık (TUS) süreci hakkında yol gösteriyorum.', 'DB')"
+                            style="flex:1; padding:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;"
+                            onmouseover="this.style.borderColor='#06b6d4'; this.style.color='#fff';"
+                            onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#cbd5e1';">
+                            👤 İncele
+                        </button>
+                        <button class="request-btn" onclick="sendMentorRequest(this)"
+                            style="flex:1; padding:10px; background:rgba(6,182,212,0.12); border:1px solid #06b6d4; color:#06b6d4; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer; transition:0.3s;">
+                            📩 İstek Gönder
+                        </button>
+                    </div>
                 </div>
             </div>
+
         </div>
+
+        <!-- SEKME: REVAÇTA ŞİRKETLER & SEKTÖR LİDERLERİ -->
+        <div class="tab-content" id="content-companies">
+            <!-- Üst Filtre Barı -->
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; background: rgba(30, 41, 59, 0.6); padding: 20px 25px; border-radius: 20px; border: 1px solid rgba(6, 182, 212, 0.2); margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h2 style="font-size: 20px; color: #fff; margin-bottom: 4px;"><i class="fa-solid fa-building"
+                            style="color: #06b6d4;"></i> Revaçta Mühendislik Şirketleri & Sektör Liderleri 🏢</h2>
+                    <p style="color: #94a3b8; font-size: 13px; margin:0;">Mühendislerin en çok tercih ettiği önde gelen
+                        şirketleri incele, bünyelerinde çalışan mentörlerle doğrudan iletişime geç.</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="companyCategoryFilter"
+                        style="color: #06b6d4; font-weight: bold; font-size: 13px;">Sektör Seç:</label>
+                    <select id="companyCategoryFilter" onchange="renderCompaniesGrid()"
+                        style="padding: 10px 16px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 12px; color: #fff; font-weight: 600; font-size: 14px; outline: none; cursor: pointer;">
+                        <option value="hepsi">Tüm Sektörler</option>
+                        <option value="teknoloji">💻 Teknoloji & E-Ticaret</option>
+                        <option value="global">🌐 Global Teknoloji Devleri</option>
+                        <option value="savunma">🛡️ Savunma Sanayii & Otonom</option>
+                        <option value="enerji">⚡ Enerji & Otomasyon</option>
+                        <option value="saglik">🏥 Sağlık Teknolojileri</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Şirket Kartları Grid'i -->
+            <div id="companiesGrid"
+                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 22px;">
+            </div>
+        </div>
+
         <!-- SEKME: GELEN İSTEKLER (Adaylardan) -->
         <div class="tab-content" id="content-gelenistekler">
+
             <div class="mentor-subnav">
                 <button class="subnav-btn active" id="subnav-gi-pending"
                     onclick="switchGelenIstekView('pending')">Bekleyen İstekler</button>
@@ -591,34 +725,484 @@
                 </div>
             </div>
         </div>
+        <!-- SEKME: MESAJLAR (CANLI SOHBET) -->
+        <div class="tab-content" id="content-chat">
+            <div
+                style="display:grid; grid-template-columns: 300px 1fr; gap:20px; height: 520px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 20px; overflow: hidden;">
+                <!-- Sol Kişi Listesi ve 2 Sekme -->
+                <div
+                    style="border-right: 1px solid rgba(255, 255, 255, 0.08); padding: 20px; display: flex; flex-direction: column; gap: 12px; background: rgba(30, 41, 59, 0.4);">
+                    <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+                        <button class="subnav-btn active" id="chat-tab-mentors"
+                            onclick="switchStudentChatTab('mentors')"
+                            style="padding: 8px 10px; font-size: 12px; flex: 1; text-align:center;">🤝
+                            Mentörlerim</button>
+                        <button class="subnav-btn" id="chat-tab-candidates" onclick="switchStudentChatTab('candidates')"
+                            style="padding: 8px 10px; font-size: 12px; flex: 1; text-align:center;">🎓
+                            Adaylarım</button>
+                    </div>
+
+                    <!-- Mentörler Listesi -->
+                    <div id="chatListMentors" style="display: flex; flex-direction: column; gap: 10px;">
+                        <div class="chat-user-card"
+                            onclick="openChatUser(this, 'Helin Çelik', 'Sektör Mentörü (Senior Frontend Dev)')"
+                            style="padding: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border-left: 3px solid transparent;">
+                            <strong style="color: #fff; font-size: 14px; display: block;">Helin Çelik</strong>
+                            <span style="color: #06b6d4; font-size: 12px;">Senior Frontend Dev</span>
+                        </div>
+                        <div class="chat-user-card"
+                            onclick="openChatUser(this, 'Murat Yılmaz', 'Sektör Mentörü (Cloud Architect)')"
+                            style="padding: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border-left: 3px solid transparent;">
+                            <strong style="color: #fff; font-size: 14px; display: block;">Murat Yılmaz</strong>
+                            <span style="color: #06b6d4; font-size: 12px;">Cloud Architect</span>
+                        </div>
+                    </div>
+
+                    <!-- Adaylar Listesi -->
+                    <div id="chatListCandidates" style="display: none; flex-direction: column; gap: 10px;">
+                        <div class="chat-user-card"
+                            onclick="openChatUser(this, 'Ayşe Demir', 'Mühendislik Adayı (Kadıköy Anadolu Lisesi)')"
+                            style="padding: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border-left: 3px solid transparent;">
+                            <strong style="color: #fff; font-size: 14px; display: block;">Ayşe Demir</strong>
+                            <span style="color: #a855f7; font-size: 12px;">YKS Adayı • 12. Sınıf</span>
+                        </div>
+                        <div class="chat-user-card"
+                            onclick="openChatUser(this, 'Can Yılmaz', 'Mühendislik Adayı (Atatürk Fen Lisesi)')"
+                            style="padding: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border-left: 3px solid transparent;">
+                            <strong style="color: #fff; font-size: 14px; display: block;">Can Yılmaz</strong>
+                            <span style="color: #a855f7; font-size: 12px;">YKS Adayı • 12. Sınıf</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sağ Sohbet Penceresi -->
+                <div style="display: flex; flex-direction: column; padding: 20px; position: relative;">
+                    <!-- Varsayılan Seçim Yapılmadı Ekranı -->
+                    <div id="emptyChatPlaceholder"
+                        style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: #94a3b8;">
+                        <i class="fa-solid fa-comments"
+                            style="font-size: 48px; color: #06b6d4; margin-bottom: 16px; opacity: 0.6;"></i>
+                        <h3 style="color: #ffffff; margin-bottom: 8px;">Sohbet Başlatmak İçin Bir Kişi Seçin</h3>
+                        <p style="font-size: 13px; max-width: 320px; line-height: 1.5;">Sol taraftaki mentörleriniz veya
+                            adaylarınız listesinden bir kişiye tıklayarak sohbeti başlatabilirsiniz.</p>
+                    </div>
+
+                    <!-- Aktif Sohbet İçeriği (Tıklanınca Açılır) -->
+                    <div id="activeChatContent" style="display: none; flex-direction: column; height: 100%;">
+                        <div
+                            style="padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h3 id="chatActiveUser" style="font-size: 18px; color: #ffffff;">—</h3>
+                                <span id="chatActiveSub" style="color: #06b6d4; font-size: 13px;">—</span>
+                            </div>
+                            <button onclick="closeActiveChat()"
+                                style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #94a3b8; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;"
+                                title="Sohbeti Kapat"
+                                onmouseover="this.style.color='#ef4444'; this.style.borderColor='#ef4444'"
+                                onmouseout="this.style.color='#94a3b8'; this.style.borderColor='rgba(255,255,255,0.15)'"><i
+                                    class="fa-solid fa-xmark" style="font-size: 16px;"></i></button>
+                        </div>
+                        <div id="directChatBox"
+                            style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 10px; margin-bottom: 15px;">
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="directChatInput" placeholder="Mesajını yaz..."
+                                style="flex: 1; padding: 12px 16px; background: #0f172a; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 12px; color: #fff; outline: none; font-size: 14px;"
+                                onkeypress="if(event.key==='Enter') sendDirectMessage()">
+                            <button onclick="sendDirectMessage()"
+                                style="padding: 12px 20px; background: #06b6d4; color: #0f172a; border: none; border-radius: 12px; font-weight: bold; cursor: pointer;">Gönder</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
         <!-- SEKME 5: PROFİLİM -->
         <div class="tab-content" id="content-profile">
-            <div class="premium-card" style="max-width: 500px;">
-                <div class="card-icon"><i class="fa-solid fa-user-graduate"></i></div>
-                <h3>Profilim</h3>
+            <div class="premium-card profile-card" style="max-width: 500px; margin: 0 auto; text-align: center;">
+                <!-- Profil Fotoğrafı ve Avatar Alanı -->
+                <div style="position: relative; width: 105px; height: 105px; margin: 0 auto 18px auto;">
+                    <div id="profileAvatarCircle"
+                        style="width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 38px; font-weight: bold; color: #fff; border: 3px solid rgba(6, 182, 212, 0.5); box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); overflow: hidden;">
+                        <span id="profileAvatarInitials">🎓</span>
+                        <img id="profileAvatarImg" src=""
+                            style="display:none; width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <label for="avatarUploadInput"
+                        style="position: absolute; bottom: 0; right: 0; background: #06b6d4; color: #0f172a; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid #0f172a; transition: 0.2s;"
+                        title="Profil Fotoğrafı Yükle">
+                        <i class="fa-solid fa-camera" style="font-size: 14px;"></i>
+                    </label>
+                    <input type="file" id="avatarUploadInput" accept="image/*" style="display:none;"
+                        onchange="profileFotoYukle(event)">
+                </div>
 
-                <div style="margin-bottom: 18px;">
-                    <label
-                        style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Okul</label>
-                    <p id="profOkul" style="color:#f1f5f9; font-size:16px; font-weight:500;">—</p>
+                <h3 id="profUserDisplayName" style="font-size: 22px; color: #fff; margin-bottom: 4px;">Öğrenci
+                    Kullanıcımız</h3>
+                <span class="user-badge" style="display: inline-block; margin-bottom: 25px;">Mühendislik Öğrencisi
+                    Modu</span>
+
+                <div
+                    style="text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15);">
+                    <div style="margin-bottom: 16px;">
+                        <label
+                            style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Okul</label>
+                        <p id="profOkul" style="color:#f1f5f9; font-size:15px; font-weight:500;">—</p>
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <label
+                            style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Bölüm</label>
+                        <p id="profBolum" style="color:#f1f5f9; font-size:15px; font-weight:500;">—</p>
+                    </div>
+                    <div>
+                        <label
+                            style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Sınıf
+                            / Seviye</label>
+                        <p id="profSinif" style="color:#06b6d4; font-size:15px; font-weight:500;">—</p>
+                    </div>
                 </div>
-                <div style="margin-bottom: 18px;">
-                    <label
-                        style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Bölüm</label>
-                    <p id="profBolum" style="color:#f1f5f9; font-size:16px; font-weight:500;">—</p>
+
+                <!-- Öğrenci / Mentör İstatistikleri Widget'ı -->
+                <div
+                    style="margin-top: 20px; text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15);">
+                    <h4
+                        style="color:#06b6d4; font-size:13px; font-weight:bold; margin:0 0 14px 0; text-transform:uppercase;">
+                        📊 Rehberlik & İstatistikleriniz</h4>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                        <div
+                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+                            <span
+                                style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">🚀
+                                Rehberlik Edilen Aday</span>
+                            <strong style="color:#fff; font-size:17px;">14 Liseli Öğrenci</strong>
+                        </div>
+                        <div
+                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+                            <span
+                                style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">🏅
+                                Platform Sıralaması</span>
+                            <strong style="color:#f59e0b; font-size:15px;">Top %5 Aktif Mentör</strong>
+                        </div>
+                        <div
+                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+                            <span
+                                style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">⏱️
+                                Ortalama Yanıt Süresi</span>
+                            <strong style="color:#22d3ee; font-size:15px;">~15 Dakika</strong>
+                        </div>
+                        <div
+                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+                            <span
+                                style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">⭐
+                                Talepleri Kabul Etme</span>
+                            <strong style="color:#10b981; font-size:15px;">%94 Kabul Oranı</strong>
+                        </div>
+                    </div>
                 </div>
-                <div style="margin-bottom: 18px;">
-                    <label
-                        style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Sınıf
-                        / Seviye</label>
-                    <p id="profSinif" style="color:#f1f5f9; font-size:16px; font-weight:500;">—</p>
+            </div>
+        </div>
+
+
+        <!-- Sektör Mentörü Detay Profil Modalı -->
+        <div class="alan-modal-overlay" id="sectorMentorModal">
+            <div class="alan-modal-box" style="max-width: 550px; text-align: center;">
+                <span class="alan-modal-close" onclick="sectorMentorModalKapat()">&times;</span>
+
+                <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; font-size: 28px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; border: 3px solid rgba(6, 182, 212, 0.5); box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);"
+                    id="sectorModalAvatar">
+                    —
                 </div>
+
+                <h3 id="sectorModalName" style="font-size: 22px; color: #fff; margin-bottom: 4px;">—</h3>
+                <span id="sectorModalSub"
+                    style="color: #06b6d4; font-size: 14px; font-weight: 600; display: block; margin-bottom: 16px;">—</span>
+
+                <!-- Güven & İstatistik Metrikleri -->
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-bottom:20px;">
+                    <div
+                        style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
+                        <span
+                            style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">⭐
+                            Kabul Oranı</span>
+                        <strong style="color:#10b981; font-size:14px;">%98 Kabul</strong>
+                    </div>
+                    <div
+                        style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
+                        <span
+                            style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">⏱️
+                            Yanıt Süresi</span>
+                        <strong style="color:#06b6d4; font-size:14px;">~10 Dk</strong>
+                    </div>
+                    <div
+                        style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
+                        <span
+                            style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">👥
+                            Mentee Sayısı</span>
+                        <strong style="color:#f59e0b; font-size:14px;">35+ Öğrenci</strong>
+                    </div>
+                </div>
+
+                <div
+                    style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 14px; border: 1px solid rgba(6, 182, 212, 0.15); text-align: left; margin-bottom: 20px;">
+                    <span
+                        style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:6px;">💼
+                        Sektör Deneyimi & Biyografi</span>
+                    <p id="sectorModalBio" style="color:#e2e8f0; font-size:14px; line-height:1.6; margin:0;">
+                        "Yazılım mimarisi, staj ve iş mülakatı hazırlığı, yurt dışı kariyer fırsatları konularında
+                        mentörlük sağlıyorum."
+                    </p>
+                </div>
+
+                <div style="display:flex; gap:12px; justify-content:center;">
+                    <button id="sectorModalReqBtn" onclick="sendSectorMentorModalReq(this)"
+                        style="width:100%; padding:14px 20px; background:#06b6d4; color:#0f172a; border:none; border-radius:12px; font-weight:bold; font-size:14px; cursor:pointer; transition:0.3s; box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);">
+                        📩 Mentörlük İsteği Gönder
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aday Profilini İnceleme Modalı -->
+        <div class="alan-modal-overlay" id="candidateDetailModal">
+
+            <div class="alan-modal-box" style="max-width: 550px; text-align: center;">
+                <span class="alan-modal-close" onclick="candidateDetailModalKapat()">&times;</span>
+
+                <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; font-size: 28px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; border: 3px solid rgba(6, 182, 212, 0.5); box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);"
+                    id="candidateModalAvatar">
+                    —
+                </div>
+
+                <h3 id="candidateModalName" style="font-size: 22px; color: #fff; margin-bottom: 4px;">—</h3>
+                <span id="candidateModalSub"
+                    style="color: #06b6d4; font-size: 14px; font-weight: 600; display: block; margin-bottom: 16px;">—</span>
+
+                <!-- Deneme & YKS İstatistikleri -->
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:18px;">
+                    <div
+                        style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
+                        <span
+                            style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">📈
+                            Güncel Deneme Netleri</span>
+                        <strong id="candidateModalNetler" style="color:#f59e0b; font-size:13px;">—</strong>
+                    </div>
+                    <div
+                        style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
+                        <span
+                            style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">🎯
+                            YKS Hedef Sıralaması</span>
+                        <strong id="candidateModalHedef" style="color:#10b981; font-size:13px;">—</strong>
+                    </div>
+                </div>
+
+                <div
+                    style="background: rgba(15, 23, 42, 0.6); padding: 14px; border-radius: 14px; border: 1px solid rgba(6, 182, 212, 0.15); text-align: left; margin-bottom: 15px;">
+                    <span
+                        style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:6px;">💬
+                        Adayın Danışma Mesajı & Notu</span>
+                    <p id="candidateModalBio" style="color:#e2e8f0; font-size:13px; line-height:1.6; margin:0;">—</p>
+                </div>
+
+                <div style="display:flex; gap:12px; justify-content:center;">
+                    <button id="candidateModalAcceptBtn"
+                        style="flex:1; padding:12px; background:#10b981; color:#ffffff; border:none; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">
+                        ✅ İsteği Kabul Et
+                    </button>
+                    <button id="candidateModalRejectBtn"
+                        style="flex:1; padding:12px; background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">
+                        ❌ Reddet
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Şirket Mentörleri Modalı -->
+        <div class="alan-modal-overlay" id="companyMentorsModal" style="z-index: 250;">
+            <div class="alan-modal-box" style="max-width: 600px;">
+                <span class="alan-modal-close" onclick="companyMentorsModalKapat()">&times;</span>
+                <div
+                    style="display:flex; align-items:center; gap:14px; margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom:15px; text-align:left;">
+                    <div class="card-icon" style="margin:0;"><i class="fa-solid fa-building" style="color:#06b6d4;"></i>
+                    </div>
+                    <div>
+                        <h3 id="companyModalTitle" style="color:#fff; font-size:22px; margin:0;">—</h3>
+                        <span style="color:#06b6d4; font-size:13px;">Bu Şirkette Çalışan Aktif Sektör Mentörleri</span>
+                    </div>
+                </div>
+                <div id="companyMentorListContainer"
+                    style="display:flex; flex-direction:column; gap:14px; max-height:380px; overflow-y:auto; padding-right:5px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Mentörlük İsteği Özel Not Modalı -->
+        <div class="alan-modal-overlay" id="sendRequestNoteModal" style="z-index: 300;">
+            <div class="alan-modal-box" style="max-width: 520px; text-align: left;">
+                <span class="alan-modal-close" onclick="sendRequestNoteModalKapat()">&times;</span>
+
+                <div
+                    style="display:flex; align-items:center; gap:12px; margin-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:12px;">
+                    <div style="width:45px; height:45px; border-radius:50%; background:linear-gradient(135deg,#06b6d4,#3b82f6); color:#fff; font-size:18px; font-weight:bold; display:flex; align-items:center; justify-content:center;"
+                        id="sendReqModalAvatar">
+                        👔
+                    </div>
+                    <div>
+                        <h3 id="sendReqModalMentorName" style="color:#fff; font-size:18px; margin:0 0 2px 0;">Mentöre
+                            İletilecek Not</h3>
+                        <span id="sendReqModalMentorSub" style="color:#06b6d4; font-size:12px; font-weight:bold;">Sektör
+                            Mentörü</span>
+                    </div>
+                </div>
+
+                <label style="color:#cbd5e1; font-size:13px; font-weight:bold; display:block; margin-bottom:8px;">
+                    ✍️ Mentöre Özel Notunuz (Opsiyonel - Max 500 Karakter):
+                </label>
+                <textarea id="sendReqNoteTextarea" maxlength="500"
+                    placeholder="Örn: Merhaba! Hikayenizi ve kariyer yolculuğunuzu okudum. Gelecekte ben de bu alanda çalışmak istiyorum, mentörlük sürecinde tavsiyelerinizi almak isterim..."
+                    style="width:100%; height:110px; background:#0f172a; border:1px solid rgba(6,182,212,0.3); border-radius:12px; color:#fff; padding:12px; font-size:13px; font-family:inherit; outline:none; resize:none; margin-bottom:6px;"
+                    oninput="updateReqNoteCharCount(this)"></textarea>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+                    <span style="color:#64748b; font-size:11px;">İstek attığınızda mentörünüze bildirim
+                        iletilecektir.</span>
+                    <span id="sendReqNoteCharCount" style="color:#06b6d4; font-size:11px; font-weight:bold;">0 /
+                        500</span>
+                </div>
+
+                <button id="sendReqConfirmBtn" onclick="confirmSendMentorRequestWithNote()"
+                    style="width:100%; padding:13px; background:#06b6d4; color:#0f172a; border:none; border-radius:12px; font-weight:bold; font-size:14px; cursor:pointer; transition:0.3s; box-shadow:0 4px 14px rgba(6,182,212,0.3);">
+                    🚀 İstek & Özel Notu Gönder
+                </button>
             </div>
         </div>
 
     </div>
 
     <script>
+        function closeAllModals() {
+            document.querySelectorAll('.alan-modal-overlay').forEach(modal => {
+                modal.classList.remove('active');
+            });
+        }
+
+
+        function openSectorMentorModal(name, sub, bio, avatar) {
+            closeAllModals();
+
+            document.getElementById('sectorModalName').innerText = name;
+            document.getElementById('sectorModalSub').innerText = sub;
+            document.getElementById('sectorModalBio').innerText = bio || "Sektör deneyimi ve mentörlük hakkında görüşmek için istek gönderebilirsiniz.";
+            document.getElementById('sectorModalAvatar').innerText = avatar || "👔";
+
+            const btn = document.getElementById('sectorModalReqBtn');
+            const isAlreadyConnected = name === 'Helin Çelik' || (btn.classList && btn.classList.contains('sent'));
+
+            if (isAlreadyConnected) {
+                btn.innerHTML = "✅ Bağlantı Kuruldu (Mesaj Gönder)";
+                btn.style.background = "#10b981";
+                btn.style.color = "#ffffff";
+                btn.disabled = false;
+            } else {
+                btn.innerHTML = "📩 Mentörlük İsteği Gönder";
+                btn.style.background = "#06b6d4";
+                btn.style.color = "#0f172a";
+                btn.disabled = false;
+            }
+
+            document.getElementById('sectorMentorModal').classList.add('active');
+        }
+
+        let activeTargetReqBtn = null;
+
+        function openSendRequestNoteModal(btn, name, sub, avatar) {
+            closeAllModals();
+
+            activeTargetReqBtn = btn;
+            document.getElementById('sendReqModalMentorName').innerText = name || "Sektör Mentörü";
+            document.getElementById('sendReqModalMentorSub').innerText = sub || "Mentörlük İsteği";
+            document.getElementById('sendReqModalAvatar').innerText = avatar || "👔";
+            document.getElementById('sendReqNoteTextarea').value = "";
+            document.getElementById('sendReqNoteCharCount').innerText = "0 / 500";
+
+            document.getElementById('sendRequestNoteModal').classList.add('active');
+        }
+
+        function updateReqNoteCharCount(el) {
+            const count = el.value.length;
+            document.getElementById('sendReqNoteCharCount').innerText = count + " / 500";
+        }
+
+        function confirmSendMentorRequestWithNote() {
+            const note = document.getElementById('sendReqNoteTextarea').value.trim();
+            if (activeTargetReqBtn) {
+                activeTargetReqBtn.innerHTML = "✓ İstek Gönderildi!";
+                activeTargetReqBtn.style.background = "#10b981";
+                activeTargetReqBtn.style.color = "#ffffff";
+                activeTargetReqBtn.disabled = true;
+            }
+
+            const mentorName = document.getElementById('sendReqModalMentorName').innerText;
+            alert(`✅ ${mentorName} kişisine mentörlük isteğin ve özel notun başarıyla iletildi!`);
+            closeAllModals();
+        }
+
+        function sendRequestNoteModalKapat() {
+            closeAllModals();
+        }
+
+        function sectorMentorModalKapat() {
+            closeAllModals();
+        }
+
+        function companyMentorsModalKapat() {
+            closeAllModals();
+        }
+
+        function candidateDetailModalKapat() {
+            closeAllModals();
+        }
+
+        function sendMentorRequest(btn) {
+            const card = btn.closest('.mentor-card');
+            let name = "Sektör Mentörü";
+            let sub = "Mentörlük İsteği";
+            let avatar = "👔";
+
+            if (card) {
+                const nameEl = card.querySelector('h3');
+                const subEl = card.querySelector('.mentor-company');
+                const avEl = card.querySelector('.mentor-avatar');
+                if (nameEl) name = nameEl.innerText;
+                if (subEl) sub = subEl.innerText;
+                if (avEl) avatar = avEl.innerText;
+            }
+
+            openSendRequestNoteModal(btn, name, sub, avatar);
+        }
+
+        function sendSectorMentorModalReq(btn) {
+            const name = document.getElementById('sectorModalName').innerText;
+            const sub = document.getElementById('sectorModalSub').innerText;
+            const avatar = document.getElementById('sectorModalAvatar').innerText;
+
+            if (name === 'Helin Çelik' || (btn.innerText && btn.innerText.includes('Bağlantı'))) {
+                closeAllModals();
+                switchTab('chat');
+                return;
+            }
+
+            openSendRequestNoteModal(btn, name, sub, avatar);
+        }
+
+        window.addEventListener('click', (e) => {
+            if (e.target.classList && e.target.classList.contains('alan-modal-overlay')) {
+                closeAllModals();
+            }
+        });
+
         window.addEventListener('DOMContentLoaded', () => {
             const disiplin = localStorage.getItem('kullaniciDisiplin');
             const cardTitle = document.getElementById('cardTitleText');
@@ -658,7 +1242,7 @@
         });
 
         function switchTab(tabName) {
-            const tabs = ['panel', 'discover', 'mentor', 'gelenistekler', 'ai', 'profile'];
+            const tabs = ['panel', 'discover', 'mentor', 'companies', 'gelenistekler', 'chat', 'ai', 'profile'];
             tabs.forEach(t => {
                 const contentEl = document.getElementById('content-' + t);
                 if (contentEl) contentEl.classList.remove('active');
@@ -666,7 +1250,8 @@
                 if (menuEl) menuEl.classList.remove('active');
             });
 
-            document.getElementById('content-' + tabName).classList.add('active');
+            const target = document.getElementById('content-' + tabName);
+            if (target) target.classList.add('active');
             const activeMenuEl = document.getElementById('menu-' + tabName);
             if (activeMenuEl) activeMenuEl.classList.add('active');
 
@@ -676,7 +1261,85 @@
             if (tabName === 'gelenistekler') {
                 renderGelenIstekler();
             }
+            if (tabName === 'companies') {
+                renderCompaniesGrid();
+            }
         }
+
+
+        function closeActiveChat() {
+            document.querySelectorAll('.chat-user-card').forEach(card => {
+                card.style.background = 'rgba(255, 255, 255, 0.03)';
+                card.style.borderLeft = '3px solid transparent';
+            });
+            const placeholder = document.getElementById('emptyChatPlaceholder');
+            const chatContent = document.getElementById('activeChatContent');
+            if (placeholder) placeholder.style.display = 'flex';
+            if (chatContent) chatContent.style.display = 'none';
+        }
+
+        function switchStudentChatTab(tab) {
+            document.getElementById('chat-tab-mentors').classList.remove('active');
+            document.getElementById('chat-tab-candidates').classList.remove('active');
+            document.getElementById('chat-tab-' + tab).classList.add('active');
+
+            document.getElementById('chatListMentors').style.display = tab === 'mentors' ? 'flex' : 'none';
+            document.getElementById('chatListCandidates').style.display = tab === 'candidates' ? 'flex' : 'none';
+
+            closeActiveChat();
+        }
+
+        function openChatUser(el, name, subInfo) {
+
+            document.querySelectorAll('.chat-user-card').forEach(card => {
+                card.style.background = 'rgba(255, 255, 255, 0.03)';
+                card.style.borderLeft = '3px solid transparent';
+            });
+            if (el) {
+                el.style.background = 'rgba(6, 182, 212, 0.15)';
+                el.style.borderLeft = '3px solid #06b6d4';
+            }
+
+            const placeholder = document.getElementById('emptyChatPlaceholder');
+            const chatContent = document.getElementById('activeChatContent');
+            if (placeholder) placeholder.style.display = 'none';
+            if (chatContent) chatContent.style.display = 'flex';
+
+            document.getElementById('chatActiveUser').innerText = name;
+            document.getElementById('chatActiveSub').innerText = subInfo;
+            const chatBox = document.getElementById('directChatBox');
+
+            let ilkMesaj = `Merhaba! ${name} ben. Sorularınız ve rehberlik için buradayım.`;
+            if (subInfo.includes('Aday') || subInfo.includes('Lise') || subInfo.includes('YKS')) {
+                ilkMesaj = `Merhaba! ${name} ben. Lise 12. sınıf öğrencisiyim, bölümünüz ve üniversite tercihleri hakkında merak ettiklerim var, yardımcı olabilir misiniz?`;
+            } else if (subInfo.includes('Mentör') || subInfo.includes('Architect') || subInfo.includes('Dev')) {
+                ilkMesaj = `Merhaba! ${name} ben. Staj süreçleri, kariyer rotaları ve teknik gelişim konusunda sorularını memnuniyetle yanıtlayabilirim.`;
+            }
+
+            chatBox.innerHTML = `
+                <div style="background: rgba(255, 255, 255, 0.05); align-self: flex-start; padding: 10px 14px; border-radius: 12px; font-size: 14px; max-width: 75%;">
+                    ${ilkMesaj}
+                </div>
+            `;
+        }
+
+
+
+        function sendDirectMessage() {
+            const input = document.getElementById('directChatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            const chatBox = document.getElementById('directChatBox');
+            const msgDiv = document.createElement('div');
+            msgDiv.style.cssText = 'background: rgba(6, 182, 212, 0.2); align-self: flex-end; padding: 10px 14px; border-radius: 12px; font-size: 14px; max-width: 75%; border: 1px solid rgba(6, 182, 212, 0.3);';
+            msgDiv.innerText = msg;
+            chatBox.appendChild(msgDiv);
+
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
 
         function aiSoruSor(soruText) {
             document.getElementById('aiInput').value = soruText;
@@ -718,11 +1381,43 @@
             }, 600);
         }
 
-        function loadProfile() {
-            document.getElementById('profOkul').innerText = localStorage.getItem('kullaniciOkul') || "— (girilmemiş)";
-            document.getElementById('profBolum').innerText = localStorage.getItem('kullaniciBolum') || "— (girilmemiş)";
-            document.getElementById('profSinif').innerText = localStorage.getItem('kullaniciSinif') || "— (girilmemiş)";
+        function profileFotoYukle(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgUrl = e.target.result;
+                    localStorage.setItem('kullaniciFoto', imgUrl);
+                    loadProfilePhoto();
+                };
+                reader.readAsDataURL(file);
+            }
         }
+
+        function loadProfilePhoto() {
+            const foto = localStorage.getItem('kullaniciFoto');
+            const imgEl = document.getElementById('profileAvatarImg');
+            const initEl = document.getElementById('profileAvatarInitials');
+            if (foto && imgEl && initEl) {
+                imgEl.src = foto;
+                imgEl.style.display = 'block';
+                initEl.style.display = 'none';
+            }
+        }
+
+        function loadProfile() {
+            const okul = localStorage.getItem('kullaniciOkul');
+            const bolum = localStorage.getItem('kullaniciBolum');
+            const sinif = localStorage.getItem('kullaniciSinif');
+            const isim = localStorage.getItem('kullaniciIsim') || "Öğrenci Kullanıcımız";
+
+            if (document.getElementById('profOkul')) document.getElementById('profOkul').innerText = okul || "— (girilmemiş)";
+            if (document.getElementById('profBolum')) document.getElementById('profBolum').innerText = bolum || "— (girilmemiş)";
+            if (document.getElementById('profSinif')) document.getElementById('profSinif').innerText = sinif || "— (girilmemiş)";
+            if (document.getElementById('profUserDisplayName')) document.getElementById('profUserDisplayName').innerText = isim;
+            loadProfilePhoto();
+        }
+
 
         // YENİ: Mentörler / Mentörlerim geçişi
         function switchMentorView(view) {
@@ -804,7 +1499,7 @@
             if (!grid) return;
 
             const rotalar = bolumKariyerRotalari[bolumKey] || bolumKariyerRotalari['bilgisayar'];
-            
+
             grid.innerHTML = rotalar.map(r => `
                 <div class="premium-card" onclick="rotayiModaldaAc('${bolumKey}', '${r.id}')" style="cursor:pointer;">
                     <div class="card-icon"><i class="${r.ikon}"></i></div>
@@ -836,10 +1531,181 @@
             document.getElementById('alanModal').classList.remove('active');
         }
 
+        // ================= 🏢 REVAÇTA ŞİRKETLER VERİSETİ & FONKSİYONLARI =================
+        const revactaSirketlerData = [
+            {
+                id: 'trendyol',
+                isim: 'Trendyol',
+                sektorKey: 'teknoloji',
+                sektorAd: '💻 Teknoloji & E-Ticaret',
+                lokasyon: 'İstanbul (Maslak Campus)',
+                stajProgrami: 'Trendyol Talent & Tech Internship',
+                ozet: 'Türkiye\'nin önde gelen e-ticaret ve teknoloji platformu. Yüksek ölçekli mikroservisler, AI tavsiye sistemleri ve bulut mimarileri.',
+                mentorler: [
+                    { isim: 'Helin Çelik', unvan: 'Senior Frontend Developer', deneyim: '5 Yıl', avatar: 'HÇ', bio: 'React, performans optimizasyonu ve UI/UX tasarımı konularında rehberlik veriyorum.' },
+                    { isim: 'Caner Erkin', unvan: 'Backend Architect', deneyim: '8 Yıl', avatar: 'CÉ', bio: 'Go, Java, Kafka ve dağıtık sistemler mimarisi üzerine sorularınızı bekliyorum.' },
+                    { isim: 'Melis Yıldız', unvan: 'Lead Data Engineer', deneyim: '6 Yıl', avatar: 'MY', bio: 'Big Data, Spark, Snowflake ve veri ambarı yönetimi rehberliği.' }
+                ]
+            },
+            {
+                id: 'google',
+                isim: 'Google',
+                sektorKey: 'global',
+                sektorAd: '🌐 Global Teknoloji Devleri',
+                lokasyon: 'İstanbul / Zürih / Mountain View',
+                stajProgrami: 'Google STEP & Software Engineering Internship',
+                ozet: 'Arama motoru, bulut bilişim ve yapay zeka alanında dünya lideri teknoloji devi.',
+                mentorler: [
+                    { isim: 'Ahmet Yılmaz', unvan: 'Senior Software Engineer', deneyim: '10+ Yıl', avatar: 'AY', bio: 'Algoritmalar, sistem tasarımı ve Google mülakat hazırlığı konularında yardımcı oluyorum.' },
+                    { isim: 'Burak Kaya', unvan: 'Cloud Infrastructure Specialist', deneyim: '7 Yıl', avatar: 'BK', bio: 'GCP, Kubernetes ve küresel veri merkezleri mimarisi.' }
+                ]
+            },
+            {
+                id: 'aselsan',
+                isim: 'ASELSAN',
+                sektorKey: 'savunma',
+                sektorAd: '🛡️ Savunma Sanayii & Otonom',
+                lokasyon: 'Ankara (Macunköy / Gölbaşı)',
+                stajProgrami: 'ASELSAN a-Yetenek Programı',
+                ozet: 'Türkiye\'nin lider savunma sanayii kuruluşu. Radar, elektronik harp, haberleşme ve otonom sistemler.',
+                mentorler: [
+                    { isim: 'Serkan Acar', unvan: 'Kıdemli Gömülü Sistemler Uzmanı', deneyim: '9 Yıl', avatar: 'SA', bio: 'ARM, STM32, C/C++ ve milli savunma projeleri rehberliği.' },
+                    { isim: 'Ogün Şahin', unvan: 'Radar Sinyal İşleme Mühendisi', deneyim: '6 Yıl', avatar: 'OŞ', bio: 'DSP, MATLAB, FPGA ve hedef takip algoritmaları.' }
+                ]
+            },
+            {
+                id: 'siemens',
+                isim: 'Siemens',
+                sektorKey: 'enerji',
+                sektorAd: '⚡ Enerji & Otomasyon',
+                lokasyon: 'İstanbul (Kartal) / Gebze',
+                stajProgrami: 'Siemens Future Leaders Internship',
+                ozet: 'Endüstriyel otomasyon, akıllı şebekeler, dijital ikiz ve sürdürülebilir enerji çözümleri.',
+                mentorler: [
+                    { isim: 'Deniz Aydın', unvan: 'Güç & Otomasyon Sistemleri Mühendisi', deneyim: '5 Yıl', avatar: 'DA', bio: 'PLC, SCADA, güç elektroniği ve fabrika otomasyonu rehberliği.' }
+                ]
+            },
+            {
+                id: 'acibadem',
+                isim: 'Acıbadem HealthTech',
+                sektorKey: 'saglik',
+                sektorAd: '🏥 Sağlık Teknolojileri',
+                lokasyon: 'İstanbul / Maslak',
+                stajProgrami: 'Acıbadem HealthTech Genç Yetenek',
+                ozet: 'Tıbbi cihazlar, dijital sağlık sistemleri ve medikal yapay zeka uygulamaları.',
+                mentorler: [
+                    { isim: 'Didem Başar', unvan: 'Biyomedikal & Sağlık Teknolojileri Uzmanı', deneyim: '4 Yıl', avatar: 'DB', bio: 'Biyomedikal mühendisliği ve hastane otomasyon yazılımları rehberliği.' }
+                ]
+            }
+        ];
+
+        function renderCompaniesGrid() {
+            const grid = document.getElementById('companiesGrid');
+            if (!grid) return;
+
+            const filterVal = document.getElementById('companyCategoryFilter') ? document.getElementById('companyCategoryFilter').value : 'hepsi';
+
+            const filtered = revactaSirketlerData.filter(c => filterVal === 'hepsi' || c.sektorKey === filterVal);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:40px; color:#94a3b8;">Seçilen sektörde şirket bulunamadı.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(c => `
+                <div class="premium-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:24px; border-top: 3px solid #06b6d4;">
+                    <div>
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;">
+                            <div>
+                                <h3 style="font-size:20px; color:#fff; margin:0 0 4px 0;">${c.isim}</h3>
+                                <span style="color:#06b6d4; font-size:12px; font-weight:bold;">${c.sektorAd}</span>
+                            </div>
+                            <span style="background:rgba(6,182,212,0.12); color:#06b6d4; font-size:11px; font-weight:bold; padding:4px 10px; border-radius:20px; border:1px solid rgba(6,182,212,0.3);">
+                                📍 ${c.lokasyon.split(' ')[0]}
+                            </span>
+                        </div>
+
+                        <p style="color:#cbd5e1; font-size:13px; line-height:1.5; background:rgba(15,23,42,0.5); padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.05); margin-bottom:15px;">
+                            ${c.ozet}
+                        </p>
+
+                        <div style="margin-bottom:18px; text-align:left;">
+                            <span style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:4px;">🎓 Staj & Genç Yetenek Programı</span>
+                            <span style="color:#f1f5f9; font-size:13px; font-weight:600;"><i class="fa-solid fa-graduation-cap" style="color:#10b981;"></i> ${c.stajProgrami}</span>
+                        </div>
+                    </div>
+
+                    <button onclick="openCompanyMentorsModal('${c.id}')" style="width:100%; padding:12px; background:rgba(6,182,212,0.12); border:1px solid #06b6d4; color:#06b6d4; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; gap:8px;" onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';" onmouseout="this.style.background='rgba(6,182,212,0.12)'; this.style.color='#06b6d4';">
+                        👥 Şirketteki Mentörleri Gör (${c.mentorler.length})
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function openCompanyMentorsModal(companyId) {
+            const c = revactaSirketlerData.find(item => item.id === companyId);
+            if (!c) return;
+
+            document.getElementById('companyModalTitle').innerText = c.isim + " · Sektör Mentörleri";
+            const container = document.getElementById('companyMentorListContainer');
+
+            if (!c.mentorler || c.mentorler.length === 0) {
+                container.innerHTML = `<p style="color:#94a3b8; text-align:center; padding:20px;">Bu şirkette henüz kayıtlı mentör bulunmuyor.</p>`;
+            } else {
+                container.innerHTML = c.mentorler.map(m => `
+                    <div style="background:rgba(15,23,42,0.7); border:1px solid rgba(6,182,212,0.2); padding:16px; border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <div style="width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg, #06b6d4, #3b82f6); color:#fff; font-weight:bold; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                ${m.avatar}
+                            </div>
+                            <div style="text-align:left;">
+                                <h4 style="color:#fff; font-size:15px; margin:0 0 2px 0;">${m.isim}</h4>
+                                <span style="color:#06b6d4; font-size:12px; font-weight:bold; display:block; margin-bottom:2px;">${m.unvan}</span>
+                                <span style="color:#94a3b8; font-size:11px;"><i class="fa-solid fa-briefcase"></i> ${m.deneyim} Deneyim</span>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; gap:8px;">
+                            <button onclick="openSectorMentorModal('${m.isim.replace(/'/g, "\\'")}', '${c.isim} • ${m.unvan.replace(/'/g, "\\'")}', '${m.bio.replace(/'/g, "\\'")}', '${m.avatar}')" style="padding:8px 12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:8px; font-weight:bold; font-size:11px; cursor:pointer;" onmouseover="this.style.borderColor='#06b6d4'; this.style.color='#fff';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#cbd5e1';">
+                                👤 İncele
+                            </button>
+                            <button class="request-btn" onclick="openSendRequestNoteModal(this, '${m.isim.replace(/'/g, "\\'")}', '${c.isim} • ${m.unvan.replace(/'/g, "\\'")}', '${m.avatar}')" style="padding:8px 12px; background:rgba(6,182,212,0.12); border:1px solid #06b6d4; color:#06b6d4; border-radius:8px; font-weight:bold; font-size:11px; cursor:pointer;">
+                                📩 İstek Gönder
+                            </button>
+
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('companyMentorsModal').classList.add('active');
+        }
+
+        function companyMentorsModalKapat() {
+            document.getElementById('companyMentorsModal').classList.remove('active');
+        }
+
+
         // 🔸 ÖRNEK VERİ: Adaylardan gelen istekler
         let pendingAdayIstekleri = [
-            { id: 1, isim: "Ayşe Demir", okul: "Kadıköy Anadolu Lisesi, 12. Sınıf", not: "Bilgisayar mühendisliğine ilgi duyuyor, bölüm hakkında sorular soracak." },
-            { id: 2, isim: "Kerem Öz", okul: "Fen Lisesi Mezunu", not: "YKS sonrası tercih sürecinde destek arıyor." }
+            {
+                id: 101,
+                isim: "Kaan Şahin",
+                okul: "Kadıköy Anadolu Lisesi · 12. Sınıf",
+                not: "Bilgisayar Mühendisliği okumak istiyor, İTÜ ve ODTÜ tercihleri hakkında sorular soracak.",
+                hedef: "İlk 3.000",
+                netler: "TYT: 98.5 Net | AYT: 74.0 Net",
+                bio: "Merhaba abi/abla! Kadıköy Anadolu Lisesi 12. sınıf öğrencisiyim. YKS maratonunda sona yaklaşıyorum. Ders çalışma programı, İTÜ Bilgisayar Müh. ders yükü ve hazırlık sınıfı hakkında rehberlik rica ediyorum."
+            },
+            {
+                id: 102,
+                isim: "Buse Karaca",
+                okul: "Atatürk Fen Lisesi · 11. Sınıf",
+                not: "Endüstri Mühendisliği seçmeyi düşünüyor, ders yükü ve staj imkanlarını merak ediyor.",
+                hedef: "İlk 5.000",
+                netler: "TYT: 91.0 Net | AYT: 65.5 Net",
+                bio: "Merhabalar! 11. Sınıf Fen Lisesi öğrencisiyim. Mühendislik alanları arasında kararsızım, Endüstri Mühendisliği'nin iş imkanlarını birinci ağızdan dinlemek istiyorum."
+            }
         ];
 
         let acceptedAdaylar = [];
@@ -851,43 +1717,87 @@
 
         function renderGiPending() {
             const grid = document.getElementById('giPendingGrid');
+            if (!grid) return;
             if (pendingAdayIstekleri.length === 0) {
-                grid.innerHTML = `<p class="empty-msg">Şu an bekleyen bir istek yok.</p>`;
+                grid.innerHTML = `<p class="empty-msg" style="grid-column:1/-1; text-align:center; padding:30px; color:#94a3b8;">Şu an bekleyen bir istek yok.</p>`;
                 return;
             }
             grid.innerHTML = pendingAdayIstekleri.map(a => `
-        <div class="mentor-card">
-            <div class="mentor-avatar">${giInitials(a.isim)}</div>
-            <h3>${a.isim}</h3>
-            <span class="mentor-company">${a.okul}</span>
-            <p class="mentor-info">${a.not}</p>
-            <div style="display:flex; gap:10px;">
-                <button class="request-btn" style="border-color:#10b981; color:#10b981;" onclick="giYanitla(${a.id}, true)">Kabul Et</button>
-                <button class="request-btn" style="border-color:#ef4444; color:#ef4444;" onclick="giYanitla(${a.id}, false)">Reddet</button>
-            </div>
-        </div>
-    `).join('');
+                <div class="mentor-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:22px; text-align:center;">
+                    <div>
+                        <div class="mentor-avatar" style="margin:0 auto 12px auto;">${giInitials(a.isim)}</div>
+                        <h3 style="font-size:18px; color:#fff; margin-bottom:4px;">${a.isim}</h3>
+                        <span class="mentor-company" style="color:#06b6d4; font-size:13px; font-weight:bold; display:block; margin-bottom:12px;">${a.okul}</span>
+                        <p class="mentor-info" style="color:#cbd5e1; font-size:13px; line-height:1.5; background:rgba(15,23,42,0.5); padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.05); text-align:left; margin-bottom:15px;">
+                            "${a.not}"
+                        </p>
+                    </div>
+
+                    <div>
+                        <button onclick="openCandidateDetailModal(${a.id})" style="width:100%; padding:10px; margin-bottom:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;" onmouseover="this.style.borderColor='#06b6d4'; this.style.color='#fff';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#cbd5e1';">
+                            👤 Aday Profilini İncele
+                        </button>
+                        <div style="display:flex; gap:10px;">
+                            <button class="request-btn" style="flex:1; padding:10px; background:#10b981; color:#fff; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;" onclick="giYanitla(${a.id}, true)">Kabul Et</button>
+                            <button class="request-btn" style="flex:1; padding:10px; background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;" onclick="giYanitla(${a.id}, false)">Reddet</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function renderGiAccepted() {
             const grid = document.getElementById('giAcceptedGrid');
+            if (!grid) return;
             if (acceptedAdaylar.length === 0) {
-                grid.innerHTML = `<p class="empty-msg">Henüz kabul ettiğin bir aday yok.</p>`;
+                grid.innerHTML = `<p class="empty-msg" style="grid-column:1/-1; text-align:center; padding:30px; color:#94a3b8;">Henüz kabul ettiğin bir aday yok.</p>`;
                 return;
             }
             grid.innerHTML = acceptedAdaylar.map(a => `
-        <div class="mentor-card">
-            <div class="mentor-avatar">${giInitials(a.isim)}</div>
-            <h3>${a.isim}</h3>
-            <span class="mentor-company">${a.okul}</span>
-            <p class="mentor-info">${a.not}</p>
-            <span class="mentor-badge" style="background: rgba(16, 185, 129, 0.1); color:#10b981;">Bağlantı Kuruldu</span>
-        </div>
-    `).join('');
+                <div class="mentor-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:22px; text-align:center;">
+                    <div>
+                        <div class="mentor-avatar" style="margin:0 auto 12px auto;">${giInitials(a.isim)}</div>
+                        <h3 style="font-size:18px; color:#fff; margin-bottom:4px;">${a.isim}</h3>
+                        <span class="mentor-company" style="color:#06b6d4; font-size:13px; font-weight:bold; display:block; margin-bottom:12px;">${a.okul}</span>
+                        <p class="mentor-info" style="color:#cbd5e1; font-size:13px; line-height:1.5; background:rgba(15,23,42,0.5); padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.05); text-align:left; margin-bottom:15px;">
+                            "${a.not}"
+                        </p>
+                    </div>
+                    <span class="mentor-badge" style="background: rgba(16, 185, 129, 0.15); color:#10b981; border:1px solid rgba(16, 185, 129, 0.3); padding:6px 12px; border-radius:20px; font-weight:bold; font-size:12px; display:inline-block;">✅ Bağlantı Kuruldu</span>
+                </div>
+            `).join('');
+        }
+
+        function openCandidateDetailModal(id) {
+            const a = pendingAdayIstekleri.find(item => item.id === id);
+            if (!a) return;
+
+            document.getElementById('candidateModalName').innerText = a.isim;
+            document.getElementById('candidateModalSub').innerText = a.okul;
+            document.getElementById('candidateModalNetler').innerText = a.netler || "TYT: 90+ | AYT: 65+";
+            document.getElementById('candidateModalHedef').innerText = a.hedef || "İlk 5.000";
+            document.getElementById('candidateModalBio').innerText = a.bio || a.not;
+            document.getElementById('candidateModalAvatar').innerText = giInitials(a.isim);
+
+            document.getElementById('candidateModalAcceptBtn').onclick = function () {
+                giYanitla(a.id, true);
+                candidateDetailModalKapat();
+            };
+
+            document.getElementById('candidateModalRejectBtn').onclick = function () {
+                giYanitla(a.id, false);
+                candidateDetailModalKapat();
+            };
+
+            document.getElementById('candidateDetailModal').classList.add('active');
+        }
+
+        function candidateDetailModalKapat() {
+            document.getElementById('candidateDetailModal').classList.remove('active');
         }
 
         function giInitials(isim) {
-            return isim.split(' ').map(k => k[0]).join('').toUpperCase();
+            return isim ? isim.split(' ').map(k => k[0]).join('').toUpperCase() : '👤';
         }
 
         function giYanitla(id, kabul) {
@@ -912,6 +1822,7 @@
             document.getElementById('giPendingGrid').style.display = view === 'pending' ? 'grid' : 'none';
             document.getElementById('giAcceptedGrid').style.display = view === 'accepted' ? 'grid' : 'none';
         }
+
     </script>
     <div class="alan-modal-overlay" id="alanModal">
         <div class="alan-modal-box">
