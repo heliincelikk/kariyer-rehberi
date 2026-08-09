@@ -137,12 +137,12 @@
         }
 
         .tab-content {
-            display: none;
+            display: none !important;
             animation: fadeIn 0.5s ease forwards;
         }
 
         .tab-content.active {
-            display: block;
+            display: block !important;
         }
 
         .dashboard-grid {
@@ -507,6 +507,9 @@
             <div class="menu-item active" id="menu-panel" onclick="switchTab('panel')">
                 <i class="fa-solid fa-chart-pie"></i> Mentör Paneli
             </div>
+            <div class="menu-item" id="menu-company" onclick="switchTab('company')">
+                <i class="fa-solid fa-building"></i> Şirketinizden 💼
+            </div>
             <div class="menu-item" id="menu-network" onclick="switchTab('network')">
                 <i class="fa-solid fa-users-rectangle"></i> Mentörlük Ağım 🤝
             </div>
@@ -570,6 +573,19 @@
                     <p>Platformdaki yeni katılan öğrenciler, en çok talep gören alanlar ve mentörlük istatistiklerini takip et.</p>
                     <a href="#" onclick="switchTab('news')" class="card-link">Haberleri Gör ➔</a>
                 </div>
+            </div>
+        </div>
+
+        <!-- SEKME: ŞİRKETİNİZDEN -->
+        <div class="tab-content" id="content-company">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <div>
+                    <h2 style="font-size: 26px; color: #fff;"><i class="fa-solid fa-building" style="color:#06b6d4;"></i> <span id="displayCompanyName">Şirketiniz</span> Mentör Meslektaşları 💼</h2>
+                    <p style="color: #94a3b8; font-size: 15px; margin-top: 5px;">Aynı şirkette çalıştığınız diğer kıdemli mühendisler ve mentörlük yapan meslektaşlarınız.</p>
+                </div>
+            </div>
+            <div class="dashboard-grid" id="companyPeersGrid">
+                <!-- JS ile yüklenecek -->
             </div>
         </div>
 
@@ -989,17 +1005,24 @@
         }
 
         function switchTab(tabName) {
-            const tabs = ['panel', 'network', 'others', 'news', 'chat', 'ai', 'profile'];
-            tabs.forEach(t => {
-                const contentEl = document.getElementById('content-' + t);
-                if (contentEl) contentEl.classList.remove('active');
-                const menuEl = document.getElementById('menu-' + t);
-                if (menuEl) menuEl.classList.remove('active');
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.classList.remove('active');
+            });
+            document.querySelectorAll('.menu-item').forEach(m => {
+                m.classList.remove('active');
             });
 
-            document.getElementById('content-' + tabName).classList.add('active');
+            const target = document.getElementById('content-' + tabName);
+            if (target) {
+                target.classList.add('active');
+            }
             const activeMenuEl = document.getElementById('menu-' + tabName);
-            if (activeMenuEl) activeMenuEl.classList.add('active');
+            if (activeMenuEl) {
+                activeMenuEl.classList.add('active');
+            }
+
+            if (tabName === 'company') renderCompanyPeers();
+            if (tabName === 'profile') loadProfile();
         }
 
         function closeActiveChat() {
@@ -1136,9 +1159,35 @@
             loadProfilePhoto();
         }
 
+        function renderCompanyPeers() {
+            const isYeri = localStorage.getItem('kullaniciIsYeri') || 'ASELSAN';
+            const displayEl = document.getElementById('displayCompanyName');
+            if (displayEl) displayEl.textContent = isYeri;
+
+            const peers = [
+                { name: "Ahmet Erdem", title: "Kıdemli Sistem Müh.", exp: "8 Yıl Deneyim", area: "Gömülü & Savunma", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ahmet" },
+                { name: "Deniz Kaya", title: "Yazılım Mimarı", exp: "10 Yıl Deneyim", area: "Bulut & Yapay Zeka", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Deniz" },
+                { name: "Gökhan Şahin", title: "Lider Makine Müh.", exp: "6 Yıl Deneyim", area: "CAD/CAM & Mekanik", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Gokhan" },
+                { name: "Derya Aslan", title: "Endüstri & Tedarik Yöneticisi", exp: "7 Yıl Deneyim", area: "Operasyon & Lojistik", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Derya" }
+            ];
+
+            const grid = document.getElementById('companyPeersGrid');
+            if (!grid) return;
+            grid.innerHTML = peers.map(peer => `
+                <div class="premium-card" style="display:flex; flex-direction:column; justify-content:space-between; align-items:center; text-align:center; padding:25px;">
+                    <img src="${peer.img}" alt="${peer.name}" style="width:75px; height:75px; border-radius:50%; border:2px solid #06b6d4; margin-bottom:15px;">
+                    <h3 style="font-size:18px; color:#fff; margin-bottom:5px;">${peer.name}</h3>
+                    <p style="font-size:13px; color:#06b6d4; font-weight:600; margin-bottom:4px;">${isYeri} - ${peer.title}</p>
+                    <p style="font-size:12px; color:#94a3b8; margin-bottom:15px;">${peer.exp} • ${peer.area}</p>
+                    <button onclick="switchTab('chat')" class="card-link" style="background:rgba(6,182,212,0.15); border:1px solid #06b6d4; padding:8px 16px; border-radius:15px; cursor:pointer;">İletişime Geç 💬</button>
+                </div>
+            `).join('');
+        }
+
         renderPending();
         renderAccepted();
         loadProfile();
+        renderCompanyPeers();
 
     </script>
 

@@ -139,12 +139,12 @@
         }
 
         .tab-content {
-            display: none;
+            display: none !important;
             animation: fadeIn 0.5s ease forwards;
         }
 
         .tab-content.active {
-            display: block;
+            display: block !important;
         }
 
         .dashboard-grid {
@@ -413,6 +413,12 @@
             <div class="menu-item active" id="menu-panel" onclick="switchTab('panel')">
                 <i class="fa-solid fa-chart-pie"></i> Kişiselleştirilmiş Panel
             </div>
+            <div class="menu-item" id="menu-school" onclick="switchTab('school')">
+                <i class="fa-solid fa-graduation-cap"></i> Okulunuzdan 🎓
+            </div>
+            <div class="menu-item" id="menu-jobs" onclick="switchTab('jobs')">
+                <i class="fa-solid fa-briefcase"></i> Staj & Proje İlanları 🚀
+            </div>
             <div class="menu-item" id="menu-discover" onclick="switchTab('discover')">
                 <i class="fa-solid fa-globe"></i> Mühendislik Dallarını Keşfet
             </div>
@@ -494,6 +500,82 @@
             </div>
         </div>
 
+        <!-- SEKME: OKULUNUZDAN -->
+        <div class="tab-content" id="content-school">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <div>
+                    <h2 style="font-size: 26px; color: #fff;"><i class="fa-solid fa-graduation-cap" style="color:#06b6d4;"></i> <span id="displaySchoolName">Okulunuz</span> Platformdaki Öğrencileri 🎓</h2>
+                    <p style="color: #94a3b8; font-size: 15px; margin-top: 5px;">Aynı üniversitede okuduğun dönem ve üst sınıf mühendislik öğrencileriyle bağlantı kur.</p>
+                </div>
+            </div>
+            <div class="dashboard-grid" id="schoolPeersGrid">
+                <!-- Javascript ile dinamik yüklenecek -->
+            </div>
+        </div>
+
+        <!-- SEKME: STAJ & PROJE İLANLARI -->
+        <div class="tab-content" id="content-jobs">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h2 style="font-size: 26px; color: #fff;"><i class="fa-solid fa-briefcase" style="color:#06b6d4;"></i> Staj & Proje Takımı İlanları 🚀</h2>
+                    <p style="color: #94a3b8; font-size: 15px; margin-top: 5px;">Projeniz için takım arkadaşı arayın veya aktif staj ilanlarına başvurun.</p>
+                </div>
+                <button onclick="openCreateJobModal()" class="create-job-btn" style="background: linear-gradient(135deg, #06b6d4, #2563eb); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);">
+                    <i class="fa-solid fa-plus"></i> Yeni İlan Oluştur
+                </button>
+            </div>
+            <div class="dashboard-grid" id="jobsGrid">
+                <!-- Javascript ile dinamik ilanlar yüklenecek -->
+            </div>
+        </div>
+
+        <!-- İLAN OLUŞTURMA MODAL -->
+        <div class="modal-overlay" id="createJobModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); z-index: 200; display: none; justify-content: center; align-items: center;">
+            <div style="background: #1e293b; border: 2px solid rgba(6, 182, 212, 0.4); border-radius: 24px; width: 90%; max-width: 550px; padding: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.6); position: relative;">
+                <span onclick="closeCreateJobModal()" style="position: absolute; top: 20px; right: 25px; font-size: 28px; color: #94a3b8; cursor: pointer;">&times;</span>
+                <h2 style="color: #fff; font-size: 24px; margin-bottom: 20px; text-align: center;"><i class="fa-solid fa-rocket" style="color:#06b6d4;"></i> Proje / Takım İlanı <span style="color:#06b6d4;">Oluştur</span></h2>
+                <form id="createJobForm">
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">İlan Başlığı</label>
+                        <input type="text" id="jobTitle" placeholder="Örn: Otonom İHA Takımına Yazılımcı Aranıyor" required style="width: 100%; padding: 12px 16px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none;">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">İlan Türü</label>
+                            <select id="jobType" style="width: 100%; padding: 12px 16px; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none;">
+                                <option value="Proje Arkadaşı">Proje Arkadaşı</option>
+                                <option value="Takım Üyesi">Takım Üyesi</option>
+                                <option value="Staj / Aday">Staj / Aday</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Disiplin / Alan</label>
+                            <select id="jobDomain" style="width: 100%; padding: 12px 16px; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none;">
+                                <option value="Yazılım / Bilgisayar">Yazılım / Bilgisayar</option>
+                                <option value="Elektrik-Elektronik">Elektrik-Elektronik</option>
+                                <option value="Makine Müh.">Makine Müh.</option>
+                                <option value="Endüstri Müh.">Endüstri Müh.</option>
+                                <option value="Havacılık ve Uzay">Havacılık ve Uzay</option>
+                                <option value="Genel / Tümü">Genel / Tümü</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Aranan Beceriler & Teknolojiler</label>
+                        <input type="text" id="jobSkills" placeholder="Örn: Python, ROS2, OpenCV, Fusion360" required style="width: 100%; padding: 12px 16px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">İlan Detayı / Açıklama</label>
+                        <textarea id="jobDesc" rows="3" placeholder="Projenizi ve aradığınız özellikleri kısaca açıklayın..." required style="width: 100%; padding: 12px 16px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none; resize: none;"></textarea>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">İletişim Bilgisi (E-posta / Telefon / Discord)</label>
+                        <input type="text" id="jobContact" placeholder="Örn: ahmet@student.itu.edu.tr veya @ahmet_dev" required style="width: 100%; padding: 12px 16px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none;">
+                    </div>
+                    <button type="submit" style="width: 100%; background: linear-gradient(135deg, #06b6d4, #2563eb); color: white; padding: 14px; border: none; border-radius: 14px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">İlanı Yayınla 🚀</button>
+                </form>
+            </div>
+        </div>
 
         <!-- SEKME 2: BÖLÜME ÖZEL KARİYER YOLLARI VE ALAN KEŞFİ -->
         <div class="tab-content" id="content-discover">
@@ -1242,28 +1324,27 @@
         });
 
         function switchTab(tabName) {
-            const tabs = ['panel', 'discover', 'mentor', 'companies', 'gelenistekler', 'chat', 'ai', 'profile'];
-            tabs.forEach(t => {
-                const contentEl = document.getElementById('content-' + t);
-                if (contentEl) contentEl.classList.remove('active');
-                const menuEl = document.getElementById('menu-' + t);
-                if (menuEl) menuEl.classList.remove('active');
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.classList.remove('active');
+            });
+            document.querySelectorAll('.menu-item').forEach(m => {
+                m.classList.remove('active');
             });
 
             const target = document.getElementById('content-' + tabName);
-            if (target) target.classList.add('active');
+            if (target) {
+                target.classList.add('active');
+            }
             const activeMenuEl = document.getElementById('menu-' + tabName);
-            if (activeMenuEl) activeMenuEl.classList.add('active');
+            if (activeMenuEl) {
+                activeMenuEl.classList.add('active');
+            }
 
-            if (tabName === 'profile') {
-                loadProfile();
-            }
-            if (tabName === 'gelenistekler') {
-                renderGelenIstekler();
-            }
-            if (tabName === 'companies') {
-                renderCompaniesGrid();
-            }
+            if (tabName === 'profile') loadProfile();
+            if (tabName === 'gelenistekler') renderGelenIstekler();
+            if (tabName === 'companies') renderCompaniesGrid();
+            if (tabName === 'school') renderSchoolPeers();
+            if (tabName === 'jobs') renderJobs();
         }
 
 
@@ -1822,6 +1903,98 @@
             document.getElementById('giPendingGrid').style.display = view === 'pending' ? 'grid' : 'none';
             document.getElementById('giAcceptedGrid').style.display = view === 'accepted' ? 'grid' : 'none';
         }
+
+        function openCreateJobModal() {
+            document.getElementById('createJobModal').style.display = 'flex';
+        }
+        function closeCreateJobModal() {
+            document.getElementById('createJobModal').style.display = 'none';
+        }
+
+        function renderSchoolPeers() {
+            const okul = localStorage.getItem('kullaniciOkul') || 'İTÜ';
+            const displayEl = document.getElementById('displaySchoolName');
+            if (displayEl) displayEl.textContent = okul;
+
+            const peers = [
+                { name: "Selin Yılmaz", dept: "Bilgisayar Müh.", classYear: "3. Sınıf", skills: "React, Node.js, Python", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Selin" },
+                { name: "Caner Demir", dept: "Makine Müh.", classYear: "4. Sınıf", skills: "SolidWorks, Ansys, MATLAB", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Caner" },
+                { name: "Merve Öztürk", dept: "Elektrik-Elektronik Müh.", classYear: "2. Sınıf", skills: "PCB, C++, Proteus", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Merve" },
+                { name: "Barış Arslan", dept: "Havacılık Müh.", classYear: "3. Sınıf", skills: "Aerodinamik, OpenFOAM", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Baris" }
+            ];
+
+            const grid = document.getElementById('schoolPeersGrid');
+            if (!grid) return;
+            grid.innerHTML = peers.map(peer => `
+                <div class="premium-card" style="display:flex; flex-direction:column; justify-content:space-between; align-items:center; text-align:center; padding:25px;">
+                    <img src="${peer.img}" alt="${peer.name}" style="width:75px; height:75px; border-radius:50%; border:2px solid #06b6d4; margin-bottom:15px;">
+                    <h3 style="font-size:18px; color:#fff; margin-bottom:5px;">${peer.name}</h3>
+                    <p style="font-size:13px; color:#06b6d4; font-weight:600; margin-bottom:4px;">${okul} - ${peer.dept}</p>
+                    <p style="font-size:12px; color:#94a3b8; margin-bottom:15px;">${peer.classYear} • ${peer.skills}</p>
+                    <button onclick="switchTab('chat')" class="card-link" style="background:rgba(6,182,212,0.15); border:1px solid #06b6d4; padding:8px 16px; border-radius:15px; cursor:pointer;">Mesaj Gönder 💬</button>
+                </div>
+            `).join('');
+        }
+
+        const defaultUserJobs = [
+            { title: "Teknofest Otonom İHA Takımı Yazılımcısı", type: "Proje Arkadaşı", domain: "Havacılık ve Uzay", skills: "Python, ROS2, OpenCV", desc: "Sürü İHA algoritmaları üzerine çalışacak bilgisayar/yazılım öğrencisi arıyoruz.", author: "Ahmet K. (İTÜ 3. Sınıf)", contact: "ahmet@itu.edu.tr", date: "Bugün" },
+            { title: "Gömülü Sistemler Stajyer Mühendis", type: "Staj / Aday", domain: "Elektrik-Elektronik", skills: "C/C++, STM32, Proteus", desc: "ASELSAN destekli Ar-Ge projesinde uzun dönem staj imkanı.", author: "ASELSAN Ar-Ge", contact: "staj@aselsan.com.tr", date: "Dün" },
+            { title: "Yapay Zeka Destekli Medikal Görüntüleme", type: "Proje Arkadaşı", domain: "Yazılım / Bilgisayar", skills: "PyTorch, TensorFlow, CNN", desc: "Biyomedikal projesinde derin öğrenme modeli geliştirecek arkadaş arıyoruz.", author: "Zeynep T. (ODTÜ)", contact: "zeynep@metu.edu.tr", date: "2 Gün Önce" }
+        ];
+
+        function getStoredJobs() {
+            const saved = localStorage.getItem('userJobsList');
+            return saved ? JSON.parse(saved) : defaultUserJobs;
+        }
+
+        function renderJobs() {
+            const jobs = getStoredJobs();
+            const grid = document.getElementById('jobsGrid');
+            if (!grid) return;
+            grid.innerHTML = jobs.map(job => `
+                <div class="premium-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:25px;">
+                    <div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                            <span style="font-size:12px; font-weight:700; color:#38bdf8; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); padding:4px 12px; border-radius:12px;">${job.type}</span>
+                            <span style="font-size:12px; color:#94a3b8;"><i class="fa-regular fa-clock"></i> ${job.date}</span>
+                        </div>
+                        <h3 style="font-size:19px; color:#fff; margin-bottom:10px;">${job.title}</h3>
+                        <p style="font-size:14px; color:#cbd5e1; margin-bottom:15px; line-height:1.5;">${job.desc}</p>
+                        <div style="font-size:13px; color:#06b6d4; font-weight:600; margin-bottom:15px;"><i class="fa-solid fa-code"></i> Aranan: ${job.skills}</div>
+                    </div>
+                    <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:15px; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:12px; color:#94a3b8;">${job.author}</span>
+                        <button onclick="alert('İletişim Bilgisi: ${job.contact}')" class="card-link" style="background:#06b6d4; color:#0f172a; padding:8px 18px; border-radius:15px; border:none; font-weight:700; cursor:pointer;">İletişime Geç ✉️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSchoolPeers();
+            renderJobs();
+
+            document.getElementById('createJobForm')?.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const newJob = {
+                    title: document.getElementById('jobTitle').value,
+                    type: document.getElementById('jobType').value,
+                    domain: document.getElementById('jobDomain').value,
+                    skills: document.getElementById('jobSkills').value,
+                    desc: document.getElementById('jobDesc').value,
+                    contact: document.getElementById('jobContact').value,
+                    author: (localStorage.getItem('kullaniciAdi') || 'Öğrenci') + ' (' + (localStorage.getItem('kullaniciOkul') || 'Üniversite') + ')',
+                    date: 'Şimdi'
+                };
+                const currentJobs = getStoredJobs();
+                currentJobs.unshift(newJob);
+                localStorage.setItem('userJobsList', JSON.stringify(currentJobs));
+                closeCreateJobModal();
+                renderJobs();
+                switchTab('jobs');
+                alert('🎉 İlanınız başarıyla yayınlandı!');
+            });
+        });
 
     </script>
     <div class="alan-modal-overlay" id="alanModal">

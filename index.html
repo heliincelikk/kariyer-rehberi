@@ -11,11 +11,10 @@
         /* ================= GENEL VE GECE MODU TEMASI ================= */
          html, body {
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        * 
-
-        {  /*Sayfadaki tüm etiketleri seçer yıldız işareti*/
+        * {  /*Sayfadaki tüm etiketleri seçer yıldız işareti*/
             margin: 0;
             padding: 0;  /*Margin ve padding sayfada tarayıcıda varsayılan olan boşlukları sfıırlar.*/
             box-sizing: border-box;   /*Kutuların içine bişey yazınca otomatik büyütür, tasarım bozulmaz. */
@@ -29,181 +28,178 @@
             min-height: 100vh; /*Ekranın yüksekliği*/
             display: flex;  /* flex aktif */ 
             flex-direction: column;   /*Ana eksen dikey. */
-             overflow-y: auto; /*Taşmaları sakla */
-            position: relative;  /* position: relative; Bu elementi referans noktası yapar. İçindeki position:absolute elemanlar artık bu kutuya göre konumlanır. Tek başına görünürde bir değişiklik oluşturmayabilir.
-*/
+            overflow-y: auto; /*Taşmaları sakla */
+            position: relative;
         }
 
         @keyframes gradientBg {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
-        }     /* @keyframes Animasyonun nasıl hareket edeceğini tanımlar.0% = başlangıç 50% = orta 100% = bitiş Burada arka plan soldan sağa kayıp tekrar sola dönüyor.Yani @keyframes aslında bir zaman çizelgesidir. Sen CSS'e "animasyonun şu anında bunu yap, sonra şunu yap" diye talimat veriyorsun.*/
+        }
 
         /* Navbar */
         header {
-            display: flex; /* İçindeki elemanları Flexbox sistemiyle düzenler. Tek başına hizalama yapmaz, Flex'i aktif eder.*/
-            justify-content: space-between; /* Ana eksende elemanları dağıtır. İlk eleman sola, son eleman sağa gider.*/
-            align-items: center; /* Elemanları çapraz eksende ortalar.Böylece hepsi aynı hizada görünür.*/
-            padding: 20px 50px;/* İç boşluk bırakır. 20px üst-alt  50px sağ-sol*/
-            background-color: rgba(15, 23, 42, 0.6); /* Header'ın arka plan rengini belirler. rgba kullanıldığı için yarı saydam görünür. Böylece arkadaki hareketli gradient hafifçe görünmeye devam eder.*/
-            backdrop-filter: blur(12px); /* Navbar'ın arkasındaki görüntüyü bulanıklaştırır. Cam (Glassmorphism) efekti oluşturur.*/
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);/* Navbar'a yumuşak gölge ekler. Daha derin ve şık görünmesini sağlar.*/
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);/* Navbar'ın altına ince bir çizgi ekler. Sayfadan daha belirgin ayrılmasını sağlar.*/
-            z-index: 10;/* Elemanın hangi katmanda olacağını belirler. Sayı büyüdükçe öne gelir.z-index'in çalışması için elementin genellikle bir position değeri olması gerekir (relative, absolute, fixed veya sticky).*/
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
         }
 
-        .logo { /*class'ı logo olan HTML elemanını etkiler */
-            font-size: 24px; /* Yazının boyutunu belirler. Değer büyüdükçe yazı büyür.*/
-            font-weight: bold; /* Yazının kalınlığını belirler. bold = kalın yazı (yaklaşık 700).*/
-            color: #06b6d4;/* Yazının rengini belirler. Sadece metni etkiler.*/
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);/* Yazıya gölge/parlama efekti verir. İlk değer = sağ-sol kayma İkinci değer = yukarı-aşağı kayma Üçüncü değer = bulanıklık (parlama miktarı) Son kısım = gölgenin rengi*/
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #06b6d4;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
         }
 
-        .auth-buttons button { /*auth-buttons class'ının içindeki tüm button elemanlarını seç. */
-            padding: 10px 24px; /* Butonun içine boşluk ekler. 10px üst-alt 24px sağ-sol*/
-            margin-left: 10px;/* Sol tarafta dış boşluk bırakır. Butonların birbirine yapışmasını önler.*/
-            border: none;/* Butonun kenarlığını kaldırır. */
-            border-radius: 25px;/* Butonun köşelerini yuvarlatır. Değer büyüdükçe köşeler daha yuvarlak olur.*/
-            cursor: pointer; /* Fare butonun üzerine gelince imleci el işaretine çevirir.*/
-            font-weight: 600; /* Yazıyı orta kalın yapar. */
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Özellikler değiştiğinde geçişi yumuşatır. all = tüm özellikler 0.3s = geçiş süresi cubic-bezier = geçişin hız şekli*/
+        .auth-buttons button {
+            padding: 10px 24px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .login-btn {  /*Class'ı login-btn olan elementi seç.*/
-            background-color: transparent; /* Butonun arka planını şeffaf yapar. */
-            color: #06b6d4;/* Buton yazısının rengini belirler. */
-            border: 2px solid #06b6d4 !important; /* Butona 2px kalınlığında mavi kenarlık ekler. !important bu kuralın öncelikli uygulanmasını sağlar.*/
+        .login-btn {
+            background-color: transparent;
+            color: #06b6d4;
+            border: 2px solid #06b6d4 !important;
         }
 
-        .login-btn:hover { /*Fare butonun üzerine geldiğinde..." */
-            background-color: #06b6d4; /*Normalde buton şeffaftı. Fare gelince mavi oluyor. */
-            color: #0f172a; /*Şimdi yazı rengi değişiyor. Çünkü arka plan mavi oldu */
-            transform: translateY(-2px); /* Butonu 2px yukarı taşır. Hover sırasında hareket efekti verir.*/
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4); /* Butona mavi gölge/parlama ekler. Hover sırasında daha dikkat çekici görünmesini sağlar.*/
+        .login-btn:hover {
+            background-color: #06b6d4;
+            color: #0f172a;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
         }
 
-        
-    .register-btn {
-    background-color: #06b6d4;
-    color: #0f172a;
-    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
-}
+        .register-btn {
+            background-color: #06b6d4;
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
 
-.register-btn:hover {
-    background-color: #22d3ee;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
-}
+        .register-btn:hover {
+            background-color: #22d3ee;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+        }
 
         /* Arka Plandaki İkonlar */
         .marquee-container {
-            position: absolute; /* Elemanı normal akıştan çıkarır. top, left gibi özelliklerle istediğimiz yere yerleştirebiliriz.*/
-            top: 50%; /* Üstten başlayarak ekranın %50'sine git.*/
-            left: 0; /*Sol kenardan başla. */
-            transform: translateY(-50%) rotate(-5deg); /* translateY(-50%) Elemanı kendi yüksekliğinin yarısı kadar yukarı taşır. Böylece tam ortalanır. rotate(-5deg) Elemanı 5 derece sola doğru döndürür.*/
-            width: 120%; /* Konteyneri ekranın %120'si kadar geniş yapar. Kayma animasyonunda boşluk oluşmasını önler.*/
-            overflow: hidden; /* Kutunun dışına taşan kısmı gizler. */
-            white-space: nowrap; /* İçerik tek satırda kalır. Alt satıra geçmez.*/
-            opacity: 0.15; /* Elemanı yarı saydam yapar. 0 = görünmez 1 = tamamen görünür*/
-            pointer-events: none; /* Fare tıklamalarını engeller. Kullanıcı ikonlara değil, arkadaki butonlara tıklayabilir.*/
-            z-index: 1; /*Bu ikonlar arkada duracak. */
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%) rotate(-5deg);
+            width: 120%;
+            overflow: hidden;
+            white-space: nowrap;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .marquee-content {
-            display: inline-block; /*Bu satırın amacı: İçeriğin tek parça gibi davranmasını sağlamak. Animasyon yapılırken bütün ikonlar birlikte hareket ediyor. */
-            animation: marquee 22s linear infinite; /*22 saniye sürsün, düz gitsin, sonsuz olsun */
+            display: inline-block;
+            animation: marquee 22s linear infinite;
         }
 
-        .marquee-content i { /* <i>/i/> etiketlerini seçer */
-            font-size: 110px; /*İkonları çok büyük yapıyor. */
-            margin: 0 50px; /*Birbirlerine yapışmasınlar diye */
+        .marquee-content i {
+            font-size: 110px;
+            margin: 0 50px;
             color: #06b6d4;
-            text-shadow: 0 0 20px rgba(6, 182, 212, 0.2); /*Rengin saydamlığını ayarlar. rgba */
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
         }
 
         @keyframes marquee {
-            0% { transform: translateX(0%); }   /* Animasyonun başlangıcı.Eleman ilk konumunda durur.*/
-            100% { transform: translateX(-50%); } /* Animasyon sonunda ikonlar kendi genişliğinin %50'si kadar sola kayar.*/
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
         }
 
         /* Kahraman Alanı */
-        .hero-section { /*Frontend bilgisi: Bir web sitesinin kullanıcıya ilk gösterdiği büyük tanıtım alanına "Hero Section" denir. */
-            flex: 1; /* Flex kutusunda kalan boş alanı doldurur. */
+        .hero-section {
             display: flex;
-            flex-direction: column; /*Dikey eksen ana eksen */
-            justify-content: center; /*Dilkey ekseni ortala en üst orta en alt */
-            align-items: center; /*Yatay ekseni ortala */
-            text-align: center; /*sadece metni ortala */
-            padding: 20px; /*iç boşluk */
-            z-index: 5; /*navbar-hero-ikonlar sırasıya katmanlar böyle */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px 40px 20px;
+            z-index: 5;
         }
 
-        .hero-section h1 { /*<h1>/</h1> seçer */
-            font-size: 58px; /* Büyük başlık*/
-            color: #ffffff; /* beyaz renk */
-            margin-bottom: 20px; /*Boşluk bırakıyor paragraf ve başlık yapışmıyor */
-            font-weight: 800; /*kalın yazı */
-            opacity: 0; /*saydam */
-            animation: fadeInUp 1s ease 0.3s forwards; /* Başlığı görünmez başlatır. fadeInUp animasyonunu uygular. 0.3 saniye bekler. 1 saniyede tamamlanır. Son hali korunur.*/
+        .hero-section h1 {
+            font-size: 58px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-weight: 800;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
         }
 
-        .hero-section h1 span {  /* h1 in içinden bir kısım seçmiş, rengini mavi yapıp gölgelendirmiş*/
+        .hero-section h1 span {
             color: #06b6d4;
             text-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
         }
 
         .description-text {
             font-size: 20px;
-            color: #cbd5e1; /*yazının rengi */
-            max-width: 800px;/* Kutunun en fazla 800px genişliğinde olmasını sağlar.Büyük ekranlarda yazının çok uzamasını önler.*/
-            line-height: 1.8; /* Satırlar arasındaki boşluğu ayarlar. Büyük değer = daha ferah görünüm.*/
+            color: #cbd5e1;
+            max-width: 800px;
+            line-height: 1.8;
             margin-bottom: 45px;
             background-color: rgba(30, 41, 59, 0.5);
             padding: 30px 40px;
             border-radius: 20px;
-            backdrop-filter: blur(8px);/* Kutunun arkasındaki görüntüyü bulanıklaştırır. Cam efekti oluşturur.*/
-            border: 1px solid rgba(6, 182, 212, 0.15); /*solid düz çizgi */
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(6, 182, 212, 0.15);
             opacity: 0;
             animation: fadeInUp 1s ease 0.8s forwards;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
-        .cta-btn { /*Call To Action: eylem çağırma butonu, kullanıcıyı birşey yapmaya teşvik eden buton */
+        .cta-btn {
             background-color: #06b6d4;
             color: #0f172a;
-            padding: 20px 50px; /*20 üst alt, 50 sağ sol */
+            padding: 20px 50px;
             font-size: 20px;
             font-weight: bold;
             border: none;
             border-radius: 50px;
-            cursor: pointer; /*cursor el işareti */
-            text-decoration: none; /* Yazının varsayılan süslemesini kaldırır. Linklerde alt çizgiyi kaldırmak için sık kullanılır.*/
+            cursor: pointer;
+            text-decoration: none;
             opacity: 0;
-            animation: fadeInUp 1s ease 1.3s forwards, pulse 2s infinite 2.3s; /*İki animasyon var */
-            transition: all 0.3s ease; /*hover değişimlerini yumuşatıyor. */
+            animation: fadeInUp 1s ease 1.3s forwards, pulse 2s infinite 2.3s;
+            transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
-            display: inline-block;/* Eleman içerik kadar yer kaplar. Ama width, height, padding gibi özellikleri kullanabiliriz.*/
+            display: inline-block;
         }
 
         .cta-btn:hover {
             background-color: #22d3ee;
             box-shadow: 0 15px 40px rgba(6, 182, 212, 0.6);
-            transform: scale(1.02); /*fare üstüne gelince boyutu büyütür */
+            transform: scale(1.02);
         }
 
-        .guest-link { /*guest link class ına sahip eleman */
-            margin-top: 25px; /*linkin üstüne 25 px dış boşluk ekeledik */
+        .guest-link {
+            margin-top: 25px;
             color: #94a3b8;
-            text-decoration: none; /*Linklerin varsayılan alt yazısını kaldırır */
+            text-decoration: none;
             font-size: 16px;
             font-weight: 600;
             opacity: 0;
-            animation: fadeInUp 1s ease 1.6s forwards; /*forwards → Animasyon bitince son halinde kalır. */
+            animation: fadeInUp 1s ease 1.6s forwards;
             transition: all 0.3s ease;
-            border-bottom: 1px dashed #94a3b8; /*1px → Çizginin kalınlığı dashed → Kesik çizgi #94a3b8 → Çizginin rengi */
-            padding-bottom: 3px; /*Yazı ile alt çizgi arasında 3px iç boşluk bırakır. */
-            display: inline-block; /*Link sadece içeriği kadar yer kaplar ama padding, transform gibi özellikler düzgün çalışır. */
+            border-bottom: 1px dashed #94a3b8;
+            padding-bottom: 3px;
+            display: inline-block;
         }
 
         .guest-link:hover {
@@ -213,25 +209,463 @@
             transform: translateY(-2px);
         }
 
+        /* ================= PLATFORM SHOWCASE (TANITIM BÖLÜMÜ) ================= */
+        .showcase-section, .cta-banner-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(40px) scale(0.96);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .showcase-section.visible, .cta-banner-section.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            animation: showcaseReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes showcaseReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.94);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .showcase-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            z-index: 5;
+            position: relative;
+        }
+
+        .showcase-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .showcase-header h2 {
+            font-size: 38px;
+            color: #ffffff;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .showcase-header h2 span {
+            color: #06b6d4;
+            text-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        }
+
+        .showcase-header p {
+            color: #94a3b8;
+            font-size: 18px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Tab Butonları */
+        .showcase-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: rgba(30, 41, 59, 0.6);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab-btn i {
+            font-size: 18px;
+            color: #06b6d4;
+            transition: transform 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background-color: rgba(6, 182, 212, 0.15);
+            border-color: #06b6d4;
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.2);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            color: #0f172a;
+            border-color: #06b6d4;
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+            font-weight: 700;
+        }
+
+        .tab-btn.active i {
+            color: #0f172a;
+        }
+
+        /* Showcase İçerik Kartı */
+        .showcase-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        @media (max-width: 900px) {
+            .showcase-card {
+                grid-template-columns: 1fr;
+                padding: 25px;
+            }
+        }
+
+        .showcase-tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .showcase-tab-content.active {
+            display: grid;
+        }
+
+        .tab-text h3 {
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tab-text h3 i {
+            color: #06b6d4;
+        }
+
+        .tab-text p {
+            color: #cbd5e1;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .feature-bullets {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .feature-bullets li {
+            color: #e2e8f0;
+            font-size: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-bullets li i {
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.15);
+            padding: 6px;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+
+        .tab-visual {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-badge {
+            align-self: flex-start;
+            background: rgba(6, 182, 212, 0.15);
+            border: 1px solid #06b6d4;
+            color: #38bdf8;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .visual-stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .stat-box .number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #06b6d4;
+            margin-bottom: 4px;
+        }
+
+        .stat-box .label {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        /* ================= HEMEN ÜYE OL CTA BANNER ================= */
+        .cta-banner-section {
+            padding: 80px 20px 100px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            z-index: 5;
+            position: relative;
+        }
+
+        .cta-banner-box {
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.8), rgba(15, 23, 42, 0.9));
+            border: 2px solid rgba(6, 182, 212, 0.4);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(6, 182, 212, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 60%);
+            animation: pulseGlow 6s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(0.8) translate(-10%, -10%); }
+            100% { transform: scale(1.2) translate(10%, 10%); }
+        }
+
+        .cta-banner-box h2 {
+            font-size: 42px;
+            color: #ffffff;
+            font-weight: 800;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-banner-box h2 span {
+            color: #06b6d4;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
+        .cta-banner-box p {
+            font-size: 19px;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .primary-register-btn {
+            background: linear-gradient(135deg, #06b6d4, #2563eb);
+            color: #ffffff;
+            padding: 18px 45px;
+            font-size: 19px;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .primary-register-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.7);
+            background: linear-gradient(135deg, #22d3ee, #3b82f6);
+        }
+
+        .secondary-login-btn {
+            background-color: transparent;
+            color: #ffffff;
+            padding: 18px 40px;
+            font-size: 19px;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .secondary-login-btn:hover {
+            border-color: #06b6d4;
+            color: #06b6d4;
+            background: rgba(6, 182, 212, 0.1);
+            transform: translateY(-4px);
+        }
+
+        /* ================= FOOTER (ALT BİLGİ) ================= */
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 50px 20px 30px 20px;
+            z-index: 10;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-brand .logo {
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .footer-brand p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #06b6d4;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-socials a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #06b6d4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-socials a:hover {
+            background: #06b6d4;
+            color: #0f172a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(6, 182, 212, 0.4);
+        }
+
+        .footer-bottom-line {
+            max-width: 1200px;
+            margin: 30px auto 0 auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            color: #475569;
+            font-size: 13px;
+        }
+
         /* ================= AÇILIR PENCERE (MODAL) TASARIMI ================= */
         .modal-overlay {
-            position: fixed; /* Elemanı ekranın kendisine sabitler. Sayfa kaydırılsa bile yerini değiştirmez. relative → Normal yerinde durur, referans olur. absolute → Bir elemana göre konumlanır. fixed → Ekrana sabitlenir.*/
-            top: 0; /*Ekranın en üstünden başla */
-            left: 0; /*Ekran sol kenardan başla */
-            width: 100%; /*Ekranı tamamen kapla */
-            height: 100%; /*Yüksekliği de ekran kadar olsun */ 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-color: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(8px); /*Arkadaki sayfa flu oluyor. */
+            backdrop-filter: blur(8px);
             z-index: 100;
             display: flex; 
             justify-content: center;
             align-items: center;
             opacity: 0;
-            pointer-events: none; /*Kullanıcı modal kapalıyken buna tıklayamaz. */
+            pointer-events: none;
             transition: all 0.4s ease;
         }
 
-        .modal-overlay.active { /*Görünür oluyor. Tıklanabilir oluyor. */
+        .modal-overlay.active {
             opacity: 1;
             pointer-events: auto;
         }
@@ -242,92 +676,88 @@
             border-radius: 25px;
             width: 90%; 
             max-width: 500px;
-            /*Küçük ekranlarda genişler, büyük ekranlarda ise en fazla 500px olur. */
             padding: 35px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            transform: scale(0.8) translateY(-30px); /*Burada iki transform aynı anda uygulanıyor. */
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /*cubic-bezier(...) = Animasyonun hızını çok daha ayrıntılı kontrol eder. */
+            transform: scale(0.8) translateY(-30px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative; 
         }
 
-        .modal-overlay.active .modal-box { /*Eğer modal-overlay aktifse, içindeki modal-box için şu kuralları uygula */
-           /* Modal açılınca */
-            transform: scale(1) /* Normal boyutuna gelir. */
-            translateY(0);/* Tam yerine iner. */
+        .modal-overlay.active .modal-box {
+            transform: scale(1) translateY(0);
         }
 
-        .close-modal { /*kapatma tuşunu tasarlıyor */
+        .close-modal {
             position: absolute;
             top: 20px;
             right: 25px;
             font-size: 28px;
             color: #94a3b8;
             cursor: pointer;
-            transition: color 0.3s ease; /* Sadece renk değişimini yumuşak yapar. */
+            transition: color 0.3s ease;
         }
 
         .close-modal:hover {
             color: #06b6d4;
         }
 
-        .modal-box h2 { /*Modal kutusunun içindeki h2 başlığını seç.*/
+        .modal-box h2 {
             color: #ffffff; 
-            margin-bottom: 25px; /*Başlığın altına boşluk bırakıyor. */
+            margin-bottom: 25px;
             font-size: 28px;
-            text-align: center; /*Başlığı ortaya hizalıyor. */
+            text-align: center;
         }
 
-        .modal-box h2 span { /*Bu CSS sadece <span> içindeki yazıyı seçer. */
+        .modal-box h2 span {
             color: #06b6d4;
         }
 
         /* Form Elemanları */
-        .form-group { /*form-group class'ına sahip her elemanı seçer.*/
-            margin-bottom: 20px; /*Alt tarafa 20px dış boşluk bırakır. */
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        .form-group label { /*form-group'un içindeki bütün label etiketlerini seç. */
-            display: block; /*Label tek satırı kaplar. Input da alt satıra geçer. */
+        .form-group label {
+            display: block;
             color: #94a3b8;
-            font-weight: 600; /*yazı kalınlığı. */
+            font-weight: 600;
             margin-bottom: 8px;
             font-size: 14px;
         }
 
-        .form-group input { /*form-group içindeki input kutularını seçer. */
-            width: 100%;/*Input bulunduğu alanın tamamını kaplasın. */
-            padding: 12px 18px; /*köşe yuvarlaklığı. */
+        .form-group input {
+            width: 100%;
+            padding: 12px 18px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             background-color: rgba(15, 23, 42, 0.6);
             color: white;
             font-size: 16px;
-            outline: none; /* Tarayıcının varsayılan odak çerçevesini kaldırır.*/
+            outline: none;
             transition: all 0.3s ease;
         }
-        /*div, label ve inputu aynı grup içinde tutar. Form, kullanıcıdan bilgi almak için kullanılan yapıdır. */
 
-        .form-group input:focus { /* Kullanıcı input kutusuna tıkladığında çalışır.*/
+        .form-group input:focus {
             border-color: #06b6d4;
             box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
         }
 
-        .submit-btn { /*submit-btn genellikle formu gönderen butondur. Yani formun en altındaki gönderme butonu. */
-            width: 100%; /*Bulunduğu kutunun (parent/div'in) tamamını kaplar. */
-            background-color: #06b6d4 ;
+        .submit-btn {
+            width: 100%;
+            background-color: #06b6d4;
             color: #0f172a;
-            padding: 14px; /*butonun içindeki yazıyla kenarlar arasındaki mesafe. */
+            padding: 14px;
             border: none;
             border-radius: 15px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 15px; /*Butonun üstüne 15px dış boşluk bırakır. */
+            margin-top: 15px;
             box-shadow: 0 5px 15px rgba(6, 182, 212, 0.2);
         }
 
-        .submit-btn:hover { /*hover = Mouse üzerine geldiğinde. tıklamada active */
+        .submit-btn:hover {
             background-color: #22d3ee;
             box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
             transform: translateY(-2px);
@@ -337,10 +767,14 @@
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
-            /* fadeInUp animasyonu Eleman aşağıdan yukarı gelirken aynı anda görünür hale gelir.*/
         }
 
-        @keyframes pulse { /* pulse animasyonu Elemanı hafif büyütüp tekrar eski boyutuna getirir.*/
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.04); }
             100% { transform: scale(1); }
@@ -350,9 +784,9 @@
 <body>
 
     <!-- ARKA PLANDA AKAN İKONLAR -->
-    <div class="marquee-container"> <!--marquee-container isimli bir kutu oluştur.-->
+    <div class="marquee-container">
         <div class="marquee-content">
-            <i class="fa-solid fa-laptop-code"></i> <!--<i> ne? Eskiden italic (eğik yazı) için kullanılırdı. Ama günümüzde çok sık ikon göstermek için kullanılır.fa-solid İkonun stilini belirler. -->
+            <i class="fa-solid fa-laptop-code"></i>
             <i class="fa-solid fa-microscope"></i>
             <i class="fa-solid fa-compass-drafting"></i>
             <i class="fa-solid fa-helmet-safety"></i>
@@ -376,122 +810,147 @@
 
     <!-- NAVBAR -->
     <header>
-        <div class="logo">EngineersPath</div> <!--logo yazısını tutan kutudur -->
-        <div class="auth-buttons"><!--Bu divin görevi iki butonu aynı kutuya koymaktır.-->
-            <button class="login-btn" onclick="openModal('loginModal')">Giriş Yap</button> <!--Bu butona tıklanınca openModal isimli fonksiyonu çalıştır.-->
+        <div class="logo">EngineersPath</div>
+        <div class="auth-buttons">
+            <button class="login-btn" onclick="openModal('loginModal')">Giriş Yap</button>
             <button class="register-btn" onclick="redirectToRegister()">Kayıt Ol</button>
         </div>
     </header>
 
     <!-- KAHRAMAN ALANI -->
-    <main class="hero-section"> <!--main sayfanın ana içeriğini tutar-->
-        <h1>Mühendislik Kariyerini <span>Şansa Bırakma</span> 🎯</h1><!--h1,sayfanın ana başlığıdır. Span yazının sadece belirli kısmına stil vermek için kullanılır-->
+    <main class="hero-section">
+        <h1>Mühendislik Kariyerini <span>Şansa Bırakma</span> 🎯</h1>
         
-       <div class="description-text">
-    <strong>EngineersPath</strong>, mühendislik öğrencileri ve mezunları için kurulmuş bir kariyer rehberliği platformudur. Yazılımdan makineye, elektrik-elektronikten inşaata, kimyadan havacılığa kadar tüm mühendislik dallarında "hangi alana yönelmeliyim?" sorusuna cevap arıyorsan doğru yerdesin.
-    <br><br>
-    <strong>İster mentör ol, ister destek al;</strong> sektördeki deneyimli mühendislerle bağlantı kur, kariyer testiyle sana en uygun alanı keşfet, ve mühendislik dünyasındaki yolculuğuna kendini tanıyarak başla! 🚀
-</div>
+        <div class="description-text">
+            <strong>EngineersPath</strong>, mühendislik öğrencileri ve mezunları için kurulmuş bir kariyer rehberliği platformudur. Yazılımdan makineye, elektrik-elektronikten inşaata, kimyadan havacılığa kadar tüm mühendislik dallarında "hangi alana yönelmeliyim?" sorusuna cevap arıyorsan doğru yerdesin.
+            <br><br>
+            <strong>İster mentör ol, ister destek al;</strong> sektördeki deneyimli mühendislerle bağlantı kur, kariyer testiyle sana en uygun alanı keşfet, ve mühendislik dünyasındaki yolculuğuna kendini tanıyarak başla! 🚀
+        </div>
         
-        <button onclick="redirectToRegister()" class="cta-btn">Hemen Keşfetmeye Başla 🚀</button> <!--CTA Button → Kullanıcıyı işlem yapmaya yönlendiren ana butondur.-->
-        <a href="search.html" class="guest-link">Üye Olmadan Keşfetmeye Devam Et ➔</a> <!--<a> → Başka bir sayfaya gitmek için kullanılan bağlantıdır.href → Gidilecek adresi belirtir.-->
+        <a href="kesfet.html" class="cta-btn">Hemen Keşfetmeye Başla 🚀</a>
     </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="logo">EngineersPath</div>
+                <p>Mühendislik Kariyer Yolculuğunuzdaki Güvenilir Rehberiniz.</p>
+            </div>
+            <ul class="footer-links">
+                <li><a href="kesfet.html">Keşfet</a></li>
+                <li><a href="kesfet.html?tab=disciplines">Disiplinler</a></li>
+                <li><a href="register.html">Kayıt Ol</a></li>
+            </ul>
+            <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom-line">
+            &copy; 2026 EngineersPath. Tüm hakları saklıdır. Mühendislik tutkusuyla tasarlandı. ⚙️✨
+        </div>
+    </footer>
 
     <!-- ================= GİRİŞ YAP MODAL PENCERESİ ================= -->
     <div class="modal-overlay" id="loginModal">
         <div class="modal-box">
-            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span> <!--times, x karakterini gösterir-->
+            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
             <h2>Tekrar <span>Hoş Geldin!</span></h2>
             <form id="loginForm">
                 <div class="form-group">
                     <label>Kullanıcı Adı (Ad Soyad)</label>
-                    <input type="text" id="loginName" placeholder="Helin Çelik" required> <!--input type, text-harf harf girilmesini yani yazı olarak girilmesini sağlar, placeholder varsayılan yazıdır. required alanın boş bırakılmasını engeller-->
+                    <input type="text" id="loginName" placeholder="Helin Çelik" required>
                 </div>
                 <div class="form-group">
                     <label>Şifre</label>
-                    <input type="password" id="loginPassword" placeholder="••••••••" required> <!--type password, şifrenin ****** şeklinde girilmesini sağlar-->
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
                 </div>
-                <button type="submit" class="submit-btn">Giriş Yap</button> <!--submit,Formu gönderen butondur.-->
+                <button type="submit" class="submit-btn">Giriş Yap</button>
             </form>
         </div>
     </div>
 
     <!-- ================= JAVASCRIPT KODLARIMIZ ================= -->
     <script>
-        function openModal(modalId) { /* Modal açma fonksiyonu */
-            document.getElementById(modalId).classList.add('active'); //document html sayfasını temsil eder.
-             /* Verilen id'ye sahip HTML elemanını bulur */
-            /* Bulduğu elemana "active" classını ekler */
-           /* Böylece CSS'deki .active özellikleri uygulanır ve modal görünür */
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
         }
 
-        function closeModal(modalId) { /* Modal kapatma fonksiyonu */
+        function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
-            /* Verilen id'ye sahip modalı bulur */
-            /* "active" classını kaldırır */
-            /* CSS tekrar eski haline döner ve modal gizlenir */
         }
 
-        // Kayıt sayfasına yönlendirme fonksiyonu
         function redirectToRegister() {
-            window.location.href = 'register.html';  /* Tarayıcıyı register.html sayfasına yönlendirir */
+            window.location.href = 'register.html';
         }
-        /* Login (Giriş Yap) formunu seçer */
-       /* Form gönderilmeye çalışıldığında aşağıdaki fonksiyon çalışır */
+
+        function revealShowcase() {
+            const showcase = document.getElementById('showcase');
+            const ctaBanner = document.getElementById('join');
+            
+            showcase.classList.add('visible');
+            ctaBanner.classList.add('visible');
+            
+            setTimeout(() => {
+                showcase.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        function switchTab(tabId, element) {
+            const tabContents = document.querySelectorAll('.showcase-tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+        }
+
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
-    
-    event.preventDefault(); /* Formun sayfayı yenilemesini engeller */
-    
-    const adSoyad = document.getElementById('loginName').value; /* Kullanıcının yazdığı adı input kutusundan alır */
-    const sifre = document.getElementById('loginPassword').value; /* Kullanıcının yazdığı şifreyi input kutusundan alır */
+            event.preventDefault();
+            
+            const adSoyad = document.getElementById('loginName').value;
+            const sifre = document.getElementById('loginPassword').value;
 
-    try { /* Hata oluşursa programın çökmesini önlemek için try bloğu kullanılır */
-        const cevap = await fetch('http://127.0.0.1:3000/api/giris-yap', {  /* Backend(API)'ye giriş isteği gönderir */
-            method: 'POST', /* İstek türü POST olduğu için sunucuya veri gönderilir */
-            headers: { 'Content-Type': 'application/json' },  /* Gönderilen verinin JSON formatında olduğunu belirtir */
-            body: JSON.stringify({ kullanici_adi: adSoyad, sifre: sifre })  /* Ad Soyad ve Şifre bilgilerini JSON formatına çevirip gönderir */
+            try {
+                const cevap = await fetch('http://127.0.0.1:3000/api/giris-yap', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ kullanici_adi: adSoyad, sifre: sifre })
+                });
+
+                const sonuc = await cevap.json();
+
+                if (cevap.ok) {
+                    alert(sonuc.message);
+                    localStorage.setItem('kullaniciDisiplin', sonuc.department);
+                    localStorage.setItem('kullaniciRolu', sonuc.rol);
+                    localStorage.setItem('kullaniciDurumu', sonuc.durum);
+                    localStorage.setItem('kullaniciAdi', adSoyad);
+                    localStorage.setItem('kullaniciOkul', sonuc.okul || '');
+                    localStorage.setItem('kullaniciBolum', sonuc.bolum || '');
+                    localStorage.setItem('kullaniciSinif', sonuc.sinif || '');
+                    localStorage.setItem('kullaniciIsYeri', sonuc.is_yeri || '');
+                    localStorage.setItem('kullaniciDeneyim', sonuc.deneyim || '');
+                    let hedefSayfa = 'dashboard-ogrenci.html';
+                    if (sonuc.rol === 'mentor') {
+                        hedefSayfa = 'dashboard-mentor.html';
+                    } else if (sonuc.durum === 'lise_ogrenci') {
+                        hedefSayfa = 'dashboard-aday.html';
+                    }
+                    window.location.replace(hedefSayfa);
+                } else {
+                    alert(sonuc.error);
+                }
+            } catch (hata) {
+                console.error("Hata: ", hata);
+                alert("Backend sunucusu açık mı? Kontrol et! ❌");
+            }
         });
-        //addEventListener() Belirtilen olayı dinler ve gerçekleşince çalışır 
-        //async İnternetten gelecek cevabı bekleyebilen fonksiyon oluşturur 
-        //function(event) Olay bilgisi. Butona mı basıldı form mu gönderildi gibi bilgiler
-        //const sabit değişken, bilgi tutmak. ad soyad gibi
-        // .value inputun içindeki değeri alır. 
-        // fetch sunucuya istek gönderir
-        // await, işlem tamamlanana kadar bekler, sunucudan cevap bekler.
-        //sunucuya veri göndermek için post methodu kullanılır
-        //headers sunucuya "Bunu JSON olarak yolluyorum." demek
-        //JSON.stringify() JS nesnesini JSON formatına çevirir.
-
-        const sonuc = await cevap.json(); /* Sunucudan (backend) gelen cevabı JSON formatına çevirir */
-
-        if (cevap.ok) { /* Eğer giriş işlemi başarılıysa */
-            alert(sonuc.message); /* Backend'den gelen başarı mesajını ekranda gösterir */
-            localStorage.setItem('kullaniciDisiplin', sonuc.department);   /* Kullanıcının bölüm/disiplin bilgisini tarayıcı hafızasına kaydeder */
-            localStorage.setItem('kullaniciRolu', sonuc.rol);
-            localStorage.setItem('kullaniciDurumu', sonuc.durum);
-            localStorage.setItem('kullaniciAdi', adSoyad);
-            localStorage.setItem('kullaniciOkul', sonuc.okul || '');
-            localStorage.setItem('kullaniciBolum', sonuc.bolum || '');
-            localStorage.setItem('kullaniciSinif', sonuc.sinif || '');
-            localStorage.setItem('kullaniciIsYeri', sonuc.is_yeri || '');
-            localStorage.setItem('kullaniciDeneyim', sonuc.deneyim || '');
-            let hedefSayfa = 'dashboard-ogrenci.html';
-if (sonuc.rol === 'mentor') {
-    hedefSayfa = 'dashboard-mentor.html';
-} else if (sonuc.durum === 'lise_ogrenci') {
-    hedefSayfa = 'dashboard-aday.html';
-}
-window.location.replace(hedefSayfa);     /* Kullanıcının rolüne ve durumuna göre uygun panele yönlendirir */    /* Kullanıcının rolüne göre uygun panele yönlendirir */
-        } else {
-            alert(sonuc.error); /* Giriş başarısız olursa backend'den gelen hata mesajını gösterir */
-        }
-    } catch (hata) {/* Eğer sunucuya bağlanırken hata oluşursa */
-        console.error("Hata: ", hata);    /* Hatayı geliştirici konsoluna yazdırır */
-
-        alert("Backend sunucusu açık mı? Kontrol et! ❌"); 
-    /* Kullanıcıya uyarı mesajı gösterir */
-    }
-});
     </script>
 </body>
 </html>
