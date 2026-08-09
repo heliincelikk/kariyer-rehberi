@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,11 +30,12 @@
             flex-direction: column;
             padding: 30px 20px;
             z-index: 10;
-             overflow-y: auto;
+            overflow-y: auto;
         }
+
         .sidebar::-webkit-scrollbar {
-    width: 0px;
-}
+            width: 0px;
+        }
 
         .sidebar .brand {
             font-size: 22px;
@@ -66,7 +68,8 @@
             transition: all 0.3s ease;
         }
 
-        .menu-item:hover, .menu-item.active {
+        .menu-item:hover,
+        .menu-item.active {
             color: #ffffff;
             background-color: rgba(6, 182, 212, 0.1);
             border-left: 4px solid #06b6d4;
@@ -74,7 +77,7 @@
 
         .logout-btn {
             margin-top: auto;
-            color: #ef4444; 
+            color: #ef4444;
             border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
@@ -138,7 +141,7 @@
             border-radius: 20px;
             padding: 30px;
             backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease;
         }
 
@@ -313,61 +316,72 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .alan-modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(2, 6, 23, 0.85);
-    backdrop-filter: blur(8px);
-    z-index: 200;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s ease;
-}
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
 
-.alan-modal-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
+        .alan-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-.alan-modal-box {
-    background: #1e293b;
-    border: 1px solid rgba(6, 182, 212, 0.3);
-    border-radius: 20px;
-    width: 90%;
-    max-width: 550px;
-    max-height: 85vh;
-    overflow-y: auto;
-    padding: 40px;
-    position: relative;
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
-}
+        .alan-modal-box {
+            background: #1e293b;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 40px;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
 
-.alan-modal-overlay.active .alan-modal-box {
-    transform: scale(1);
-}
+        .alan-modal-overlay.active .alan-modal-box {
+            transform: scale(1);
+        }
 
-.alan-modal-close {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    font-size: 28px;
-    color: #94a3b8;
-    cursor: pointer;
-}
+        .alan-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
+            color: #94a3b8;
+            cursor: pointer;
+        }
 
-.alan-modal-close:hover {
-    color: #06b6d4;
-}
+        .alan-modal-close:hover {
+            color: #06b6d4;
+        }
     </style>
 </head>
+
 <body>
 
     <div class="sidebar">
@@ -379,26 +393,25 @@
                 <i class="fa-solid fa-chart-pie"></i> Kişiselleştirilmiş Panel
             </div>
             <div class="menu-item" id="menu-discover" onclick="switchTab('discover')">
-                <i class="fa-solid fa-globe"></i> Tüm Alanları Keşfet
+                <i class="fa-solid fa-globe"></i> Mühendislik Dallarını Keşfet
             </div>
             <div class="menu-item" id="menu-mentor" onclick="switchTab('mentor')">
-                <i class="fa-solid fa-users-rectangle"></i> Mentörlük Ağı 🤝
+                <i class="fa-solid fa-users-rectangle"></i> Sektör Mentörleri 🤝
             </div>
             <div class="menu-item" id="menu-gelenistekler" onclick="switchTab('gelenistekler')">
-    <i class="fa-solid fa-inbox"></i> Gelen İstekler 📥
-</div>
-            <div class="menu-item" id="menu-quiz" onclick="switchTab('quiz')">
-                <i class="fa-solid fa-clipboard-question"></i> Kariyer Testi 🎯
+                <i class="fa-solid fa-inbox"></i> Aday İstekleri 📥
             </div>
-            <!-- Yapay Zeka Asistanı -->
             <div class="menu-item" id="menu-ai" onclick="switchTab('ai')">
-                <i class="fa-solid fa-robot"></i> Yapay Zeka Asistanı 🤖
+                <i class="fa-solid fa-robot"></i> AI Öğrenci Danışmanı 🤖
             </div>
 
-            <div class="profile-section" id="menu-profile" style="margin-top: 80px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; transition: 0.3s;" onclick="switchTab('profile')">
-    <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i> Profilim</h4>
-    <p id="userSchoolInfo" style="font-size: 12px; color: #94a3b8;">Üniversite / Sınıf</p>
-</div>
+            <div class="profile-section" id="menu-profile"
+                style="margin-top: 80px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; transition: 0.3s;"
+                onclick="switchTab('profile')">
+                <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i>
+                    Profilim</h4>
+                <p id="userSchoolInfo" style="font-size: 12px; color: #94a3b8;">Üniversite / Sınıf</p>
+            </div>
             <a href="index.html" class="menu-item logout-btn" onclick="localStorage.clear()">
                 <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
             </a>
@@ -407,7 +420,7 @@
     </div>
 
     <div class="main-content">
-        
+
         <div class="welcome-bar">
             <h1>Hoş Geldin, <span id="userNameSpan">Mühendis Adayı!</span> 👋</h1>
             <div class="user-badge" id="userBadgeMode">Yükleniyor...</div>
@@ -416,99 +429,86 @@
         <!-- SEKME 1: KİŞİSELLEŞTİRİLMİŞ PANEL -->
         <div class="tab-content active" id="content-panel">
             <div class="dashboard-grid">
-                
+
                 <div class="premium-card">
-                    <div class="card-icon" id="cardIconStyle"><i class="fa-solid fa-route"></i></div>
-                    <h3 id="cardTitleText">Sana Özel Yol Haritası</h3>
-<p id="cardDescText">Seçtiğin hedeflere ve eğitim durumuna göre yapay zeka tarafından optimize edilmiş gelişim adımlarını incele.</p>
-                    <a href="quiz.html" class="card-link" id="cardLinkBtn">Haritayı İncele ➔</a>
+                    <div class="card-icon" id="cardIconStyle"><i class="fa-solid fa-robot"></i></div>
+                    <h3 id="cardTitleText">AI Öğrenci & Kariyer Danışmanı 🤖</h3>
+                    <p id="cardDescText">Staj mülakatları, CV hazırlama, GitHub projeleri ve ders tavsiyeleri için yapay
+                        zeka ile sohbet et.</p>
+                    <a href="#" onclick="switchTab('ai')" class="card-link" id="cardLinkBtn">Danışmana Sor ➔</a>
                 </div>
 
                 <div class="premium-card">
                     <div class="card-icon"><i class="fa-solid fa-bullhorn"></i></div>
                     <h3>Önerilen Staj Fırsatları</h3>
-                    <p>Kendi alanında şu an aktif olan, öğrencilere açık güncel staj ve yetenek programı ilanlarını listele.</p>
-                    <a href="#" class="card-link">İlanları Gör ➔</a>
+                    <p>Kendi mühendislik alanında aktif olan staj ve yetenek programı (Aselsan, Baykar, Trendyol vb.)
+                        ilanlarını incele.</p>
+                    <a href="#" onclick="alert('📢 Yakında aktif staj ilanları entegre edilecek!')"
+                        class="card-link">İlanları Gör ➔</a>
                 </div>
 
                 <div class="premium-card">
-                    <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                    <h3>Akademi Kampüsü</h3>
-                    <p>Bölümünde öne çıkmanı sağlayacak, en çok talep gören ücretsiz sertifikasyon ve eğitim linkleri.</p>
-                    <a href="#" class="card-link">Eğitimlere Git ➔</a>
+                    <div class="card-icon"><i class="fa-solid fa-users-rectangle"></i></div>
+                    <h3>Sektör Mentörlerindan Destek Al 🤝</h3>
+                    <p>Google, Aselsan, Trendyol gibi şirketlerde çalışan kıdemli mühendislerden staj, kariyer ve
+                        mülakat tavsiyesi al.</p>
+                    <a href="#" onclick="switchTab('mentor')" class="card-link">Mentör Bul ➔</a>
+                </div>
+
+                <div class="premium-card">
+                    <div class="card-icon"><i class="fa-solid fa-inbox"></i></div>
+                    <h3>Aday Öğrencilere Rehberlik Et</h3>
+                    <p>Mühendislik hedefleyen lise adaylarından sana gelen soruları yanıtla, geleceğin mühendislerine
+                        mentörlük yap.</p>
+                    <a href="#" onclick="switchTab('gelenistekler')" class="card-link">Gelen İstekler ➔</a>
                 </div>
 
             </div>
         </div>
 
-        
-        <!-- SEKME 2: TÜM ALANLARI KEŞFET -->
-<div class="tab-content" id="content-discover">
-    <div class="dashboard-grid">
-            <div class="premium-card" onclick="alanGoster('bilgisayar')" style="cursor:pointer;">
-            <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
-            <h3>Yazılım / Bilgisayar-Yazılım Mühendisliği</h3>
-            <p>Backend, Frontend, Yapay Zeka, Siber Güvenlik gibi yazılım tabanlı kariyer yollarını keşfet.</p>
-           
-        </div>
-            <div class="premium-card" onclick="alanGoster('elektrik')" style="cursor:pointer;">
-            <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
-            <h3>Elektrik-Elektronik Mühendisliği</h3>
-            <p>Devre tasarımı, gömülü sistemler, enerji sistemleri ve otomasyon alanlarını incele.</p>
-           
-        </div>
-            <div class="premium-card" onclick="alanGoster('makine')" style="cursor:pointer;">
-            <div class="card-icon"><i class="fa-solid fa-gears"></i></div>
-            <h3>Makine Mühendisliği</h3>
-            <p>Tasarım, üretim, robotik ve termodinamik gibi alt alanlarda kariyer fırsatlarını gör.</p>
-        </div>
-            <div class="premium-card" onclick="alanGoster('endustri')" style="cursor:pointer;">
-            <div class="card-icon"><i class="fa-solid fa-sitemap"></i></div>
-            <h3>Endüstri Mühendisliği</h3>
-            <p>Süreç optimizasyonu, lojistik, veri analitiği ve üretim yönetimi alanlarını keşfet.</p>
-        </div>
-            <div class="premium-card" onclick="alanGoster('insaat')" style="cursor:pointer;">
-            <div class="card-icon"><i class="fa-solid fa-compass-drafting"></i></div>
-            <h3>İnşaat Mühendisliği</h3>
-            <p>Yapı, altyapı, deprem mühendisliği ve proje yönetimi gibi alanları incele.</p>
-        </div>
-            <div class="premium-card" onclick="alanGoster('kimya')" style="cursor:pointer;">
-            <div class="card-icon"><i class="fa-solid fa-flask"></i></div>
-            <h3>Kimya Mühendisliği</h3>
-            <p>Süreç mühendisliği, malzeme geliştirme ve üretim sistemleri alanlarını keşfet.</p>
-        </div>
-            <div class="premium-card" onclick="alanGoster('biyomedikal')" style="cursor:pointer;">
-            <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
-            <h3>Biyomedikal Mühendislik</h3>
-            <p>Tıbbi cihaz tasarımı, biyomekanik ve sağlık teknolojileri alanlarını incele.</p>
-        </div>
 
-            <div class="premium-card" onclick="alanGoster('havacilik')" style="cursor:pointer;">
-            <div class="card-icon"><i class="fa-solid fa-plane"></i></div>
-            <h3>Havacılık ve Uzay Mühendisliği</h3>
-            <p>Uçak tasarımı, uzay sistemleri ve havacılık teknolojileri alanlarını keşfet.</p>
+        <!-- SEKME 2: BÖLÜME ÖZEL KARİYER YOLLARI VE ALAN KEŞFİ -->
+        <div class="tab-content" id="content-discover">
+            <!-- Bölüm Seçim Başlığı & Filtre -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:25px; background:rgba(30,41,59,0.5); padding:18px 24px; border-radius:16px; border:1px solid rgba(6,182,212,0.2);">
+                <div>
+                    <h2 id="discoverHeaderTitle" style="font-size:22px; color:#fff;">Kariyer Rotaları & Alt Uzmanlık Alanları</h2>
+                    <p id="discoverHeaderSub" style="color:#94a3b8; font-size:13px; margin-top:4px;">Seçtiğin mühendislik disiplinine özel uzmanlık yollarını ve gerekli yetkinlikleri incele.</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <label style="color:#06b6d4; font-size:13px; font-weight:600;"><i class="fa-solid fa-filter"></i> Bölüm Değiştir:</label>
+                    <select id="bolumSecici" onchange="bolumKariyerYollariniGuncelle(this.value)" style="padding:10px 16px; background:#0f172a; border:1px solid rgba(6,182,212,0.4); border-radius:12px; color:#fff; font-size:14px; font-weight:600; outline:none; cursor:pointer;">
+                        <option value="bilgisayar">Bilgisayar / Yazılım Mühendisliği</option>
+                        <option value="elektrik">Elektrik-Elektronik Mühendisliği</option>
+                        <option value="makine">Makine Mühendisliği</option>
+                        <option value="endustri">Endüstri Mühendisliği</option>
+                        <option value="insaat">İnşaat Mühendisliği</option>
+                        <option value="kimya">Kimya / Biyomedikal Mühendislik</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Dinamik Kariyer Rotaları Grid Container -->
+            <div class="dashboard-grid" id="kariyerRotalariGrid">
+                <!-- JavaScript tarafından dinamik doldurulacak -->
+            </div>
         </div>
-            <div class="premium-card" onclick="alanGoster('gemi')" style="cursor:pointer;">
-            <div class="card-icon"><i class="fa-solid fa-ship"></i></div>
-            <h3>Gemi ve Deniz Teknolojisi Mühendisliği</h3>
-            <p>Gemi tasarımı, deniz araçları işletmesi ve denizcilik teknolojilerini incele.</p>
-        </div>
-    </div>
-</div>
 
         <!-- SEKME 3: MENTÖRLÜK AĞI -->
         <div class="tab-content" id="content-mentor">
             <div class="mentor-subnav">
-    <button class="subnav-btn active" id="subnav-all" onclick="switchMentorView('all')">Mentörler</button>
-    <button class="subnav-btn" id="subnav-mine" onclick="switchMentorView('mine')">Mentörlerim</button>
-</div>
+                <button class="subnav-btn active" id="subnav-all" onclick="switchMentorView('all')">Mentörler</button>
+                <button class="subnav-btn" id="subnav-mine" onclick="switchMentorView('mine')">Mentörlerim</button>
+            </div>
             <div class="mentor-grid">
-                <p id="mineEmptyMsg" style="display:none; grid-column: 1 / -1; color: #94a3b8; text-align:center;">Henüz bir mentöre istek göndermedin. "Mentörler" sekmesinden birini seçebilirsin.</p>
+                <p id="mineEmptyMsg" style="display:none; grid-column: 1 / -1; color: #94a3b8; text-align:center;">Henüz
+                    bir mentöre istek göndermedin. "Mentörler" sekmesinden birini seçebilirsin.</p>
                 <div class="mentor-card">
                     <div class="mentor-avatar">HÇ</div>
                     <h3>Helin Çelik</h3>
                     <span class="mentor-company">Trendyol</span>
-                    <p class="mentor-info">Senior Frontend Developer<br>"React ve CSS animasyonları konusunda uzmanım. Sektör sorularınızı bekliyorum!"</p>
+                    <p class="mentor-info">Senior Frontend Developer<br>"React ve CSS animasyonları konusunda uzmanım.
+                        Sektör sorularınızı bekliyorum!"</p>
                     <span class="mentor-badge">5 Yıl Deneyim</span>
                     <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
                 </div>
@@ -516,7 +516,8 @@
                     <div class="mentor-avatar">AY</div>
                     <h3>Ahmet Yılmaz</h3>
                     <span class="mentor-company">Google</span>
-                    <p class="mentor-info">Senior Software Engineer<br>"Algoritmalar, sistem mimarisi ve yurt dışı kariyer fırsatları hakkında mentorluk sağlıyorum."</p>
+                    <p class="mentor-info">Senior Software Engineer<br>"Algoritmalar, sistem mimarisi ve yurt dışı
+                        kariyer fırsatları hakkında mentorluk sağlıyorum."</p>
                     <span class="mentor-badge">10+ Yıl Deneyim</span>
                     <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
                 </div>
@@ -524,28 +525,70 @@
                     <div class="mentor-avatar">DB</div>
                     <h3>Didem Başar</h3>
                     <span class="mentor-company">Acıbadem Hastanesi</span>
-                    <p class="mentor-info">Çocuk Sağlığı Uzmanı (Pediatrist)<br>"Tıp fakültesi ders çalışma taktikleri ve uzmanlık (TUS) süreci hakkında yol gösteriyorum."</p>
+                    <p class="mentor-info">Çocuk Sağlığı Uzmanı (Pediatrist)<br>"Tıp fakültesi ders çalışma taktikleri
+                        ve uzmanlık (TUS) süreci hakkında yol gösteriyorum."</p>
                     <span class="mentor-badge">3-5 Yıl Deneyim</span>
                     <button class="request-btn" onclick="sendMentorRequest(this)">Mentörlük İsteği Gönder</button>
                 </div>
             </div>
         </div>
         <!-- SEKME: GELEN İSTEKLER (Adaylardan) -->
-<div class="tab-content" id="content-gelenistekler">
-    <div class="mentor-subnav">
-        <button class="subnav-btn active" id="subnav-gi-pending" onclick="switchGelenIstekView('pending')">Bekleyen İstekler</button>
-        <button class="subnav-btn" id="subnav-gi-accepted" onclick="switchGelenIstekView('accepted')">Kabul Ettiklerim</button>
-    </div>
-    <div class="mentor-grid" id="giPendingGrid"></div>
-    <div class="mentor-grid" id="giAcceptedGrid" style="display:none;"></div>
-</div>
+        <div class="tab-content" id="content-gelenistekler">
+            <div class="mentor-subnav">
+                <button class="subnav-btn active" id="subnav-gi-pending"
+                    onclick="switchGelenIstekView('pending')">Bekleyen İstekler</button>
+                <button class="subnav-btn" id="subnav-gi-accepted" onclick="switchGelenIstekView('accepted')">Kabul
+                    Ettiklerim</button>
+            </div>
+            <div class="mentor-grid" id="giPendingGrid"></div>
+            <div class="mentor-grid" id="giAcceptedGrid" style="display:none;"></div>
+        </div>
 
-        <!-- SEKME 4: YAPAY ZEKA ASİSTANI (YENİ) -->
+        <!-- SEKME 4: YAPAY ZEKA ÖĞRENCİ DANIŞMANI -->
         <div class="tab-content" id="content-ai">
-            <div class="premium-card" style="max-width: 500px;">
-                <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
-                <h3>Yapay Zeka Kariyer Asistanı</h3>
-                <p>Bu bölüm yakında aktif olacak. İleride buraya, sorularını yanıtlayan ve sana özel öneriler sunan bir yapay zeka asistanı entegre edeceğiz.</p>
+            <div class="premium-card" style="max-width: 850px; margin: 0 auto;">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                    <div class="card-icon" style="margin-bottom:0;"><i class="fa-solid fa-robot"></i></div>
+                    <div>
+                        <h3 style="margin-bottom: 4px;">AI Mühendislik Öğrenci Danışmanı 🤖</h3>
+                        <p style="margin-bottom:0; font-size:13px; color:#94a3b8;">Üniversite mühendislik öğrencilerine
+                            özel CV, Staj, Mülakat ve Proje Danışmanı</p>
+                    </div>
+                </div>
+
+                <!-- Hızlı Sorular -->
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+                    <button class="subnav-btn"
+                        onclick="aiSoruSor('Staj için etkili bir mühendislik CV\'si nasıl hazırlanır?')">📄 Mühendislik
+                        Staj CV'si</button>
+                    <button class="subnav-btn" onclick="aiSoruSor('GitHub portfolyomda hangi projeler olmalı?')">🚀
+                        GitHub & Portfolyo Projeleri</button>
+                    <button class="subnav-btn"
+                        onclick="aiSoruSor('Mühendislik mülakatlarında en çok hangi teknik sorular sorulur?')">💼
+                        Mülakat Soruları & Hazırlık</button>
+                </div>
+
+                <!-- Chat Mesajları -->
+                <div id="aiChatBox"
+                    style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 16px; padding: 20px; min-height: 260px; max-height: 400px; overflow-y: auto; margin-bottom: 20px; display:flex; flex-direction:column; gap:15px;">
+                    <div
+                        style="background: rgba(6, 182, 212, 0.1); border-left: 3px solid #06b6d4; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.6;">
+                        <strong style="color: #06b6d4;">🤖 AI Danışman:</strong> Selam! Mühendislik lisans eğitimin
+                        boyunca staj arama, CV hazırlama, teknik mülakatlar ve ders projeleri konularında yanındayım. 🚀
+                        Bana merak ettiğin her şeyi sorabilirsin!
+                    </div>
+                </div>
+
+                <!-- Input alanı -->
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="aiInput"
+                        placeholder="Staj, mülakat, proje fikirleri veya dersler hakkında sorunu yaz..."
+                        style="flex:1; padding:12px 18px; background:#0f172a; border:1px solid rgba(6, 182, 212, 0.3); border-radius:12px; color:#fff; font-size:14px; outline:none;"
+                        onkeypress="if(event.key==='Enter') aiMesajGonder()">
+                    <button onclick="aiMesajGonder()"
+                        style="padding:12px 24px; background:#06b6d4; color:#0f172a; border:none; border-radius:12px; font-weight:bold; cursor:pointer; transition:0.3s;"><i
+                            class="fa-solid fa-paper-plane"></i> Sor</button>
+                </div>
             </div>
         </div>
         <!-- SEKME 5: PROFİLİM -->
@@ -555,15 +598,19 @@
                 <h3>Profilim</h3>
 
                 <div style="margin-bottom: 18px;">
-                    <label style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Okul</label>
+                    <label
+                        style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Okul</label>
                     <p id="profOkul" style="color:#f1f5f9; font-size:16px; font-weight:500;">—</p>
                 </div>
                 <div style="margin-bottom: 18px;">
-                    <label style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Bölüm</label>
+                    <label
+                        style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Bölüm</label>
                     <p id="profBolum" style="color:#f1f5f9; font-size:16px; font-weight:500;">—</p>
                 </div>
                 <div style="margin-bottom: 18px;">
-                    <label style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Sınıf / Seviye</label>
+                    <label
+                        style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Sınıf
+                        / Seviye</label>
                     <p id="profSinif" style="color:#f1f5f9; font-size:16px; font-weight:500;">—</p>
                 </div>
             </div>
@@ -595,32 +642,81 @@
             }
 
             badgeMode.innerText = "Öğrenci Modu";
+
+            let seciliBolumKey = 'bilgisayar';
+            if (bolum) {
+                const b = bolum.toLowerCase();
+                if (b.includes('elektrik')) seciliBolumKey = 'elektrik';
+                else if (b.includes('makine')) seciliBolumKey = 'makine';
+                else if (b.includes('endüstri') || b.includes('endustri')) seciliBolumKey = 'endustri';
+                else if (b.includes('inşaat') || b.includes('insaat')) seciliBolumKey = 'insaat';
+                else if (b.includes('kimya') || b.includes('biyomedikal')) seciliBolumKey = 'kimya';
+            }
+            const secici = document.getElementById('bolumSecici');
+            if (secici) secici.value = seciliBolumKey;
+            bolumKariyerYollariniGuncelle(seciliBolumKey);
         });
-        
-function switchTab(tabName) {
-    if (tabName === 'quiz') {
-        window.location.href = 'quiz.html';
-        return;
-    }
 
-    const tabs = ['panel', 'discover', 'mentor', 'gelenistekler', 'ai', 'profile'];
-    tabs.forEach(t => {
-        document.getElementById('content-' + t).classList.remove('active');
-        const menuEl = document.getElementById('menu-' + t);
-        if (menuEl) menuEl.classList.remove('active');
-    });
+        function switchTab(tabName) {
+            const tabs = ['panel', 'discover', 'mentor', 'gelenistekler', 'ai', 'profile'];
+            tabs.forEach(t => {
+                const contentEl = document.getElementById('content-' + t);
+                if (contentEl) contentEl.classList.remove('active');
+                const menuEl = document.getElementById('menu-' + t);
+                if (menuEl) menuEl.classList.remove('active');
+            });
 
-    document.getElementById('content-' + tabName).classList.add('active');
-    const activeMenuEl = document.getElementById('menu-' + tabName);
-    if (activeMenuEl) activeMenuEl.classList.add('active');
+            document.getElementById('content-' + tabName).classList.add('active');
+            const activeMenuEl = document.getElementById('menu-' + tabName);
+            if (activeMenuEl) activeMenuEl.classList.add('active');
 
-    if (tabName === 'profile') {
-        loadProfile();
-    }
-    if (tabName === 'gelenistekler') {
-        renderGelenIstekler();
-    }
-}
+            if (tabName === 'profile') {
+                loadProfile();
+            }
+            if (tabName === 'gelenistekler') {
+                renderGelenIstekler();
+            }
+        }
+
+        function aiSoruSor(soruText) {
+            document.getElementById('aiInput').value = soruText;
+            aiMesajGonder();
+        }
+
+        function aiMesajGonder() {
+            const input = document.getElementById('aiInput');
+            const mesaj = input.value.trim();
+            if (!mesaj) return;
+
+            const chatBox = document.getElementById('aiChatBox');
+
+            const userDiv = document.createElement('div');
+            userDiv.style.cssText = 'background: rgba(255, 255, 255, 0.08); align-self: flex-end; padding: 12px 16px; border-radius: 12px; font-size: 14px; max-width: 80%; line-height: 1.6; border: 1px solid rgba(255,255,255,0.1);';
+            userDiv.innerHTML = `<strong style="color:#ffffff;">👤 Sen:</strong> ${mesaj}`;
+            chatBox.appendChild(userDiv);
+
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            setTimeout(() => {
+                const aiDiv = document.createElement('div');
+                aiDiv.style.cssText = 'background: rgba(6, 182, 212, 0.1); border-left: 3px solid #06b6d4; padding: 12px 16px; border-radius: 12px; font-size: 14px; max-width: 85%; line-height: 1.6; align-self: flex-start;';
+
+                let yanıt = "Mühendislik eğitimin boyunca başarılar dilerim! Staj ararken LinkedIn profili, güncel bir GitHub portfolyosu ve sade bir PDF CV her zaman öne geçmeni sağlar.";
+
+                if (mesaj.toLowerCase().includes('cv') || mesaj.toLowerCase().includes('staj')) {
+                    yanıt = "📄 **Mühendislik Staj CV İpuçları:**\n\n1. **Format:** Tek sayfa, temiz ve sade bir tasarım kullan (Overleaf / LaTeX harikadır).\n2. **Projeler:** Okul ve şahsi projelerini detaylandır (Kullandığın teknolojiler, yaptığın katkı).\n3. **GitHub & LinkedIn:** Sayfanın en üstünde tıklanabilir profil linklerini mutlaka paylaş!";
+                } else if (mesaj.toLowerCase().includes('github') || mesaj.toLowerCase().includes('portfolyo') || mesaj.toLowerCase().includes('proje')) {
+                    yanıt = "🚀 **GitHub Portfolyo Tavsiyeleri:**\n\n• **Temiz README:** Her projenin ne iş yaptığını ve ekran görüntülerini anlatan kaliteli bir README.md dosyası yaz.\n• **2-3 Derinlikli Proje:** 10 tane basit proje yerine, veritabanı ve API entegrasyonu olan 2-3 tam proje koy.\n• **Kod Düzeni:** Temiz kod ve yorum satırlarına özen göster.";
+                } else if (mesaj.toLowerCase().includes('mülakat') || mesaj.toLowerCase().includes('soru')) {
+                    yanıt = "💼 **Mühendislik Mülakat Soruları:**\n\n• **Teknik Soru:** Veri yapıları, Algoritmalar, OOP ilkeleri ve SQL sorguları sıklıkla sorulur.\n• **Proje Sorusu:** 'Bu projede karşılaştığın en büyük zorluk neydi ve nasıl çözdün?' sorusuna hazırlıklı ol.\n• **Davranışsal:** Takım çalışması ve problem çözme yaklaşımını anlat.";
+                }
+
+                aiDiv.innerHTML = `<strong style="color:#06b6d4;">🤖 AI Danışman:</strong> ${yanıt.replace(/\n/g, '<br>')}`;
+                chatBox.appendChild(aiDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 600);
+        }
 
         function loadProfile() {
             document.getElementById('profOkul').innerText = localStorage.getItem('kullaniciOkul') || "— (girilmemiş)";
@@ -630,28 +726,28 @@ function switchTab(tabName) {
 
         // YENİ: Mentörler / Mentörlerim geçişi
         function switchMentorView(view) {
-    document.getElementById('subnav-all').classList.remove('active');
-    document.getElementById('subnav-mine').classList.remove('active');
-    document.getElementById('subnav-' + view).classList.add('active');
+            document.getElementById('subnav-all').classList.remove('active');
+            document.getElementById('subnav-mine').classList.remove('active');
+            document.getElementById('subnav-' + view).classList.add('active');
 
-    const cards = document.querySelectorAll('#content-mentor .mentor-card');
-    let anySent = false;
+            const cards = document.querySelectorAll('#content-mentor .mentor-card');
+            let anySent = false;
 
-    cards.forEach(card => {
-        const btn = card.querySelector('.request-btn');
-        const isSent = btn.classList.contains('sent');
-        if (isSent) anySent = true;
+            cards.forEach(card => {
+                const btn = card.querySelector('.request-btn');
+                const isSent = btn.classList.contains('sent');
+                if (isSent) anySent = true;
 
-        if (view === 'all') {
-            card.style.display = 'block';
-        } else {
-            card.style.display = isSent ? 'block' : 'none';
-        }
-    });
+                if (view === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = isSent ? 'block' : 'none';
+                }
+            });
 
-    const emptyMsg = document.getElementById('mineEmptyMsg');
-    emptyMsg.style.display = (view === 'mine' && !anySent) ? 'block' : 'none';
-};
+            const emptyMsg = document.getElementById('mineEmptyMsg');
+            emptyMsg.style.display = (view === 'mine' && !anySent) ? 'block' : 'none';
+        };
 
 
         function sendMentorRequest(buttonElement) {
@@ -670,52 +766,96 @@ function switchTab(tabName) {
                 switchMentorView('mine');
             }
         }
-   const alanVerileri = {
-    bilgisayar: { baslik: "Yazılım / Bilgisayar Mühendisliği", icerik: "Bu alan, sistemlerin ve uygulamaların tasarlanıp geliştirilmesini kapsar. Backend, frontend, yapay zeka ve siber güvenlik gibi birçok alt dala ayrılır.", beceriler: "Node.js, Python, Java, SQL, Git", isImkanlari: "Yazılım Geliştirici, Backend/Frontend Developer, AI Engineer, Siber Güvenlik Uzmanı", maas: "25.000 - 90.000 TL (deneyime göre değişir)", istihdam: "Yüksek — sektörde talep sürekli artıyor" },
-    elektrik: { baslik: "Elektrik-Elektronik Mühendisliği", icerik: "Devre tasarımı, enerji sistemleri, gömülü sistemler ve otomasyon bu alanın temel konularıdır.", beceriler: "MATLAB, PLC programlama, devre analizi", isImkanlari: "Elektronik Tasarım Mühendisi, Enerji Sistemleri Uzmanı, Otomasyon Mühendisi", maas: "22.000 - 70.000 TL (deneyime göre değişir)", istihdam: "Yüksek — enerji ve otomasyon sektörlerinde istikrarlı talep" },
-    makine: { baslik: "Makine Mühendisliği", icerik: "Tasarım, üretim, termodinamik ve robotik gibi konuları kapsar.", beceriler: "SolidWorks, AutoCAD, CAM yazılımları", isImkanlari: "Tasarım Mühendisi, Üretim Mühendisi, Robotik Mühendisi", maas: "22.000 - 65.000 TL (deneyime göre değişir)" , istihdam: "Orta-Yüksek — üretim sektörüne bağlı, sanayi bölgelerinde güçlü"},
-    endustri: { baslik: "Endüstri Mühendisliği", icerik: "Süreç optimizasyonu, lojistik, üretim yönetimi ve veri analitiği bu alanın odak noktalarıdır.", beceriler: "Excel/Power BI, süreç modelleme, istatistik", isImkanlari: "Süreç Mühendisi, Lojistik Uzmanı, İş Analisti", maas: "20.000 - 60.000 TL (deneyime göre değişir)",istihdam: "Yüksek — hemen her sektörde (üretim, lojistik, danışmanlık) aranıyor"  },
-    insaat: { baslik: "İnşaat Mühendisliği", icerik: "Yapı, altyapı, deprem mühendisliği ve proje yönetimi bu alanın temelini oluşturur.", beceriler: "AutoCAD, statik hesap, proje yönetimi", isImkanlari: "Şantiye Mühendisi, Statik Proje Mühendisi, Altyapı Uzmanı", maas: "20.000 - 60.000 TL (deneyime göre değişir)",istihdam: "Orta — inşaat sektörünün ekonomik dalgalanmalarına duyarlı" },
-    kimya: { baslik: "Kimya Mühendisliği", icerik: "Süreç mühendisliği, malzeme geliştirme ve üretim sistemleri bu alanın konularıdır.", beceriler: "Laboratuvar teknikleri, süreç simülasyonu", isImkanlari: "Süreç Mühendisi, Kalite Kontrol Uzmanı, Ar-Ge Mühendisi", maas: "20.000 - 60.000 TL (deneyime göre değişir)" ,  istihdam: "Orta — kimya/ilaç/gıda sektörlerinde istikrarlı" },
-    biyomedikal: { baslik: "Biyomedikal Mühendislik", icerik: "Tıbbi cihaz tasarımı, biyomekanik ve sağlık teknolojileri bu alanın odağıdır.", beceriler: "Sinyal işleme, cihaz tasarımı, biyomekanik", isImkanlari: "Tıbbi Cihaz Mühendisi, Ar-Ge Uzmanı, Klinik Mühendis", maas: "20.000 - 55.000 TL (deneyime göre değişir)" , istihdam: "Orta — gelişmekte olan, büyüme potansiyeli yüksek bir alan"},
-    havacilik: { baslik: "Havacılık ve Uzay Mühendisliği", icerik: "Uçak tasarımı, uzay sistemleri ve havacılık teknolojileri bu alanın temel konularıdır.", beceriler: "Aerodinamik analiz, CAD, uçuş sistemleri", isImkanlari: "Tasarım Mühendisi, Uçuş Test Mühendisi, Sistem Mühendisi", maas: "25.000 - 75.000 TL (deneyime göre değişir)", istihdam: "Orta — sınırlı sayıda büyük firma, rekabet yüksek" },
-    gemi: { baslik: "Gemi ve Deniz Teknolojisi Mühendisliği", icerik: "Gemi tasarımı, deniz araçları işletmesi ve denizcilik teknolojileri bu alanın odağıdır.", beceriler: "Gemi tasarımı, hidrodinamik, denizcilik mevzuatı", isImkanlari: "Gemi İnşa Mühendisi, Deniz Araçları Uzmanı", maas: "20.000 - 55.000 TL (deneyime göre değişir)", istihdam: "Orta — kıyı bölgelerinde ve tersanelerde yoğunlaşmış" }
-};
+        const bolumKariyerRotalari = {
+            bilgisayar: [
+                { id: "fullstack", ikon: "fa-solid fa-laptop-code", baslik: "Full-Stack & Cloud Development", ozet: "Modern web ve bulut uygulamaları geliştirme. React, Node.js, Go ve mikroservis mimarileri.", beceriler: "JavaScript/TypeScript, React, Node.js, PostgreSQL, Docker, AWS", isImkanlari: "Full-Stack Developer, Backend Engineer, Frontend Engineer", maas: "30.000 - 110.000 TL", istihdam: "Çok Yüksek 🚀" },
+                { id: "siber", ikon: "fa-solid fa-shield-halved", baslik: "Siber Güvenlik & Network", ozet: "Sistem güvenliğini sağlama, sızma testleri (Pentest) ve güvenlik protokolleri geliştirme.", beceriler: "Linux, Python/Bash, Wireshark, Metasploit, Cryptography", isImkanlari: "Siber Güvenlik Uzmanı, Pentester, SOC Analisti, Security Engineer", maas: "35.000 - 120.000 TL", istihdam: "Çok Yüksek 🛡️" },
+                { id: "yapayzeka", ikon: "fa-solid fa-brain", baslik: "Yapay Zeka & Veri Bilimi", ozet: "Makine öğrenmesi modelleri, derin öğrenme, doğal dil işleme (NLP) ve büyük veri analizi.", beceriler: "Python, PyTorch/TensorFlow, Pandas, SQL, Scikit-learn, MLOps", isImkanlari: "AI/ML Engineer, Data Scientist, Data Engineer, NLP Specialist", maas: "35.000 - 130.000 TL", istihdam: "Yüksek 🤖" },
+                { id: "mobil", ikon: "fa-solid fa-mobile-screen-button", baslik: "Mobil Uygulama Geliştirme", ozet: "iOS ve Android platformları için yüksek performanslı mobil uygulamalar tasarlama.", beceriler: "React Native, Flutter, Swift, Kotlin, REST API, Firebase", isImkanlari: "Mobile Developer, iOS Developer, Android Developer", maas: "28.000 - 95.000 TL", istihdam: "Yüksek 📱" },
+                { id: "devops", ikon: "fa-solid fa-gears", baslik: "DevOps & Sistem Yönetimi", ozet: "Yazılım yaygınlaştırma süreçlerini otomatize etme, CI/CD hatları ve sunucu altyapıları kurma.", beceriler: "Docker, Kubernetes, Jenkins, Terraform, Linux, Bash", isImkanlari: "DevOps Engineer, Site Reliability Engineer (SRE)", maas: "35.000 - 120.000 TL", istihdam: "Çok Yüksek ⚙️" },
+                { id: "gamedev", ikon: "fa-solid fa-gamepad", baslik: "Oyun Geliştirme (Game Dev)", ozet: "PC, konsol ve mobil oyun motorlarında mekanik ve grafik sistemleri kodlama.", beceriler: "C++, C#, Unity, Unreal Engine, 3D Matematik & Fizik", isImkanlari: "Game Developer, Gameplay Programmer, Graphics Engineer", maas: "25.000 - 90.000 TL", istihdam: "Orta-Yüksek 🎮" }
+            ],
+            elektrik: [
+                { id: "gomulu", ikon: "fa-solid fa-microchip", baslik: "Gömülü Sistemler (Embedded)", ozet: "Mikrodenetleyiciler ve kartlar (ARM, STM32, ESP32) üzerinde donanıma yakın yazılım geliştirme.", beceriler: "C/C++, FreeRTOS, STM32, SPI/I2C/CAN-Bus, PCB Tasarımı", isImkanlari: "Gömülü Sistem Mühendisi, Firmware Developer, Savunma Donanım Yazılımcısı", maas: "30.000 - 105.000 TL", istihdam: "Çok Yüksek 🚀" },
+                { id: "robotik", ikon: "fa-solid fa-robot", baslik: "Otonom & Robotik Kontrol", ozet: "Otonom araçlar, drone'lar ve sanayi robotları için sensör füzyonu ve kontrol algoritmaları.", beceriler: "ROS/ROS2, Python, C++, MATLAB/Simulink, Kontrol Teorisi", isImkanlari: "Robotik Mühendisi, Otonom Sistemler Uzmanı, Kontrol Mühendisi", maas: "32.000 - 110.000 TL", istihdam: "Yüksek 🤖" },
+                { id: "guc", ikon: "fa-solid fa-bolt", baslik: "Güç & Yenilenebilir Enerji", ozet: "Yüksek gerilim hatları, trafo merkezleri, güneş/rüzgar santralleri ve şebeke optimizasyonu.", beceriler: "Güç Elektroniği, PSCAD, ETAP, Yenilenebilir Enerji", isImkanlari: "Güç Sistemleri Mühendisi, Enerji Santral Mühendisi", maas: "25.000 - 85.000 TL", istihdam: "Yüksek ⚡" },
+                { id: "rf", ikon: "fa-solid fa-tower-cell", baslik: "Telekomünikasyon & RF/Anten", ozet: "5G/6G haberleşme protokolleri, radar sistemleri, RF devre ve anten tasarımları.", beceriler: "HFSS, CST Studio, Sinyal İşleme, RF Devre Tasarımı", isImkanlari: "RF Tasarım Mühendisi, Telekomünikasyon Uzmanı, Radar Mühendisi", maas: "30.000 - 100.000 TL", istihdam: "Yüksek 📡" }
+            ],
+            makine: [
+                { id: "otomotiv", ikon: "fa-solid fa-car", baslik: "Otomotiv & İHA Tasarımı", ozet: "Kara ve hava araçlarının şasi, motor, aerodinamik ve mekanik tasarımı.", beceriler: "CATIA, SolidWorks, Ansys Fluent (CFD), Malzeme Bilgisi", isImkanlari: "Otomotiv Tasarım Mühendisi, İHA Mekanik Tasarımcısı", maas: "28.000 - 95.000 TL", istihdam: "Yüksek 🏎️" },
+                { id: "mekatronik", ikon: "fa-solid fa-gears", baslik: "Mekatronik & Robotik", ozet: "Mekanik sistemlerin elektronik sensör ve yazılımlarla entegrasyonu.", beceriler: "SolidWorks, PLC, C++, Hidrolik & Pnömatik", isImkanlari: "Mekatronik Mühendisi, Otomasyon Tasarımcısı", maas: "27.000 - 90.000 TL", istihdam: "Yüksek ⚙️" },
+                { id: "imalat", ikon: "fa-solid fa-industry", baslik: "İmalat & CAD/CAM Üretim", ozet: "Talaşlı imalat, CNC programlama, 3D eklemeli imalat ve kalıp tasarımı.", beceriler: "Mastercam, Siemens NX, CNC, Kalıp Tasarımı", isImkanlari: "Üretim Mühendisi, Kalıp Tasarımcısı, Fabrika Sorumlusu", maas: "24.000 - 80.000 TL", istihdam: "Çok Yüksek 🛠️" }
+            ],
+            endustri: [
+                { id: "verianalitigi", ikon: "fa-solid fa-chart-line", baslik: "Veri Analitiği & İş Zekası (BI)", ozet: "Şirket verilerini analiz ederek stratejik iş kararları için dashboard ve tahmin modelleri üretme.", beceriler: "SQL, Python/R, Power BI, Tableau, Excel, İstatistik", isImkanlari: "Data Analyst, BI Developer, İş Analisti, Veri Mimarı", maas: "28.000 - 95.000 TL", istihdam: "Çok Yüksek 📊" },
+                { id: "tedarik", ikon: "fa-solid fa-truck-ramp-box", baslik: "Tedarik Zinciri & Lojistik", ozet: "Depo yönetimi, rota optimizasyonu, satın alma ve küresel tedarik süreçlerinin planlanması.", beceriler: "SAP/ERP, Yöneylem Araştırması, Stok Yönetimi, Excel", isImkanlari: "Tedarik Zinciri Uzmanı, Lojistik Planlama Mühendisi", maas: "25.000 - 85.000 TL", istihdam: "Yüksek 🚚" },
+                { id: "pm", ikon: "fa-solid fa-diagram-project", baslik: "Ürün Yönetimi (Product Management)", ozet: "Yazılım ve sanayi ürünlerinin stratejisini belirleme, kullanıcı ihtiyaçlarını ürün özelliklerine dönüştürme.", beceriler: "Agile/Scrum, Jira, Kullanıcı Araştırması, Roadmap", isImkanlari: "Product Manager, Associate Product Manager, Product Owner", maas: "30.000 - 110.000 TL", istihdam: "Yüksek 🎯" }
+            ],
+            insaat: [
+                { id: "yapi", ikon: "fa-solid fa-building", baslik: "Yapı & Deprem Mühendisliği", ozet: "Bina, köprü ve dayanıklı yapıların statik modellemesi ve deprem analizi.", beceriler: "AutoCAD, SAP2000, Sta4CAD, Statik Hesap", isImkanlari: "Statik Proje Mühendisi, Yapı Uzmanı", maas: "22.000 - 75.000 TL", istihdam: "Orta-Yüksek 🏗️" }
+            ],
+            kimya: [
+                { id: "surec", ikon: "fa-solid fa-flask", baslik: "Süreç & Üretim Mühendisliği", ozet: "Kimyasal tesislerde reaktör tasarımı, süreç simülasyonu ve ürün kalite kontrolü.", beceriler: "Aspen Plus, Laboratuvar Teknikleri, Proses Kontrol", isImkanlari: "Süreç Mühendisi, Kalite Kontrol Mühendisi", maas: "22.000 - 70.000 TL", istihdam: "Orta 🧪" }
+            ]
+        };
 
-function alanGoster(alan) {
-    const veri = alanVerileri[alan];
-    document.getElementById('alanModalBaslik').innerText = veri.baslik;
-    document.getElementById('alanModalIcerik').innerText = veri.icerik;
-    document.getElementById('alanModalBeceriler').innerText = veri.beceriler;
-    document.getElementById('alanModalIsImkanlari').innerText = veri.isImkanlari;
-    document.getElementById('alanModalMaas').innerText = veri.maas;
-     document.getElementById('alanModalIstihdam').innerText = veri.istihdam;
-    document.getElementById('alanModal').classList.add('active');
-}
+        function bolumKariyerYollariniGuncelle(bolumKey) {
+            const grid = document.getElementById('kariyerRotalariGrid');
+            if (!grid) return;
 
-function alanModalKapat() {
-    document.getElementById('alanModal').classList.remove('active');
-}
-// 🔸 ÖRNEK VERİ: Adaylardan gelen istekler
-let pendingAdayIstekleri = [
-    { id: 1, isim: "Ayşe Demir", okul: "Kadıköy Anadolu Lisesi, 12. Sınıf", not: "Bilgisayar mühendisliğine ilgi duyuyor, bölüm hakkında sorular soracak." },
-    { id: 2, isim: "Kerem Öz", okul: "Fen Lisesi Mezunu", not: "YKS sonrası tercih sürecinde destek arıyor." }
-];
+            const rotalar = bolumKariyerRotalari[bolumKey] || bolumKariyerRotalari['bilgisayar'];
+            
+            grid.innerHTML = rotalar.map(r => `
+                <div class="premium-card" onclick="rotayiModaldaAc('${bolumKey}', '${r.id}')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="${r.ikon}"></i></div>
+                    <h3>${r.baslik}</h3>
+                    <p>${r.ozet}</p>
+                    <div style="margin-top:15px; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:12px; color:#06b6d4; font-weight:bold;">İstihdam: ${r.istihdam}</span>
+                        <span style="font-size:13px; color:#94a3b8; font-weight:bold;">Detaylar ➔</span>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-let acceptedAdaylar = [];
+        function rotayiModaldaAc(bolumKey, rotaId) {
+            const rotalar = bolumKariyerRotalari[bolumKey] || bolumKariyerRotalari['bilgisayar'];
+            const r = rotalar.find(item => item.id === rotaId);
+            if (!r) return;
 
-function renderGelenIstekler() {
-    renderGiPending();
-    renderGiAccepted();
-}
+            document.getElementById('alanModalBaslik').innerText = r.baslik;
+            document.getElementById('alanModalIcerik').innerText = r.ozet;
+            document.getElementById('alanModalBeceriler').innerText = r.beceriler;
+            document.getElementById('alanModalIsImkanlari').innerText = r.isImkanlari;
+            document.getElementById('alanModalMaas').innerText = r.maas;
+            document.getElementById('alanModalIstihdam').innerText = r.istihdam;
+            document.getElementById('alanModal').classList.add('active');
+        }
 
-function renderGiPending() {
-    const grid = document.getElementById('giPendingGrid');
-    if (pendingAdayIstekleri.length === 0) {
-        grid.innerHTML = `<p class="empty-msg">Şu an bekleyen bir istek yok.</p>`;
-        return;
-    }
-    grid.innerHTML = pendingAdayIstekleri.map(a => `
+        function alanModalKapat() {
+            document.getElementById('alanModal').classList.remove('active');
+        }
+
+        // 🔸 ÖRNEK VERİ: Adaylardan gelen istekler
+        let pendingAdayIstekleri = [
+            { id: 1, isim: "Ayşe Demir", okul: "Kadıköy Anadolu Lisesi, 12. Sınıf", not: "Bilgisayar mühendisliğine ilgi duyuyor, bölüm hakkında sorular soracak." },
+            { id: 2, isim: "Kerem Öz", okul: "Fen Lisesi Mezunu", not: "YKS sonrası tercih sürecinde destek arıyor." }
+        ];
+
+        let acceptedAdaylar = [];
+
+        function renderGelenIstekler() {
+            renderGiPending();
+            renderGiAccepted();
+        }
+
+        function renderGiPending() {
+            const grid = document.getElementById('giPendingGrid');
+            if (pendingAdayIstekleri.length === 0) {
+                grid.innerHTML = `<p class="empty-msg">Şu an bekleyen bir istek yok.</p>`;
+                return;
+            }
+            grid.innerHTML = pendingAdayIstekleri.map(a => `
         <div class="mentor-card">
             <div class="mentor-avatar">${giInitials(a.isim)}</div>
             <h3>${a.isim}</h3>
@@ -727,15 +867,15 @@ function renderGiPending() {
             </div>
         </div>
     `).join('');
-}
+        }
 
-function renderGiAccepted() {
-    const grid = document.getElementById('giAcceptedGrid');
-    if (acceptedAdaylar.length === 0) {
-        grid.innerHTML = `<p class="empty-msg">Henüz kabul ettiğin bir aday yok.</p>`;
-        return;
-    }
-    grid.innerHTML = acceptedAdaylar.map(a => `
+        function renderGiAccepted() {
+            const grid = document.getElementById('giAcceptedGrid');
+            if (acceptedAdaylar.length === 0) {
+                grid.innerHTML = `<p class="empty-msg">Henüz kabul ettiğin bir aday yok.</p>`;
+                return;
+            }
+            grid.innerHTML = acceptedAdaylar.map(a => `
         <div class="mentor-card">
             <div class="mentor-avatar">${giInitials(a.isim)}</div>
             <h3>${a.isim}</h3>
@@ -744,61 +884,66 @@ function renderGiAccepted() {
             <span class="mentor-badge" style="background: rgba(16, 185, 129, 0.1); color:#10b981;">Bağlantı Kuruldu</span>
         </div>
     `).join('');
-}
+        }
 
-function giInitials(isim) {
-    return isim.split(' ').map(k => k[0]).join('').toUpperCase();
-}
+        function giInitials(isim) {
+            return isim.split(' ').map(k => k[0]).join('').toUpperCase();
+        }
 
-function giYanitla(id, kabul) {
-    const aday = pendingAdayIstekleri.find(a => a.id === id);
-    pendingAdayIstekleri = pendingAdayIstekleri.filter(a => a.id !== id);
+        function giYanitla(id, kabul) {
+            const aday = pendingAdayIstekleri.find(a => a.id === id);
+            pendingAdayIstekleri = pendingAdayIstekleri.filter(a => a.id !== id);
 
-    if (kabul) {
-        acceptedAdaylar.push(aday);
-        alert(`✅ ${aday.isim} ile bağlantın kuruldu!`);
-    } else {
-        alert(`${aday.isim} isteği reddedildi.`);
-    }
-    renderGiPending();
-    renderGiAccepted();
-}
+            if (kabul) {
+                acceptedAdaylar.push(aday);
+                alert(`✅ ${aday.isim} ile bağlantın kuruldu!`);
+            } else {
+                alert(`${aday.isim} isteği reddedildi.`);
+            }
+            renderGiPending();
+            renderGiAccepted();
+        }
 
-function switchGelenIstekView(view) {
-    document.getElementById('subnav-gi-pending').classList.remove('active');
-    document.getElementById('subnav-gi-accepted').classList.remove('active');
-    document.getElementById('subnav-gi-' + view).classList.add('active');
+        function switchGelenIstekView(view) {
+            document.getElementById('subnav-gi-pending').classList.remove('active');
+            document.getElementById('subnav-gi-accepted').classList.remove('active');
+            document.getElementById('subnav-gi-' + view).classList.add('active');
 
-    document.getElementById('giPendingGrid').style.display = view === 'pending' ? 'grid' : 'none';
-    document.getElementById('giAcceptedGrid').style.display = view === 'accepted' ? 'grid' : 'none';
-}
+            document.getElementById('giPendingGrid').style.display = view === 'pending' ? 'grid' : 'none';
+            document.getElementById('giAcceptedGrid').style.display = view === 'accepted' ? 'grid' : 'none';
+        }
     </script>
-<div class="alan-modal-overlay" id="alanModal">
-    <div class="alan-modal-box">
-        <span class="alan-modal-close" onclick="alanModalKapat()">&times;</span>
-        <div class="card-icon" style="margin-bottom:20px;"><i class="fa-solid fa-graduation-cap"></i></div>
-        <h2 id="alanModalBaslik" style="color:#fff; font-size:26px; margin-bottom:16px;"></h2>
-        <p id="alanModalIcerik" style="color:#cbd5e1; font-size:15px; line-height:1.7; margin-bottom:20px;"></p>
+    <div class="alan-modal-overlay" id="alanModal">
+        <div class="alan-modal-box">
+            <span class="alan-modal-close" onclick="alanModalKapat()">&times;</span>
+            <div class="card-icon" style="margin-bottom:20px;"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h2 id="alanModalBaslik" style="color:#fff; font-size:26px; margin-bottom:16px;"></h2>
+            <p id="alanModalIcerik" style="color:#cbd5e1; font-size:15px; line-height:1.7; margin-bottom:20px;"></p>
 
-        <div style="margin-bottom:16px;">
-            <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Aranan Beceriler</span>
-            <p id="alanModalBeceriler" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
-        </div>
+            <div style="margin-bottom:16px;">
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Aranan
+                    Beceriler</span>
+                <p id="alanModalBeceriler" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
 
-        <div style="margin-bottom:16px;">
-            <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İş İmkanları</span>
-            <p id="alanModalIsImkanlari" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
-        </div>
+            <div style="margin-bottom:16px;">
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İş
+                    İmkanları</span>
+                <p id="alanModalIsImkanlari" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
 
-        <div>
-            <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Maaş Aralığı</span>
-            <p id="alanModalMaas" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            <div>
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Maaş
+                    Aralığı</span>
+                <p id="alanModalMaas" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
+            <div style="margin-top:16px;">
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İstihdam
+                    Oranı</span>
+                <p id="alanModalIstihdam" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
         </div>
-        <div style="margin-top:16px;">
-    <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İstihdam Oranı</span>
-    <p id="alanModalIstihdam" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
-</div>
     </div>
-</div>
 </body>
+
 </html>
