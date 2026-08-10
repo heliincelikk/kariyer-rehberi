@@ -400,6 +400,11 @@
         }
 
         .discipline-btn {
+            background: transparent !important;
+            border: none !important;
+            outline: none !important;
+            padding: 0 !important;
+            cursor: pointer;
             color: #06b6d4;
             font-weight: 700;
             font-size: 14px;
@@ -413,6 +418,7 @@
         .discipline-btn:hover {
             color: #22d3ee;
             transform: translateX(4px);
+            background: transparent !important;
         }
 
         /* HEMEN ÜYE OL CTA BANNER */
@@ -548,6 +554,196 @@
 
         .modal-overlay.active .modal-box {
             transform: scale(1) translateY(0);
+        }
+
+        /* DİSİPLİN DETAY MODAL TASARIMI */
+        .discipline-detail-modal-box {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 2px solid rgba(6, 182, 212, 0.4);
+            border-radius: 25px;
+            width: 92%; 
+            max-width: 800px;
+            max-height: 88vh;
+            overflow-y: auto;
+            padding: 35px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(6, 182, 212, 0.2);
+            transform: scale(0.85) translateY(-30px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            color: #ffffff;
+        }
+
+        .modal-overlay.active .discipline-detail-modal-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .detail-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .detail-modal-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2));
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #06b6d4;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            flex-shrink: 0;
+        }
+
+        .detail-modal-title-group h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 4px;
+            text-align: left;
+        }
+
+        .detail-modal-badge {
+            display: inline-block;
+            background: rgba(6, 182, 212, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .detail-section {
+            margin-bottom: 22px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .detail-section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #06b6d4;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-section-text {
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .info-pill {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            color: #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .info-pill:hover {
+            border-color: #06b6d4;
+            background: rgba(6, 182, 212, 0.15);
+            color: #06b6d4;
+            transform: translateY(-2px);
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .course-card-item {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .course-card-item i {
+            color: #06b6d4;
+            font-size: 13px;
+        }
+
+        .detail-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 25px;
+        }
+
+        .btn-modal-mentor {
+            background: linear-gradient(135deg, #06b6d4, #2563eb);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-modal-mentor:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+            background: linear-gradient(135deg, #22d3ee, #3b82f6);
+        }
+
+        .btn-modal-close {
+            background: transparent;
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal-close:hover {
+            border-color: #cbd5e1;
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .close-modal {
@@ -760,7 +956,7 @@
                         <h3>Yazılım / Bilgisayar Müh.</h3>
                         <p>Backend, Frontend, Yapay Zeka, Siber Güvenlik ve Mobil geliştirme kariyer yollarını keşfet.</p>
                     </div>
-                    <a href="search.html" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></a>
+                    <button type="button" onclick="openDisciplineDetail('yazilim')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
 
                 <!-- 2. Elektrik-Elektronik -->
@@ -773,7 +969,7 @@
                         <h3>Elektrik-Elektronik Müh.</h3>
                         <p>Devre tasarımı, gömülü sistemler, yenilenebilir enerji ve otomasyon teknolojilerini incele.</p>
                     </div>
-                    <a href="search.html" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></a>
+                    <button type="button" onclick="openDisciplineDetail('elektrik')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
 
                 <!-- 3. Makine Mühendisliği -->
@@ -786,7 +982,7 @@
                         <h3>Makine Mühendisliği</h3>
                         <p>CAD/CAM tasarımı, imalat, robotik, mekatronik ve termodinamik alt alanlarını gör.</p>
                     </div>
-                    <a href="search.html" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></a>
+                    <button type="button" onclick="openDisciplineDetail('makine')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
 
                 <!-- 4. Endüstri Mühendisliği -->
@@ -799,7 +995,7 @@
                         <h3>Endüstri Mühendisliği</h3>
                         <p>Süreç optimizasyonu, tedarik zinciri, veri analitiği ve üretim yönetimi alanlarını keşfet.</p>
                     </div>
-                    <a href="search.html" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></a>
+                    <button type="button" onclick="openDisciplineDetail('endustri')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
 
                 <!-- 5. İnşaat Mühendisliği -->
@@ -812,7 +1008,7 @@
                         <h3>İnşaat Mühendisliği</h3>
                         <p>Akıllı yapılar, altyapı projeleri, geoteknik ve deprem dayanımlı bina tasarımını incele.</p>
                     </div>
-                    <a href="search.html" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></a>
+                    <button type="button" onclick="openDisciplineDetail('insaat')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
 
                 <!-- 6. Kimya Mühendisliği -->
@@ -825,7 +1021,7 @@
                         <h3>Kimya Mühendisliği</h3>
                         <p>Proses tasarımı, batarya teknolojileri, polimer ve sentez sistemleri kariyer alanları.</p>
                     </div>
-                    <a href="search.html" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></a>
+                    <button type="button" onclick="openDisciplineDetail('kimya')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
 
                 <!-- 7. Biyomedikal Mühendisliği -->
@@ -838,7 +1034,7 @@
                         <h3>Biyomedikal Mühendisliği</h3>
                         <p>Tıbbi cihaz tasarımı, biyomekanik, yapay organlar ve sağlık teknolojilerini incele.</p>
                     </div>
-                    <a href="search.html" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></a>
+                    <button type="button" onclick="openDisciplineDetail('biyomedikal')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
 
                 <!-- 8. Havacılık ve Uzay -->
@@ -851,7 +1047,7 @@
                         <h3>Havacılık ve Uzay Müh.</h3>
                         <p>Aerodinamik, İHA/SİHA sistemleri, jet motorları ve uydu teknolojilerini keşfet.</p>
                     </div>
-                    <a href="search.html" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></a>
+                    <button type="button" onclick="openDisciplineDetail('havacilik')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
 
                 <!-- 9. Gemi ve Deniz Teknolojisi -->
@@ -864,7 +1060,7 @@
                         <h3>Gemi & Deniz Teknolojisi</h3>
                         <p>Gemi tasarımı, marin hidrodinamik, marinalar ve açık deniz yapılarını incele.</p>
                     </div>
-                    <a href="search.html" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></a>
+                    <button type="button" onclick="openDisciplineDetail('gemi')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </div>
         </div>
@@ -879,6 +1075,9 @@
                     <li><i class="fa-solid fa-check"></i> Şirket Kültürleri & Mülakat İpuçları</li>
                     <li><i class="fa-solid fa-check"></i> Onaylı ve Deneyimli Mentor Kadrosu</li>
                 </ul>
+                <button onclick="openModal('authNoticeModal')" class="primary-register-btn" style="margin-top: 15px; font-size: 15px; padding: 12px 28px; border: none; cursor: pointer;">
+                    <i class="fa-solid fa-user-lock"></i> Mentor Randevusu Al (Üye Ol)
+                </button>
             </div>
             <div class="tab-visual">
                 <div class="visual-badge">🤝 MENTORLUK AĞI</div>
@@ -978,6 +1177,28 @@
         </div>
     </footer>
 
+    <!-- ÜYELİK UYARI MODAL PENCERESİ -->
+    <div class="modal-overlay" id="authNoticeModal">
+        <div class="modal-box" style="text-align: center;">
+            <span class="close-modal" onclick="closeModal('authNoticeModal')">&times;</span>
+            <div style="font-size: 55px; color: #06b6d4; margin-bottom: 15px; text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);">
+                <i class="fa-solid fa-user-lock"></i>
+            </div>
+            <h2 style="margin-bottom: 12px; font-size: 26px;">Bu Özellik İçin <span>Üye Olmalısınız!</span> 🔒</h2>
+            <p style="color: #cbd5e1; font-size: 15px; line-height: 1.7; margin-bottom: 25px;">
+                Mentorlarla birebir görüşme yapmak, CV incelemesi talep etmek ve staj/proje ilanlarına başvurmak için üyeliğiniz bulunmalıdır.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <button type="button" onclick="closeModal('authNoticeModal'); openModal('loginModal');" class="submit-btn" style="margin-top: 0; background: linear-gradient(135deg, #06b6d4, #2563eb); color: white;">
+                    <i class="fa-solid fa-right-to-bracket"></i> Hesabın Var Mı? Giriş Yap
+                </button>
+                <a href="register.html" class="submit-btn" style="text-decoration: none; display: block; background: transparent; border: 2px solid #06b6d4; color: #06b6d4; text-align: center;">
+                    <i class="fa-solid fa-user-plus"></i> Ücretsiz Kayıt Ol
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- GİRİŞ YAP MODAL PENCERESİ -->
     <div class="modal-overlay" id="loginModal">
         <div class="modal-box">
@@ -997,14 +1218,209 @@
         </div>
     </div>
 
+    <!-- DİSİPLİN DETAY MODAL PENCERESİ -->
+    <div class="modal-overlay" id="disciplineDetailModal">
+        <div class="discipline-detail-modal-box">
+            <span class="close-modal" onclick="closeModal('disciplineDetailModal')">&times;</span>
+            <div class="detail-modal-header">
+                <div class="detail-modal-icon" id="modalDisciplineIcon">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <div class="detail-modal-title-group">
+                    <h2 id="modalDisciplineTitle">Yazılım / Bilgisayar Müh.</h2>
+                    <span class="detail-modal-badge" id="modalDisciplineBadge">Yazılım & AI</span>
+                </div>
+            </div>
+
+            <!-- 1. Genel Bakış -->
+            <div class="detail-section">
+                <div class="detail-section-title">
+                    <i class="fa-solid fa-circle-info"></i> Genel Bakış & Misyon
+                </div>
+                <p class="detail-section-text" id="modalDisciplineOverview">
+                    İçerik yükleniyor...
+                </p>
+            </div>
+
+            <!-- 2. Alt Branşlar & Kariyer Yolları -->
+            <div class="detail-section">
+                <div class="detail-section-title">
+                    <i class="fa-solid fa-route"></i> Uzmanlık Alanları & Alt Branşlar
+                </div>
+                <div class="pill-container" id="modalDisciplineSubbranches">
+                </div>
+            </div>
+
+            <!-- 3. Kullanılan Araçlar & Teknolojiler -->
+            <div class="detail-section">
+                <div class="detail-section-title">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> Temel Araçlar & Teknolojiler
+                </div>
+                <div class="pill-container" id="modalDisciplineTools">
+                </div>
+            </div>
+
+            <!-- 4. Öne Çıkan Üniversite Dersleri -->
+            <div class="detail-section">
+                <div class="detail-section-title">
+                    <i class="fa-solid fa-graduation-cap"></i> Temel Lisans Dersleri
+                </div>
+                <div class="course-grid" id="modalDisciplineCourses">
+                </div>
+            </div>
+
+            <!-- 5. Sektör Durumu & Gelecek Beklentisi -->
+            <div class="detail-section">
+                <div class="detail-section-title">
+                    <i class="fa-solid fa-chart-line"></i> Sektör Görünümü & Gelecek Beklentisi
+                </div>
+                <p class="detail-section-text" id="modalDisciplineOutlook">
+                </p>
+            </div>
+
+            <!-- Modal Alt Butonları -->
+            <div class="detail-modal-footer">
+                <button type="button" class="btn-modal-mentor" onclick="goToMentorsFromModal()">
+                    <i class="fa-solid fa-comments"></i> Mentorları Keşfet
+                </button>
+                <button type="button" class="btn-modal-close" onclick="closeModal('disciplineDetailModal')">
+                    Kapat
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- JAVASCRIPT KODLARI -->
     <script>
+        const disciplineData = {
+            yazilim: {
+                title: "Yazılım / Bilgisayar Müh.",
+                badge: "Yazılım & AI",
+                icon: "fa-laptop-code",
+                overview: "Yazılım ve Bilgisayar Mühendisliği; dijital çağın mimarisini oluşturan kodlar, yapay zeka modelleri, veri yapıları ve güvenlik altyapılarını tasarlar. Sağlıktan finansa, oyundan uzay teknolojilerine kadar tüm alanların merkezindedir.",
+                subbranches: ["Backend & API Architecture", "Frontend & UI/UX Design", "Yapay Zeka & Derin Öğrenme", "Siber Güvenlik & Kriptoloji", "Mobil Uygulama (iOS/Android)", "DevOps & Bulut Sistemleri"],
+                tools: ["Python", "JavaScript / TypeScript", "C / C++", "Java", "React / Next.js", "Docker & Kubernetes", "SQL / NoSQL", "Git"],
+                courses: ["Veri Yapıları & Algoritmalar", "Nesne Yönelimli Programlama", "Veritabanı Yönetimi", "İşletim Sistemleri", "Bilgisayar Ağları", "Yapay Zeka & ML"],
+                outlook: "🔥 %98 Yüksek Talep | 🌐 Uzaktan (Remote) Çalışma İmkânı | 🚀 Global İş ve Dolar/Euro Kazanç Fırsatları"
+            },
+            elektrik: {
+                title: "Elektrik-Elektronik Müh.",
+                badge: "Enerji & Sistem",
+                icon: "fa-bolt",
+                overview: "Elektrik-Elektronik Mühendisliği; mikroçiplerden yenilenebilir enerji santrallerine, haberleşme uydularından Donanım/Gömülü yazılımlara kadar elektronun gücünü hayatın hizmetine sunar.",
+                subbranches: ["Gömülü Sistemler (Embedded Systems)", "Mikroelektronik & Çip Tasarımı", "Haberleşme & Sinyal İşleme", "Güç Elektroniği & Yenilenebilir Enerji", "Endüstriyel Otomasyon & PLC"],
+                tools: ["C / C++", "MATLAB / Simulink", "Altium Designer", "KiCAD", "PLC Programlama", "Verilog / VHDL", "Python"],
+                courses: ["Devre Teorisi I-II", "Elektronik Devreler", "Sinyaller ve Sistemler", "Mikroişlemciler", "Elektromanyetik Dalgalar", "Kontrol Sistemleri"],
+                outlook: "⚡ %92 Yüksek Talep | 🛡️ Savunma Sanayii & Otonom Araçlar Odaklı | ☀️ Yeşil Enerji Dönüşümü"
+            },
+            makine: {
+                title: "Makine Mühendisliği",
+                badge: "Tasarım & Üretim",
+                icon: "fa-gears",
+                overview: "Makine Mühendisliği; hareket eden her sistemin kuvvet, termodinamik, akışkanlar ve malzeme analizini gerçekleştirerek fikri fiziksel ürüne dönüştüren temel disiplindir.",
+                subbranches: ["Mekanik Tasarım & CAD", "İmalat & Üretim Yöntemleri", "Termodinamik & Isı Transferi", "Mekatronik & Robotik", "Otomotiv & Savunma Sistemleri"],
+                tools: ["SolidWorks", "CATIA", "AutoCAD", "ANSYS (FEA/CFD)", "MATLAB", "CNC G-Code", "Python"],
+                courses: ["Statik & Dinamik", "Mukavemet I-II", "Termodinamik", "Akışkanlar Mekaniği", "Makine Elemanları", "İmal Usulleri"],
+                outlook: "⚙️ %90 İstikrarlı Talep | 🚜 İmalat & Sanayi Sektörünün Ana Omurgası | 🤖 Robotik & Mekatronik Entegrasyonu"
+            },
+            endustri: {
+                title: "Endüstri Mühendisliği",
+                badge: "Veri & Yönetim",
+                icon: "fa-sitemap",
+                overview: "Endüstri Mühendisliği; insan, makine, bilgi ve finans kaynaklarını entegre ederek karmaşık sistemlerin verimliliğini ve kalitesini matematiksel optimizasyonla artıran yönetsel mühendisliktir.",
+                subbranches: ["Yöneylem Araştırması & Optimizasyon", "Veri Analitiği & Data Science", "Tedarik Zinciri & Lojistik", "Yalın Üretim (Lean Six Sigma)", "ERP & Süreç Yönetimi"],
+                tools: ["Python / R", "SQL", "SAP / ERP", "Arena / Simio", "Power BI / Tableau", "Minitab", "Advanced Excel"],
+                courses: ["Yöneylem Araştırması I-II", "İstatistik ve Olasılık", "Üretim Planlama ve Kontrol", "Kalite Yönetimi", "Benzetim (Simülasyon)", "Maliyet Muhasebesi"],
+                outlook: "📊 %95 Geniş Esneklik | 💼 Finans, Lojistik, E-Ticaret ve Teknoloji Sektörlerinde Üst Düzey Yöneticilik | 🎯 Veri Odaklı Karar Sistemleri"
+            },
+            insaat: {
+                title: "İnşaat Mühendisliği",
+                badge: "Yapı & Proje",
+                icon: "fa-compass-drafting",
+                overview: "İnşaat Mühendisliği; şehirlerin altyapılarını, gökdelenleri, köprüleri, tünelleri ve depreme dayanıklı modern yaşam alanlarını tasarlayan, inşa eden köklü yapı disiplinidir.",
+                subbranches: ["Yapı Statiği & Deprem Mühendisliği", "Geoteknik & Zemin Mekaniği", "Ulaştırma & Karayolu/Demiryolu", "Hidrolik & Su Yapıları", "Proje Yönetimi & BIM"],
+                tools: ["AutoCAD", "SAP2000", "ETABS", "Revit (BIM)", "Primavera P6", "MS Project", "GEO5"],
+                courses: ["Yapı Statiği I-II", "Betonarme", "Zemin Mekaniği", "Akışkanlar Mekaniği & Hidrolik", "Şantiye Yönetimi", "Çelik Yapılar"],
+                outlook: "🏗️ %88 Yüksek Proje Hacmi | 🌍 Uluslararası Yurtdışı Şantiye & Proje Yönetimi Fırsatları | 🏙️ Akıllı Bina Dönüşümü"
+            },
+            kimya: {
+                title: "Kimya Mühendisliği",
+                badge: "Proses & Malzeme",
+                icon: "fa-flask",
+                overview: "Kimya Mühendisliği; hammadde ve moleküllerin güvenli, sürdürülebilir ve yüksek katma değerli ürünlere (ilaç, batarya, kozmetik, polimer) dönüşmesini sağlayan proses disiplinidir.",
+                subbranches: ["Proses Tasarımı & Simülasyonu", "Batarya & Enerji Depolama", "Polimer & Nanoteknoloji", "Petrokimya & Rafineri", "İlaç & Biyoteknoloji Sanayii"],
+                tools: ["Aspen Plus / HYSYS", "ChemCAD", "MATLAB", "COMSOL Multiphysics", "Minitab", "LabVIEW"],
+                courses: ["Kütle ve Isı Transferi", "Kimyasal Reaksiyon Mühendisliği", "Termodinamik", "Proses Kontrol", "Akışkanlar Mekaniği", "Ayırma İşlemleri"],
+                outlook: "🧪 %90 Büyüyen Sektör | 🔋 Batarya Teknolojileri ve Yenilikçi Malzeme Patlaması | 💊 İlaç ve Kimya Devleri"
+            },
+            biyomedikal: {
+                title: "Biyomedikal Mühendisliği",
+                badge: "Sağlık & Medikal",
+                icon: "fa-heart-pulse",
+                overview: "Biyomedikal Mühendisliği; tıbbi teşhis ve tedavi cihazları, biyonik protezler, yapay organlar ve medikal yazılımlar geliştirerek insan yaşam kalitesini artıran disiplindir.",
+                subbranches: ["Tıbbi Görüntüleme Sistemleri", "Biyomekanik & Protez Tasarımı", "Biyosinyal İşleme & Yapay Zeka", "Klinik Mühendislik", "Doku Mühendisliği & Biyomateryal"],
+                tools: ["MATLAB / Simulink", "LabVIEW", "SolidWorks Medical", "Python (Medical AI)", "DICOM Viewers", "SPSS"],
+                courses: ["Biyomedikal Sinyal İşleme", "Tıbbi Cihaz Elektroniği", "Biyomekanik", "İnsan Anatomisi & Fizyolojisi", "Biyomateryaller"],
+                outlook: "🩺 %93 Medikal Teknoloji Devrimi | 🦾 Biyonik Protez & Yapay Organ Teknolojisi | 📈 Yüksek Global Yatırım"
+            },
+            havacilik: {
+                title: "Havacılık ve Uzay Müh.",
+                badge: "Savunma & Uzay",
+                icon: "fa-plane",
+                overview: "Havacılık ve Uzay Mühendisliği; uçak, helikopter, İHA/SİHA, uydu ve roketlerin aerodinamik, itki, kontrol ve yapısal tasarımlarını yapan yüksek teknolojili prestij alanıdır.",
+                subbranches: ["Aerodinamik & CFD Analizleri", "İtki Sistemleri & Jet Motorları", "Uçuş Dinamiği & Kontrol", "Aviyonik & Otonom Sistemler", "Uydu ve Uzay Yapıları"],
+                tools: ["OpenFOAM", "ANSYS Fluent", "CATIA V5/V6", "MATLAB / Simulink", "ROS (Robot Operating System)", "C++ / Python"],
+                courses: ["Aerodinamik I-II", "Uçuş Mekaniği", "İtki Sistemleri", "Gaz Dinamiği", "Uçak Yapı ve Malzemeleri", "Aviyonik Sistemler"],
+                outlook: "🚀 %96 Çok Yüksek Prestij | 🛡️ Yerli Savunma ve Uzay Sanayii (Baykar, TUSAŞ, Aselsan, Roketsan) | 🌌 Uzay Çağı Vizyonu"
+            },
+            gemi: {
+                title: "Gemi & Deniz Teknolojisi",
+                badge: "Denizcilik",
+                icon: "fa-ship",
+                overview: "Gemi ve Deniz Teknolojisi Mühendisliği; yük ve savaş gemilerinden lüks yatlara, açık deniz rüzgar platformlarından marinalara kadar tüm marin yapıları tasarlar ve yönetir.",
+                subbranches: ["Gemi Tasarımı & Hidrodinamik", "Tersane İmalat & Üretim Yönetimi", "Lüks Yat Tasarımı & İhracatı", "Offshore (Açık Deniz) Yapıları", "Marin Sevk Sistemleri"],
+                tools: ["Maxsurf", "Rhino 3D", "AutoCAD Marine", "ANSYS Hydrodynamics", "SolidWorks", "Python"],
+                courses: ["Gemi Hidrodinamiği", "Gemi Statiği ve Sevk", "Tersane Organizasyonu", "Deniz Yapıları", "Marin Motorlar ve Sevk"],
+                outlook: "⚓ %89 Küresel Sektör | 💵 Uluslararası Dolar/Euro Kazanç İmkânı | 🛳️ Türkiye'nin Dünya Lideri Yat İhracat Gücü"
+            }
+        };
+
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
         }
 
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
+        }
+
+        function openDisciplineDetail(key) {
+            const data = disciplineData[key];
+            if (!data) return;
+
+            document.getElementById('modalDisciplineIcon').innerHTML = `<i class="fa-solid ${data.icon}"></i>`;
+            document.getElementById('modalDisciplineTitle').innerText = data.title;
+            document.getElementById('modalDisciplineBadge').innerText = data.badge;
+            document.getElementById('modalDisciplineOverview').innerText = data.overview;
+            document.getElementById('modalDisciplineOutlook').innerText = data.outlook;
+
+            // Subbranches
+            const subContainer = document.getElementById('modalDisciplineSubbranches');
+            subContainer.innerHTML = data.subbranches.map(sb => `<span class="info-pill"><i class="fa-solid fa-check" style="color:#10b981;"></i> ${sb}</span>`).join('');
+
+            // Tools
+            const toolContainer = document.getElementById('modalDisciplineTools');
+            toolContainer.innerHTML = data.tools.map(tl => `<span class="info-pill"><i class="fa-solid fa-code" style="color:#06b6d4;"></i> ${tl}</span>`).join('');
+
+            // Courses
+            const courseContainer = document.getElementById('modalDisciplineCourses');
+            courseContainer.innerHTML = data.courses.map(c => `<div class="course-card-item"><i class="fa-solid fa-book"></i> ${c}</div>`).join('');
+
+            openModal('disciplineDetailModal');
+        }
+
+        function goToMentorsFromModal() {
+            closeModal('disciplineDetailModal');
+            openModal('authNoticeModal');
         }
 
         function switchTab(tabId, element) {
