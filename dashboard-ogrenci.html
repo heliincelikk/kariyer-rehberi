@@ -466,7 +466,7 @@
                 onclick="switchTab('profile')">
                 <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i>
                     Profilim</h4>
-                <p id="userSchoolInfo" style="font-size: 12px; color: #94a3b8;">Üniversite / Sınıf</p>
+                <p id="userSchoolInfo" style="font-size: 12px; color: #94a3b8;">Bilgilerin</p>
             </div>
             <a href="index.html" class="menu-item logout-btn" onclick="localStorage.clear()">
                 <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
@@ -542,7 +542,8 @@
                 <button class="subnav-btn" id="subnav-school-announcements" onclick="switchSchoolView('announcements')"
                     style="font-size:14px; padding:10px 18px; font-weight:600;">📢 Duyurular & Etkinlikler</button>
                 <button class="subnav-btn" id="subnav-school-clubs" onclick="switchSchoolView('clubs')"
-                    style="font-size:14px; padding:10px 18px; font-weight:600;">🏛️ Okul Ağı & Kulüpler</button>
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">🏛️ Okul Toplulukları &
+                    Kulüpler</button>
                 <button class="subnav-btn" id="subnav-school-chat" onclick="switchSchoolView('chat')"
                     style="font-size:14px; padding:10px 18px; font-weight:600;">💬 Okul Ağınız </button>
             </div>
@@ -933,12 +934,27 @@
         <!-- SEKME 3-A: SEKTÖR MENTÖRLERİ -->
         <div class="tab-content" id="content-mentor-sector">
             <div
-                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; background: rgba(30, 41, 59, 0.5); padding: 18px 24px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.2);">
                 <div>
                     <h2 style="font-size: 24px; color: #fff;"><i class="fa-solid fa-user-tie"
                             style="color:#06b6d4;"></i> Sektör Mentörleri & Mentörlük Ağı 🤝</h2>
                     <p style="color: #94a3b8; font-size: 14px; margin-top: 4px;">Sektördeki kıdemli mühendislerden
                         danışmanlık alın, soru sorun ve birebir rehberlik edinin.</p>
+                </div>
+                <div id="mentorFilterWrapper" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                    <label style="color:#06b6d4; font-size:13px; font-weight:600;"><i class="fa-solid fa-filter"></i>
+                        Branş / Bölüm Filtrele:</label>
+                    <select id="mentorDepartmentFilter" onchange="filterSectorMentors(this.value)"
+                        style="padding:10px 16px; background:#0f172a; border:1px solid rgba(6,182,212,0.4); border-radius:12px; color:#fff; font-size:14px; font-weight:600; outline:none; cursor:pointer;">
+                        <option value="hepsi">🌐 Tüm Mühendislik Branşları</option>
+                        <option value="bilgisayar">💻 Bilgisayar & Yazılım Müh.</option>
+                        <option value="elektrik">⚡ Elektrik-Elektronik Müh.</option>
+                        <option value="makine">⚙️ Makine & Otomotiv Müh.</option>
+                        <option value="endustri">📊 Endüstri & Veri Müh.</option>
+                        <option value="havacilik">✈️ Havacılık & Uzay Müh.</option>
+                        <option value="biyomedikal">🏥 Biyomedikal & Sağlık Müh.</option>
+                        <option value="insaat">🏗️ İnşaat & Yapı Müh.</option>
+                    </select>
                 </div>
             </div>
 
@@ -949,7 +965,7 @@
                     style="font-size:14px; padding:10px 18px; font-weight:600;">📩 Gönderilen İstekler (<span
                         id="outgoingCount">0</span>)</button>
                 <button class="subnav-btn" id="subnav-mentor-mine" onclick="switchMentorSubnav('mine')"
-                    style="font-size:14px; padding:10px 18px; font-weight:600;">✅ Mentörlerim (Kabul Edilenler)</button>
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">✅ Mentörlerim </button>
                 <button class="subnav-btn" id="subnav-mentor-chat" onclick="switchMentorSubnav('chat')"
                     style="font-size:14px; padding:10px 18px; font-weight:600;">💬 Mentör Sohbetleri</button>
             </div>
@@ -1301,7 +1317,7 @@
 
         <!-- SEKME 5: PROFİLİM -->
         <div class="tab-content" id="content-profile">
-            <div class="premium-card profile-card" style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <div class="premium-card profile-card" style="max-width: 580px; margin: 0 auto; text-align: center;">
                 <!-- Profil Fotoğrafı ve Avatar Alanı -->
                 <div style="position: relative; width: 105px; height: 105px; margin: 0 auto 18px auto;">
                     <div id="profileAvatarCircle"
@@ -1321,64 +1337,191 @@
 
                 <h3 id="profUserDisplayName" style="font-size: 22px; color: #fff; margin-bottom: 4px;">Öğrenci
                     Kullanıcımız</h3>
-                <span class="user-badge" style="display: inline-block; margin-bottom: 25px;">Mühendislik Öğrencisi
-                    Modu</span>
+                <span class="user-badge" style="display: inline-block; margin-bottom: 22px;">🎓 Mühendislik Öğrencisi &
+                    Mentör</span>
 
+                <!-- 📌 Kişisel & Akademik Bilgiler Alanı -->
                 <div
-                    style="text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15);">
-                    <div style="margin-bottom: 16px;">
-                        <label
-                            style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Okul</label>
-                        <p id="profOkul" style="color:#f1f5f9; font-size:15px; font-weight:500;">—</p>
+                    style="text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15); margin-bottom: 20px;">
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.06);">
+                        <h4
+                            style="color:#06b6d4; font-size:13px; font-weight:bold; margin:0; text-transform:uppercase;">
+                            👤 Kişisel & Akademik Bilgileriniz
+                        </h4>
+                        <button onclick="openEditProfileModal()"
+                            style="background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; padding:5px 12px; border-radius:10px; font-size:12px; font-weight:bold; cursor:pointer; transition:0.2s;"
+                            onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';"
+                            onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
+                            ✏️ Düzenle
+                        </button>
                     </div>
-                    <div style="margin-bottom: 16px;">
-                        <label
-                            style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Bölüm</label>
-                        <p id="profBolum" style="color:#f1f5f9; font-size:15px; font-weight:500;">—</p>
-                    </div>
-                    <div>
-                        <label
-                            style="display:block; color:#64748b; font-size:12px; font-weight:600; text-transform:uppercase; margin-bottom:4px;">Sınıf
-                            / Seviye</label>
-                        <p id="profSinif" style="color:#06b6d4; font-size:15px; font-weight:500;">—</p>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+                        <div>
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">Ad
+                                Soyad</label>
+                            <p id="profAd" style="color:#f1f5f9; font-size:14px; font-weight:bold; margin:0;">—</p>
+                        </div>
+                        <div>
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">Doğum
+                                Tarihi</label>
+                            <p id="profDogumTarihi" style="color:#f1f5f9; font-size:14px; font-weight:bold; margin:0;">
+                                14.06.2002</p>
+                        </div>
+                        <div style="grid-column: 1 / -1;">
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">E-Posta
+                                / İletişim</label>
+                            <p id="profEposta" style="color:#38bdf8; font-size:14px; font-weight:bold; margin:0;">—</p>
+                        </div>
+                        <div style="grid-column: 1 / -1;">
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">Üniversite
+                                / Okul</label>
+                            <p id="profOkul" style="color:#f1f5f9; font-size:14px; font-weight:bold; margin:0;">—</p>
+                        </div>
+                        <div>
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">Bölüm</label>
+                            <p id="profBolum" style="color:#c084fc; font-size:14px; font-weight:bold; margin:0;">—</p>
+                        </div>
+                        <div>
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">Sınıf
+                                / Seviye</label>
+                            <p id="profSinif" style="color:#06b6d4; font-size:14px; font-weight:bold; margin:0;">—</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Öğrenci / Mentör İstatistikleri Widget'ı -->
+                <!-- 📄 Özgeçmiş & CV Yükleme Widget'ı (Opsiyonel) -->
                 <div
-                    style="margin-top: 20px; text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15);">
+                    style="margin-bottom: 20px; text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <h4
+                            style="color:#06b6d4; font-size:13px; font-weight:bold; margin:0; text-transform:uppercase;">
+                            📄 Özgeçmiş / CV Dosyanız <span
+                                style="color:#94a3b8; font-size:11px; text-transform:none; font-weight:normal;">(Opsiyonel)</span>
+                        </h4>
+                        <span id="profileCvBadge"
+                            style="background:rgba(255,255,255,0.06); color:#94a3b8; font-size:11px; font-weight:600; padding:3px 10px; border-radius:12px;">Yüklenmedi</span>
+                    </div>
+
+                    <p style="color:#cbd5e1; font-size:13px; line-height:1.5; margin-bottom:14px;">
+                        Mentörlük isteklerinizde ve staj/proje başvurularınızda mentörlere iletilmek üzere CV dosyanızı
+                        (PDF) ekleyebilirsiniz.
+                    </p>
+
+                    <!-- CV Yüklenmişse Gösterilecek Alan -->
+                    <div id="profileCvUploadedContainer"
+                        style="display:none; background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3); padding:12px 14px; border-radius:12px; margin-bottom:14px; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; align-items:center; gap:10px; overflow:hidden;">
+                            <i class="fa-solid fa-file-pdf" style="font-size:24px; color:#ef4444;"></i>
+                            <div style="overflow:hidden;">
+                                <strong id="profileCvFileName"
+                                    style="color:#fff; font-size:13px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">—</strong>
+                                <span id="profileCvFileSize" style="color:#94a3b8; font-size:11px;">PDF Dosyası</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:8px; flex-shrink:0;">
+                            <button onclick="previewProfileCv()"
+                                style="background:rgba(6,182,212,0.2); border:1px solid #06b6d4; color:#06b6d4; padding:6px 12px; border-radius:8px; font-size:12px; font-weight:bold; cursor:pointer;">👁️
+                                İncele</button>
+                            <button onclick="removeProfileCv()"
+                                style="background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; padding:6px 10px; border-radius:8px; font-size:12px; font-weight:bold; cursor:pointer;"
+                                title="CV'yi Kaldır">🗑️</button>
+                        </div>
+                    </div>
+
+                    <!-- Yükleme Butonu -->
+                    <label for="cvFileInput"
+                        style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer; transition:0.2s;"
+                        onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';"
+                        onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
+                        <i class="fa-solid fa-upload"></i> <span id="cvUploadBtnText">PDF CV Dosyası Yükle</span>
+                    </label>
+                    <input type="file" id="cvFileInput" accept=".pdf,.doc,.docx" style="display:none;"
+                        onchange="profileCvYukle(event)">
+                </div>
+
+                <!-- 📊 Öğrenci & Mentör İnteraktif İstatistik Kartları -->
+                <div
+                    style="text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15);">
                     <h4
                         style="color:#06b6d4; font-size:13px; font-weight:bold; margin:0 0 14px 0; text-transform:uppercase;">
-                        📊 Rehberlik & İstatistikleriniz</h4>
+                        📊 Rehberlik & Etkileşim İstatistikleriniz (Tıklanabilir)
+                    </h4>
 
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-                        <div
-                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+                        <!-- Liseli Öğrencilerim -->
+                        <div onclick="openMyMenteesListModal()"
+                            style="background:rgba(168,85,247,0.1); padding:12px 14px; border-radius:12px; border:1px solid rgba(168,85,247,0.3); cursor:pointer; transition:0.2s;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='rgba(168,85,247,0.18)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(168,85,247,0.1)';">
                             <span
-                                style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">🚀
-                                Rehberlik Edilen Aday</span>
-                            <strong style="color:#fff; font-size:17px;">14 Liseli Öğrenci</strong>
+                                style="color:#c084fc; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">🎓
+                                Rehberlik Edilen Aday Öğrenci</span>
+                            <strong id="profMenteesCount" style="color:#fff; font-size:15px; display:block;">2 Aday
+                                Mentee ➔</strong>
+                            <span style="color:#94a3b8; font-size:10px; display:block; margin-top:2px;">Öğrencilerimi
+                                Göster</span>
                         </div>
-                        <div
-                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+
+                        <!-- Liselilerden Aldığım Puan & Yorumlar -->
+                        <div onclick="openAnonymousReviewsModal()"
+                            style="background:rgba(245,158,11,0.1); padding:12px 14px; border-radius:12px; border:1px solid rgba(245,158,11,0.3); cursor:pointer; transition:0.2s;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='rgba(245,158,11,0.18)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(245,158,11,0.1)';">
                             <span
-                                style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">🏅
-                                Platform Sıralaması</span>
-                            <strong style="color:#f59e0b; font-size:15px;">Top %5 Aktif Mentör</strong>
+                                style="color:#f59e0b; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">⭐
+                                Adaylardan Aldığım Puan</span>
+                            <strong style="color:#f59e0b; font-size:15px; display:block;">⭐ 4.9 / 5.0 (6 Yorum)
+                                ➔</strong>
+                            <span style="color:#94a3b8; font-size:10px; display:block; margin-top:2px;">Anonim Yorumları
+                                İncele</span>
                         </div>
+
+                        <!-- Talepleri Kabul Etme Oranım -->
                         <div
-                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+                            style="background:rgba(16,185,129,0.1); padding:12px 14px; border-radius:12px; border:1px solid rgba(16,185,129,0.3);">
                             <span
-                                style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">⏱️
-                                Ortalama Yanıt Süresi</span>
-                            <strong style="color:#22d3ee; font-size:15px;">~15 Dakika</strong>
+                                style="color:#10b981; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">📈
+                                Talepleri Kabul Oranım</span>
+                            <strong style="color:#10b981; font-size:15px; display:block;">%94 Kabul Oranı</strong>
+                            <span style="color:#94a3b8; font-size:10px; display:block; margin-top:2px;">Yüksek Aktiflik
+                                Puanı</span>
                         </div>
-                        <div
-                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+
+                        <!-- Başvurduğum İlanlar -->
+                        <div onclick="openMyAppliedJobsModal()"
+                            style="background:rgba(56,189,248,0.1); padding:12px 14px; border-radius:12px; border:1px solid rgba(56,189,248,0.3); cursor:pointer; transition:0.2s;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='rgba(56,189,248,0.18)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(56,189,248,0.1)';">
                             <span
-                                style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">⭐
-                                Talepleri Kabul Etme</span>
-                            <strong style="color:#10b981; font-size:15px;">%94 Kabul Oranı</strong>
+                                style="color:#38bdf8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">💼
+                                Başvurduğum İlanlar</span>
+                            <strong id="profAppliedJobsCount" style="color:#fff; font-size:15px; display:block;">4 İlan
+                                & Proje ➔</strong>
+                            <span style="color:#94a3b8; font-size:10px; display:block; margin-top:2px;">Başvurularımı
+                                Listeleyin</span>
+                        </div>
+
+                        <!-- Aldığım Mentörlükler (Sektör Mentörlerim) -->
+                        <div onclick="switchTab('mentor-sector'); switchMentorSubnav('mine');"
+                            style="grid-column: 1 / -1; background:rgba(6,182,212,0.1); padding:12px 14px; border-radius:12px; border:1px solid rgba(6,182,212,0.3); cursor:pointer; transition:0.2s; display:flex; justify-content:space-between; align-items:center;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='rgba(6,182,212,0.18)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(6,182,212,0.1)';">
+                            <div>
+                                <span
+                                    style="color:#06b6d4; font-size:11px; font-weight:600; display:block; margin-bottom:2px;">🤝
+                                    Aldığım Mentörlük Sayısı</span>
+                                <strong id="profMyMentorsCount" style="color:#fff; font-size:15px;">2 Aktif Sektör
+                                    Mentörü</strong>
+                            </div>
+                            <span style="color:#06b6d4; font-size:12px; font-weight:bold;">Mentörlerime Git ➔</span>
                         </div>
                     </div>
                 </div>
@@ -1407,21 +1550,21 @@
                         <span
                             style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">⭐
                             Kabul Oranı</span>
-                        <strong style="color:#10b981; font-size:14px;">%98 Kabul</strong>
+                        <strong id="sectorModalAcceptance" style="color:#10b981; font-size:14px;">%98 Kabul</strong>
                     </div>
                     <div
                         style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
                         <span
                             style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">⏱️
                             Yanıt Süresi</span>
-                        <strong style="color:#06b6d4; font-size:14px;">~10 Dk</strong>
+                        <strong id="sectorModalResponseTime" style="color:#06b6d4; font-size:14px;">~10 Dk</strong>
                     </div>
                     <div
                         style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
                         <span
                             style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">👥
                             Mentee Sayısı</span>
-                        <strong style="color:#f59e0b; font-size:14px;">35+ Öğrenci</strong>
+                        <strong id="sectorModalMentees" style="color:#f59e0b; font-size:14px;">35+ Öğrenci</strong>
                     </div>
                 </div>
 
@@ -1445,59 +1588,7 @@
             </div>
         </div>
 
-        <!-- Aday Profilini İnceleme Modalı -->
-        <div class="alan-modal-overlay" id="candidateDetailModal">
 
-            <div class="alan-modal-box" style="max-width: 550px; text-align: center;">
-                <span class="alan-modal-close" onclick="candidateDetailModalKapat()">&times;</span>
-
-                <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; font-size: 28px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; border: 3px solid rgba(6, 182, 212, 0.5); box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);"
-                    id="candidateModalAvatar">
-                    —
-                </div>
-
-                <h3 id="candidateModalName" style="font-size: 22px; color: #fff; margin-bottom: 4px;">—</h3>
-                <span id="candidateModalSub"
-                    style="color: #06b6d4; font-size: 14px; font-weight: 600; display: block; margin-bottom: 16px;">—</span>
-
-                <!-- Deneme & YKS İstatistikleri -->
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:18px;">
-                    <div
-                        style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
-                        <span
-                            style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">📈
-                            Güncel Deneme Netleri</span>
-                        <strong id="candidateModalNetler" style="color:#f59e0b; font-size:13px;">—</strong>
-                    </div>
-                    <div
-                        style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
-                        <span
-                            style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">🎯
-                            YKS Hedef Sıralaması</span>
-                        <strong id="candidateModalHedef" style="color:#10b981; font-size:13px;">—</strong>
-                    </div>
-                </div>
-
-                <div
-                    style="background: rgba(15, 23, 42, 0.6); padding: 14px; border-radius: 14px; border: 1px solid rgba(6, 182, 212, 0.15); text-align: left; margin-bottom: 15px;">
-                    <span
-                        style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:6px;">💬
-                        Adayın Danışma Mesajı & Notu</span>
-                    <p id="candidateModalBio" style="color:#e2e8f0; font-size:13px; line-height:1.6; margin:0;">—</p>
-                </div>
-
-                <div style="display:flex; gap:12px; justify-content:center;">
-                    <button id="candidateModalAcceptBtn"
-                        style="flex:1; padding:12px; background:#10b981; color:#ffffff; border:none; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">
-                        ✅ İsteği Kabul Et
-                    </button>
-                    <button id="candidateModalRejectBtn"
-                        style="flex:1; padding:12px; background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">
-                        ❌ Reddet
-                    </button>
-                </div>
-            </div>
-        </div>
 
         <!-- Şirket Mentörleri Modalı -->
         <div class="alan-modal-overlay" id="companyMentorsModal" style="z-index: 250;">
@@ -1545,11 +1636,18 @@
                     style="width:100%; height:110px; background:#0f172a; border:1px solid rgba(6,182,212,0.3); border-radius:12px; color:#fff; padding:12px; font-size:13px; font-family:inherit; outline:none; resize:none; margin-bottom:6px;"
                     oninput="updateReqNoteCharCount(this)"></textarea>
 
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
-                    <span style="color:#64748b; font-size:11px;">İstek attığınızda mentörünüze bildirim
-                        iletilecektir.</span>
-                    <span id="sendReqNoteCharCount" style="color:#06b6d4; font-size:11px; font-weight:bold;">0 /
-                        500</span>
+                <!-- CV Eki Gösterim Alanı (Opsiyonel) -->
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px 14px; border-radius:12px; border:1px solid rgba(6,182,212,0.2); margin-bottom:16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:#cbd5e1; font-size:12px; font-weight:600;"><i class="fa-solid fa-paperclip"
+                                style="color:#06b6d4;"></i> CV Dosya Eki (Opsiyonel):</span>
+                        <span id="sendReqCvStatusBadge" style="font-size:11px; font-weight:bold; color:#10b981;">📄
+                            Yüklü CV Var</span>
+                    </div>
+                    <p id="sendReqCvDesc" style="color:#94a3b8; font-size:12px; margin-top:4px; line-height:1.4;">
+                        —
+                    </p>
                 </div>
 
                 <button id="sendReqConfirmBtn" onclick="confirmSendMentorRequestWithNote()"
@@ -1565,31 +1663,64 @@
         function closeAllModals() {
             document.querySelectorAll('.alan-modal-overlay').forEach(modal => {
                 modal.classList.remove('active');
+                modal.removeAttribute('style');
             });
         }
 
 
-        function openSectorMentorModal(name, sub, bio, avatar) {
+        let currentSendReqMentorId = null;
+
+        function openSectorMentorModal(mentorIdOrName, sub, bio, avatar) {
             closeAllModals();
 
-            document.getElementById('sectorModalName').innerText = name;
-            document.getElementById('sectorModalSub').innerText = sub;
-            document.getElementById('sectorModalBio').innerText = bio || "Sektör deneyimi ve mentörlük hakkında görüşmek için istek gönderebilirsiniz.";
-            document.getElementById('sectorModalAvatar').innerText = avatar || "👔";
+            let m = sectorMentorsList.find(x => x.id === mentorIdOrName || x.name === mentorIdOrName);
+            let nameVal = m ? m.name : mentorIdOrName;
+            let subVal = m ? `${m.company} • ${m.title}` : (sub || 'Sektör Mentörü');
+            let bioVal = m ? m.bio : (bio || "Sektör deneyimi ve mentörlük hakkında görüşmek için istek gönderebilirsiniz.");
+            let avatarVal = m ? (m.avatar || '👔') : (avatar || "👔");
+
+            document.getElementById('sectorModalName').innerText = nameVal;
+            document.getElementById('sectorModalSub').innerText = subVal;
+            document.getElementById('sectorModalBio').innerText = bioVal;
+            document.getElementById('sectorModalAvatar').innerText = avatarVal;
+
+            if (document.getElementById('sectorModalAcceptance')) {
+                document.getElementById('sectorModalAcceptance').innerText = m ? (m.acceptanceRate || '%95') : '%95 Kabul';
+            }
+            if (document.getElementById('sectorModalResponseTime')) {
+                document.getElementById('sectorModalResponseTime').innerText = m ? (m.responseTime || '< 1 Saat') : '~10 Dk';
+            }
+            if (document.getElementById('sectorModalMentees')) {
+                document.getElementById('sectorModalMentees').innerText = m ? (`${m.activeMentees} Aktif Öğrenci`) : '35+ Öğrenci';
+            }
 
             const btn = document.getElementById('sectorModalReqBtn');
-            const isAlreadyConnected = name === 'Helin Çelik' || (btn.classList && btn.classList.contains('sent'));
+            const isAlreadyConnected = acceptedMentorList.some(a => a.name === nameVal || a.id === (m ? m.id : ''));
+            const isSent = m && outgoingMentorRequests.some(r => r.mentorId === m.id);
 
             if (isAlreadyConnected) {
                 btn.innerHTML = "✅ Bağlantı Kuruldu (Mesaj Gönder)";
                 btn.style.background = "#10b981";
                 btn.style.color = "#ffffff";
-                btn.disabled = false;
+                btn.onclick = function () {
+                    closeAllModals();
+                    openMentorChatUser(nameVal, subVal, m ? m.img : '');
+                };
+            } else if (isSent) {
+                btn.innerHTML = "⏳ İstek Bekliyor (İsteği Çek)";
+                btn.style.background = "#f59e0b";
+                btn.style.color = "#0f172a";
+                btn.onclick = function () {
+                    closeAllModals();
+                    cancelOutgoingRequest(m.id);
+                };
             } else {
                 btn.innerHTML = "📩 Mentörlük İsteği Gönder";
                 btn.style.background = "#06b6d4";
                 btn.style.color = "#0f172a";
-                btn.disabled = false;
+                btn.onclick = function () {
+                    openSendRequestNoteModal(m ? m.id : nameVal, nameVal, subVal, avatarVal);
+                };
             }
 
             document.getElementById('sectorMentorModal').classList.add('active');
@@ -1597,15 +1728,42 @@
 
         let activeTargetReqBtn = null;
 
-        function openSendRequestNoteModal(btn, name, sub, avatar) {
+        function openSendRequestNoteModal(mentorIdOrBtn, name, sub, avatar) {
             closeAllModals();
 
-            activeTargetReqBtn = btn;
-            document.getElementById('sendReqModalMentorName').innerText = name || "Sektör Mentörü";
-            document.getElementById('sendReqModalMentorSub').innerText = sub || "Mentörlük İsteği";
-            document.getElementById('sendReqModalAvatar').innerText = avatar || "👔";
+            if (typeof mentorIdOrBtn === 'string') {
+                currentSendReqMentorId = mentorIdOrBtn;
+                activeTargetReqBtn = null;
+            } else {
+                activeTargetReqBtn = mentorIdOrBtn;
+                currentSendReqMentorId = null;
+            }
+
+            const mObj = sectorMentorsList.find(m => m.id === currentSendReqMentorId || m.name === name);
+            const mName = mObj ? mObj.name : (name || "Sektör Mentörü");
+            const mSub = mObj ? `${mObj.company} • ${mObj.title}` : (sub || "Mentörlük İsteği");
+            const mAv = mObj ? (mObj.avatar || "👔") : (avatar || "👔");
+
+            document.getElementById('sendReqModalMentorName').innerText = mName;
+            document.getElementById('sendReqModalMentorSub').innerText = mSub;
+            document.getElementById('sendReqModalAvatar').innerText = mAv;
             document.getElementById('sendReqNoteTextarea').value = "";
             document.getElementById('sendReqNoteCharCount').innerText = "0 / 500";
+
+            const cvName = localStorage.getItem('kullaniciCVName');
+            const cvBadge = document.getElementById('sendReqCvStatusBadge');
+            const cvDesc = document.getElementById('sendReqCvDesc');
+            if (cvBadge && cvDesc) {
+                if (cvName) {
+                    cvBadge.innerText = '📄 Yüklü CV Ekli';
+                    cvBadge.style.color = '#10b981';
+                    cvDesc.innerHTML = `Profilinizde yüklü olan <strong>${cvName}</strong> dosyanız bu mentörlük isteğiyle birlikte mentörünüze iletilecektir (Opsiyonel).`;
+                } else {
+                    cvBadge.innerText = 'CV Ekli Değil (Opsiyonel)';
+                    cvBadge.style.color = '#94a3b8';
+                    cvDesc.innerHTML = `Profilinizde henüz bir CV yüklenmemiş. Dilerseniz Profilinizden CV yükleyebilirsiniz, ancak CV olmadan da mentörlük isteği gönderebilirsiniz.`;
+                }
+            }
 
             document.getElementById('sendRequestNoteModal').classList.add('active');
         }
@@ -1617,6 +1775,27 @@
 
         function confirmSendMentorRequestWithNote() {
             const note = document.getElementById('sendReqNoteTextarea').value.trim();
+            const mentorName = document.getElementById('sendReqModalMentorName').innerText;
+
+            const mObj = sectorMentorsList.find(m => m.id === currentSendReqMentorId || m.name === mentorName);
+            const targetId = mObj ? mObj.id : (currentSendReqMentorId || 'm_' + Date.now());
+
+            const cvName = localStorage.getItem('kullaniciCVName');
+            const cvData = localStorage.getItem('kullaniciCVData');
+
+            if (!outgoingMentorRequests.some(r => r.mentorId === targetId)) {
+                outgoingMentorRequests.push({
+                    mentorId: targetId,
+                    name: mObj ? mObj.name : mentorName,
+                    title: mObj ? `${mObj.company} • ${mObj.title}` : 'Sektör Mentörü',
+                    avatar: mObj ? (mObj.avatar || '👔') : '👔',
+                    note: note,
+                    hasCv: !!cvName,
+                    cvName: cvName || null,
+                    cvData: cvData || null
+                });
+            }
+
             if (activeTargetReqBtn) {
                 activeTargetReqBtn.innerHTML = "✓ İstek Gönderildi!";
                 activeTargetReqBtn.style.background = "#10b981";
@@ -1624,9 +1803,18 @@
                 activeTargetReqBtn.disabled = true;
             }
 
-            const mentorName = document.getElementById('sendReqModalMentorName').innerText;
-            alert(`✅ ${mentorName} kişisine mentörlük isteğin ve özel notun başarıyla iletildi!`);
+            const cvMsg = cvName ? ` (Ekli CV: ${cvName})` : '';
+            alert(`✅ ${mentorName} kişisine mentörlük isteğin${cvMsg} ve özel notun başarıyla iletildi!`);
             closeAllModals();
+            if (typeof renderMentorAllGrid === 'function') renderMentorAllGrid();
+            if (typeof renderMentorRequestsGrid === 'function') renderMentorRequestsGrid();
+        }
+
+        function cancelOutgoingRequest(mentorId) {
+            outgoingMentorRequests = outgoingMentorRequests.filter(r => r.mentorId !== mentorId);
+            alert("İsteğiniz geri çekildi.");
+            if (typeof renderMentorAllGrid === 'function') renderMentorAllGrid();
+            if (typeof renderMentorRequestsGrid === 'function') renderMentorRequestsGrid();
         }
 
         function sendRequestNoteModalKapat() {
@@ -1684,6 +1872,7 @@
         });
 
         window.addEventListener('DOMContentLoaded', () => {
+            loadProfileData();
             const disiplin = localStorage.getItem('kullaniciDisiplin');
             const cardTitle = document.getElementById('cardTitleText');
             const cardDesc = document.getElementById('cardDescText');
@@ -1941,6 +2130,78 @@
             }
         }
 
+        function profileCvYukle(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const cvData = e.target.result;
+                const cvSize = Math.round(file.size / 1024) + ' KB';
+
+                localStorage.setItem('kullaniciCVName', file.name);
+                localStorage.setItem('kullaniciCVSize', cvSize);
+                localStorage.setItem('kullaniciCVData', cvData);
+
+                loadProfileCv();
+                alert(`✅ "${file.name}" isimli CV dosyanız profilinize başarıyla yüklendi! Artık mentörlere ve projelere istek atarken görünecektir (Opsiyonel).`);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function loadProfileCv() {
+            const cvName = localStorage.getItem('kullaniciCVName');
+            const cvSize = localStorage.getItem('kullaniciCVSize') || 'PDF';
+
+            const badge = document.getElementById('profileCvBadge');
+            const container = document.getElementById('profileCvUploadedContainer');
+            const nameEl = document.getElementById('profileCvFileName');
+            const sizeEl = document.getElementById('profileCvFileSize');
+            const btnText = document.getElementById('cvUploadBtnText');
+
+            if (cvName && container && badge) {
+                badge.innerText = '✅ CV Yüklendi';
+                badge.style.background = 'rgba(16,185,129,0.15)';
+                badge.style.color = '#10b981';
+
+                container.style.display = 'flex';
+                if (nameEl) nameEl.innerText = cvName;
+                if (sizeEl) sizeEl.innerText = cvSize;
+                if (btnText) btnText.innerText = 'CV Dosyasını Değiştir';
+            } else if (container && badge) {
+                badge.innerText = 'Yüklenmedi';
+                badge.style.background = 'rgba(255,255,255,0.06)';
+                badge.style.color = '#94a3b8';
+
+                container.style.display = 'none';
+                if (btnText) btnText.innerText = 'PDF CV Dosyası Yükle';
+            }
+        }
+
+        function removeProfileCv() {
+            if (confirm("Yüklü CV dosyanızı kaldırmak istediğinize emin misiniz?")) {
+                localStorage.removeItem('kullaniciCVName');
+                localStorage.removeItem('kullaniciCVSize');
+                localStorage.removeItem('kullaniciCVData');
+                loadProfileCv();
+                alert("CV dosyanız profilinizden kaldırıldı.");
+            }
+        }
+
+        function previewProfileCv(customName, customData) {
+            const cvName = customName || localStorage.getItem('kullaniciCVName') || 'Ozgecmis.pdf';
+            const cvData = customData || localStorage.getItem('kullaniciCVData');
+
+            if (cvData && cvData.startsWith('data:application/pdf')) {
+                const win = window.open();
+                if (win) {
+                    win.document.write(`<iframe src="${cvData}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+                    return;
+                }
+            }
+            alert(`📄 ${cvName}\n\nÖzgeçmişiniz PDF formatında sistemde başarıyla kayıtlıdır.`);
+        }
+
         function loadProfile() {
             const okul = localStorage.getItem('kullaniciOkul');
             const bolum = localStorage.getItem('kullaniciBolum');
@@ -1952,6 +2213,7 @@
             if (document.getElementById('profSinif')) document.getElementById('profSinif').innerText = sinif || "— (girilmemiş)";
             if (document.getElementById('profUserDisplayName')) document.getElementById('profUserDisplayName').innerText = isim;
             loadProfilePhoto();
+            loadProfileCv();
         }
 
 
@@ -2192,7 +2454,7 @@
             ];
 
             grid.innerHTML = announcements.map(a => {
-                const btnHtml = a.isActionable ? 
+                const btnHtml = a.isActionable ?
                     `<button onclick="applyToSchoolEvent('${a.id}')" style="background:#06b6d4; color:#0f172a; border:none; padding:7px 18px; border-radius:12px; font-weight:700; font-size:12px; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='#38bdf8';" onmouseout="this.style.background='#06b6d4';">Başvur 🚀</button>` :
                     `<button onclick="openSchoolNoticeDetailModal('${a.id}')" style="background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; padding:7px 16px; border-radius:12px; font-weight:700; font-size:12px; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';" onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">İncele ➔</button>`;
 
@@ -2263,6 +2525,13 @@
 
 
         // ================= 🤝 MENTÖRLÜK AĞI BİRLEŞİK MANTIĞI =================
+        let selectedMentorDeptFilter = 'hepsi';
+
+        function filterSectorMentors(deptKey) {
+            selectedMentorDeptFilter = deptKey;
+            renderMentorAllGrid();
+        }
+
         let sectorMentorsList = [
             {
                 id: 'm1',
@@ -2273,6 +2542,8 @@
                 avatar: 'HÇ',
                 img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=HelinCelik',
                 field: 'Yazılım & Web Teknolojileri',
+                dept: 'bilgisayar',
+                deptLabel: '💻 Bilgisayar & Yazılım',
                 activeMentees: 12,
                 totalMentees: 34,
                 acceptanceRate: '%96',
@@ -2290,6 +2561,8 @@
                 avatar: 'AY',
                 img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=AhmetYilmaz',
                 field: 'Dağıtık Sistemler & Yapay Zeka',
+                dept: 'bilgisayar',
+                deptLabel: '💻 Bilgisayar & Yazılım',
                 activeMentees: 18,
                 totalMentees: 52,
                 acceptanceRate: '%92',
@@ -2300,20 +2573,22 @@
             },
             {
                 id: 'm3',
-                name: 'Didem Başar',
-                company: 'Acıbadem Sağlık Grubu',
-                title: 'Çocuk Sağlığı Uzmanı & Biyomedikal Danışman',
-                exp: '4 Yıl Deneyim',
-                avatar: 'DB',
-                img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=DidemBasar',
-                field: 'Biyomedikal & Sağlık Teknolojileri',
-                activeMentees: 8,
-                totalMentees: 22,
-                acceptanceRate: '%98',
-                responseTime: '< 30 Dk',
-                rating: '4.9 ⭐ (19 Değerlendirme)',
-                skills: ['Biyomedikal Cihazlar', 'Tıp & Mühendislik', 'Akademik Danışmanlık', 'TUS & Uzmanlık'],
-                bio: 'Biyomedikal mühendisliği ve tıp kesişiminde sağlık teknolojileri üzerine araştırmalar yürütüyorum. Tıp ve Biyomedikal öğrencilerine verimli ders çalışma teknikleri ve kariyer planlaması konusunda yardım ediyorum.'
+                name: 'Eren Sever',
+                company: 'ASELSAN',
+                title: 'Kıdemli Gömülü Sistemler & FPGA Mimarı',
+                exp: '7 Yıl Deneyim',
+                avatar: 'ES',
+                img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ErenSever',
+                field: 'Gömülü Sistemler & Savunma Sanayii',
+                dept: 'elektrik',
+                deptLabel: '⚡ Elektrik-Elektronik',
+                activeMentees: 14,
+                totalMentees: 38,
+                acceptanceRate: '%95',
+                responseTime: '< 45 Dk',
+                rating: '4.9 ⭐ (28 Değerlendirme)',
+                skills: ['FPGA Design', 'VHDL / Verilog', 'ARM Architecture', 'DSP', 'Savunma Sanayii Mülakatları'],
+                bio: 'ASELSAN Radar ve Elektronik Harp Sistemleri bölümünde Gömülü Mimari Lideriyim. FPGA, VHDL, C/C++ ve mikrokontrolcüler alanında kariyer yapmak isteyen öğrencilere staj ve proje mentorluğu yapıyorum.'
             },
             {
                 id: 'm4',
@@ -2324,6 +2599,8 @@
                 avatar: 'MY',
                 img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=MuratYilmaz',
                 field: 'Bulut Bilişim & DevOps',
+                dept: 'bilgisayar',
+                deptLabel: '💻 Bilgisayar & Yazılım',
                 activeMentees: 15,
                 totalMentees: 45,
                 acceptanceRate: '%94',
@@ -2331,6 +2608,120 @@
                 rating: '4.8 ⭐ (31 Değerlendirme)',
                 skills: ['AWS Cloud', 'Kubernetes', 'DevOps CI/CD', 'Terraform', 'Bulut Sertifikasyonu'],
                 bio: 'AWS üzerinde kurumsal bulut mimarileri tasarlıyorum. Kubernetes, Terraform ve DevOps kültürünü benimsemek isteyen mühendis adaylarına mentorluk sağlayıp AWS sertifika sınavlarına hazırlıyorum.'
+            },
+            {
+                id: 'm5',
+                name: 'Zeynep Kaya',
+                company: 'Ford Otosan',
+                title: 'Otonom Araç & Şasi Tasarım Lideri',
+                exp: '6 Yıl Deneyim',
+                avatar: 'ZK',
+                img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ZeynepKaya',
+                field: 'Otomotiv & Mekanik Tasarım',
+                dept: 'makine',
+                deptLabel: '⚙️ Makine & Otomotiv',
+                activeMentees: 11,
+                totalMentees: 29,
+                acceptanceRate: '%97',
+                responseTime: '< 1 Saat',
+                rating: '4.9 ⭐ (22 Değerlendirme)',
+                skills: ['SolidWorks', 'CATIA V5', 'ANSYS FEA', 'Otonom Araç Dinamiği', 'Formula Student'],
+                bio: 'Ford Otosan Ar-Ge merkezinde otonom sürüş sistemleri ve mekanik şasi simülasyonları üzerine çalışıyorum. Makine mühendisliği öğrencilerine ANSYS, SolidWorks ve otomotiv staj süreçlerinde danışmanlık veriyorum.'
+            },
+            {
+                id: 'm6',
+                name: 'Berkay Demir',
+                company: 'McKinsey & Company',
+                title: 'Tedarik Zinciri & Veri Danışmanı',
+                exp: '5 Yıl Deneyim',
+                avatar: 'BD',
+                img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=BerkayDemir',
+                field: 'Yöneylem & Veri Analitiği',
+                dept: 'endustri',
+                deptLabel: '📊 Endüstri & Veri Müh.',
+                activeMentees: 16,
+                totalMentees: 40,
+                acceptanceRate: '%93',
+                responseTime: '~ 2 Saat',
+                rating: '4.8 ⭐ (30 Değerlendirme)',
+                skills: ['Yöneylem Araştırması', 'Python & SQL', 'Tedarik Zinciri', 'Case Interview', 'Yönetim Danışmanlığı'],
+                bio: 'McKinsey bünyesinde kurumsal şirketlerin optimizasyon ve tedarik zinciri dönüşümlerini yönetiyorum. Endüstri mühendisliği öğrencilerine Case Study mülakatları ve veri analitiği stajları için rehberlik ediyorum.'
+            },
+            {
+                id: 'm7',
+                name: 'Kaan Temel',
+                company: 'TUSAŞ (TAI)',
+                title: 'Havacılık & Aerodinamik Mimarı',
+                exp: '8 Yıl Deneyim',
+                avatar: 'KT',
+                img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=KaanTemel',
+                field: 'Havacılık, Uzay & İtki Sistemleri',
+                dept: 'havacilik',
+                deptLabel: '✈️ Havacılık & Uzay',
+                activeMentees: 10,
+                totalMentees: 27,
+                acceptanceRate: '%98',
+                responseTime: '< 30 Dk',
+                rating: '5.0 ⭐ (25 Değerlendirme)',
+                skills: ['CFD Analizi', 'OpenFOAM', 'Aerodinamik Tasarım', 'Milli Muharip Uçak (KAAN)', 'İHA / SİHA'],
+                bio: 'TUSAŞ uçuş dinamiği ve aerodinamik ekibinde görev yapıyorum. Havacılık, Uzay ve Makine mühendisliği öğrencilerine CFD simülasyonları, Teknofest yarışmaları ve milli savunma projeleri üzerine mentörlük sunuyorum.'
+            },
+            {
+                id: 'm8',
+                name: 'Didem Başar',
+                company: 'Acıbadem Sağlık Grubu',
+                title: 'Biyomedikal Danışman & Araştırmacı',
+                exp: '4 Yıl Deneyim',
+                avatar: 'DB',
+                img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=DidemBasar',
+                field: 'Biyomedikal & Sağlık Teknolojileri',
+                dept: 'biyomedikal',
+                deptLabel: '🏥 Biyomedikal & Sağlık',
+                activeMentees: 8,
+                totalMentees: 22,
+                acceptanceRate: '%98',
+                responseTime: '< 30 Dk',
+                rating: '4.9 ⭐ (19 Değerlendirme)',
+                skills: ['Biyomedikal Cihazlar', 'Tıp & Mühendislik', 'Akademik Danışmanlık', 'Tıbbi Görüntüleme'],
+                bio: 'Biyomedikal mühendisliği ve tıp kesişiminde sağlık teknolojileri üzerine araştırmalar yürütüyorum. Tıp ve Biyomedikal öğrencilerine verimli ders çalışma teknikleri ve kariyer planlaması konusunda yardım ediyorum.'
+            },
+            {
+                id: 'm9',
+                name: 'Oğuzhan Çelik',
+                company: 'Yapı Merkezi',
+                title: 'Senior Geoteknik & Statik Mühendisi',
+                exp: '9 Yıl Deneyim',
+                avatar: 'OÇ',
+                img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=OguzhanCelik',
+                field: 'Yapı Statik & Deprem Mühendisliği',
+                dept: 'insaat',
+                deptLabel: '🏗️ İnşaat & Yapı Müh.',
+                activeMentees: 7,
+                totalMentees: 20,
+                acceptanceRate: '%91',
+                responseTime: '~ 3 Saat',
+                rating: '4.7 ⭐ (15 Değerlendirme)',
+                skills: ['SAP2000', 'ETABS', 'Deprem Mühendisliği', 'Geoteknik', 'Şantiye Yönetimi'],
+                bio: 'Büyük ölçekli viyadük, tünel ve yüksek yapı projelerinde kıdemli statik mühendisi olarak görev yapıyorum. İnşaat mühendisliği öğrencilerine şantiye stajı, proje çizimi ve statik yazılımları konusunda rehberlik sunuyorum.'
+            },
+            {
+                id: 'm10',
+                name: 'Gökhan Acar',
+                company: 'Siemens',
+                title: 'Otomasyon & Güç Sistemleri Mühendisi',
+                exp: '6 Yıl Deneyim',
+                avatar: 'GA',
+                img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=GokhanAcar',
+                field: 'Endüstriyel Otomasyon & PLC',
+                dept: 'elektrik',
+                deptLabel: '⚡ Elektrik-Elektronik',
+                activeMentees: 9,
+                totalMentees: 24,
+                acceptanceRate: '%96',
+                responseTime: '< 1 Saat',
+                rating: '4.8 ⭐ (18 Değerlendirme)',
+                skills: ['Siemens TIA Portal', 'PLC Programlama', 'SCADA', 'Yüksek Gerilim', 'Güç Dağıtımı'],
+                bio: 'Siemens Sanayi Grubu bünyesinde akıllı fabrika otomasyonu ve PLC projeleri yönetiyorum. Elektrik ve Kontrol mühendisliği öğrencilerine endüstriyel otomasyon kariyer adımlarını anlatıyorum.'
             }
         ];
 
@@ -2363,6 +2754,11 @@
             const activeBtn = document.getElementById('subnav-mentor-' + sub);
             if (activeBtn) activeBtn.classList.add('active');
 
+            const filterWrapper = document.getElementById('mentorFilterWrapper');
+            if (filterWrapper) {
+                filterWrapper.style.display = (sub === 'all') ? 'flex' : 'none';
+            }
+
             if (sub === 'chat') {
                 document.getElementById('mentorSectorListView').style.display = 'none';
                 const expView = document.getElementById('mentorChatExpandedView');
@@ -2389,7 +2785,28 @@
             const grid = document.getElementById('mentorAllGrid');
             if (!grid) return;
 
-            grid.innerHTML = sectorMentorsList.map(m => {
+            let filtered = sectorMentorsList;
+            if (selectedMentorDeptFilter && selectedMentorDeptFilter !== 'hepsi') {
+                filtered = sectorMentorsList.filter(m => m.dept === selectedMentorDeptFilter);
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; color: #94a3b8; text-align:center; padding:45px 20px; background:rgba(30,41,59,0.4); border-radius:20px; border:1px dashed rgba(6,182,212,0.3);">
+                        <div style="width:70px; height:70px; border-radius:50%; background:rgba(6,182,212,0.1); display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 16px auto; color:#06b6d4;">
+                            <i class="fa-solid fa-filter-circle-xmark"></i>
+                        </div>
+                        <h4 style="color:#fff; font-size:18px; margin-bottom:8px;">Bu Branşta Henüz Kayıtlı Mentör Bulunmuyor</h4>
+                        <p style="font-size:14px; color:#94a3b8; max-width:450px; margin:0 auto 20px auto;">Seçtiğiniz mühendislik dalında mentör araması yaptınız. Diğer disiplinlerdeki mentörleri görüntülemek için filtreyi değiştirebilirsiniz.</p>
+                        <button onclick="document.getElementById('mentorDepartmentFilter').value='hepsi'; filterSectorMentors('hepsi');" style="padding:10px 20px; background:#06b6d4; color:#0f172a; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">
+                            🌐 Tüm Mentörleri Göster
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(m => {
                 const isSent = outgoingMentorRequests.some(r => r.mentorId === m.id);
                 const isAccepted = acceptedMentorList.some(r => r.id === m.id);
 
@@ -2408,7 +2825,10 @@
                             <img src="${m.img}" alt="${m.name}" style="width:65px; height:65px; border-radius:50%; border:2px solid #06b6d4; margin: 0 auto 10px auto; object-fit:cover; background:#1e293b;">
                             <h3 style="font-size:17px; color:#fff; margin-bottom:4px;">${m.name}</h3>
                             <span class="mentor-company" style="color:#06b6d4; font-size:12px; font-weight:bold; display:block; margin-bottom:4px;">${m.company} • ${m.title}</span>
-                            <span class="mentor-badge" style="display:inline-block; margin-bottom:10px;">${m.exp}</span>
+                            <div style="display:flex; justify-content:center; gap:6px; margin-bottom:10px; flex-wrap:wrap;">
+                                <span style="background:rgba(6,182,212,0.12); color:#06b6d4; border:1px solid rgba(6,182,212,0.3); font-size:11px; font-weight:bold; padding:3px 10px; border-radius:12px;">${m.deptLabel || 'Mühendislik'}</span>
+                                <span class="mentor-badge" style="margin-bottom:0;">${m.exp}</span>
+                            </div>
                             <p class="mentor-info" style="color:#cbd5e1; font-size:12px; line-height:1.4; background:rgba(15,23,42,0.5); padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.05); text-align:left; margin-bottom:8px;">
                                 "${m.bio}"
                             </p>
@@ -2441,27 +2861,138 @@
                 return;
             }
 
-            grid.innerHTML = outgoingMentorRequests.map(r => `
-                <div class="mentor-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:20px; text-align:center; border:1px solid rgba(6,182,212,0.3);">
-                    <div>
-                        <div class="mentor-avatar" style="margin: 0 auto 10px auto;">${r.avatar}</div>
-                        <h3 style="font-size:17px; color:#fff; margin-bottom:4px;">${r.name}</h3>
-                        <span style="color:#06b6d4; font-size:12px; font-weight:bold; display:block; margin-bottom:6px;">${r.title}</span>
-                        <span style="background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:15px; display:inline-block; margin-bottom:12px;">
-                            ⏳ Mentör Yanıtı Bekleniyor
-                        </span>
-                        
-                        <div style="text-align:left; background:rgba(15,23,42,0.6); padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); margin-bottom:12px;">
-                            <span style="color:#64748b; font-size:11px; font-weight:bold; display:block; margin-bottom:2px;">📝 Bıraktığınız Not:</span>
-                            <p style="color:#e2e8f0; font-size:12px; line-height:1.4; margin:0;">"${r.note || 'Özel not eklenmedi.'}"</p>
-                        </div>
-                    </div>
+            grid.innerHTML = outgoingMentorRequests.map(r => {
+                const cvHtml = r.hasCv ?
+                    `<div style="font-size:11px; color:#10b981; background:rgba(16,185,129,0.12); padding:7px 10px; border-radius:8px; margin-bottom:10px; border:1px solid rgba(16,185,129,0.3); text-align:left; display:flex; justify-content:space-between; align-items:center;">
+                        <span>📄 Ekli CV: <strong>${r.cvName}</strong></span>
+                        <button onclick="previewProfileCv('${r.cvName.replace(/'/g, "\\'")}', '${r.cvData ? r.cvData.replace(/'/g, "\\'") : ''}')" style="background:transparent; border:none; color:#10b981; font-weight:bold; cursor:pointer; text-decoration:underline; font-size:11px;">İncele</button>
+                    </div>` :
+                    `<div style="font-size:11px; color:#94a3b8; background:rgba(255,255,255,0.03); padding:6px 10px; border-radius:8px; margin-bottom:10px; text-align:left;">
+                        📄 CV Ekli Değil (Not İle İletildi)
+                    </div>`;
 
-                    <button onclick="cancelOutgoingRequest('${r.mentorId}')" style="width:100%; padding:10px; background:rgba(239,68,68,0.12); border:1px solid #ef4444; color:#ef4444; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
-                        ✕ İsteği Geri Çek
-                    </button>
-                </div>
-            `).join('');
+                return `
+                    <div class="mentor-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:20px; text-align:center; border:1px solid rgba(6,182,212,0.3);">
+                        <div>
+                            <div class="mentor-avatar" style="margin: 0 auto 10px auto;">${r.avatar}</div>
+                            <h3 style="font-size:17px; color:#fff; margin-bottom:4px;">${r.name}</h3>
+                            <span style="color:#06b6d4; font-size:12px; font-weight:bold; display:block; margin-bottom:6px;">${r.title}</span>
+                            <span style="background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:15px; display:inline-block; margin-bottom:10px;">
+                                ⏳ Mentör Yanıtı Bekleniyor
+                            </span>
+                            
+                            ${cvHtml}
+
+                            <div style="text-align:left; background:rgba(15,23,42,0.6); padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); margin-bottom:12px;">
+                                <span style="color:#64748b; font-size:11px; font-weight:bold; display:block; margin-bottom:2px;">📝 Bıraktığınız Not:</span>
+                                <p style="color:#e2e8f0; font-size:12px; line-height:1.4; margin:0;">"${r.note || 'Özel not eklenmedi.'}"</p>
+                            </div>
+                        </div>
+
+                        <button onclick="cancelOutgoingRequest('${r.mentorId}')" style="width:100%; padding:10px; background:rgba(239,68,68,0.12); border:1px solid #ef4444; color:#ef4444; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
+                            ✕ İsteği Geri Çek
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        let currentRatingMentorId = null;
+        let selectedStarValue = 5;
+
+        function getStoredMentorRatings() {
+            try {
+                const stored = localStorage.getItem('mentorRatings');
+                return stored ? JSON.parse(stored) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function saveStoredMentorRatings(ratings) {
+            localStorage.setItem('mentorRatings', JSON.stringify(ratings));
+        }
+
+        function openRateMentorModal(mentorId, mentorName, mentorSub) {
+            closeAllModals();
+
+            currentRatingMentorId = mentorId;
+            document.getElementById('rateModalMentorName').innerText = mentorName;
+            document.getElementById('rateModalMentorSub').innerText = mentorSub || 'Sektör Mentörü';
+
+            const ratings = getStoredMentorRatings();
+            const existing = ratings[mentorId] || ratings[mentorName];
+
+            selectedStarValue = existing ? existing.rating : 5;
+            document.getElementById('rateMentorCommentTextarea').value = existing ? (existing.comment || '') : '';
+
+            highlightStars(selectedStarValue);
+
+            const modal = document.getElementById('rateMentorModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.opacity = '1';
+                modal.style.pointerEvents = 'auto';
+                modal.style.zIndex = '999999';
+                modal.classList.add('active');
+            }
+        }
+
+        function closeRateMentorModal() {
+            const modal = document.getElementById('rateMentorModal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+                modal.style.opacity = '0';
+                modal.style.pointerEvents = 'none';
+            }
+        }
+
+        function setMentorStarRating(rating) {
+            selectedStarValue = rating;
+            highlightStars(rating);
+        }
+
+        function highlightStars(rating) {
+            const stars = document.querySelectorAll('#starRatingContainer span');
+            const labels = ['1 Yıldız - Zayıf', '2 Yıldız - Orta', '3 Yıldız - İddialı', '4 Yıldız - Çok İyi', '5 Yıldız - Mükemmel ✨'];
+            stars.forEach((s, idx) => {
+                if (idx < rating) {
+                    s.style.color = '#f59e0b';
+                    s.style.transform = 'scale(1.15)';
+                } else {
+                    s.style.color = '#475569';
+                    s.style.transform = 'scale(1)';
+                }
+            });
+            const txt = document.getElementById('starRatingText');
+            if (txt) txt.innerText = labels[rating - 1] || `${rating} Yıldız`;
+        }
+
+        function resetStarHighlight() {
+            highlightStars(selectedStarValue);
+        }
+
+        function submitMentorRating() {
+            if (!currentRatingMentorId) return;
+
+            const comment = document.getElementById('rateMentorCommentTextarea').value.trim();
+            const ratings = getStoredMentorRatings();
+
+            ratings[currentRatingMentorId] = {
+                rating: selectedStarValue,
+                comment: comment,
+                date: new Date().toLocaleDateString('tr-TR')
+            };
+
+            const mentorName = document.getElementById('rateModalMentorName').innerText;
+            ratings[mentorName] = ratings[currentRatingMentorId];
+
+            saveStoredMentorRatings(ratings);
+
+            alert(`⭐ ${mentorName} için ${selectedStarValue}/5 puanınız ve değerlendirmeniz başarıyla kaydedildi! Teşekkür ederiz.`);
+            closeRateMentorModal();
+            renderMentorMineGrid();
         }
 
         function renderMentorMineGrid() {
@@ -2473,22 +3004,217 @@
                 return;
             }
 
-            grid.innerHTML = acceptedMentorList.map(m => `
-                <div class="mentor-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:20px; text-align:center; border:1px solid rgba(16,185,129,0.3);">
-                    <div>
-                        <img src="${m.img || `https://api.dicebear.com/7.x/avataaars/svg?seed=${m.name.replace(/\s/g, '')}`}" alt="${m.name}" style="width:65px; height:65px; border-radius:50%; border:2px solid #10b981; margin: 0 auto 10px auto; object-fit:cover; background:#1e293b;">
-                        <h3 style="font-size:17px; color:#fff; margin-bottom:4px;">${m.name}</h3>
-                        <span style="color:#06b6d4; font-size:12px; font-weight:bold; display:block; margin-bottom:6px;">${m.company} • ${m.title}</span>
-                        <span style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:15px; display:inline-block; margin-bottom:12px;">
-                            ✅ Aktif Mentörüm
-                        </span>
-                    </div>
+            const ratings = getStoredMentorRatings();
 
-                    <button onclick="openMentorChatUser('${m.name.replace(/'/g, "\\'")}', '${m.company} • ${m.title.replace(/'/g, "\\'")}', '${m.img || ''}')" style="width:100%; padding:10px; background:#06b6d4; color:#0f172a; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
-                        💬 Doğrudan Mesaj Gönder
-                    </button>
-                </div>
-            `).join('');
+            grid.innerHTML = acceptedMentorList.map(m => {
+                const userRating = ratings[m.id] || ratings[m.name];
+
+                const ratingBadge = userRating ?
+                    `<div style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.3); border-radius:12px; padding:8px 12px; margin-bottom:12px; text-align:left;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+                            <span style="color:#f59e0b; font-size:12px; font-weight:bold;">⭐ Verdiğiniz Puan: ${userRating.rating}/5</span>
+                            <span style="color:#94a3b8; font-size:10px;">${userRating.date || ''}</span>
+                        </div>
+                        ${userRating.comment ? `<p style="color:#cbd5e1; font-size:11px; margin:0; line-height:1.3; font-style:italic;">"${userRating.comment}"</p>` : ''}
+                    </div>` :
+                    `<div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:7px 12px; margin-bottom:12px; text-align:center;">
+                        <span style="color:#f59e0b; font-size:12px; font-weight:bold;">⭐ 4.9 / 5.0 (Değerlendirilmedi)</span>
+                    </div>`;
+
+                const rateBtnText = userRating ? '⭐ Puanı & Yorumu Düzenle' : '⭐ Mentörü Puanla & Yorum Yap';
+
+                return `
+                    <div class="mentor-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:20px; text-align:center; border:1px solid rgba(16,185,129,0.3); transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div>
+                            <img src="${m.img || `https://api.dicebear.com/7.x/avataaars/svg?seed=${m.name.replace(/\s/g, '')}`}" alt="${m.name}" style="width:65px; height:65px; border-radius:50%; border:2px solid #10b981; margin: 0 auto 10px auto; object-fit:cover; background:#1e293b;">
+                            <h3 style="font-size:17px; color:#fff; margin-bottom:4px;">${m.name}</h3>
+                            <span style="color:#06b6d4; font-size:12px; font-weight:bold; display:block; margin-bottom:6px;">${m.company} • ${m.title}</span>
+                            <span style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:15px; display:inline-block; margin-bottom:10px;">
+                                ✅ Aktif Mentörüm
+                            </span>
+
+                            ${ratingBadge}
+                        </div>
+
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            <button onclick="openRateMentorModal('${m.id}', '${m.name.replace(/'/g, "\\'")}', '${m.company} • ${m.title.replace(/'/g, "\\'")}')" style="width:100%; padding:9px; background:rgba(245,158,11,0.15); border:1px solid #f59e0b; color:#f59e0b; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='#f59e0b'; this.style.color='#0f172a';" onmouseout="this.style.background='rgba(245,158,11,0.15)'; this.style.color='#f59e0b';">
+                                ${rateBtnText}
+                            </button>
+                            <button onclick="openMentorChatUser('${m.name.replace(/'/g, "\\'")}', '${m.company} • ${m.title.replace(/'/g, "\\'")}', '${m.img || ''}')" style="width:100%; padding:10px; background:#06b6d4; color:#0f172a; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
+                                💬 Doğrudan Mesaj Gönder
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ================= 👤 PROFİL VERİLERİ & ETKİLEŞİM MODALLARI =================
+        function loadProfileData() {
+            const ad = localStorage.getItem('kullaniciAd') || 'Helin Çelik';
+            const eposta = localStorage.getItem('kullaniciEposta') || 'helin.celik@itu.edu.tr';
+            const dogumTarihi = localStorage.getItem('kullaniciDogumTarihi') || '14.06.2002';
+            const okul = localStorage.getItem('kullaniciOkul') || 'İstanbul Teknik Üniversitesi';
+            const bolum = localStorage.getItem('kullaniciBolum') || 'Bilgisayar Mühendisliği';
+            const sinif = localStorage.getItem('kullaniciSinif') || '3. Sınıf (Lisans)';
+
+            if (document.getElementById('profAd')) document.getElementById('profAd').innerText = ad;
+            if (document.getElementById('profUserDisplayName')) document.getElementById('profUserDisplayName').innerText = ad;
+            if (document.getElementById('profEposta')) document.getElementById('profEposta').innerText = eposta;
+            if (document.getElementById('profDogumTarihi')) document.getElementById('profDogumTarihi').innerText = dogumTarihi;
+            if (document.getElementById('profOkul')) document.getElementById('profOkul').innerText = okul;
+            if (document.getElementById('profBolum')) document.getElementById('profBolum').innerText = bolum;
+            if (document.getElementById('profSinif')) document.getElementById('profSinif').innerText = sinif;
+
+            if (document.getElementById('profMenteesCount')) {
+                document.getElementById('profMenteesCount').innerText = `${acceptedCandidateList.length || 2} Mentee ➔`;
+            }
+            if (document.getElementById('profMyMentorsCount')) {
+                document.getElementById('profMyMentorsCount').innerText = `${acceptedMentorList.length || 2} Aktif Sektör Mentörü`;
+            }
+        }
+
+        function openEditProfileModal() {
+            closeAllModals();
+
+            document.getElementById('editProfAd').value = localStorage.getItem('kullaniciAd') || 'Helin Çelik';
+            document.getElementById('editProfEposta').value = localStorage.getItem('kullaniciEposta') || 'helin.celik@itu.edu.tr';
+            document.getElementById('editProfDogumTarihi').value = localStorage.getItem('kullaniciDogumTarihi') || '14.06.2002';
+            document.getElementById('editProfOkul').value = localStorage.getItem('kullaniciOkul') || 'İstanbul Teknik Üniversitesi';
+            document.getElementById('editProfBolum').value = localStorage.getItem('kullaniciBolum') || 'Bilgisayar Mühendisliği';
+            document.getElementById('editProfSinif').value = localStorage.getItem('kullaniciSinif') || '3. Sınıf (Lisans)';
+
+            const modal = document.getElementById('editProfileInfoModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.opacity = '1';
+                modal.style.pointerEvents = 'auto';
+                modal.style.zIndex = '999999';
+                modal.classList.add('active');
+            }
+        }
+
+        function closeEditProfileModal() {
+            const modal = document.getElementById('editProfileInfoModal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+            }
+        }
+
+        function saveProfileInfo() {
+            const ad = document.getElementById('editProfAd').value.trim();
+            const eposta = document.getElementById('editProfEposta').value.trim();
+            const dogumTarihi = document.getElementById('editProfDogumTarihi').value.trim();
+            const okul = document.getElementById('editProfOkul').value.trim();
+            const bolum = document.getElementById('editProfBolum').value.trim();
+            const sinif = document.getElementById('editProfSinif').value.trim();
+
+            if (!ad) {
+                alert('Lütfen ad soyad alanını doldurun.');
+                return;
+            }
+
+            localStorage.setItem('kullaniciAd', ad);
+            localStorage.setItem('kullaniciEposta', eposta);
+            localStorage.setItem('kullaniciDogumTarihi', dogumTarihi);
+            localStorage.setItem('kullaniciOkul', okul);
+            localStorage.setItem('kullaniciBolum', bolum);
+            localStorage.setItem('kullaniciSinif', sinif);
+
+            loadProfileData();
+            closeEditProfileModal();
+            alert('✅ Kişisel profil bilgileriniz başarıyla güncellendi!');
+        }
+
+        function openMyMenteesListModal() {
+            closeAllModals();
+
+            const bodyEl = document.getElementById('myMenteesListModalBody');
+            if (bodyEl) {
+                if (acceptedCandidateList.length === 0) {
+                    bodyEl.innerHTML = `<p style="color:#94a3b8; text-align:center; padding:20px;">Henüz kabul ettiğiniz liseli öğrenci mentee bulunmuyor.</p>`;
+                } else {
+                    bodyEl.innerHTML = acceptedCandidateList.map(c => {
+                        const nameVal = (c.name || 'Aday Öğrenci').replace(/'/g, "\\'");
+                        const infoVal = (c.info || c.target || c.school || 'Mentee Öğrenci').replace(/'/g, "\\'");
+                        const imgUrl = c.img || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(nameVal)}`;
+                        return `
+                                <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:rgba(15,23,42,0.6); border:1px solid rgba(168,85,247,0.2); border-radius:14px; margin-bottom:10px;">
+                                    <div style="display:flex; align-items:center; gap:12px;">
+                                        <img src="${imgUrl}" style="width:48px; height:48px; border-radius:50%; border:2px solid #a855f7; object-fit:cover; background:#1e293b;">
+                                        <div>
+                                            <strong style="color:#fff; font-size:15px; display:block;">${c.name}</strong>
+                                            <span style="color:#c084fc; font-size:12px;">🎓 ${c.school}</span>
+                                        </div>
+                                    </div>
+                                    <button onclick="closeMyMenteesListModal(); openCandidateChatUser('${nameVal}', '${infoVal}')" style="padding:8px 14px; background:#a855f7; color:#fff; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
+                                        💬 Sohbet Et
+                                    </button>
+                                </div>
+                            `;
+                    }).join('');
+                }
+            }
+
+            const modal = document.getElementById('myMenteesListModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.opacity = '1';
+                modal.style.pointerEvents = 'auto';
+                modal.style.zIndex = '999999';
+                modal.classList.add('active');
+            }
+        }
+
+        function closeMyMenteesListModal() {
+            const modal = document.getElementById('myMenteesListModal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+            }
+        }
+
+        function openAnonymousReviewsModal() {
+            closeAllModals();
+
+            const modal = document.getElementById('anonymousReviewsModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.opacity = '1';
+                modal.style.pointerEvents = 'auto';
+                modal.style.zIndex = '999999';
+                modal.classList.add('active');
+            }
+        }
+
+        function closeAnonymousReviewsModal() {
+            const modal = document.getElementById('anonymousReviewsModal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+            }
+        }
+
+        function openMyAppliedJobsModal() {
+            closeAllModals();
+
+            const modal = document.getElementById('myAppliedJobsModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.opacity = '1';
+                modal.style.pointerEvents = 'auto';
+                modal.style.zIndex = '999999';
+                modal.classList.add('active');
+            }
+        }
+
+        function closeMyAppliedJobsModal() {
+            const modal = document.getElementById('myAppliedJobsModal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+            }
         }
 
         function renderMentorChatUserList(activeName) {
@@ -2643,10 +3369,12 @@
             }
 
             grid.innerHTML = pendingCandidateRequests.map(c => `
-                <div class="mentor-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:20px; text-align:center; border:1px solid rgba(168,85,247,0.3);">
+                <div class="mentor-card" onclick="openCandidateDetailModal('${c.id}')" style="display:flex; flex-direction:column; justify-content:space-between; padding:20px; text-align:center; border:1px solid rgba(168,85,247,0.3); transition:transform 0.2s, box-shadow 0.2s; cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 25px rgba(168,85,247,0.25)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
                     <div>
-                        <img src="${c.img}" alt="${c.name}" style="width:65px; height:65px; border-radius:50%; border:2px solid #a855f7; margin: 0 auto 10px auto; object-fit:cover; background:#1e293b;">
-                        <h3 style="font-size:17px; color:#fff; margin-bottom:4px;">${c.name}</h3>
+                        <img src="${c.img}" alt="${c.name}" style="width:68px; height:68px; border-radius:50%; border:3px solid #a855f7; margin: 0 auto 10px auto; object-fit:cover; background:#1e293b; box-shadow:0 0 15px rgba(168,85,247,0.3); cursor:pointer;" title="Aday Detayını Büyüt">
+                        <h3 style="font-size:18px; color:#fff; margin-bottom:4px; cursor:pointer; transition:0.2s;" onmouseover="this.style.color='#c084fc'" onmouseout="this.style.color='#fff'" title="Aday Detayını Büyüt">
+                            ${c.name}
+                        </h3>
                         <span style="color:#c084fc; font-size:12px; font-weight:bold; display:block; margin-bottom:4px;">🎓 ${c.school}</span>
                         <span style="background:rgba(168,85,247,0.15); color:#c084fc; border:1px solid rgba(168,85,247,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:15px; display:inline-block; margin-bottom:10px;">
                             🎯 ${c.target}
@@ -2656,19 +3384,24 @@
                             📊 ${c.nets}
                         </div>
 
-                        <div style="text-align:left; background:rgba(15,23,42,0.6); padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); margin-bottom:12px;">
-                            <span style="color:#64748b; font-size:11px; font-weight:bold; display:block; margin-bottom:2px;">💬 Aday Notu:</span>
-                            <p style="color:#e2e8f0; font-size:12px; line-height:1.4; margin:0;">"${c.note}"</p>
+                        <div style="text-align:left; background:rgba(15,23,42,0.6); padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,0.06); margin-bottom:12px;" title="Aday Notunu Büyüt">
+                            <span style="color:#64748b; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">💬 Aday Notu:</span>
+                            <p style="color:#e2e8f0; font-size:12px; line-height:1.4; margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">"${c.note}"</p>
                         </div>
                     </div>
 
-                    <div style="display:flex; gap:8px;">
-                        <button onclick="acceptCandidateRequest('${c.id}')" style="flex:1; padding:9px; background:linear-gradient(135deg, #10b981, #059669); border:none; color:#fff; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
-                            ✅ Kabul Et
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <button type="button" onclick="event.stopPropagation(); openCandidateDetailModal('${c.id}')" style="width:100%; padding:9px; background:rgba(168,85,247,0.15); border:1px solid #a855f7; color:#c084fc; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='#a855f7'; this.style.color='#fff';" onmouseout="this.style.background='rgba(168,85,247,0.15)'; this.style.color='#c084fc';">
+                            🔍 Talebi Büyüt & Detaylı İncele
                         </button>
-                        <button onclick="rejectCandidateRequest('${c.id}')" style="flex:1; padding:9px; background:rgba(239,68,68,0.12); border:1px solid #ef4444; color:#ef4444; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
-                            ✕ Reddet
-                        </button>
+                        <div style="display:flex; gap:8px;">
+                            <button type="button" onclick="event.stopPropagation(); acceptCandidateRequest('${c.id}')" style="flex:1; padding:9px; background:linear-gradient(135deg, #10b981, #059669); border:none; color:#fff; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
+                                ✅ Kabul Et
+                            </button>
+                            <button type="button" onclick="event.stopPropagation(); rejectCandidateRequest('${c.id}')" style="flex:1; padding:9px; background:rgba(239,68,68,0.12); border:1px solid #ef4444; color:#ef4444; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
+                                ✕ Reddet
+                            </button>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -2684,25 +3417,100 @@
             }
 
             grid.innerHTML = acceptedCandidateList.map(c => `
-                <div class="mentor-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:20px; text-align:center; border:1px solid rgba(16,185,129,0.3);">
+                <div class="mentor-card" onclick="openCandidateDetailModal('${c.id}')" style="display:flex; flex-direction:column; justify-content:space-between; padding:20px; text-align:center; border:1px solid rgba(16,185,129,0.3); transition:transform 0.2s; cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
                     <div>
-                        <img src="${c.img}" alt="${c.name}" style="width:65px; height:65px; border-radius:50%; border:2px solid #10b981; margin: 0 auto 10px auto; object-fit:cover; background:#1e293b;">
-                        <h3 style="font-size:17px; color:#fff; margin-bottom:4px;">${c.name}</h3>
+                        <img src="${c.img}" alt="${c.name}" style="width:68px; height:68px; border-radius:50%; border:3px solid #10b981; margin: 0 auto 10px auto; object-fit:cover; background:#1e293b; box-shadow:0 0 15px rgba(16,185,129,0.3);">
+                        <h3 style="font-size:18px; color:#fff; margin-bottom:4px;">${c.name}</h3>
                         <span style="color:#c084fc; font-size:12px; font-weight:bold; display:block; margin-bottom:4px;">🎓 ${c.school}</span>
                         <span style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:15px; display:inline-block; margin-bottom:10px;">
                             ✅ Aktif Menteem
                         </span>
 
-                        <p style="color:#cbd5e1; font-size:12px; line-height:1.4; background:rgba(15,23,42,0.5); padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,0.05); text-align:left; margin-bottom:12px;">
+                        <p style="color:#cbd5e1; font-size:12px; line-height:1.4; background:rgba(15,23,42,0.5); padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.05); text-align:left; margin-bottom:12px;">
                             ${c.info}
                         </p>
                     </div>
 
-                    <button onclick="openCandidateChatUser('${c.name.replace(/'/g, "\\'")}', '${c.info.replace(/'/g, "\\'")}')" style="width:100%; padding:10px; background:#a855f7; color:#fff; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
+                    <button type="button" onclick="event.stopPropagation(); openCandidateChatUser('${c.name.replace(/'/g, "\\'")}', '${c.info.replace(/'/g, "\\'")}')" style="width:100%; padding:10px; background:#a855f7; color:#fff; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
                         💬 Adayla Sohbet Et
                     </button>
                 </div>
             `).join('');
+        }
+
+        function openCandidateDetailModal(id) {
+            closeAllModals();
+
+            let candidate = pendingCandidateRequests.find(c => String(c.id) === String(id)) || acceptedCandidateList.find(c => String(c.id) === String(id));
+            if (!candidate) {
+                candidate = pendingCandidateRequests[0] || {
+                    id: 'c1',
+                    name: 'Arda Yılmaz',
+                    school: 'Atatürk Anadolu Lisesi (12. Sınıf)',
+                    target: 'İTÜ Bilgisayar Mühendisliği (Hedef: İlk 2.000)',
+                    nets: 'TYT: 98 Net • AYT: 72 Net',
+                    avatar: 'AY',
+                    img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ArdaYilmaz',
+                    note: 'Merhaba abi, İTÜ Bilgisayar hazırlık ve ders yoğunluğu hakkında tavsiyelerinizi almak istiyorum. Mentee talebimi kabul ederseniz çok sevinirim.'
+                };
+            }
+
+            const imgEl = document.getElementById('candidateModalImg');
+            const initialsEl = document.getElementById('candidateModalAvatar');
+            if (candidate.img && imgEl && initialsEl) {
+                imgEl.src = candidate.img;
+                imgEl.style.display = 'block';
+                initialsEl.style.display = 'none';
+            } else if (initialsEl) {
+                initialsEl.innerText = candidate.avatar || candidate.name.substring(0, 2).toUpperCase();
+                if (imgEl) imgEl.style.display = 'none';
+                initialsEl.style.display = 'inline';
+            }
+
+            if (document.getElementById('candidateModalName')) document.getElementById('candidateModalName').innerText = candidate.name;
+            if (document.getElementById('candidateModalSub')) document.getElementById('candidateModalSub').innerText = '🎓 ' + candidate.school;
+            if (document.getElementById('candidateModalNetler')) document.getElementById('candidateModalNetler').innerText = candidate.nets || 'TYT: 98 Net • AYT: 72 Net';
+            if (document.getElementById('candidateModalHedef')) document.getElementById('candidateModalHedef').innerText = candidate.target || candidate.info || 'İTÜ Bilgisayar Mühendisliği';
+            if (document.getElementById('candidateModalBio')) document.getElementById('candidateModalBio').innerText = `"${candidate.note || 'Tavsiyelerinizi almak istiyorum.'}"`;
+
+            const acceptBtn = document.getElementById('candidateModalAcceptBtn');
+            const rejectBtn = document.getElementById('candidateModalRejectBtn');
+
+            const isPending = pendingCandidateRequests.some(c => String(c.id) === String(candidate.id)) || true;
+
+            if (acceptBtn && rejectBtn) {
+                if (isPending) {
+                    acceptBtn.style.display = 'block';
+                    acceptBtn.innerHTML = '✅ İsteği Kabul Et';
+                    rejectBtn.style.display = 'block';
+                    acceptBtn.onclick = function () { candidateDetailModalKapat(); acceptCandidateRequest(candidate.id); };
+                    rejectBtn.onclick = function () { candidateDetailModalKapat(); rejectCandidateRequest(candidate.id); };
+                } else {
+                    acceptBtn.style.display = 'block';
+                    acceptBtn.innerHTML = '💬 Adayla Sohbet Et';
+                    acceptBtn.onclick = function () { candidateDetailModalKapat(); openCandidateChatUser(candidate.name, candidate.target || candidate.info); };
+                    rejectBtn.style.display = 'none';
+                }
+            }
+
+            const modal = document.getElementById('candidateDetailModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.opacity = '1';
+                modal.style.pointerEvents = 'auto';
+                modal.style.zIndex = '999999';
+                modal.classList.add('active');
+            }
+        }
+
+        function candidateDetailModalKapat() {
+            const modal = document.getElementById('candidateDetailModal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+                modal.style.opacity = '0';
+                modal.style.pointerEvents = 'none';
+            }
         }
 
         function acceptCandidateRequest(id) {
@@ -3118,9 +3926,9 @@
 
             const titleEl = document.getElementById('companyNoticeModalTitle');
             if (titleEl) titleEl.innerText = c.isim + " · Aktif İlanlar (" + c.activeJobsCount + ")";
-            
+
             const jobs = getStoredJobs();
-            let companyJobs = jobs.filter(j => 
+            let companyJobs = jobs.filter(j =>
                 (j.company && j.company.toLowerCase().includes(c.isim.toLowerCase())) ||
                 (j.author && j.author.toLowerCase().includes(c.isim.toLowerCase())) ||
                 (j.title && j.title.toLowerCase().includes(c.isim.toLowerCase()))
@@ -3643,25 +4451,189 @@
                 return;
             }
 
-            grid.innerHTML = filterBannerHtml + filtered.map(job => `
-                <div class="premium-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:25px; border-top: 3px solid #38bdf8;">
-                    <div>
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                            <div>
-                                <span style="font-size:12px; font-weight:700; color:#38bdf8; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); padding:4px 12px; border-radius:12px;">${job.type}</span>
+            grid.innerHTML = filterBannerHtml + filtered.map(job => {
+                const jId = job.id || job.title.replace(/'/g, "\\'");
+                const jTitleEsc = job.title.replace(/'/g, "\\'");
+                const jContactEsc = (job.contact || job.author || '').replace(/'/g, "\\'");
+
+                return `
+                    <div class="premium-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:25px; border-top: 3px solid #38bdf8; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                                <div>
+                                    <span style="font-size:12px; font-weight:700; color:#38bdf8; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); padding:4px 12px; border-radius:12px;">${job.type}</span>
+                                </div>
+                                <span style="font-size:12px; color:#94a3b8;"><i class="fa-regular fa-clock"></i> ${job.date}</span>
                             </div>
-                            <span style="font-size:12px; color:#94a3b8;"><i class="fa-regular fa-clock"></i> ${job.date}</span>
+                            <h3 onclick="openJobDetailModal('${jId}')" style="font-size:19px; color:#fff; margin-bottom:10px; cursor:pointer; transition:0.2s;" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#fff'" title="İlan Detaylarını İncele">
+                                ${job.title} <span style="font-size:13px; color:#06b6d4;">🔍</span>
+                            </h3>
+                            <p style="font-size:14px; color:#cbd5e1; margin-bottom:15px; line-height:1.5;">${job.desc}</p>
+                            <div style="font-size:13px; color:#06b6d4; font-weight:600; margin-bottom:15px;"><i class="fa-solid fa-code"></i> Aranan: ${job.skills}</div>
                         </div>
-                        <h3 style="font-size:19px; color:#fff; margin-bottom:10px;">${job.title}</h3>
-                        <p style="font-size:14px; color:#cbd5e1; margin-bottom:15px; line-height:1.5;">${job.desc}</p>
-                        <div style="font-size:13px; color:#06b6d4; font-weight:600; margin-bottom:15px;"><i class="fa-solid fa-code"></i> Aranan: ${job.skills}</div>
+                        <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:15px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                            <span style="font-size:12px; color:#94a3b8;">🏢 ${job.author}</span>
+                            <div style="display:flex; gap:8px; align-items:center;">
+                                <button onclick="analyzeJobWithAi('${jId}')" style="background:rgba(168,85,247,0.15); border:1px solid #a855f7; color:#c084fc; padding:8px 13px; border-radius:14px; font-weight:bold; font-size:12px; cursor:pointer; display:inline-flex; align-items:center; gap:5px; transition:0.2s;" onmouseover="this.style.background='#a855f7'; this.style.color='#fff';" onmouseout="this.style.background='rgba(168,85,247,0.15)'; this.style.color='#c084fc';" title="Yapay Zeka ile CV Uyumunu Analiz Et">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i> 🤖 AI ile İncele
+                                </button>
+                                <button onclick="applyToJob('${jId}', '${jTitleEsc}', '${jContactEsc}')" class="card-link" style="background:#06b6d4; color:#0f172a; padding:8px 18px; border-radius:14px; border:none; font-weight:700; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='#38bdf8';" onmouseout="this.style.background='#06b6d4';">
+                                    Başvur 🚀
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:15px; display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:12px; color:#94a3b8;">🏢 ${job.author}</span>
-                        <button onclick="applyToJob('${job.id || job.title.replace(/'/g, "\\'")}', '${job.title.replace(/'/g, "\\'")}', '${job.contact}')" class="card-link" style="background:#06b6d4; color:#0f172a; padding:8px 20px; border-radius:15px; border:none; font-weight:700; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='#38bdf8';" onmouseout="this.style.background='#06b6d4';">Başvur 🚀</button>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
+        }
+
+        let currentSelectedJobForAi = null;
+
+        function openJobDetailModal(jobId) {
+            const jobs = getStoredJobs();
+            const job = jobs.find(j => j.id === jobId || j.title === jobId);
+            if (!job) return;
+
+            currentSelectedJobForAi = job;
+
+            document.getElementById('jobDetailTitle').innerText = job.title;
+            document.getElementById('jobDetailCompany').innerHTML = `<i class="fa-solid fa-building"></i> ${job.company || job.author || "Kurumsal Şirket"} • ${job.domain || "Mühendislik"}`;
+            document.getElementById('jobDetailTypeBadge').innerText = job.type || "Staj / İlan";
+            document.getElementById('jobDetailDomainBadge').innerText = job.domain || "Teknoloji";
+            document.getElementById('jobDetailDate').innerHTML = `<i class="fa-regular fa-clock"></i> ${job.date || "Bugün"}`;
+            document.getElementById('jobDetailFullDesc').innerText = job.desc || "Ayrıntılı ilan bilgileri ve sorumluluklar burada yer almaktadır.";
+            document.getElementById('jobDetailContact').innerText = job.contact || job.author || "İnsan Kaynakları";
+
+            // Skills render
+            const skillsArr = (job.skills || "Mühendislik, Yazılım, Proje").split(', ');
+            const skillsContainer = document.getElementById('jobDetailSkillsContainer');
+            if (skillsContainer) {
+                skillsContainer.innerHTML = skillsArr.map(s => `<span style="background:rgba(6,182,212,0.15); color:#06b6d4; border:1px solid rgba(6,182,212,0.3); font-size:12px; font-weight:bold; padding:5px 12px; border-radius:10px;">${s}</span>`).join('');
+            }
+
+            // Calculate AI match score preview for detail modal
+            const matchData = calculateAiCvMatch(job);
+            const scoreEl = document.getElementById('jobDetailAiScoreText');
+            if (scoreEl) {
+                scoreEl.innerText = `%${matchData.score} ${matchData.status}`;
+                scoreEl.style.color = matchData.score >= 85 ? '#10b981' : '#f59e0b';
+            }
+
+            const modal = document.getElementById('jobDetailExpandedModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                setTimeout(() => modal.classList.add('active'), 10);
+            }
+        }
+
+        function closeJobDetailExpandedModal() {
+            const modal = document.getElementById('jobDetailExpandedModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => { modal.style.display = 'none'; }, 300);
+            }
+        }
+
+        function calculateAiCvMatch(job) {
+            const cvName = localStorage.getItem('kullaniciCVName');
+            const bolum = localStorage.getItem('kullaniciBolum') || "Bilgisayar Mühendisliği";
+
+            const skillsArr = (job.skills || "").split(', ').map(s => s.trim());
+
+            let baseScore = 78;
+            if (cvName) baseScore += 10;
+            if (job.title.toLowerCase().includes('frontend') || job.title.toLowerCase().includes('software') || job.title.toLowerCase().includes('yazılım') || job.title.toLowerCase().includes('iha') || job.title.toLowerCase().includes('gömülü')) {
+                baseScore += 6;
+            }
+
+            const finalScore = Math.min(Math.max(baseScore, 75), 98);
+            let status = 'Mükemmel Uyum ✨';
+            if (finalScore < 82) status = 'İyi Uyum 👍';
+            if (finalScore >= 92) status = 'Yüksek Uyum 🚀';
+
+            const splitIdx = Math.max(1, Math.ceil(skillsArr.length * 0.75));
+            const matchedSkills = skillsArr.slice(0, splitIdx);
+            const missingSkills = skillsArr.slice(splitIdx);
+            if (missingSkills.length === 0) missingSkills.push("CI/CD Pipeline", "Mikroservis Mimarisi");
+
+            let advice = `Yapay zeka analizimize göre profiliniz ve teknik arkaplanınız <strong>${job.title}</strong> ilanı ile %${finalScore} oranında eşleşiyor.`;
+            if (cvName) {
+                advice += ` Profilinize yüklediğiniz <strong>${cvName}</strong> belgeniz doğrudan başvuru dosyanıza ekleneceğinden mülakat alma ihtimaliniz oldukça yüksek!`;
+            } else {
+                advice += ` Profil sekmesinden bir PDF CV ekleyerek mülakat çağrılma şansınızı %95'in üzerine çıkarabilirsiniz.`;
+            }
+
+            return {
+                score: finalScore,
+                status: status,
+                matchedSkills: matchedSkills,
+                missingSkills: missingSkills,
+                advice: advice
+            };
+        }
+
+        function analyzeJobWithAi(jobId) {
+            const jobs = getStoredJobs();
+            const job = jobs.find(j => j.id === jobId || j.title === jobId);
+            if (!job) return;
+
+            currentSelectedJobForAi = job;
+            const matchData = calculateAiCvMatch(job);
+
+            document.getElementById('aiMatchJobTitle').innerText = job.title + " (" + (job.company || job.author || 'Kurumsal') + ")";
+            document.getElementById('aiMatchPercentageText').innerText = "%" + matchData.score;
+
+            const pBar = document.getElementById('aiMatchProgressBar');
+            if (pBar) pBar.style.width = matchData.score + "%";
+
+            document.getElementById('aiMatchStatusLabel').innerText = matchData.status;
+
+            const matchedContainer = document.getElementById('aiMatchMatchedSkills');
+            if (matchedContainer) {
+                matchedContainer.innerHTML = matchData.matchedSkills.map(s => `<span style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); font-size:12px; font-weight:bold; padding:4px 10px; border-radius:8px;">✓ ${s}</span>`).join('');
+            }
+
+            const missingContainer = document.getElementById('aiMatchMissingSkills');
+            if (missingContainer) {
+                missingContainer.innerHTML = matchData.missingSkills.map(s => `<span style="background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.3); font-size:12px; font-weight:bold; padding:4px 10px; border-radius:8px;">💡 ${s}</span>`).join('');
+            }
+
+            document.getElementById('aiMatchAdviceText').innerHTML = matchData.advice;
+
+            const modal = document.getElementById('aiCvMatchModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                setTimeout(() => modal.classList.add('active'), 10);
+            }
+        }
+
+        function closeAiCvMatchModal() {
+            const modal = document.getElementById('aiCvMatchModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => { modal.style.display = 'none'; }, 300);
+            }
+        }
+
+        function openAiCvMatchModalFromDetail() {
+            closeJobDetailExpandedModal();
+            if (currentSelectedJobForAi) {
+                analyzeJobWithAi(currentSelectedJobForAi.id || currentSelectedJobForAi.title);
+            }
+        }
+
+        function confirmApplyFromAiModal() {
+            closeAiCvMatchModal();
+            if (currentSelectedJobForAi) {
+                applyToJob(currentSelectedJobForAi.id || currentSelectedJobForAi.title, currentSelectedJobForAi.title, currentSelectedJobForAi.contact);
+            }
+        }
+
+        function confirmApplyFromJobDetail() {
+            closeJobDetailExpandedModal();
+            if (currentSelectedJobForAi) {
+                applyToJob(currentSelectedJobForAi.id || currentSelectedJobForAi.title, currentSelectedJobForAi.title, currentSelectedJobForAi.contact);
+            }
         }
 
         function renderMyJobs() {
@@ -3889,6 +4861,123 @@
             if (modal) {
                 modal.classList.remove('active');
                 modal.style.display = 'none';
+            }
+        }
+
+        function openApplicantCvModal(name, dept, jobTitle, contact, note) {
+            closeAllModals();
+
+            const avatarEl = document.getElementById('applicantCvAvatar');
+            if (avatarEl) {
+                avatarEl.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name || 'Aday')}`;
+            }
+
+            if (document.getElementById('applicantCvName')) document.getElementById('applicantCvName').innerText = name || 'Aday Öğrenci';
+            if (document.getElementById('applicantCvDept')) document.getElementById('applicantCvDept').innerText = dept || 'Mühendislik Öğrencisi';
+
+            const bodyEl = document.getElementById('applicantCvBody');
+            if (bodyEl) {
+                const cvName = localStorage.getItem('kullaniciCVName');
+                const hasCv = cvName ? `<span style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); font-size:12px; font-weight:bold; padding:4px 10px; border-radius:10px;">📄 Yüklü CV: ${cvName}</span>` : `<span style="background:rgba(255,255,255,0.05); color:#94a3b8; font-size:12px; padding:4px 10px; border-radius:10px;">📄 Varsayılan Platform CV'si</span>`;
+
+                bodyEl.innerHTML = `
+                    <div style="background:rgba(30,41,59,0.6); padding:14px; border-radius:14px; border:1px solid rgba(6,182,212,0.2); margin-bottom:14px;">
+                        <span style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:4px;">📌 Başvurulan İlan / Proje</span>
+                        <strong style="color:#06b6d4; font-size:14px;">${jobTitle}</strong>
+                    </div>
+
+                    <div style="background:rgba(15,23,42,0.6); padding:14px; border-radius:14px; border:1px solid rgba(255,255,255,0.06); margin-bottom:14px;">
+                        <span style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:6px;">💬 Adayın Başvuru Mesajı & Notu</span>
+                        <p style="color:#e2e8f0; font-size:13px; line-height:1.6; margin:0;">"${note || 'İlanınız ilgimi çekti, projenizde yer almak isterim.'}"</p>
+                    </div>
+
+                    <div style="background:rgba(15,23,42,0.6); padding:14px; border-radius:14px; border:1px solid rgba(255,255,255,0.06); margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                        <div>
+                            <span style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">📑 Özgeçmiş / CV Durumu</span>
+                            ${hasCv}
+                        </div>
+                        <button onclick="alert('📄 Adayın ekli CV dosyası güvenli sunucumuzdan indiriliyor/görüntüleniyor...')" style="padding:8px 14px; background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
+                            📥 CV'yi İndir / İncele
+                        </button>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <div style="background:rgba(255,255,255,0.03); padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.05);">
+                            <span style="color:#94a3b8; font-size:11px; display:block; margin-bottom:2px;">📧 İletişim E-Posta</span>
+                            <strong style="color:#10b981; font-size:12px;">${contact}</strong>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03); padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.05);">
+                            <span style="color:#94a3b8; font-size:11px; display:block; margin-bottom:2px;">⭐ İlan Uyumu</span>
+                            <strong style="color:#f59e0b; font-size:12px;">%96 Yüksek Uyum</strong>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const footerEl = document.getElementById('applicantCvFooter');
+            if (footerEl) {
+                footerEl.innerHTML = `
+                    <div style="display:flex; gap:10px;">
+                        <button onclick="closeApplicantCvModal()" style="flex:1; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">Kapat</button>
+                        <button onclick="closeApplicantCvModal(); openChatWithApplicant('${name.replace(/'/g, "\\'")}', '${dept.replace(/'/g, "\\'")}', '${jobTitle.replace(/'/g, "\\'")}', '${contact}')" style="flex:2; padding:12px; background:#06b6d4; color:#0f172a; border:none; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">
+                            💬 Adayla Mesajlaşmaya Başla
+                        </button>
+                    </div>
+                `;
+            }
+
+            const modal = document.getElementById('applicantCvModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.opacity = '1';
+                modal.style.pointerEvents = 'auto';
+                modal.style.zIndex = '99999';
+                modal.classList.add('active');
+            }
+        }
+
+        function closeApplicantCvModal() {
+            const modal = document.getElementById('applicantCvModal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+                modal.style.opacity = '0';
+                modal.style.pointerEvents = 'none';
+            }
+        }
+
+        function openChatWithApplicant(name, dept, jobTitle, contact) {
+            closeAllModals();
+
+            if (typeof switchJobsSubnav === 'function') {
+                switchJobsSubnav('chat');
+            }
+
+            let chats = getStoredJobsChats();
+            let c = chats.find(item => item.name === name || item.projectTitle.toLowerCase().includes(jobTitle.toLowerCase()));
+
+            if (!c) {
+                c = {
+                    id: 'jchat_' + Date.now(),
+                    name: name,
+                    projectType: 'my',
+                    projectTitle: jobTitle,
+                    roleInfo: dept,
+                    badgeText: '📌 BENİM PROJEM',
+                    badgeColor: '#06b6d4',
+                    img: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`,
+                    messages: [
+                        `Selam! ${jobTitle} ilanıma yaptığınız başvuru için teşekkürler. Detayları konuşalım.`
+                    ]
+                };
+                chats.unshift(c);
+                saveStoredJobsChats(chats);
+            }
+
+            if (typeof openJobsChatUser === 'function') {
+                openJobsChatUser(c.id);
+            } else {
+                alert(`💬 ${name} ile sohbet başlatıldı! Mesajlar bölümünden iletişime geçebilirsiniz.`);
             }
         }
 
@@ -4144,12 +5233,16 @@
             style="max-width: 550px; width: 90%; text-align: left; background:#0f172a; border:2px solid rgba(56,189,248,0.4); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 60px rgba(0,0,0,0.7);">
             <span class="alan-modal-close" onclick="closeCompanyNoticeModal()"
                 style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
-            
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08);">
-                <div style="width:46px; height:46px; border-radius:50%; background:rgba(56,189,248,0.15); border:1px solid #38bdf8; color:#38bdf8; font-size:22px; display:flex; align-items:center; justify-content:center;">🔔</div>
+
+            <div
+                style="display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div
+                    style="width:46px; height:46px; border-radius:50%; background:rgba(56,189,248,0.15); border:1px solid #38bdf8; color:#38bdf8; font-size:22px; display:flex; align-items:center; justify-content:center;">
+                    🔔</div>
                 <div>
                     <h3 id="companyNoticeModalTitle" style="color:#fff; font-size:19px; margin:0 0 2px 0;">—</h3>
-                    <span style="color:#94a3b8; font-size:12px;">Aktif staj programı ve güncel pozisyon bildirimleri</span>
+                    <span style="color:#94a3b8; font-size:12px;">Aktif staj programı ve güncel pozisyon
+                        bildirimleri</span>
                 </div>
             </div>
 
@@ -4170,9 +5263,11 @@
             style="max-width: 620px; width: 92%; text-align: left; background:#0f172a; border:2px solid rgba(6,182,212,0.4); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 60px rgba(0,0,0,0.7); max-height: 88vh; overflow-y: auto;">
             <span class="alan-modal-close" onclick="closeApplicantCvModal()"
                 style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
-            
-            <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.08);">
-                <img id="applicantCvAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arda" style="width:52px; height:52px; border-radius:50%; border:2px solid #06b6d4; background:#1e293b; flex-shrink:0;">
+
+            <div
+                style="display:flex; align-items:center; gap:14px; margin-bottom:18px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <img id="applicantCvAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arda"
+                    style="width:52px; height:52px; border-radius:50%; border:2px solid #06b6d4; background:#1e293b; flex-shrink:0;">
                 <div>
                     <h3 id="applicantCvName" style="color:#fff; font-size:20px; margin:0 0 2px 0;">—</h3>
                     <span id="applicantCvDept" style="color:#06b6d4; font-size:13px; font-weight:600;">—</span>
@@ -4183,7 +5278,8 @@
                 <!-- JS Dinamik CV & Bilgiler -->
             </div>
 
-            <div id="applicantCvFooter" style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;">
+            <div id="applicantCvFooter"
+                style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;">
                 <!-- JS Dinamik Sohbet Başlat Butonu -->
             </div>
         </div>
@@ -4196,9 +5292,12 @@
             style="max-width: 580px; width: 90%; text-align: left; background:#0f172a; border:2px solid rgba(6,182,212,0.4); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 60px rgba(0,0,0,0.7);">
             <span class="alan-modal-close" onclick="closeSchoolNoticeDetailModal()"
                 style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
-            
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08);">
-                <div style="width:46px; height:46px; border-radius:50%; background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; font-size:22px; display:flex; align-items:center; justify-content:center;">📢</div>
+
+            <div
+                style="display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div
+                    style="width:46px; height:46px; border-radius:50%; background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; font-size:22px; display:flex; align-items:center; justify-content:center;">
+                    📢</div>
                 <div>
                     <h3 id="schoolNoticeDetailModalTitle" style="color:#fff; font-size:18px; margin:0 0 2px 0;">—</h3>
                     <span style="color:#94a3b8; font-size:12px;">Kampüs duyuru detayları ve açıklama</span>
@@ -4209,8 +5308,497 @@
                 <!-- JS dinamik detaylar -->
             </div>
 
-            <button onclick="closeSchoolNoticeDetailModal()" style="width:100%; padding:12px; background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;" onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';" onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
+            <button onclick="closeSchoolNoticeDetailModal()"
+                style="width:100%; padding:12px; background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;"
+                onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';"
+                onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
                 Anlaşıldı / Kapat ✖️
+            </button>
+        </div>
+    </div>
+
+    <!-- 🚀 İLAN DETAY & GENİŞLETİLMİŞ GÖRÜNÜM MODALI -->
+    <div class="alan-modal-overlay" id="jobDetailExpandedModal" style="display:none; z-index:320;">
+        <div class="alan-modal-box"
+            style="max-width: 680px; width:92%; text-align: left; background:#0f172a; border:2px solid rgba(6,182,212,0.4); border-radius:24px; padding:30px; position:relative; box-shadow: 0 25px 60px rgba(0,0,0,0.8); max-height:88vh; overflow-y:auto;">
+            <span class="alan-modal-close" onclick="closeJobDetailExpandedModal()"
+                style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
+
+            <!-- Üst İlan Başlığı ve Rozetler -->
+            <div
+                style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08); flex-wrap:wrap; gap:10px;">
+                <div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                        <span id="jobDetailTypeBadge"
+                            style="font-size:12px; font-weight:700; color:#38bdf8; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); padding:4px 12px; border-radius:12px;">Staj
+                            / Aday</span>
+                        <span id="jobDetailDomainBadge"
+                            style="font-size:12px; color:#a855f7; background:rgba(168,85,247,0.15); border:1px solid rgba(168,85,247,0.3); padding:4px 12px; border-radius:12px;">Yazılım
+                            Mühendisliği</span>
+                    </div>
+                    <h2 id="jobDetailTitle"
+                        style="color:#fff; font-size:22px; margin:0 0 6px 0; font-weight:bold; line-height:1.3;">—</h2>
+                    <span id="jobDetailCompany" style="color:#06b6d4; font-size:14px; font-weight:600;"><i
+                            class="fa-solid fa-building"></i> —</span>
+                </div>
+                <span id="jobDetailDate"
+                    style="color:#94a3b8; font-size:12px; background:rgba(255,255,255,0.05); padding:6px 12px; border-radius:12px;"><i
+                        class="fa-regular fa-clock"></i> Bugün</span>
+            </div>
+
+            <!-- AI CV Uyum Özeti Kartı -->
+            <div
+                style="background:linear-gradient(135deg, rgba(6,182,212,0.12), rgba(168,85,247,0.12)); border:1px solid rgba(6,182,212,0.3); border-radius:16px; padding:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <div>
+                    <span style="color:#94a3b8; font-size:12px; font-weight:bold; display:block; margin-bottom:4px;">🤖
+                        AI CV Uyum Puanınız</span>
+                    <strong id="jobDetailAiScoreText" style="color:#10b981; font-size:20px; font-weight:bold;">%88
+                        Mükemmel Uyum ✨</strong>
+                </div>
+                <button id="jobDetailAiAnalyzeBtn" onclick="openAiCvMatchModalFromDetail()"
+                    style="padding:10px 18px; background:linear-gradient(135deg, #a855f7, #6366f1); border:none; color:#fff; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer; box-shadow:0 4px 14px rgba(168,85,247,0.3); display:flex; align-items:center; gap:6px;">
+                    🤖 AI Analizini Göster ➔
+                </button>
+            </div>
+
+            <!-- İlan Detaylı Açıklaması -->
+            <div style="margin-bottom:20px;">
+                <h4 style="color:#fff; font-size:15px; margin-bottom:8px;"><i class="fa-solid fa-file-lines"
+                        style="color:#06b6d4;"></i> Pozisyon & Proje Detayları</h4>
+                <p id="jobDetailFullDesc"
+                    style="color:#cbd5e1; font-size:14px; line-height:1.6; background:rgba(15,23,42,0.6); padding:16px; border-radius:14px; border:1px solid rgba(255,255,255,0.06); margin:0;">
+                    —
+                </p>
+            </div>
+
+            <!-- Aranan Teknolojiler & Beceriler -->
+            <div style="margin-bottom:24px;">
+                <h4 style="color:#fff; font-size:15px; margin-bottom:10px;"><i class="fa-solid fa-code"
+                        style="color:#06b6d4;"></i> Aranan Beceriler & Teknolojiler</h4>
+                <div id="jobDetailSkillsContainer" style="display:flex; flex-wrap:wrap; gap:8px;">
+                    <!-- JS ile yüklenecek -->
+                </div>
+            </div>
+
+            <!-- İletişim & Alt Aksiyon Butonları -->
+            <div
+                style="border-top:1px solid rgba(255,255,255,0.08); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <div style="font-size:12px; color:#94a3b8;">
+                    📧 İletişim / Yayınlayan: <strong id="jobDetailContact" style="color:#06b6d4;">—</strong>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button id="jobDetailApplyBtn" onclick="confirmApplyFromJobDetail()"
+                        style="padding:12px 24px; background:#06b6d4; color:#0f172a; border:none; border-radius:14px; font-weight:bold; font-size:14px; cursor:pointer; transition:0.2s; box-shadow:0 4px 15px rgba(6,182,212,0.3);">
+                        Başvur 🚀
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🤖 AI CV UYUM ANALİZİ MODALI -->
+    <div class="alan-modal-overlay" id="aiCvMatchModal" style="display:none; z-index:350;">
+        <div class="alan-modal-box"
+            style="max-width: 620px; width:92%; text-align: left; background:#0f172a; border:2px solid rgba(168,85,247,0.5); border-radius:24px; padding:30px; position:relative; box-shadow: 0 25px 65px rgba(168,85,247,0.3); max-height:88vh; overflow-y:auto;">
+            <span class="alan-modal-close" onclick="closeAiCvMatchModal()"
+                style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
+
+            <!-- Üst Başlık -->
+            <div
+                style="display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div
+                    style="width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, #a855f7, #6366f1); color:#fff; font-size:24px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                    🤖
+                </div>
+                <div>
+                    <h3 style="color:#fff; font-size:20px; margin:0 0 2px 0; font-weight:bold;">Yapay Zeka CV Uyum
+                        Analizi</h3>
+                    <span id="aiMatchJobTitle" style="color:#a855f7; font-size:13px; font-weight:600;">—</span>
+                </div>
+            </div>
+
+            <!-- Dairesel / Bar Uyum Skoru -->
+            <div
+                style="background:rgba(30,41,59,0.7); border:1px solid rgba(168,85,247,0.3); border-radius:18px; padding:20px; text-align:center; margin-bottom:20px;">
+                <span
+                    style="color:#94a3b8; font-size:12px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:6px;">🎯
+                    CV & İlan Eşleşme Oranı</span>
+                <div style="font-size:36px; font-weight:900; color:#10b981; margin-bottom:8px;"
+                    id="aiMatchPercentageText">%88</div>
+
+                <!-- İlerleme Çubuğu -->
+                <div
+                    style="width:100%; height:12px; background:rgba(15,23,42,0.8); border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); margin-bottom:10px;">
+                    <div id="aiMatchProgressBar"
+                        style="width:88%; height:100%; background:linear-gradient(90deg, #10b981, #06b6d4); border-radius:10px; transition:width 0.8s ease;">
+                    </div>
+                </div>
+                <span id="aiMatchStatusLabel" style="color:#38bdf8; font-size:13px; font-weight:bold;">✨ Bu ilan için
+                    oldukça yüksek bir uyuma sahipsin!</span>
+            </div>
+
+            <!-- Eşleşen / Güçlü Yönler -->
+            <div style="margin-bottom:18px;">
+                <h4 style="color:#10b981; font-size:14px; margin-bottom:8px;"><i class="fa-solid fa-circle-check"></i>
+                    Eşleşen Yetkinliklerin (Güçlü Yönler)</h4>
+                <div id="aiMatchMatchedSkills" style="display:flex; flex-wrap:wrap; gap:6px;">
+                    <!-- JS ile yüklenecek -->
+                </div>
+            </div>
+
+            <!-- Eksik / Geliştirilebilir Beceriler -->
+            <div style="margin-bottom:20px;">
+                <h4 style="color:#f59e0b; font-size:14px; margin-bottom:8px;"><i class="fa-solid fa-lightbulb"></i>
+                    Geliştirilebilecek / İncenlenebilecek Beceriler</h4>
+                <div id="aiMatchMissingSkills" style="display:flex; flex-wrap:wrap; gap:6px;">
+                    <!-- JS ile yüklenecek -->
+                </div>
+            </div>
+
+            <!-- AI Tavsiyesi -->
+            <div
+                style="background:rgba(168,85,247,0.1); border-left:3px solid #a855f7; padding:14px 16px; border-radius:12px; margin-bottom:24px;">
+                <strong style="color:#a855f7; font-size:13px; display:block; margin-bottom:4px;">🤖 AI Danışman
+                    Tavsiyesi:</strong>
+                <p id="aiMatchAdviceText" style="color:#e2e8f0; font-size:13px; line-height:1.5; margin:0;">
+                    CV'nizdeki projeler ve teknik beceriler bu ilanın gereksinimleriyle büyük oranda örtüşüyor.
+                    Başvurunuzda projelerinizdeki katkılarınızı vurgulayarak öne geçebilirsiniz.
+                </p>
+            </div>
+
+            <!-- Aksiyon Butonları -->
+            <div style="display:flex; gap:10px;">
+                <button onclick="closeAiCvMatchModal()"
+                    style="flex:1; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">Kapat</button>
+                <button id="aiMatchApplyBtn" onclick="confirmApplyFromAiModal()"
+                    style="flex:2; padding:12px; background:linear-gradient(135deg, #06b6d4, #2563eb); border:none; color:#fff; border-radius:12px; font-weight:bold; font-size:14px; cursor:pointer; box-shadow:0 4px 15px rgba(6,182,212,0.3);">
+                    🚀 Bu CV ile İlana Başvur
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- 🎓 ADAY ÖĞRENCİ DETAYLI BÜYÜTME MODALI -->
+    <div class="alan-modal-overlay" id="candidateDetailModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 580px; width:90%; text-align: center; background:#0f172a; border:2px solid rgba(168,85,247,0.5); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(168,85,247,0.4);">
+            <span class="alan-modal-close" onclick="candidateDetailModalKapat()">&times;</span>
+
+            <div style="width: 95px; height: 95px; border-radius: 50%; background: linear-gradient(135deg, #a855f7, #3b82f6); color: #fff; font-size: 28px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; border: 3px solid rgba(168, 85, 247, 0.5); box-shadow: 0 0 25px rgba(168, 85, 247, 0.4); overflow:hidden;"
+                id="candidateModalAvatarContainer">
+                <img id="candidateModalImg" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+                <span id="candidateModalAvatar">—</span>
+            </div>
+
+            <h3 id="candidateModalName" style="font-size: 24px; color: #fff; margin-bottom: 4px; font-weight:bold;">—
+            </h3>
+            <span id="candidateModalSub"
+                style="color: #c084fc; font-size: 14px; font-weight: 600; display: block; margin-bottom: 18px;">—</span>
+
+            <!-- Deneme & YKS İstatistikleri -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:18px;">
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px; border-radius:14px; border:1px solid rgba(168,85,247,0.2); text-align:center;">
+                    <span
+                        style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:4px;">📈
+                        Güncel Deneme Netleri</span>
+                    <strong id="candidateModalNetler" style="color:#f59e0b; font-size:14px;">—</strong>
+                </div>
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px; border-radius:14px; border:1px solid rgba(168,85,247,0.2); text-align:center;">
+                    <span
+                        style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:4px;">🎯
+                        YKS Hedef Sıralaması</span>
+                    <strong id="candidateModalHedef" style="color:#10b981; font-size:14px;">—</strong>
+                </div>
+            </div>
+
+            <div
+                style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 14px; border: 1px solid rgba(168, 85, 247, 0.2); text-align: left; margin-bottom: 20px;">
+                <span
+                    style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:6px;">💬
+                    Adayın Danışma Mesajı & Notu</span>
+                <p id="candidateModalBio" style="color:#e2e8f0; font-size:14px; line-height:1.6; margin:0;">—</p>
+            </div>
+
+            <div style="display:flex; gap:12px; justify-content:center;">
+                <button id="candidateModalAcceptBtn"
+                    style="flex:1; padding:13px; background:#10b981; color:#ffffff; border:none; border-radius:12px; font-weight:bold; font-size:14px; cursor:pointer;">
+                    ✅ İsteği Kabul Et
+                </button>
+                <button id="candidateModalRejectBtn"
+                    style="flex:1; padding:13px; background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; border-radius:12px; font-weight:bold; font-size:14px; cursor:pointer;">
+                    ❌ Reddet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ⭐ MENTÖR PUANLAMA VE YORUM YAPMA MODALI -->
+    <div class="alan-modal-overlay" id="rateMentorModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 520px; width:90%; text-align: center; background:#0f172a; border:2px solid rgba(245,158,11,0.5); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(245,158,11,0.3);">
+            <span class="alan-modal-close" onclick="closeRateMentorModal()">&times;</span>
+
+            <div
+                style="width: 76px; height: 76px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; font-size: 32px; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px auto; border: 3px solid rgba(245, 158, 11, 0.4); box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);">
+                ⭐
+            </div>
+
+            <h3 id="rateModalMentorName" style="font-size: 22px; color: #fff; margin-bottom: 4px; font-weight:bold;">
+                Mentör Değerlendirme</h3>
+            <span id="rateModalMentorSub"
+                style="color: #06b6d4; font-size: 13px; font-weight: 600; display: block; margin-bottom: 20px;">Trendyol
+                • Senior Frontend Dev</span>
+
+            <!-- İnteraktif Yıldız Seçici -->
+            <div
+                style="background:rgba(15,23,42,0.6); padding:16px; border-radius:16px; border:1px solid rgba(245,158,11,0.2); margin-bottom:20px;">
+                <span
+                    style="color:#cbd5e1; font-size:13px; font-weight:600; display:block; margin-bottom:10px;">Mentörünüze
+                    Kaç Yıldız Veriyorsunuz?</span>
+                <div id="starRatingContainer"
+                    style="display:flex; justify-content:center; gap:12px; font-size:32px; cursor:pointer;">
+                    <span onclick="setMentorStarRating(1)" onmouseover="highlightStars(1)"
+                        onmouseout="resetStarHighlight()" data-star="1" style="color:#64748b; transition:0.2s;">★</span>
+                    <span onclick="setMentorStarRating(2)" onmouseover="highlightStars(2)"
+                        onmouseout="resetStarHighlight()" data-star="2" style="color:#64748b; transition:0.2s;">★</span>
+                    <span onclick="setMentorStarRating(3)" onmouseover="highlightStars(3)"
+                        onmouseout="resetStarHighlight()" data-star="3" style="color:#64748b; transition:0.2s;">★</span>
+                    <span onclick="setMentorStarRating(4)" onmouseover="highlightStars(4)"
+                        onmouseout="resetStarHighlight()" data-star="4" style="color:#64748b; transition:0.2s;">★</span>
+                    <span onclick="setMentorStarRating(5)" onmouseover="highlightStars(5)"
+                        onmouseout="resetStarHighlight()" data-star="5" style="color:#64748b; transition:0.2s;">★</span>
+                </div>
+                <span id="starRatingText"
+                    style="color:#f59e0b; font-size:13px; font-weight:bold; display:block; margin-top:8px;">Lütfen puan
+                    seçin (5 Yıldız = Mükemmel ✨)</span>
+            </div>
+
+            <!-- Yorum Metin Kutusu -->
+            <div style="text-align:left; margin-bottom:20px;">
+                <label style="color:#cbd5e1; font-size:12px; font-weight:600; display:block; margin-bottom:6px;">💬
+                    Mentörlük Deneyiminiz & Yorumunuz (İsteğe Bağlı):</label>
+                <textarea id="rateMentorCommentTextarea" rows="3"
+                    placeholder="Örn: Sorularıma çok samimi ve açıklayıcı yanıtlar verdi, kariyer haritamı belirlememde çok yardımcı oldu..."
+                    style="width:100%; padding:12px; background:rgba(15,23,42,0.8); border:1px solid rgba(245,158,11,0.3); border-radius:12px; color:#fff; font-size:13px; outline:none; resize:none;"></textarea>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+                <button onclick="closeRateMentorModal()"
+                    style="flex:1; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">Vazgeç</button>
+                <button onclick="submitMentorRating()"
+                    style="flex:2; padding:12px; background:linear-gradient(135deg, #f59e0b, #d97706); border:none; color:#fff; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer; box-shadow:0 4px 15px rgba(245,158,11,0.3);">
+                    ⭐ Puanı & Yorumu Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✏️ KİŞİSEL BİLGİLERİ DÜZENLEME MODALI -->
+    <div class="alan-modal-overlay" id="editProfileInfoModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 520px; width:90%; text-align: left; background:#0f172a; border:2px solid rgba(6,182,212,0.4); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(6,182,212,0.3);">
+            <span class="alan-modal-close" onclick="closeEditProfileModal()">&times;</span>
+
+            <h3 style="font-size: 20px; color: #fff; margin-bottom: 6px; font-weight:bold;"><i
+                    class="fa-solid fa-user-pen" style="color:#06b6d4;"></i> Kişisel Bilgilerinizi Düzenleyin</h3>
+            <p style="color:#94a3b8; font-size:12px; margin-bottom:20px;">Kayıt esnasında girilen kişisel ve
+                akademik bilgilerinizi buradan güncelleyebilirsiniz.</p>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:20px;">
+                <div style="grid-column: 1 / -1;">
+                    <label style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">👤
+                        Ad Soyad</label>
+                    <input type="text" id="editProfAd"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+                <div>
+                    <label style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">🎂
+                        Doğum Tarihi</label>
+                    <input type="text" id="editProfDogumTarihi" placeholder="Örn: 14.06.2002"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+                <div>
+                    <label style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">📧
+                        E-Posta Adresi</label>
+                    <input type="text" id="editProfEposta"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label
+                        style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">🏛️
+                        Okul / Üniversite</label>
+                    <input type="text" id="editProfOkul"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+                <div>
+                    <label style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">💻
+                        Bölüm</label>
+                    <input type="text" id="editProfBolum"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+                <div>
+                    <label style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">📚
+                        Sınıf / Seviye</label>
+                    <input type="text" id="editProfSinif"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+                <button onclick="closeEditProfileModal()"
+                    style="flex:1; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">Vazgeç</button>
+                <button onclick="saveProfileInfo()"
+                    style="flex:2; padding:12px; background:linear-gradient(135deg, #06b6d4, #2563eb); border:none; color:#fff; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer; box-shadow:0 4px 15px rgba(6,182,212,0.3);">
+                    💾 Bilgileri Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎓 REHBERLİK EDİLEN LİSELİ ÖĞRENCİLERİM MODALI -->
+    <div class="alan-modal-overlay" id="myMenteesListModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 540px; width:90%; text-align: left; background:#0f172a; border:2px solid rgba(168,85,247,0.5); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(168,85,247,0.3);">
+            <span class="alan-modal-close" onclick="closeMyMenteesListModal()">&times;</span>
+
+            <h3 style="font-size: 20px; color: #fff; margin-bottom: 6px; font-weight:bold;"><i
+                    class="fa-solid fa-user-graduate" style="color:#a855f7;"></i> Rehberlik Ettiğiniz Liseli
+                Öğrencileriniz</h3>
+            <p style="color:#94a3b8; font-size:12px; margin-bottom:18px;">Danışmanlık ve mentörlük talebini kabul
+                ettiğiniz aktif liseli mentee öğrencileriniz.</p>
+
+            <div id="myMenteesListModalBody"
+                style="max-height:360px; overflow-y:auto; margin-bottom:20px; padding-right:4px;">
+                <!-- JS Dinamik yükler -->
+            </div>
+
+            <button onclick="closeMyMenteesListModal()"
+                style="width:100%; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">
+                Kapat
+            </button>
+        </div>
+    </div>
+
+    <!-- ⭐ LİSELİ ÖĞRENCİLERDEN ALINAN ANONİM DEĞERLENDİRMELER MODALI -->
+    <div class="alan-modal-overlay" id="anonymousReviewsModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 560px; width:90%; text-align: left; background:#0f172a; border:2px solid rgba(245,158,11,0.5); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(245,158,11,0.3);">
+            <span class="alan-modal-close" onclick="closeAnonymousReviewsModal()">&times;</span>
+
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:14px;">
+                <div>
+                    <h3 style="font-size: 20px; color: #fff; margin:0 0 4px 0; font-weight:bold;">⭐ Liseli Öğrenci
+                        Değerlendirmeleri</h3>
+                    <span style="color:#f59e0b; font-size:13px; font-weight:bold;">Ortalama Puanınız: 4.9 / 5.0 (6
+                        Yorum)</span>
+                </div>
+                <span
+                    style="background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:12px;">🔒
+                    Anonim Öğrenci Geri Bildirimleri</span>
+            </div>
+
+            <div
+                style="max-height:360px; overflow-y:auto; margin-bottom:20px; display:flex; flex-direction:column; gap:12px; padding-right:4px;">
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:14px; border-radius:14px; border:1px solid rgba(245,158,11,0.2);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="color:#f59e0b; font-weight:bold; font-size:13px;">⭐⭐⭐⭐⭐ (5/5 Yıldız)</span>
+                        <span style="color:#64748b; font-size:11px;">10 Ağustos 2026</span>
+                    </div>
+                    <p style="color:#e2e8f0; font-size:13px; line-height:1.5; margin:0 0 6px 0;">"Tercih dönemimde
+                        Bilgisayar Mühendisliği ders yoğunluğu, hazırlık sınavı ve kampüs ortamı hakkında harika
+                        bilgiler verdi. Çok samimi bir abim/ablam."</p>
+                    <span style="color:#94a3b8; font-size:11px; font-style:italic;">— Anonim YKS Öğrencisi (12.
+                        Sınıf)</span>
+                </div>
+
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:14px; border-radius:14px; border:1px solid rgba(245,158,11,0.2);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="color:#f59e0b; font-weight:bold; font-size:13px;">⭐⭐⭐⭐⭐ (5/5 Yıldız)</span>
+                        <span style="color:#64748b; font-size:11px;">04 Ağustos 2026</span>
+                    </div>
+                    <p style="color:#e2e8f0; font-size:13px; line-height:1.5; margin:0 0 6px 0;">"YKS deneme
+                        netlerimi nasıl artırabileceğim konusunda çalışma programı taktiği verdi. Kendisine
+                        tavsiyeleri için çok teşekkür ederim."</p>
+                    <span style="color:#94a3b8; font-size:11px; font-style:italic;">— Anonim YKS Öğrencisi (Mezun
+                        Seviye)</span>
+                </div>
+
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:14px; border-radius:14px; border:1px solid rgba(245,158,11,0.2);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="color:#f59e0b; font-weight:bold; font-size:13px;">⭐⭐⭐⭐⭐ (4.8/5 Yıldız)</span>
+                        <span style="color:#64748b; font-size:11px;">28 Temmuz 2026</span>
+                    </div>
+                    <p style="color:#e2e8f0; font-size:13px; line-height:1.5; margin:0 0 6px 0;">"Mühendislik okumak
+                        isteyen adaylar için çok motivasyon verici konuşuyor. Sorularıma anında yanıt verdi."</p>
+                    <span style="color:#94a3b8; font-size:11px; font-style:italic;">— Anonim YKS Öğrencisi (11.
+                        Sınıf)</span>
+                </div>
+            </div>
+
+            <button onclick="closeAnonymousReviewsModal()"
+                style="width:100%; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">
+                Kapat
+            </button>
+        </div>
+    </div>
+
+    <!-- 💼 BAŞVURDUĞUM İLANLAR MODALI -->
+    <div class="alan-modal-overlay" id="myAppliedJobsModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 560px; width:90%; text-align: left; background:#0f172a; border:2px solid rgba(56,189,248,0.5); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(56,189,248,0.3);">
+            <span class="alan-modal-close" onclick="closeMyAppliedJobsModal()">&times;</span>
+
+            <h3 style="font-size: 20px; color: #fff; margin-bottom: 6px; font-weight:bold;"><i
+                    class="fa-solid fa-briefcase" style="color:#38bdf8;"></i> Başvurduğunuz İlanlar & Projeler</h3>
+            <p style="color:#94a3b8; font-size:12px; margin-bottom:18px;">Platform üzerinden staj veya proje takımı
+                için başvuru yaptığınız ilanlar.</p>
+
+            <div
+                style="max-height:360px; overflow-y:auto; margin-bottom:20px; display:flex; flex-direction:column; gap:10px; padding-right:4px;">
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px 14px; border-radius:14px; border:1px solid rgba(56,189,248,0.2); display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <strong style="color:#fff; font-size:14px; display:block;">Frontend Developer
+                            (React/Next)</strong>
+                        <span style="color:#38bdf8; font-size:12px;">Trendyol Gençlik Projesi</span>
+                    </div>
+                    <span
+                        style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:10px;">✅
+                        Başvuru Alındı</span>
+                </div>
+
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px 14px; border-radius:14px; border:1px solid rgba(56,189,248,0.2); display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <strong style="color:#fff; font-size:14px; display:block;">Yapay Zeka Staj Programı</strong>
+                        <span style="color:#38bdf8; font-size:12px;">ASELSAN Sanayi Geliştirme Programı</span>
+                    </div>
+                    <span
+                        style="background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:10px;">⏳
+                        İncelemede</span>
+                </div>
+
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px 14px; border-radius:14px; border:1px solid rgba(56,189,248,0.2); display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <strong style="color:#fff; font-size:14px; display:block;">Backend Node.js
+                            Geliştirici</strong>
+                        <span style="color:#38bdf8; font-size:12px;">İTÜ Kulüpler Arası Yazılım Projesi</span>
+                    </div>
+                    <span
+                        style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:10px;">✅
+                        Başvuru Alındı</span>
+                </div>
+            </div>
+
+            <button onclick="closeMyAppliedJobsModal()"
+                style="width:100%; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">
+                Kapat
             </button>
         </div>
     </div>

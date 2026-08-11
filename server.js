@@ -5,6 +5,9 @@ const PORT = 3000;
 
 // 🛡️ TARAYICI ENGELİNİ (CORS) ARKASINDAN DOLANARAK YIKAN ÖZEL AYAR
 app.use((req, res, next) => {
+    res.header("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.header("Pragma", "no-cache");
+    res.header("Expires", "0");
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
