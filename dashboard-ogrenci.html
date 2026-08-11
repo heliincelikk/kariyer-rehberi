@@ -494,29 +494,31 @@
                     <a href="#" onclick="switchTab('ai')" class="card-link" id="cardLinkBtn">Danışmana Sor ➔</a>
                 </div>
 
-                <div class="premium-card">
-                    <div class="card-icon"><i class="fa-solid fa-bullhorn"></i></div>
-                    <h3>Önerilen Staj Fırsatları</h3>
+                <div class="premium-card" onclick="switchTab('jobs')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-bullhorn" style="color:#06b6d4;"></i></div>
+                    <h3>Önerilen Staj Fırsatları 💼</h3>
                     <p>Kendi mühendislik alanında aktif olan staj ve yetenek programı (Aselsan, Baykar, Trendyol vb.)
                         ilanlarını incele.</p>
-                    <a href="#" onclick="alert('📢 Yakında aktif staj ilanları entegre edilecek!')"
-                        class="card-link">İlanları Gör ➔</a>
+                    <a href="javascript:void(0)" onclick="event.stopPropagation(); switchTab('jobs')"
+                        class="card-link">Staj & Proje İlanlarını Gör ➔</a>
                 </div>
 
-                <div class="premium-card">
-                    <div class="card-icon"><i class="fa-solid fa-users-rectangle"></i></div>
-                    <h3>Sektör Mentörlerindan Destek Al 🤝</h3>
+                <div class="premium-card" onclick="switchTab('mentor-sector')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-users-rectangle" style="color:#10b981;"></i></div>
+                    <h3>Sektör Mentörlerinden Destek Al 🤝</h3>
                     <p>Google, Aselsan, Trendyol gibi şirketlerde çalışan kıdemli mühendislerden staj, kariyer ve
                         mülakat tavsiyesi al.</p>
-                    <a href="#" onclick="switchTab('mentor')" class="card-link">Mentör Bul ➔</a>
+                    <a href="javascript:void(0)" onclick="event.stopPropagation(); switchTab('mentor-sector')"
+                        class="card-link">Tüm Mentörler ➔</a>
                 </div>
 
-                <div class="premium-card">
-                    <div class="card-icon"><i class="fa-solid fa-inbox"></i></div>
-                    <h3>Aday Öğrencilere Rehberlik Et</h3>
+                <div class="premium-card" onclick="switchTab('mentor-candidates')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-graduation-cap" style="color:#a855f7;"></i></div>
+                    <h3>Aday Öğrencilerle İletişime Geç 🎓</h3>
                     <p>Mühendislik hedefleyen lise adaylarından sana gelen soruları yanıtla, geleceğin mühendislerine
                         mentörlük yap.</p>
-                    <a href="#" onclick="switchTab('gelenistekler')" class="card-link">Gelen İstekler ➔</a>
+                    <a href="javascript:void(0)" onclick="event.stopPropagation(); switchTab('mentor-candidates')"
+                        class="card-link">Aday Öğrenciler ➔</a>
                 </div>
 
             </div>
@@ -1530,7 +1532,7 @@
 
 
         <!-- Sektör Mentörü Detay Profil Modalı -->
-        <div class="alan-modal-overlay" id="sectorMentorModal">
+        <div class="alan-modal-overlay" id="sectorMentorModal" style="display:none;">
             <div class="alan-modal-box" style="max-width: 550px; text-align: center;">
                 <span class="alan-modal-close" onclick="sectorMentorModalKapat()">&times;</span>
 
@@ -1591,7 +1593,7 @@
 
 
         <!-- Şirket Mentörleri Modalı -->
-        <div class="alan-modal-overlay" id="companyMentorsModal" style="z-index: 250;">
+        <div class="alan-modal-overlay" id="companyMentorsModal" style="display:none; z-index: 500;">
             <div class="alan-modal-box" style="max-width: 600px;">
                 <span class="alan-modal-close" onclick="companyMentorsModalKapat()">&times;</span>
                 <div
@@ -1610,7 +1612,7 @@
         </div>
 
         <!-- Mentörlük İsteği Özel Not Modalı -->
-        <div class="alan-modal-overlay" id="sendRequestNoteModal" style="z-index: 300;">
+        <div class="alan-modal-overlay" id="sendRequestNoteModal" style="display:none; z-index: 100000;">
             <div class="alan-modal-box" style="max-width: 520px; text-align: left;">
                 <span class="alan-modal-close" onclick="sendRequestNoteModalKapat()">&times;</span>
 
@@ -1633,8 +1635,9 @@
                 </label>
                 <textarea id="sendReqNoteTextarea" maxlength="500"
                     placeholder="Örn: Merhaba! Hikayenizi ve kariyer yolculuğunuzu okudum. Gelecekte ben de bu alanda çalışmak istiyorum, mentörlük sürecinde tavsiyelerinizi almak isterim..."
-                    style="width:100%; height:110px; background:#0f172a; border:1px solid rgba(6,182,212,0.3); border-radius:12px; color:#fff; padding:12px; font-size:13px; font-family:inherit; outline:none; resize:none; margin-bottom:6px;"
+                    style="width:100%; height:110px; background:#0f172a; border:1px solid rgba(6,182,212,0.3); border-radius:12px; color:#fff; padding:12px; font-size:13px; font-family:inherit; outline:none; resize:none; margin-bottom:4px;"
                     oninput="updateReqNoteCharCount(this)"></textarea>
+                <span id="sendReqNoteCharCount" style="color:#64748b; font-size:11px; display:block; text-align:right; margin-bottom:12px;">0 / 500</span>
 
                 <!-- CV Eki Gösterim Alanı (Opsiyonel) -->
                 <div
@@ -1663,74 +1666,180 @@
         function closeAllModals() {
             document.querySelectorAll('.alan-modal-overlay').forEach(modal => {
                 modal.classList.remove('active');
-                modal.removeAttribute('style');
+                modal.style.display = 'none';
             });
         }
 
 
         let currentSendReqMentorId = null;
 
+        function deriveSkillsFromTitle(title) {
+            if (!title) return ['Sektör Deneyimi', 'Kariyer Danışmanlığı', 'Teknik Mülakat'];
+            let t = title.toLowerCase();
+            if (t.includes('frontend')) return ['React', 'TypeScript', 'Frontend Perf', 'UI/UX', 'JavaScript'];
+            if (t.includes('backend') || t.includes('architect')) return ['Go', 'Java', 'Kafka', 'Microservices', 'System Design'];
+            if (t.includes('data') || t.includes('veri')) return ['Big Data', 'Spark', 'Snowflake', 'Python', 'Data Pipeline'];
+            if (t.includes('software') || t.includes('yazılım') || t.includes('mühendis')) return ['Software Engineering', 'System Design', 'Algorithms', 'Code Review'];
+            if (t.includes('gömülü') || t.includes('embedded') || t.includes('fpga') || t.includes('sinyal')) return ['ARM', 'C/C++', 'STM32', 'FPGA', 'DSP'];
+            if (t.includes('cloud') || t.includes('devops') || t.includes('infrastructure')) return ['AWS', 'GCP', 'Kubernetes', 'Docker', 'DevOps'];
+            if (t.includes('otomasyon') || t.includes('güç') || t.includes('plc')) return ['PLC', 'SCADA', 'Otomasyon', 'Güç Sistemleri'];
+            if (t.includes('biyomedikal') || t.includes('sağlık') || t.includes('health')) return ['Biyomedikal', 'HealthTech', 'Medikal Yazılım', 'Python'];
+            return ['Sektör Deneyimi', 'Kariyer Danışmanlığı', 'Teknik Mülakat', 'Portfolyo İnceleme'];
+        }
+
         function openSectorMentorModal(mentorIdOrName, sub, bio, avatar) {
-            closeAllModals();
+            let mentor = null;
 
-            let m = sectorMentorsList.find(x => x.id === mentorIdOrName || x.name === mentorIdOrName);
-            let nameVal = m ? m.name : mentorIdOrName;
-            let subVal = m ? `${m.company} • ${m.title}` : (sub || 'Sektör Mentörü');
-            let bioVal = m ? m.bio : (bio || "Sektör deneyimi ve mentörlük hakkında görüşmek için istek gönderebilirsiniz.");
-            let avatarVal = m ? (m.avatar || '👔') : (avatar || "👔");
-
-            document.getElementById('sectorModalName').innerText = nameVal;
-            document.getElementById('sectorModalSub').innerText = subVal;
-            document.getElementById('sectorModalBio').innerText = bioVal;
-            document.getElementById('sectorModalAvatar').innerText = avatarVal;
-
-            if (document.getElementById('sectorModalAcceptance')) {
-                document.getElementById('sectorModalAcceptance').innerText = m ? (m.acceptanceRate || '%95') : '%95 Kabul';
-            }
-            if (document.getElementById('sectorModalResponseTime')) {
-                document.getElementById('sectorModalResponseTime').innerText = m ? (m.responseTime || '< 1 Saat') : '~10 Dk';
-            }
-            if (document.getElementById('sectorModalMentees')) {
-                document.getElementById('sectorModalMentees').innerText = m ? (`${m.activeMentees} Aktif Öğrenci`) : '35+ Öğrenci';
+            // 1. Mentör objesi doğrudan geçildiyse
+            if (typeof mentorIdOrName === 'object' && mentorIdOrName !== null) {
+                mentor = mentorIdOrName;
             }
 
-            const btn = document.getElementById('sectorModalReqBtn');
-            const isAlreadyConnected = acceptedMentorList.some(a => a.name === nameVal || a.id === (m ? m.id : ''));
-            const isSent = m && outgoingMentorRequests.some(r => r.mentorId === m.id);
+            // 2. sectorMentorsList içerisinde id, name veya isim ile arama yap
+            if (!mentor && typeof mentorIdOrName === 'string') {
+                mentor = sectorMentorsList.find(m => m.id === mentorIdOrName || m.name === mentorIdOrName || m.isim === mentorIdOrName);
+            }
 
-            if (isAlreadyConnected) {
-                btn.innerHTML = "✅ Bağlantı Kuruldu (Mesaj Gönder)";
-                btn.style.background = "#10b981";
-                btn.style.color = "#ffffff";
-                btn.onclick = function () {
-                    closeAllModals();
-                    openMentorChatUser(nameVal, subVal, m ? m.img : '');
+            // 3. revactaSirketlerData içerisindeki şirket mentörlerinde arama yap
+            if (!mentor && typeof mentorIdOrName === 'string' && typeof revactaSirketlerData !== 'undefined') {
+                for (let company of revactaSirketlerData) {
+                    let found = (company.mentorler || []).find(m => m.isim === mentorIdOrName || m.name === mentorIdOrName);
+                    if (found) {
+                        mentor = {
+                            id: found.isim.toLowerCase().replace(/\s+/g, '_'),
+                            name: found.isim,
+                            company: company.isim,
+                            title: found.unvan,
+                            exp: found.deneyim || '5 Yıl Deneyim',
+                            avatar: found.avatar || '👔',
+                            img: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(found.isim)}`,
+                            bio: found.bio || 'Sektör deneyimi ve mentörlük rehberliği sunuyorum.',
+                            field: company.sektorAd || 'Teknoloji & Mühendislik',
+                            activeMentees: 12,
+                            totalMentees: 34,
+                            acceptanceRate: '%96',
+                            responseTime: '< 1 Saat',
+                            rating: '4.9 ⭐ (24 Değerlendirme)',
+                            skills: deriveSkillsFromTitle(found.unvan)
+                        };
+                        break;
+                    }
+                }
+            }
+
+            // 4. Bulunamadıysa verilen parametrelerden varsayılan mentor objesi oluştur
+            if (!mentor) {
+                let nameVal = (typeof mentorIdOrName === 'string') ? mentorIdOrName : "Sektör Mentörü";
+                let subVal = sub || "Kıdemli Sektör Uzmanı";
+                let parts = subVal.split('•');
+                let compVal = parts[0] ? parts[0].trim() : "Sektör Şirketi";
+                let titleVal = parts[1] ? parts[1].trim() : subVal;
+
+                mentor = {
+                    id: nameVal.toLowerCase().replace(/\s+/g, '_'),
+                    name: nameVal,
+                    company: compVal,
+                    title: titleVal,
+                    exp: '5 Yıl Deneyim',
+                    avatar: avatar || '👔',
+                    img: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(nameVal)}`,
+                    bio: bio || 'Sektör deneyimi ve mentörlük hakkında görüşmek için istek gönderebilirsiniz.',
+                    field: 'Teknoloji & Mühendislik',
+                    activeMentees: 10,
+                    totalMentees: 25,
+                    acceptanceRate: '%95',
+                    responseTime: '~10 Dk',
+                    rating: '4.9 ⭐ (18 Değerlendirme)',
+                    skills: deriveSkillsFromTitle(titleVal)
                 };
-            } else if (isSent) {
-                btn.innerHTML = "⏳ İstek Bekliyor (İsteği Çek)";
-                btn.style.background = "#f59e0b";
-                btn.style.color = "#0f172a";
-                btn.onclick = function () {
-                    closeAllModals();
-                    cancelOutgoingRequest(m.id);
-                };
+            }
+
+            // Modala Mentör Detay Bilgilerini Doldur
+            const imgEl = document.getElementById('mentorDetailImg');
+            if (imgEl) {
+                imgEl.src = mentor.img || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(mentor.name)}`;
+            }
+
+            const nameEl = document.getElementById('mentorDetailName');
+            if (nameEl) nameEl.innerText = mentor.name;
+
+            const titleEl = document.getElementById('mentorDetailTitle');
+            if (titleEl) titleEl.innerText = `${mentor.company || ''} • ${mentor.title || ''}`;
+
+            const fieldEl = document.getElementById('mentorDetailField');
+            if (fieldEl) fieldEl.innerText = `🏢 ${mentor.field || 'Teknoloji'} • ${mentor.exp || '5 Yıl Deneyim'}`;
+
+            const menteesEl = document.getElementById('mentorDetailMentees');
+            if (menteesEl) menteesEl.innerText = `${mentor.activeMentees || 12} Aktif (${mentor.totalMentees || 30} Toplam)`;
+
+            const acceptanceEl = document.getElementById('mentorDetailAcceptance');
+            if (acceptanceEl) acceptanceEl.innerText = `${mentor.acceptanceRate || '%95'} (${mentor.responseTime || '< 1 Saat'})`;
+
+            const ratingEl = document.getElementById('mentorDetailRating');
+            if (ratingEl) ratingEl.innerText = mentor.rating || '4.9 ⭐';
+
+            const bioEl = document.getElementById('mentorDetailBio');
+            if (bioEl) bioEl.innerText = mentor.bio || 'Sektör tecrübesi ve kariyer tavsiyeleri için mentorlük sağlıyorum.';
+
+            const skillsDiv = document.getElementById('mentorDetailSkills');
+            if (skillsDiv) {
+                let skillsArr = mentor.skills || deriveSkillsFromTitle(mentor.title);
+                skillsDiv.innerHTML = skillsArr.map(s => `
+                    <span style="background:rgba(6,182,212,0.12); color:#06b6d4; border:1px solid rgba(6,182,212,0.3); font-size:12px; font-weight:600; padding:5px 12px; border-radius:15px;">${s}</span>
+                `).join('');
+            }
+
+            // Aksiyon Butonlarını Güncelle
+            const isSent = outgoingMentorRequests.some(r => r.mentorId === mentor.id || r.mentorName === mentor.name);
+            const isAccepted = acceptedMentorList.some(r => r.id === mentor.id || r.name === mentor.name);
+            const actionArea = document.getElementById('mentorDetailActionArea');
+
+            if (actionArea) {
+                let escName = mentor.name.replace(/'/g, "\\'");
+                let escSub = `${mentor.company} • ${mentor.title}`.replace(/'/g, "\\'");
+                let escAvatar = mentor.avatar ? mentor.avatar.replace(/'/g, "\\'") : '👔';
+
+                if (isAccepted) {
+                    actionArea.innerHTML = `<button onclick="closeSectorMentorModal(); openMentorChatUser('${escName}', '${escSub}')" style="padding:11px 22px; background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#10b981; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">💬 Mentörle Sohbet Et</button>`;
+                } else if (isSent) {
+                    actionArea.innerHTML = `<button onclick="closeSectorMentorModal(); cancelOutgoingRequest('${mentor.id}')" style="padding:11px 22px; background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">✕ İsteği Geri Çek</button>`;
+                } else {
+                    actionArea.innerHTML = `<button onclick="closeSectorMentorModal(); openSendRequestNoteModal('${mentor.id}', '${escName}', '${escSub}', '${escAvatar}')" style="padding:11px 24px; background:linear-gradient(135deg, #06b6d4, #2563eb); border:none; color:#fff; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer; box-shadow:0 4px 15px rgba(6,182,212,0.3);">📩 Mentörlük İsteği Gönder 🚀</button>`;
+                }
+            }
+
+            // Eski Modal Alanlarını da Senkronize Et
+            if (document.getElementById('sectorModalName')) {
+                document.getElementById('sectorModalName').innerText = mentor.name;
+            }
+            if (document.getElementById('sectorModalSub')) {
+                document.getElementById('sectorModalSub').innerText = `${mentor.company} • ${mentor.title}`;
+            }
+            if (document.getElementById('sectorModalBio')) {
+                document.getElementById('sectorModalBio').innerText = mentor.bio;
+            }
+            if (document.getElementById('sectorModalAvatar')) {
+                document.getElementById('sectorModalAvatar').innerText = mentor.avatar || '👔';
+            }
+
+            // Mentör Detay Modalını Göster (Katmanların Üstünde Yer Alması İçin zIndex 9999)
+            const modal = document.getElementById('sectorMentorDetailsModal');
+            if (modal) {
+                modal.style.zIndex = '9999';
+                modal.style.display = 'flex';
+                setTimeout(() => modal.classList.add('active'), 10);
             } else {
-                btn.innerHTML = "📩 Mentörlük İsteği Gönder";
-                btn.style.background = "#06b6d4";
-                btn.style.color = "#0f172a";
-                btn.onclick = function () {
-                    openSendRequestNoteModal(m ? m.id : nameVal, nameVal, subVal, avatarVal);
-                };
+                const oldModal = document.getElementById('sectorMentorModal');
+                if (oldModal) {
+                    oldModal.style.zIndex = '9999';
+                    oldModal.classList.add('active');
+                }
             }
-
-            document.getElementById('sectorMentorModal').classList.add('active');
         }
 
         let activeTargetReqBtn = null;
 
         function openSendRequestNoteModal(mentorIdOrBtn, name, sub, avatar) {
-            closeAllModals();
-
             if (typeof mentorIdOrBtn === 'string') {
                 currentSendReqMentorId = mentorIdOrBtn;
                 activeTargetReqBtn = null;
@@ -1744,11 +1853,20 @@
             const mSub = mObj ? `${mObj.company} • ${mObj.title}` : (sub || "Mentörlük İsteği");
             const mAv = mObj ? (mObj.avatar || "👔") : (avatar || "👔");
 
-            document.getElementById('sendReqModalMentorName').innerText = mName;
-            document.getElementById('sendReqModalMentorSub').innerText = mSub;
-            document.getElementById('sendReqModalAvatar').innerText = mAv;
-            document.getElementById('sendReqNoteTextarea').value = "";
-            document.getElementById('sendReqNoteCharCount').innerText = "0 / 500";
+            const nameEl = document.getElementById('sendReqModalMentorName');
+            if (nameEl) nameEl.innerText = mName;
+
+            const subEl = document.getElementById('sendReqModalMentorSub');
+            if (subEl) subEl.innerText = mSub;
+
+            const avatarEl = document.getElementById('sendReqModalAvatar');
+            if (avatarEl) avatarEl.innerText = mAv;
+
+            const textareaEl = document.getElementById('sendReqNoteTextarea');
+            if (textareaEl) textareaEl.value = "";
+
+            const charCountEl = document.getElementById('sendReqNoteCharCount');
+            if (charCountEl) charCountEl.innerText = "0 / 500";
 
             const cvName = localStorage.getItem('kullaniciCVName');
             const cvBadge = document.getElementById('sendReqCvStatusBadge');
@@ -1765,17 +1883,26 @@
                 }
             }
 
-            document.getElementById('sendRequestNoteModal').classList.add('active');
+            const modal = document.getElementById('sendRequestNoteModal');
+            if (modal) {
+                modal.style.zIndex = '100000';
+                modal.style.display = 'flex';
+                setTimeout(() => modal.classList.add('active'), 10);
+            }
         }
 
         function updateReqNoteCharCount(el) {
             const count = el.value.length;
-            document.getElementById('sendReqNoteCharCount').innerText = count + " / 500";
+            const counterEl = document.getElementById('sendReqNoteCharCount');
+            if (counterEl) counterEl.innerText = count + " / 500";
         }
 
         function confirmSendMentorRequestWithNote() {
-            const note = document.getElementById('sendReqNoteTextarea').value.trim();
-            const mentorName = document.getElementById('sendReqModalMentorName').innerText;
+            const noteEl = document.getElementById('sendReqNoteTextarea');
+            const note = noteEl ? noteEl.value.trim() : '';
+
+            const mentorNameEl = document.getElementById('sendReqModalMentorName');
+            const mentorName = mentorNameEl ? mentorNameEl.innerText : 'Sektör Mentörü';
 
             const mObj = sectorMentorsList.find(m => m.id === currentSendReqMentorId || m.name === mentorName);
             const targetId = mObj ? mObj.id : (currentSendReqMentorId || 'm_' + Date.now());
@@ -1803,9 +1930,10 @@
                 activeTargetReqBtn.disabled = true;
             }
 
+            sendRequestNoteModalKapat();
+
             const cvMsg = cvName ? ` (Ekli CV: ${cvName})` : '';
             alert(`✅ ${mentorName} kişisine mentörlük isteğin${cvMsg} ve özel notun başarıyla iletildi!`);
-            closeAllModals();
             if (typeof renderMentorAllGrid === 'function') renderMentorAllGrid();
             if (typeof renderMentorRequestsGrid === 'function') renderMentorRequestsGrid();
         }
@@ -1818,7 +1946,15 @@
         }
 
         function sendRequestNoteModalKapat() {
-            closeAllModals();
+            const modal = document.getElementById('sendRequestNoteModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => { modal.style.display = 'none'; }, 300);
+            }
+        }
+
+        function closeMentorNoteModal() {
+            sendRequestNoteModalKapat();
         }
 
         function sectorMentorModalKapat() {
@@ -3647,46 +3783,7 @@
             }
         }
 
-        function openSectorMentorModal(mentorId) {
-            const mentor = sectorMentorsList.find(m => m.id === mentorId);
-            if (!mentor) return;
 
-            document.getElementById('mentorDetailImg').src = mentor.img || `https://api.dicebear.com/7.x/avataaars/svg?seed=${mentor.name}`;
-            document.getElementById('mentorDetailName').innerText = mentor.name;
-            document.getElementById('mentorDetailTitle').innerText = `${mentor.company} • ${mentor.title}`;
-            document.getElementById('mentorDetailField').innerText = `🏢 ${mentor.field} • ${mentor.exp}`;
-            document.getElementById('mentorDetailMentees').innerText = `${mentor.activeMentees} Aktif (${mentor.totalMentees} Toplam)`;
-            document.getElementById('mentorDetailAcceptance').innerText = `${mentor.acceptanceRate} (${mentor.responseTime})`;
-            document.getElementById('mentorDetailRating').innerText = mentor.rating;
-            document.getElementById('mentorDetailBio').innerText = mentor.bio;
-
-            const skillsDiv = document.getElementById('mentorDetailSkills');
-            if (skillsDiv) {
-                skillsDiv.innerHTML = mentor.skills.map(s => `
-                    <span style="background:rgba(6,182,212,0.12); color:#06b6d4; border:1px solid rgba(6,182,212,0.3); font-size:12px; font-weight:600; padding:5px 12px; border-radius:15px;">${s}</span>
-                `).join('');
-            }
-
-            const isSent = outgoingMentorRequests.some(r => r.mentorId === mentor.id);
-            const isAccepted = acceptedMentorList.some(r => r.id === mentor.id);
-            const actionArea = document.getElementById('mentorDetailActionArea');
-
-            if (actionArea) {
-                if (isAccepted) {
-                    actionArea.innerHTML = `<button onclick="closeSectorMentorModal(); openMentorChatUser('${mentor.name.replace(/'/g, "\\'")}', '${mentor.company} • ${mentor.title.replace(/'/g, "\\'")}')" style="padding:11px 22px; background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#10b981; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">💬 Mentörle Sohbet Et</button>`;
-                } else if (isSent) {
-                    actionArea.innerHTML = `<button onclick="closeSectorMentorModal(); cancelOutgoingRequest('${mentor.id}')" style="padding:11px 22px; background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">✕ İsteği Geri Çek</button>`;
-                } else {
-                    actionArea.innerHTML = `<button onclick="closeSectorMentorModal(); openSendRequestNoteModal('${mentor.id}', '${mentor.name.replace(/'/g, "\\'")}', '${mentor.company} • ${mentor.title.replace(/'/g, "\\'")}', '${mentor.avatar}')" style="padding:11px 24px; background:linear-gradient(135deg, #06b6d4, #2563eb); border:none; color:#fff; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer; box-shadow:0 4px 15px rgba(6,182,212,0.3);">📩 Mentörlük İsteği Gönder 🚀</button>`;
-                }
-            }
-
-            const modal = document.getElementById('sectorMentorDetailsModal');
-            if (modal) {
-                modal.style.display = 'flex';
-                setTimeout(() => modal.classList.add('active'), 10);
-            }
-        }
 
         function closeSectorMentorModal() {
             const modal = document.getElementById('sectorMentorDetailsModal');
@@ -3704,51 +3801,7 @@
             }
         }
 
-        function openSendRequestNoteModal(mentorId, name, title, avatar) {
-            currentModalTargetMentor = { id: mentorId, name, title, avatar };
-            document.getElementById('modalTargetName').innerText = name;
-            document.getElementById('modalTargetTitle').innerText = title;
-            document.getElementById('modalTargetAvatar').innerText = avatar || '👤';
-            document.getElementById('mentorNoteTextarea').value = '';
 
-            const modal = document.getElementById('mentorNoteModal');
-            if (modal) {
-                modal.style.display = 'flex';
-                setTimeout(() => modal.classList.add('active'), 10);
-            }
-        }
-
-        function closeMentorNoteModal() {
-            const modal = document.getElementById('mentorNoteModal');
-            if (modal) {
-                modal.classList.remove('active');
-                setTimeout(() => { modal.style.display = 'none'; }, 300);
-            }
-            currentModalTargetMentor = null;
-        }
-
-        function confirmSendMentorRequestWithNote() {
-            if (!currentModalTargetMentor) return;
-
-            const noteText = document.getElementById('mentorNoteTextarea').value.trim();
-            const newReq = {
-                mentorId: currentModalTargetMentor.id,
-                name: currentModalTargetMentor.name,
-                title: currentModalTargetMentor.title,
-                avatar: currentModalTargetMentor.avatar,
-                note: noteText,
-                date: new Date().toLocaleDateString('tr-TR')
-            };
-
-            outgoingMentorRequests.push(newReq);
-            closeMentorNoteModal();
-
-            const countSpan = document.getElementById('outgoingCount');
-            if (countSpan) countSpan.innerText = outgoingMentorRequests.length;
-
-            renderMentorAllGrid();
-            alert(`🎉 ${newReq.name} mentörüne mentörlük talebiniz ${noteText ? 'bıraktığınız not ile birlikte' : ''} başarıyla iletildi!`);
-        }
 
         function cancelOutgoingRequest(mentorId) {
             outgoingMentorRequests = outgoingMentorRequests.filter(r => r.mentorId !== mentorId);
@@ -4029,7 +4082,19 @@
                             <span style="color:#f1f5f9; font-size:13px; font-weight:600;"><i class="fa-solid fa-graduation-cap" style="color:#10b981;"></i> ${c.stajProgrami}</span>
                         </div>
 
-                        <!-- 🔔 AÇIK İLAN / BİLDİRİM KUTUSU (TEMİZ & BİLDİRİM ODAKLI) -->
+                        <!-- Mentör Önizleme Etiketleri -->
+                        <div style="margin-bottom:14px; text-align:left;">
+                            <span style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:6px;">👤 Şirket Mentörleri:</span>
+                            <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                                ${(c.mentorler || []).map(m => `
+                                    <span onclick="event.stopPropagation(); openSectorMentorModal('${m.isim.replace(/'/g, "\\'")}', '${c.isim} • ${m.unvan.replace(/'/g, "\\'")}', '${m.bio.replace(/'/g, "\\'")}', '${m.avatar}')" style="background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3); color:#06b6d4; font-size:11px; font-weight:bold; padding:4px 9px; border-radius:10px; cursor:pointer; transition:0.2s; display:inline-flex; align-items:center; gap:4px;" onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';" onmouseout="this.style.background='rgba(6,182,212,0.1)'; this.style.color='#06b6d4';">
+                                        👨‍💼 ${m.isim}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- 🔔 AÇIK İLAN / BİLDİRİM KUTUSU -->
                         <div onclick="openCompanyNoticeModal('${c.id}')" style="background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.4); padding: 10px 14px; border-radius: 12px; margin-bottom: 16px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: 0.2s;" onmouseover="this.style.background='rgba(56, 189, 248, 0.25)';" onmouseout="this.style.background='rgba(56, 189, 248, 0.12)';">
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span style="font-size: 16px;">🔔</span>
@@ -4059,9 +4124,9 @@
                 container.innerHTML = `<p style="color:#94a3b8; text-align:center; padding:20px;">Bu şirkette henüz kayıtlı mentör bulunmuyor.</p>`;
             } else {
                 container.innerHTML = c.mentorler.map(m => `
-                    <div style="background:rgba(15,23,42,0.7); border:1px solid rgba(6,182,212,0.2); padding:16px; border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                    <div onclick="openSectorMentorModal('${m.isim.replace(/'/g, "\\'")}', '${c.isim} • ${m.unvan.replace(/'/g, "\\'")}', '${m.bio.replace(/'/g, "\\'")}', '${m.avatar}')" style="background:rgba(15,23,42,0.7); border:1px solid rgba(6,182,212,0.2); padding:16px; border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; cursor:pointer; transition:0.2s;" onmouseover="this.style.borderColor='#06b6d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(6,182,212,0.2)'; this.style.transform='none';">
                         <div style="display:flex; align-items:center; gap:12px;">
-                            <div style="width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg, #06b6d4, #3b82f6); color:#fff; font-weight:bold; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                            <div style="width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg, #06b6d4, #3b82f6); color:#fff; font-weight:bold; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 12px rgba(6,182,212,0.3);">
                                 ${m.avatar}
                             </div>
                             <div style="text-align:left;">
@@ -4071,24 +4136,32 @@
                             </div>
                         </div>
 
-                        <div style="display:flex; gap:8px;">
-                            <button onclick="openSectorMentorModal('${m.isim.replace(/'/g, "\\'")}', '${c.isim} • ${m.unvan.replace(/'/g, "\\'")}', '${m.bio.replace(/'/g, "\\'")}', '${m.avatar}')" style="padding:8px 12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:8px; font-weight:bold; font-size:11px; cursor:pointer;" onmouseover="this.style.borderColor='#06b6d4'; this.style.color='#fff';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#cbd5e1';">
+                        <div style="display:flex; gap:8px;" onclick="event.stopPropagation();">
+                            <button onclick="event.stopPropagation(); openSectorMentorModal('${m.isim.replace(/'/g, "\\'")}', '${c.isim} • ${m.unvan.replace(/'/g, "\\'")}', '${m.bio.replace(/'/g, "\\'")}', '${m.avatar}')" style="padding:8px 12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:8px; font-weight:bold; font-size:11px; cursor:pointer; transition:0.2s;" onmouseover="this.style.borderColor='#06b6d4'; this.style.color='#fff';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#cbd5e1';">
                                 👤 İncele
                             </button>
-                            <button class="request-btn" onclick="openSendRequestNoteModal(this, '${m.isim.replace(/'/g, "\\'")}', '${c.isim} • ${m.unvan.replace(/'/g, "\\'")}', '${m.avatar}')" style="padding:8px 12px; background:rgba(6,182,212,0.12); border:1px solid #06b6d4; color:#06b6d4; border-radius:8px; font-weight:bold; font-size:11px; cursor:pointer;">
+                            <button class="request-btn" onclick="event.stopPropagation(); openSendRequestNoteModal(this, '${m.isim.replace(/'/g, "\\'")}', '${c.isim} • ${m.unvan.replace(/'/g, "\\'")}', '${m.avatar}')" style="padding:8px 12px; background:rgba(6,182,212,0.12); border:1px solid #06b6d4; color:#06b6d4; border-radius:8px; font-weight:bold; font-size:11px; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';" onmouseout="this.style.background='rgba(6,182,212,0.12)'; this.style.color='#06b6d4';">
                                 📩 İstek Gönder
                             </button>
-
                         </div>
                     </div>
                 `).join('');
             }
 
-            document.getElementById('companyMentorsModal').classList.add('active');
+            const modal = document.getElementById('companyMentorsModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.zIndex = '500';
+                setTimeout(() => modal.classList.add('active'), 10);
+            }
         }
 
         function companyMentorsModalKapat() {
-            document.getElementById('companyMentorsModal').classList.remove('active');
+            const modal = document.getElementById('companyMentorsModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => { modal.style.display = 'none'; }, 300);
+            }
         }
 
 
@@ -5132,7 +5205,7 @@
     </div>
 
     <!-- SEKTÖR MENTÖRÜ DETAY MODALI -->
-    <div class="alan-modal-overlay" id="sectorMentorDetailsModal" style="display:none;">
+    <div class="alan-modal-overlay" id="sectorMentorDetailsModal" style="display:none; z-index:9999;">
         <div class="alan-modal-box"
             style="max-width: 620px; text-align: left; background:#0f172a; border:1px solid rgba(6,182,212,0.3); border-radius:24px; padding:30px; position:relative; box-shadow: 0 25px 60px rgba(0,0,0,0.7);">
             <span class="alan-modal-close" onclick="closeSectorMentorModal()"
