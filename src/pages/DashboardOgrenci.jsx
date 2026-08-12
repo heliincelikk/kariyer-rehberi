@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-// 🏢 Revaçta Şirketler Veri Seti
+// 🏢 Revaçta Şirketler Verisi
 const revactaSirketlerData = [
-  { id: 1, ad: "Aselsan", kategori: "savunma", logo: "🛡️", unvan: "Savunma Sanayii & Otonom Sistemler", konum: "Ankara / Türkiye", mentörSayisi: 12, ilanSayisi: 4, tanim: "Türkiye'nin lider savunma elektroniği ve otonom sistemler kuruluşu.", mentörler: [{ isim: "Murat Demir", unvan: "Kıdemli Gömülü Yazılım Mimarı", avatar: "MD" }] },
-  { id: 2, ad: "Trendyol Tech", kategori: "teknoloji", logo: "🛍️", unvan: "E-Ticaret & Yüksek Ölçekli Yazılım", konum: "İstanbul / Remote", mentörSayisi: 18, ilanSayisi: 6, tanim: "Günde milyonlarca istek alan mikro-servis mimarisi ve veri analitiği merkezi.", mentörler: [{ isim: "Hande Erçel", unvan: "Lead Frontend Engineer", avatar: "HE" }] },
+  { id: 1, ad: "Aselsan", kategori: "savunma", logo: "🛡️", unvan: "Savunma Sanayii & Otonom Sistemler", konum: "Ankara / Türkiye", mentörSayisi: 12, ilanSayisi: 4, tanim: "Türkiye'nin lider savunma elektroniği ve otonom sistemler kuruluşu.", mentörler: [{ isim: "Murat Demir", unvan: "Kıdemli Gömülü Yazılım Mimarı", avatar: "MD" }, { isim: "Selin Kaya", unvan: "Sistem Tasarım Mühendisi", avatar: "SK" }] },
+  { id: 2, ad: "Trendyol Tech", kategori: "teknoloji", logo: "🛍️", unvan: "E-Ticaret & Yüksek Ölçekli Yazılım", konum: "İstanbul / Remote", mentörSayisi: 18, ilanSayisi: 6, tanim: "Günde milyonlarca istek alan mikro-servis mimarisi ve veri analitiği merkezi.", mentörler: [{ isim: "Hande Erçel", unvan: "Lead Frontend Engineer", avatar: "HE" }, { isim: "Emre Arslan", unvan: "Backend Team Lead", avatar: "EA" }] },
   { id: 3, ad: "Baykar Teknoloji", kategori: "savunma", logo: "✈️", unvan: "İnsansız Hava Araçları & Yapay Zeka", konum: "İstanbul / Türkiye", mentörSayisi: 15, ilanSayisi: 5, tanim: "Milli İHA/SİHA teknolojileri, otonom yazılımlar ve havacılık Ar-Ge merkezi.", mentörler: [{ isim: "Selim Çetin", unvan: "Otonom Uçuş Yazılım Lideri", avatar: "SÇ" }] },
   { id: 4, ad: "Google Turkey / EMEA", kategori: "global", logo: "🌐", unvan: "Global Arama & Bulut Teknolojileri", konum: "İstanbul / Dublin / Remote", mentörSayisi: 8, ilanSayisi: 2, tanim: "Dünya çapında dağıtık sistemler ve yapay zeka altyapıları.", mentörler: [{ isim: "Canan Dağdeviren", unvan: "Senior Staff Software Engineer", avatar: "CD" }] },
   { id: 5, ad: "Roketsan", kategori: "savunma", logo: "🚀", unvan: "Füze Sistemleri & Mekatronik Ar-Ge", konum: "Ankara / Türkiye", mentörSayisi: 9, ilanSayisi: 3, tanim: "Mekanik tasarım, aerodinamik ve güdüm kontrol sistemleri.", mentörler: [{ isim: "Emre Kaya", unvan: "Mekatronik Tasarım Uzmanı", avatar: "EK" }] },
@@ -29,7 +29,7 @@ const bolumRotalariData = {
   ]
 };
 
-// 🎓 Sektör Mentörleri Veri Seti
+// 🎓 Sektör Mentörleri Verisi
 const sektorMentorleriData = [
   { id: 1, isim: "Selin Çeliker", şirket: "Google", unvan: "Staff Software Engineer", bolum: "bilgisayar", tecrube: "8+ Yıl Deneyim", avatar: "SÇ", bio: "Yurt dışı yüksek lisans, Google mülakat süreçleri ve büyük ölçekli sistemler." },
   { id: 2, isim: "Barış Arslan", şirket: "Aselsan", unvan: "Gömülü Sistemler Ar-Ge Lideri", bolum: "elektrik", tecrube: "10+ Yıl Deneyim", avatar: "BA", bio: "Savunma sanayii stajları, C++ ve gerçek zamanlı işletim sistemleri (RTOS)." },
@@ -40,21 +40,34 @@ export default function DashboardOgrenci() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // Menü ve Sekme Kontrolleri
+  // Menü Seçim State'i
   const [activeTab, setActiveTab] = useState('panel'); // 'panel', 'school', 'jobs', 'companies', 'discover', 'mentor-sector', 'mentor-candidates', 'ai', 'profile'
   const [mentornetOpen, setMentornetOpen] = useState(true);
   const [industryOpen, setIndustryOpen] = useState(true);
 
   // Subnav State'leri
-  const [schoolSubtab, setSchoolSubtab] = useState('peers');
+  const [schoolSubtab, setSchoolSubtab] = useState('peers'); // 'peers', 'announcements', 'clubs', 'chat'
+  const [jobsSubtab, setJobsSubtab] = useState('all'); // 'all', 'mine', 'chat'
+  const [mentorSubtab, setMentorSubtab] = useState('all'); // 'all', 'requests', 'mine', 'chat'
   const [companyCategory, setCompanyCategory] = useState('hepsi');
   const [selectedBolumKey, setSelectedBolumKey] = useState('bilgisayar');
   const [selectedMentorDept, setSelectedMentorDept] = useState('hepsi');
 
-  // Modallar
+  // Modallar State
   const [isCreateJobOpen, setIsCreateJobOpen] = useState(false);
   const [selectedCompanyModal, setSelectedCompanyModal] = useState(null);
   const [selectedMentorModal, setSelectedMentorModal] = useState(null);
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+  const [isMenteesModalOpen, setIsMenteesModalOpen] = useState(false);
+  const [isReviewsModalOpen, setIsReviewsModalOpen] = useState(false);
+  const [isAppliedJobsModalOpen, setIsAppliedJobsModalOpen] = useState(false);
+
+  // Profil Form State
+  const [profName, setProfName] = useState(user?.kullaniciAdi || 'Öğrenci Kullanıcımız');
+  const [profEmail, setProfEmail] = useState('ogrenci@universite.edu.tr');
+  const [profSchool, setProfSchool] = useState(user?.okul || 'Boğaziçi Üniversitesi');
+  const [profDept, setProfDept] = useState(user?.bolum || 'Bilgisayar Mühendisliği');
+  const [profGrade, setProfGrade] = useState('3. Sınıf');
 
   // Form State (İlan Oluşturma)
   const [jobTitle, setJobTitle] = useState('');
@@ -70,10 +83,12 @@ export default function DashboardOgrenci() {
   ]);
   const [aiInputText, setAiInputText] = useState('');
 
-  // Kullanıcı bilgileri
-  const userName = user?.kullaniciAdi || 'Değerli Öğrenci';
-  const userSchool = user?.okul || 'Boğaziçi Üniversitesi';
-  const userDept = user?.bolum || 'Bilgisayar Mühendisliği';
+  // Canlı Sohbet Mesajları
+  const [activeChatPeer, setActiveChatPeer] = useState(null);
+  const [chatMessages, setChatMessages] = useState([
+    { sender: 'them', text: 'Selam! Proje grubu için görüşebiliriz.' }
+  ]);
+  const [chatInputText, setChatInputText] = useState('');
 
   const handleAiSend = (query) => {
     const text = query || aiInputText;
@@ -90,6 +105,12 @@ export default function DashboardOgrenci() {
     }, 600);
   };
 
+  const handleChatSend = () => {
+    if (!chatInputText.trim()) return;
+    setChatMessages(prev => [...prev, { sender: 'me', text: chatInputText }]);
+    setChatInputText('');
+  };
+
   const handleCreateJobSubmit = (e) => {
     e.preventDefault();
     alert(`🚀 "${jobTitle}" başlıklı ilanınız başarıyla oluşturuldu! Proje takımı arayan öğrenciler size ulaşacaktır.`);
@@ -98,6 +119,12 @@ export default function DashboardOgrenci() {
     setJobDesc('');
     setJobSkills('');
     setJobContact('');
+  };
+
+  const handleSaveProfile = (e) => {
+    e.preventDefault();
+    alert("Profil bilgileriniz başarıyla güncellendi! ✅");
+    setIsEditProfileOpen(false);
   };
 
   const filteredCompanies = revactaSirketlerData.filter(c => companyCategory === 'hepsi' || c.kategori === companyCategory);
@@ -160,7 +187,7 @@ export default function DashboardOgrenci() {
 
           <div className="profile-section" style={{ marginTop: 'auto', marginBottom: '10px', padding: '12px 16px', background: 'rgba(255, 255, 255, 0.04)', borderRadius: '12px', cursor: 'pointer' }} onClick={() => setActiveTab('profile')}>
             <h4 style={{ fontSize: '14px', color: '#fff', marginBottom: '3px' }}><i className="fa-solid fa-user-graduate"></i> Profilim</h4>
-            <p style={{ fontSize: '12px', color: '#94a3b8' }}>{userDept}</p>
+            <p style={{ fontSize: '12px', color: '#94a3b8' }}>{profDept}</p>
           </div>
 
           <button onClick={() => { logout(); navigate('/'); }} className="menu-item logout-btn" style={{ background: 'none', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444' }}>
@@ -172,11 +199,11 @@ export default function DashboardOgrenci() {
       {/* SAĞ ANA İÇERİK */}
       <main className="main-content">
         <div className="welcome-bar">
-          <h1>Hoş Geldin, <span style={{ color: '#06b6d4' }}>{userName}</span>! 👋</h1>
+          <h1>Hoş Geldin, <span style={{ color: '#06b6d4' }}>{profName}</span>! 👋</h1>
           <div className="user-badge">Öğrenci Modu</div>
         </div>
 
-        {/* SEKME 1: KİŞİSELLEŞTİRİLMİŞ PANEL */}
+        {/* TAB 1: KİŞİSELLEŞTİRİLMİŞ PANEL */}
         {activeTab === 'panel' && (
           <div className="dashboard-grid">
             <div className="premium-card">
@@ -209,7 +236,49 @@ export default function DashboardOgrenci() {
           </div>
         )}
 
-        {/* SEKME: REVAÇTA ŞİRKETLER */}
+        {/* TAB 2: OKULUNUZDAN */}
+        {activeTab === 'school' && (
+          <div>
+            <h2 style={{ fontSize: '24px', color: '#fff', marginBottom: '10px' }}>
+              <i className="fa-solid fa-graduation-cap" style={{ color: '#06b6d4', marginRight: '8px' }}></i>
+              <span>{profSchool}</span> Ağı & Toplulukları 🎓
+            </h2>
+
+            <div className="showcase-tabs" style={{ justifyContent: 'flex-start', marginBottom: '25px' }}>
+              <button className={`tab-btn ${schoolSubtab === 'peers' ? 'active' : ''}`} onClick={() => setSchoolSubtab('peers')}>👥 Öğrenci Arkadaşların</button>
+              <button className={`tab-btn ${schoolSubtab === 'announcements' ? 'active' : ''}`} onClick={() => setSchoolSubtab('announcements')}>📢 Duyurular & Etkinlikler</button>
+              <button className={`tab-btn ${schoolSubtab === 'clubs' ? 'active' : ''}`} onClick={() => setSchoolSubtab('clubs')}>🏛️ Kulüpler</button>
+            </div>
+
+            {schoolSubtab === 'peers' && (
+              <div className="dashboard-grid">
+                <div className="premium-card">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+                    <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#06b6d4', color: '#0f172a', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>CA</div>
+                    <div>
+                      <h3 style={{ margin: 0, fontSize: '17px' }}>Can Aksoy</h3>
+                      <span style={{ color: '#06b6d4', fontSize: '13px' }}>Bilgisayar Müh. 3. Sınıf</span>
+                    </div>
+                  </div>
+                  <p style={{ fontSize: '14px', color: '#cbd5e1' }}>React ve Python projelerinde çalışıyor.</p>
+                  <button onClick={() => setActiveChatPeer('Can Aksoy')} className="submit-btn" style={{ marginTop: '10px', padding: '8px 16px', fontSize: '13px' }}>Sohbet Başlat 💬</button>
+                </div>
+              </div>
+            )}
+
+            {schoolSubtab === 'announcements' && (
+              <div className="premium-card">
+                <h3 style={{ color: '#06b6d4', marginBottom: '15px' }}><i className="fa-solid fa-bullhorn"></i> Kampüs Duyuruları</h3>
+                <div style={{ background: 'rgba(15,23,42,0.6)', borderLeft: '4px solid #06b6d4', padding: '16px', borderRadius: '12px' }}>
+                  <strong style={{ color: '#fff', fontSize: '15px' }}>🏆 Mühendislik Proje Yarışması Başvuruları Başladı!</strong>
+                  <p style={{ color: '#cbd5e1', fontSize: '13.5px', marginTop: '6px' }}>Öğrenci kulüplerinin ortaklığında düzenlenen hackathon için takımlar kuruluyor.</p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 3: REVAÇTA ŞİRKETLER */}
         {activeTab === 'companies' && (
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px', flexWrap: 'wrap', gap: '15px' }}>
@@ -247,7 +316,7 @@ export default function DashboardOgrenci() {
           </div>
         )}
 
-        {/* SEKME: STAJ & PROJE İLANLARI */}
+        {/* TAB 4: STAJ & PROJE İLANLARI */}
         {activeTab === 'jobs' && (
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px', flexWrap: 'wrap', gap: '15px' }}>
@@ -287,7 +356,7 @@ export default function DashboardOgrenci() {
           </div>
         )}
 
-        {/* SEKME: SEKTÖR MENTÖRLERİ */}
+        {/* TAB 5: SEKTÖR MENTÖRLERİ */}
         {activeTab === 'mentor-sector' && (
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px', flexWrap: 'wrap', gap: '15px' }}>
@@ -322,7 +391,26 @@ export default function DashboardOgrenci() {
           </div>
         )}
 
-        {/* SEKME: BÖLÜM ROTALARI & KEŞİF */}
+        {/* TAB 6: ADAY İSTEKLERİ & MENTEELER */}
+        {activeTab === 'mentor-candidates' && (
+          <div>
+            <h2 style={{ fontSize: '24px', color: '#fff', marginBottom: '10px' }}>
+              <i className="fa-solid fa-user-graduate" style={{ color: '#a855f7', marginRight: '8px' }}></i>
+              Aday İstekleri & Rehberlik (Menteelerim) 🎓
+            </h2>
+            <p style={{ color: '#94a3b8', fontSize: '14px', marginBottom: '20px' }}>Mühendislik hedefleyen lise öğrencilerine üniversite deneyimlerinizi aktarın.</p>
+            <div className="dashboard-grid">
+              <div className="premium-card">
+                <h3>Ayşe Demir</h3>
+                <span className="user-badge" style={{ color: '#a855f7' }}>YKS Adayı • 12. Sınıf</span>
+                <p style={{ marginTop: '10px', fontSize: '14px', color: '#cbd5e1' }}>"Boğaziçi Bilgisayar ders yükü ve hazırlık muafiyeti hakkında soru sormak istiyorum."</p>
+                <button onClick={() => alert("Mentörlük talebini kabul ettiniz! 🤝")} className="submit-btn" style={{ marginTop: '15px', padding: '10px' }}>Talebi Kabul Et & Rehber Ol ✅</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 7: BÖLÜM ROTALARI & KEŞİF */}
         {activeTab === 'discover' && (
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px', background: 'rgba(30, 41, 59, 0.5)', padding: '18px 24px', borderRadius: '16px', border: '1px solid rgba(6, 182, 212, 0.2)' }}>
@@ -351,7 +439,7 @@ export default function DashboardOgrenci() {
           </div>
         )}
 
-        {/* SEKME: AI DANIŞMANI */}
+        {/* TAB 8: AI DANIŞMANI */}
         {activeTab === 'ai' && (
           <div className="premium-card" style={{ maxWidth: '850px', margin: '0 auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
@@ -378,27 +466,51 @@ export default function DashboardOgrenci() {
           </div>
         )}
 
-        {/* SEKME: PROFİLİM */}
+        {/* TAB 9: PROFİLİM */}
         {activeTab === 'profile' && (
-          <div className="premium-card" style={{ maxWidth: '520px', margin: '0 auto', textAlign: 'center' }}>
+          <div className="premium-card" style={{ maxWidth: '580px', margin: '0 auto', textAlign: 'center' }}>
             <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'linear-gradient(135deg, #06b6d4, #3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 15px auto', fontSize: '36px', fontWeight: 'bold' }}>
               🎓
             </div>
-            <h3 style={{ fontSize: '24px', color: '#fff', marginBottom: '4px' }}>{userName}</h3>
-            <span className="user-badge" style={{ display: 'inline-block', marginBottom: '25px' }}>Mühendislik Öğrencisi Modu</span>
+            <h3 style={{ fontSize: '24px', color: '#fff', marginBottom: '4px' }}>{profName}</h3>
+            <span className="user-badge" style={{ display: 'inline-block', marginBottom: '22px' }}>🎓 Mühendislik Öğrencisi & Mentör</span>
 
-            <div style={{ textAlign: 'left', background: 'rgba(15, 23, 42, 0.6)', padding: '20px', borderRadius: '16px', border: '1px solid rgba(6, 182, 212, 0.15)' }}>
-              <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', color: '#64748b', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', marginBottom: '4px' }}>Üniversite / Okul</label>
-                <p style={{ color: '#f1f5f9', fontSize: '15px', fontWeight: '500' }}>{userSchool}</p>
+            {/* Kişisel & Akademik Bilgiler */}
+            <div style={{ textAlign: 'left', background: 'rgba(15, 23, 42, 0.6)', padding: '20px', borderRadius: '16px', border: '1px solid rgba(6, 182, 212, 0.15)', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                <h4 style={{ color: '#06b6d4', fontSize: '13px', fontWeight: 'bold', margin: 0, textTransform: 'uppercase' }}>👤 Akademik Bilgileriniz</h4>
+                <button onClick={() => setIsEditProfileOpen(true)} className="subnav-btn" style={{ padding: '4px 12px', fontSize: '12px' }}>✏️ Düzenle</button>
               </div>
-              <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', color: '#64748b', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', marginBottom: '4px' }}>Bölüm & Sınıf</label>
-                <p style={{ color: '#06b6d4', fontSize: '15px', fontWeight: '500' }}>{userDept}</p>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                <div>
+                  <label style={{ display: 'block', color: '#64748b', fontSize: '11px', fontWeight: '600', textTransform: 'uppercase', marginBottom: '2px' }}>Ad Soyad</label>
+                  <p style={{ color: '#f1f5f9', fontSize: '14px', fontWeight: 'bold', margin: 0 }}>{profName}</p>
+                </div>
+                <div>
+                  <label style={{ display: 'block', color: '#64748b', fontSize: '11px', fontWeight: '600', textTransform: 'uppercase', marginBottom: '2px' }}>E-Posta</label>
+                  <p style={{ color: '#38bdf8', fontSize: '14px', fontWeight: 'bold', margin: 0 }}>{profEmail}</p>
+                </div>
+                <div>
+                  <label style={{ display: 'block', color: '#64748b', fontSize: '11px', fontWeight: '600', textTransform: 'uppercase', marginBottom: '2px' }}>Üniversite</label>
+                  <p style={{ color: '#f1f5f9', fontSize: '14px', fontWeight: 'bold', margin: 0 }}>{profSchool}</p>
+                </div>
+                <div>
+                  <label style={{ display: 'block', color: '#64748b', fontSize: '11px', fontWeight: '600', textTransform: 'uppercase', marginBottom: '2px' }}>Bölüm & Sınıf</label>
+                  <p style={{ color: '#06b6d4', fontSize: '14px', fontWeight: 'bold', margin: 0 }}>{profDept} ({profGrade})</p>
+                </div>
               </div>
-              <div>
-                <label style={{ display: 'block', color: '#64748b', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', marginBottom: '4px' }}>Hedeflenen Uzmanlık</label>
-                <p style={{ color: '#f1f5f9', fontSize: '15px', fontWeight: '500' }}>Yapay Zeka & Full-Stack Yazılım Mühendisliği</p>
+            </div>
+
+            {/* İstatistikler */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', textAlign: 'left' }}>
+              <div onClick={() => setIsMenteesModalOpen(true)} style={{ background: 'rgba(168,85,247,0.1)', padding: '14px', borderRadius: '12px', border: '1px solid rgba(168,85,247,0.3)', cursor: 'pointer' }}>
+                <span style={{ color: '#c084fc', fontSize: '11px', display: 'block', marginBottom: '4px' }}>🎓 Rehberlik Edilen Aday</span>
+                <strong style={{ color: '#fff', fontSize: '15px' }}>2 Aday Mentee &rarr;</strong>
+              </div>
+              <div onClick={() => setIsReviewsModalOpen(true)} style={{ background: 'rgba(245,158,11,0.1)', padding: '14px', borderRadius: '12px', border: '1px solid rgba(245,158,11,0.3)', cursor: 'pointer' }}>
+                <span style={{ color: '#f59e0b', fontSize: '11px', display: 'block', marginBottom: '4px' }}>⭐ Adaylardan Aldığım Puan</span>
+                <strong style={{ color: '#f59e0b', fontSize: '15px' }}>4.9 / 5.0 (6 Yorum) &rarr;</strong>
               </div>
             </div>
           </div>
@@ -430,7 +542,29 @@ export default function DashboardOgrenci() {
         </div>
       )}
 
-      {/* MODAL: MENTÖR DETAY */}
+      {/* MODAL: ŞİRKET MENTÖRLERİ */}
+      {selectedCompanyModal && (
+        <div className="modal-overlay active" onClick={() => setSelectedCompanyModal(null)}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '550px' }}>
+            <span className="close-modal" onClick={() => setSelectedCompanyModal(null)}>&times;</span>
+            <h2 style={{ textAlign: 'left', color: '#06b6d4', marginBottom: '5px' }}>{selectedCompanyModal.ad} Mentörleri</h2>
+            <p style={{ color: '#94a3b8', fontSize: '13px', marginBottom: '20px' }}>{selectedCompanyModal.unvan}</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {selectedCompanyModal.mentörler.map((m, idx) => (
+                <div key={idx} style={{ background: '#0f172a', padding: '14px', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block' }}>{m.isim}</strong>
+                    <span style={{ color: '#06b6d4', fontSize: '12px' }}>{m.unvan}</span>
+                  </div>
+                  <button onClick={() => { alert(`${m.isim} isimli mentöre ulaşıldı! 📩`); setSelectedCompanyModal(null); }} className="submit-btn" style={{ marginTop: 0, padding: '6px 12px', fontSize: '12px' }}>İletişime Geç 💬</button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: SEKTÖR MENTÖRÜ DETAY */}
       {selectedMentorModal && (
         <div className="modal-overlay active" onClick={() => setSelectedMentorModal(null)}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '500px', textAlign: 'center' }}>
@@ -439,7 +573,68 @@ export default function DashboardOgrenci() {
             <h3 style={{ fontSize: '22px', color: '#fff', margin: 0 }}>{selectedMentorModal.isim}</h3>
             <span style={{ color: '#06b6d4', fontSize: '14px', display: 'block', margin: '4px 0 15px 0' }}>{selectedMentorModal.unvan} @ {selectedMentorModal.şirket}</span>
             <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.6', marginBottom: '20px' }}>"{selectedMentorModal.bio}"</p>
-            <button onClick={() => { alert(`${selectedMentorModal.isim} isimli mentöre isteğiniz iletildi! 📩`); setSelectedMentorModal(null); }} className="submit-btn" style={{ width: '100%', marginTop: 0 }}>Birebir Mentörlük İstegi Gönder 📩</button>
+            <button onClick={() => { alert(`${selectedMentorModal.isim} isimli mentöre isteğiniz iletildi! 📩`); setSelectedMentorModal(null); }} className="submit-btn" style={{ width: '100%', marginTop: 0 }}>Mentörlük İsteği Gönder 📩</button>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: PROFİL DÜZENLEME */}
+      {isEditProfileOpen && (
+        <div className="modal-overlay active" onClick={() => setIsEditProfileOpen(false)}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '500px' }}>
+            <span className="close-modal" onClick={() => setIsEditProfileOpen(false)}>&times;</span>
+            <h2 style={{ textAlign: 'left', color: '#06b6d4', marginBottom: '20px' }}>Akademik Profil Düzenle ✏️</h2>
+            <form onSubmit={handleSaveProfile}>
+              <div style={{ marginBottom: '14px' }}>
+                <label style={{ display: 'block', color: '#94a3b8', fontSize: '13px', marginBottom: '6px' }}>Ad Soyad</label>
+                <input type="text" value={profName} onChange={(e) => setProfName(e.target.value)} required style={{ width: '100%', padding: '10px 14px', background: '#0f172a', border: '1px solid rgba(6,182,212,0.3)', borderRadius: '10px', color: '#fff', outline: 'none' }} />
+              </div>
+              <div style={{ marginBottom: '14px' }}>
+                <label style={{ display: 'block', color: '#94a3b8', fontSize: '13px', marginBottom: '6px' }}>Üniversite</label>
+                <input type="text" value={profSchool} onChange={(e) => setProfSchool(e.target.value)} required style={{ width: '100%', padding: '10px 14px', background: '#0f172a', border: '1px solid rgba(6,182,212,0.3)', borderRadius: '10px', color: '#fff', outline: 'none' }} />
+              </div>
+              <div style={{ marginBottom: '18px' }}>
+                <label style={{ display: 'block', color: '#94a3b8', fontSize: '13px', marginBottom: '6px' }}>Bölüm</label>
+                <input type="text" value={profDept} onChange={(e) => setProfDept(e.target.value)} required style={{ width: '100%', padding: '10px 14px', background: '#0f172a', border: '1px solid rgba(6,182,212,0.3)', borderRadius: '10px', color: '#fff', outline: 'none' }} />
+              </div>
+              <button type="submit" className="submit-btn" style={{ width: '100%', marginTop: 0 }}>Değişiklikleri Kaydet ✅</button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: MENTEELERİM LİSTESİ */}
+      {isMenteesModalOpen && (
+        <div className="modal-overlay active" onClick={() => setIsMenteesModalOpen(false)}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '500px' }}>
+            <span className="close-modal" onClick={() => setIsMenteesModalOpen(false)}>&times;</span>
+            <h2 style={{ textAlign: 'left', color: '#a855f7', marginBottom: '15px' }}>🎓 Menteelerim (Aday Öğrenciler)</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div style={{ background: '#0f172a', padding: '12px', borderRadius: '10px' }}>
+                <strong style={{ color: '#fff', display: 'block' }}>Ayşe Demir</strong>
+                <span style={{ color: '#94a3b8', fontSize: '12px' }}>Kadıköy Anadolu Lisesi • YKS 2026</span>
+              </div>
+              <div style={{ background: '#0f172a', padding: '12px', borderRadius: '10px' }}>
+                <strong style={{ color: '#fff', display: 'block' }}>Can Yılmaz</strong>
+                <span style={{ color: '#94a3b8', fontSize: '12px' }}>Atatürk Fen Lisesi • YKS 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: ANONİM YORUMLAR */}
+      {isReviewsModalOpen && (
+        <div className="modal-overlay active" onClick={() => setIsReviewsModalOpen(false)}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '500px' }}>
+            <span className="close-modal" onClick={() => setIsReviewsModalOpen(false)}>&times;</span>
+            <h2 style={{ textAlign: 'left', color: '#f59e0b', marginBottom: '15px' }}>⭐ Adaylardan Aldığınız Yorumlar</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div style={{ background: '#0f172a', padding: '12px', borderRadius: '10px' }}>
+                <strong style={{ color: '#f59e0b', fontSize: '13px' }}>⭐ 5.0 — "Çok yardımcı oldu!"</strong>
+                <p style={{ color: '#cbd5e1', fontSize: '13px', margin: '4px 0 0 0' }}>Boğaziçi Bilgisayar tercih dönemimde aklımdaki tüm soruları giderdi.</p>
+              </div>
+            </div>
           </div>
         </div>
       )}
