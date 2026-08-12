@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EngineersPath - Keşfet & Rehberlik</title>
+    <!-- FontAwesome kütüphanesi -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ================= GENEL VE GECE MODU TEMASI ================= */
+        html, body {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #020617, #1e293b);
+            background-size: 400% 400%;
+            animation: gradientBg 12s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* NAVBAR HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
+            position: sticky;
+            top: 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #06b6d4;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            text-decoration: none;
+        }
+
+        .back-home-btn {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2));
+            color: #06b6d4;
+            border: 1px solid #06b6d4;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+        }
+
+        .back-home-btn:hover {
+            background-color: #06b6d4;
+            color: #0f172a;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+        }
+
+        /* PAGE BANNER */
+        .page-banner {
+            text-align: center;
+            padding: 60px 20px 30px 20px;
+            z-index: 5;
+        }
+
+        .page-banner h1 {
+            font-size: 48px;
+            color: #ffffff;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .page-banner h1 span {
+            color: #06b6d4;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        }
+
+        .page-banner p {
+            color: #94a3b8;
+            font-size: 19px;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* SHOWCASE SECTION */
+        .showcase-section {
+            padding: 40px 20px 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            z-index: 5;
+            position: relative;
+        }
+
+        /* Tab Butonları */
+        .showcase-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: rgba(30, 41, 59, 0.6);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab-btn i {
+            font-size: 18px;
+            color: #06b6d4;
+            transition: transform 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background-color: rgba(6, 182, 212, 0.15);
+            border-color: #06b6d4;
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.2);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            color: #0f172a;
+            border-color: #06b6d4;
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+            font-weight: 700;
+        }
+
+        .tab-btn.active i {
+            color: #0f172a;
+        }
+
+        /* Showcase İçerik Kartı */
+        .showcase-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 24px;
+            padding: 45px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        @media (max-width: 900px) {
+            .showcase-card {
+                grid-template-columns: 1fr;
+                padding: 25px;
+            }
+        }
+
+        .showcase-tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .showcase-tab-content.active {
+            display: grid;
+        }
+
+        .tab-text h3 {
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tab-text h3 i {
+            color: #06b6d4;
+        }
+
+        .tab-text p {
+            color: #cbd5e1;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .feature-bullets {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .feature-bullets li {
+            color: #e2e8f0;
+            font-size: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-bullets li i {
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.15);
+            padding: 6px;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+
+        .tab-visual {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-badge {
+            align-self: flex-start;
+            background: rgba(6, 182, 212, 0.15);
+            border: 1px solid #06b6d4;
+            color: #38bdf8;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .visual-stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .stat-box .number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #06b6d4;
+            margin-bottom: 4px;
+        }
+
+        .stat-box .label {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        /* ================= DISİPLİN KARTLARI GRID YAPISI ================= */
+        .discipline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .discipline-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            border-radius: 20px;
+            padding: 28px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discipline-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .discipline-card:hover {
+            transform: translateY(-8px);
+            border-color: #06b6d4;
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.35);
+        }
+
+        .discipline-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .discipline-card .card-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            background: rgba(6, 182, 212, 0.15);
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            color: #06b6d4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .discipline-card:hover .card-icon {
+            background: #06b6d4;
+            color: #0f172a;
+            transform: scale(1.1) rotate(4deg);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+        }
+
+        .discipline-tag {
+            font-size: 12px;
+            font-weight: 700;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+
+        .discipline-card h3 {
+            font-size: 20px;
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .discipline-card p {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .discipline-btn {
+            background: transparent !important;
+            border: none !important;
+            outline: none !important;
+            padding: 0 !important;
+            cursor: pointer;
+            color: #06b6d4;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .discipline-btn:hover {
+            color: #22d3ee;
+            transform: translateX(4px);
+            background: transparent !important;
+        }
+
+        /* HEMEN ÜYE OL CTA BANNER */
+        .cta-banner-section {
+            padding: 40px 20px 100px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            z-index: 5;
+            position: relative;
+        }
+
+        .cta-banner-box {
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.8), rgba(15, 23, 42, 0.9));
+            border: 2px solid rgba(6, 182, 212, 0.4);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(6, 182, 212, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner-box h2 {
+            font-size: 42px;
+            color: #ffffff;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .cta-banner-box h2 span {
+            color: #06b6d4;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
+        .cta-banner-box p {
+            font-size: 19px;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            line-height: 1.7;
+        }
+
+        .cta-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .primary-register-btn {
+            background: linear-gradient(135deg, #06b6d4, #2563eb);
+            color: #ffffff;
+            padding: 18px 45px;
+            font-size: 19px;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .primary-register-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.7);
+            background: linear-gradient(135deg, #22d3ee, #3b82f6);
+        }
+
+        .secondary-login-btn {
+            background-color: transparent;
+            color: #ffffff;
+            padding: 18px 40px;
+            font-size: 19px;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .secondary-login-btn:hover {
+            border-color: #06b6d4;
+            color: #06b6d4;
+            background: rgba(6, 182, 212, 0.1);
+            transform: translateY(-4px);
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #1e293b;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 25px;
+            width: 90%; 
+            max-width: 500px;
+            padding: 35px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.8) translateY(-30px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; 
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1) translateY(0);
+        }
+
+        /* DİSİPLİN DETAY MODAL TASARIMI */
+        .discipline-detail-modal-box {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 2px solid rgba(6, 182, 212, 0.4);
+            border-radius: 25px;
+            width: 92%; 
+            max-width: 800px;
+            max-height: 88vh;
+            overflow-y: auto;
+            padding: 35px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(6, 182, 212, 0.2);
+            transform: scale(0.85) translateY(-30px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            color: #ffffff;
+        }
+
+        .modal-overlay.active .discipline-detail-modal-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .detail-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .detail-modal-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2));
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #06b6d4;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            flex-shrink: 0;
+        }
+
+        .detail-modal-title-group h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 4px;
+            text-align: left;
+        }
+
+        .detail-modal-badge {
+            display: inline-block;
+            background: rgba(6, 182, 212, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .detail-section {
+            margin-bottom: 22px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .detail-section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #06b6d4;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-section-text {
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .info-pill {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            color: #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .info-pill:hover {
+            border-color: #06b6d4;
+            background: rgba(6, 182, 212, 0.15);
+            color: #06b6d4;
+            transform: translateY(-2px);
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .course-card-item {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .course-card-item i {
+            color: #06b6d4;
+            font-size: 13px;
+        }
+
+        .detail-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 25px;
+        }
+
+        .btn-modal-mentor {
+            background: linear-gradient(135deg, #06b6d4, #2563eb);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-modal-mentor:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+            background: linear-gradient(135deg, #22d3ee, #3b82f6);
+        }
+
+        .btn-modal-close {
+            background: transparent;
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal-close:hover {
+            border-color: #cbd5e1;
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
+            color: #94a3b8;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: #06b6d4;
+        }
+
+        .modal-box h2 {
+            color: #ffffff; 
+            margin-bottom: 25px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .modal-box h2 span {
+            color: #06b6d4;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(15, 23, 42, 0.6);
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #06b6d4;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #06b6d4;
+            color: #0f172a;
+            padding: 14px;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .submit-btn:hover {
+            background-color: #22d3ee;
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 50px 20px 30px 20px;
+            z-index: 10;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-brand .logo {
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .footer-brand p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #06b6d4;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-socials a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #06b6d4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-socials a:hover {
+            background: #06b6d4;
+            color: #0f172a;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom-line {
+            max-width: 1200px;
+            margin: 30px auto 0 auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            color: #475569;
+            font-size: 13px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR HEADER -->
+    <header>
+        <a href="index.html" class="logo">EngineersPath</a>
+        <a href="index.html" class="back-home-btn">
+            <i class="fa-solid fa-arrow-left"></i> Ana Sayfaya / Panele Dön
+        </a>
+    </header>
+
+    <!-- PAGE BANNER -->
+    <section class="page-banner">
+        <h1>Mühendislik Platformu <span>Keşif Alanı</span> 🚀</h1>
+        <p>EngineersPath'in sunduğu tüm akademik, kariyer ve rehberlik imkanlarını inceleyin.</p>
+    </section>
+
+    <!-- PLATFORM SHOWCASE -->
+    <section class="showcase-section" id="showcase">
+        <!-- Sekmeler -->
+        <div class="showcase-tabs">
+            <button class="tab-btn active" onclick="switchTab('disciplinesTab', this)">
+                <i class="fa-solid fa-compass-drafting"></i> Mühendislik Disiplinleri
+            </button>
+            <button class="tab-btn" onclick="switchTab('mentorshipTab', this)">
+                <i class="fa-solid fa-user-graduate"></i> Birebir Mentorluk
+            </button>
+            <button class="tab-btn" onclick="switchTab('opportunitiesTab', this)">
+                <i class="fa-solid fa-briefcase"></i> Staj & Proje Fırsatları
+            </button>
+        </div>
+
+        <!-- Tab 1: Mühendislik Disiplinleri -->
+        <div class="showcase-tab-content active" id="disciplinesTab">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <h3 style="font-size: 30px; color: white; margin-bottom: 8px;">
+                    <i class="fa-solid fa-compass-drafting" style="color: #06b6d4;"></i> Tüm Mühendislik Disiplinleri
+                </h3>
+                <p style="color: #94a3b8; font-size: 16px;">Geleceğin dünyasını şekillendiren mühendislik dallarını keşfet ve uzmanlık alanını belirle.</p>
+            </div>
+
+            <div class="discipline-grid">
+                <!-- 1. Yazılım & Bilgisayar -->
+                <div class="discipline-card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                            <span class="discipline-tag">Yazılım & AI</span>
+                        </div>
+                        <h3>Yazılım / Bilgisayar Müh.</h3>
+                        <p>Backend, Frontend, Yapay Zeka, Siber Güvenlik ve Mobil geliştirme kariyer yollarını keşfet.</p>
+                    </div>
+                    <button type="button" onclick="openDisciplineDetail('yazilim')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <!-- 2. Elektrik-Elektronik -->
+                <div class="discipline-card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+                            <span class="discipline-tag">Enerji & Sistem</span>
+                        </div>
+                        <h3>Elektrik-Elektronik Müh.</h3>
+                        <p>Devre tasarımı, gömülü sistemler, yenilenebilir enerji ve otomasyon teknolojilerini incele.</p>
+                    </div>
+                    <button type="button" onclick="openDisciplineDetail('elektrik')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <!-- 3. Makine Mühendisliği -->
+                <div class="discipline-card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon"><i class="fa-solid fa-gears"></i></div>
+                            <span class="discipline-tag">Tasarım & Üretim</span>
+                        </div>
+                        <h3>Makine Mühendisliği</h3>
+                        <p>CAD/CAM tasarımı, imalat, robotik, mekatronik ve termodinamik alt alanlarını gör.</p>
+                    </div>
+                    <button type="button" onclick="openDisciplineDetail('makine')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <!-- 4. Endüstri Mühendisliği -->
+                <div class="discipline-card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon"><i class="fa-solid fa-sitemap"></i></div>
+                            <span class="discipline-tag">Veri & Yönetim</span>
+                        </div>
+                        <h3>Endüstri Mühendisliği</h3>
+                        <p>Süreç optimizasyonu, tedarik zinciri, veri analitiği ve üretim yönetimi alanlarını keşfet.</p>
+                    </div>
+                    <button type="button" onclick="openDisciplineDetail('endustri')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <!-- 5. İnşaat Mühendisliği -->
+                <div class="discipline-card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+                            <span class="discipline-tag">Yapı & Proje</span>
+                        </div>
+                        <h3>İnşaat Mühendisliği</h3>
+                        <p>Akıllı yapılar, altyapı projeleri, geoteknik ve deprem dayanımlı bina tasarımını incele.</p>
+                    </div>
+                    <button type="button" onclick="openDisciplineDetail('insaat')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <!-- 6. Kimya Mühendisliği -->
+                <div class="discipline-card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon"><i class="fa-solid fa-flask"></i></div>
+                            <span class="discipline-tag">Proses & Malzeme</span>
+                        </div>
+                        <h3>Kimya Mühendisliği</h3>
+                        <p>Proses tasarımı, batarya teknolojileri, polimer ve sentez sistemleri kariyer alanları.</p>
+                    </div>
+                    <button type="button" onclick="openDisciplineDetail('kimya')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <!-- 7. Biyomedikal Mühendisliği -->
+                <div class="discipline-card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                            <span class="discipline-tag">Sağlık & Medikal</span>
+                        </div>
+                        <h3>Biyomedikal Mühendisliği</h3>
+                        <p>Tıbbi cihaz tasarımı, biyomekanik, yapay organlar ve sağlık teknolojilerini incele.</p>
+                    </div>
+                    <button type="button" onclick="openDisciplineDetail('biyomedikal')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <!-- 8. Havacılık ve Uzay -->
+                <div class="discipline-card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon"><i class="fa-solid fa-plane"></i></div>
+                            <span class="discipline-tag">Savunma & Uzay</span>
+                        </div>
+                        <h3>Havacılık ve Uzay Müh.</h3>
+                        <p>Aerodinamik, İHA/SİHA sistemleri, jet motorları ve uydu teknolojilerini keşfet.</p>
+                    </div>
+                    <button type="button" onclick="openDisciplineDetail('havacilik')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <!-- 9. Gemi ve Deniz Teknolojisi -->
+                <div class="discipline-card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon"><i class="fa-solid fa-ship"></i></div>
+                            <span class="discipline-tag">Denizcilik</span>
+                        </div>
+                        <h3>Gemi & Deniz Teknolojisi</h3>
+                        <p>Gemi tasarımı, marin hidrodinamik, marinalar ve açık deniz yapılarını incele.</p>
+                    </div>
+                    <button type="button" onclick="openDisciplineDetail('gemi')" class="discipline-btn">Detaylı İncele <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Mentorluk -->
+        <div class="showcase-card showcase-tab-content" id="mentorshipTab">
+            <div class="tab-text">
+                <h3><i class="fa-solid fa-people-arrows"></i> Tecrübeli Mühendislerden Rehberlik</h3>
+                <p>Sektörde çalışan kıdemli mühendislerle eşleş. CV incelemesi, mülakat simülasyonu ve kariyer tavsiyeleri ile hedeflerine daha hızlı ulaş.</p>
+                <ul class="feature-bullets">
+                    <li><i class="fa-solid fa-check"></i> Doğrudan Birebir Canlı Görüşme</li>
+                    <li><i class="fa-solid fa-check"></i> Şirket Kültürleri & Mülakat İpuçları</li>
+                    <li><i class="fa-solid fa-check"></i> Onaylı ve Deneyimli Mentor Kadrosu</li>
+                </ul>
+                <button onclick="openModal('authNoticeModal')" class="primary-register-btn" style="margin-top: 15px; font-size: 15px; padding: 12px 28px; border: none; cursor: pointer;">
+                    <i class="fa-solid fa-user-lock"></i> Mentor Randevusu Al (Üye Ol)
+                </button>
+            </div>
+            <div class="tab-visual">
+                <div class="visual-badge">🤝 MENTORLUK AĞI</div>
+                <div class="visual-stat-grid">
+                    <div class="stat-box">
+                        <div class="number">150+</div>
+                        <div class="label">Aktif Mentor</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">4.9 / 5</div>
+                        <div class="label">Puanlama</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">1.200+</div>
+                        <div class="label">Görüşme</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">7/24</div>
+                        <div class="label">Erişim</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Staj & Proje Fırsatları -->
+        <div class="showcase-card showcase-tab-content" id="opportunitiesTab">
+            <div class="tab-text">
+                <h3><i class="fa-solid fa-lightbulb"></i> Gerçek Projeler & Staj İlanları</h3>
+                <p>Öğrencilik yıllarında portfolyonu güçlendir. Topluluk projelerine katıl, şirketlerin staj ve yeni mezun ilanlarını yakından takip et.</p>
+                <ul class="feature-bullets">
+                    <li><i class="fa-solid fa-check"></i> Doğrulanmış Şirket İlanları</li>
+                    <li><i class="fa-solid fa-check"></i> Açık Kaynak Topluluk Projeleri</li>
+                    <li><i class="fa-solid fa-check"></i> Hackathon ve Yarışma Duyuruları</li>
+                </ul>
+            </div>
+            <div class="tab-visual">
+                <div class="visual-badge">💼 FIRSAT MERKEZİ</div>
+                <div class="visual-stat-grid">
+                    <div class="stat-box">
+                        <div class="number">85+</div>
+                        <div class="label">Partner Şirket</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">300+</div>
+                        <div class="label">Aktif İlan</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">40+</div>
+                        <div class="label">Takım Projesi</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">Haftalık</div>
+                        <div class="label">Güncelleme</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEMEN ÜYE OL CTA BANNER -->
+    <section class="cta-banner-section">
+        <div class="cta-banner-box">
+            <h2>Geleceğin Mühendisi Olmaya <span>Hazır Mısın?</span> 🚀</h2>
+            <p>Binlerce mühendis adayı ve deneyimli mentor EngineersPath topluluğunda buluşuyor. Sen de hemen yerini al, kariyer yolculuğunda bir adım öne geç!</p>
+            <div class="cta-btn-group">
+                <a href="register.html" class="primary-register-btn">
+                    <i class="fa-solid fa-user-plus"></i> Hemen Ücretsiz Kayıt Ol
+                </a>
+                <button onclick="openModal('loginModal')" class="secondary-login-btn">
+                    <i class="fa-solid fa-right-to-bracket"></i> Hesabın Var Mı? Giriş Yap
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">EngineersPath</a>
+                <p>Mühendislik Kariyer Yolculuğunuzdaki Güvenilir Rehberiniz.</p>
+            </div>
+            <ul class="footer-links">
+                <li><a href="kesfet.html">Keşfet</a></li>
+                <li><a href="kesfet.html?tab=disciplines">Disiplinler</a></li>
+                <li><a href="register.html">Kayıt Ol</a></li>
+            </ul>
+            <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom-line">
+            &copy; 2026 EngineersPath. Tüm hakları saklıdır. Mühendislik tutkusuyla tasarlandı. ⚙️✨
+        </div>
+    </footer>
+
+    <!-- ÜYELİK UYARI MODAL PENCERESİ -->
+    <div class="modal-overlay" id="authNoticeModal">
+        <div class="modal-box" style="text-align: center;">
+            <span class="close-modal" onclick="closeModal('authNoticeModal')">&times;</span>
+            <div style="font-size: 55px; color: #06b6d4; margin-bottom: 15px; text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);">
+                <i class="fa-solid fa-user-lock"></i>
+            </div>
+            <h2 style="margin-bottom: 12px; font-size: 26px;">Bu Özellik İçin <span>Üye Olmalısınız!</span> 🔒</h2>
+            <p style="color: #cbd5e1; font-size: 15px; line-height: 1.7; margin-bottom: 25px;">
+                Mentorlarla birebir görüşme yapmak, CV incelemesi talep etmek ve staj/proje ilanlarına başvurmak için üyeliğiniz bulunmalıdır.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <button type="button" onclick="closeModal('authNoticeModal'); openModal('loginModal');" class="submit-btn" style="margin-top: 0; background: linear-gradient(135deg, #06b6d4, #2563eb); color: white;">
+                    <i class="fa-solid fa-right-to-bracket"></i> Hesabın Var Mı? Giriş Yap
+                </button>
+                <a href="register.html" class="submit-btn" style="text-decoration: none; display: block; background: transparent; border: 2px solid #06b6d4; color: #06b6d4; text-align: center;">
+                    <i class="fa-solid fa-user-plus"></i> Ücretsiz Kayıt Ol
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- GİRİŞ YAP MODAL PENCERESİ -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-box">
+            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Tekrar <span>Hoş Geldin!</span></h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Kullanıcı Adı (Ad Soyad)</label>
+                    <input type="text" id="loginName" placeholder="Helin Çelik" required>
+                </div>
+                <div class="form-group">
+                    <label>Şifre</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="submit-btn">Giriş Yap</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- DİSİPLİN DETAY MODAL PENCERESİ -->
+    <div class="modal-overlay" id="disciplineDetailModal">
+        <div class="discipline-detail-modal-box">
+            <span class="close-modal" onclick="closeModal('disciplineDetailModal')">&times;</span>
+            <div class="detail-modal-header">
+                <div class="detail-modal-icon" id="modalDisciplineIcon">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <div class="detail-modal-title-group">
+                    <h2 id="modalDisciplineTitle">Yazılım / Bilgisayar Müh.</h2>
+                    <span class="detail-modal-badge" id="modalDisciplineBadge">Yazılım & AI</span>
+                </div>
+            </div>
+
+            <!-- 1. Genel Bakış -->
+            <div class="detail-section">
+                <div class="detail-section-title">
+                    <i class="fa-solid fa-circle-info"></i> Genel Bakış & Misyon
+                </div>
+                <p class="detail-section-text" id="modalDisciplineOverview">
+                    İçerik yükleniyor...
+                </p>
+            </div>
+
+            <!-- 2. Alt Branşlar & Kariyer Yolları -->
+            <div class="detail-section">
+                <div class="detail-section-title">
+                    <i class="fa-solid fa-route"></i> Uzmanlık Alanları & Alt Branşlar
+                </div>
+                <div class="pill-container" id="modalDisciplineSubbranches">
+                </div>
+            </div>
+
+            <!-- 3. Kullanılan Araçlar & Teknolojiler -->
+            <div class="detail-section">
+                <div class="detail-section-title">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> Temel Araçlar & Teknolojiler
+                </div>
+                <div class="pill-container" id="modalDisciplineTools">
+                </div>
+            </div>
+
+            <!-- 4. Öne Çıkan Üniversite Dersleri -->
+            <div class="detail-section">
+                <div class="detail-section-title">
+                    <i class="fa-solid fa-graduation-cap"></i> Temel Lisans Dersleri
+                </div>
+                <div class="course-grid" id="modalDisciplineCourses">
+                </div>
+            </div>
+
+            <!-- 5. Sektör Durumu & Gelecek Beklentisi -->
+            <div class="detail-section">
+                <div class="detail-section-title">
+                    <i class="fa-solid fa-chart-line"></i> Sektör Görünümü & Gelecek Beklentisi
+                </div>
+                <p class="detail-section-text" id="modalDisciplineOutlook">
+                </p>
+            </div>
+
+            <!-- Modal Alt Butonları -->
+            <div class="detail-modal-footer">
+                <button type="button" class="btn-modal-mentor" onclick="goToMentorsFromModal()">
+                    <i class="fa-solid fa-comments"></i> Mentorları Keşfet
+                </button>
+                <button type="button" class="btn-modal-close" onclick="closeModal('disciplineDetailModal')">
+                    Kapat
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT KODLARI -->
+    <script>
+        const disciplineData = {
+            yazilim: {
+                title: "Yazılım / Bilgisayar Müh.",
+                badge: "Yazılım & AI",
+                icon: "fa-laptop-code",
+                overview: "Yazılım ve Bilgisayar Mühendisliği; dijital çağın mimarisini oluşturan kodlar, yapay zeka modelleri, veri yapıları ve güvenlik altyapılarını tasarlar. Sağlıktan finansa, oyundan uzay teknolojilerine kadar tüm alanların merkezindedir.",
+                subbranches: ["Backend & API Architecture", "Frontend & UI/UX Design", "Yapay Zeka & Derin Öğrenme", "Siber Güvenlik & Kriptoloji", "Mobil Uygulama (iOS/Android)", "DevOps & Bulut Sistemleri"],
+                tools: ["Python", "JavaScript / TypeScript", "C / C++", "Java", "React / Next.js", "Docker & Kubernetes", "SQL / NoSQL", "Git"],
+                courses: ["Veri Yapıları & Algoritmalar", "Nesne Yönelimli Programlama", "Veritabanı Yönetimi", "İşletim Sistemleri", "Bilgisayar Ağları", "Yapay Zeka & ML"],
+                outlook: "🔥 %98 Yüksek Talep | 🌐 Uzaktan (Remote) Çalışma İmkânı | 🚀 Global İş ve Dolar/Euro Kazanç Fırsatları"
+            },
+            elektrik: {
+                title: "Elektrik-Elektronik Müh.",
+                badge: "Enerji & Sistem",
+                icon: "fa-bolt",
+                overview: "Elektrik-Elektronik Mühendisliği; mikroçiplerden yenilenebilir enerji santrallerine, haberleşme uydularından Donanım/Gömülü yazılımlara kadar elektronun gücünü hayatın hizmetine sunar.",
+                subbranches: ["Gömülü Sistemler (Embedded Systems)", "Mikroelektronik & Çip Tasarımı", "Haberleşme & Sinyal İşleme", "Güç Elektroniği & Yenilenebilir Enerji", "Endüstriyel Otomasyon & PLC"],
+                tools: ["C / C++", "MATLAB / Simulink", "Altium Designer", "KiCAD", "PLC Programlama", "Verilog / VHDL", "Python"],
+                courses: ["Devre Teorisi I-II", "Elektronik Devreler", "Sinyaller ve Sistemler", "Mikroişlemciler", "Elektromanyetik Dalgalar", "Kontrol Sistemleri"],
+                outlook: "⚡ %92 Yüksek Talep | 🛡️ Savunma Sanayii & Otonom Araçlar Odaklı | ☀️ Yeşil Enerji Dönüşümü"
+            },
+            makine: {
+                title: "Makine Mühendisliği",
+                badge: "Tasarım & Üretim",
+                icon: "fa-gears",
+                overview: "Makine Mühendisliği; hareket eden her sistemin kuvvet, termodinamik, akışkanlar ve malzeme analizini gerçekleştirerek fikri fiziksel ürüne dönüştüren temel disiplindir.",
+                subbranches: ["Mekanik Tasarım & CAD", "İmalat & Üretim Yöntemleri", "Termodinamik & Isı Transferi", "Mekatronik & Robotik", "Otomotiv & Savunma Sistemleri"],
+                tools: ["SolidWorks", "CATIA", "AutoCAD", "ANSYS (FEA/CFD)", "MATLAB", "CNC G-Code", "Python"],
+                courses: ["Statik & Dinamik", "Mukavemet I-II", "Termodinamik", "Akışkanlar Mekaniği", "Makine Elemanları", "İmal Usulleri"],
+                outlook: "⚙️ %90 İstikrarlı Talep | 🚜 İmalat & Sanayi Sektörünün Ana Omurgası | 🤖 Robotik & Mekatronik Entegrasyonu"
+            },
+            endustri: {
+                title: "Endüstri Mühendisliği",
+                badge: "Veri & Yönetim",
+                icon: "fa-sitemap",
+                overview: "Endüstri Mühendisliği; insan, makine, bilgi ve finans kaynaklarını entegre ederek karmaşık sistemlerin verimliliğini ve kalitesini matematiksel optimizasyonla artıran yönetsel mühendisliktir.",
+                subbranches: ["Yöneylem Araştırması & Optimizasyon", "Veri Analitiği & Data Science", "Tedarik Zinciri & Lojistik", "Yalın Üretim (Lean Six Sigma)", "ERP & Süreç Yönetimi"],
+                tools: ["Python / R", "SQL", "SAP / ERP", "Arena / Simio", "Power BI / Tableau", "Minitab", "Advanced Excel"],
+                courses: ["Yöneylem Araştırması I-II", "İstatistik ve Olasılık", "Üretim Planlama ve Kontrol", "Kalite Yönetimi", "Benzetim (Simülasyon)", "Maliyet Muhasebesi"],
+                outlook: "📊 %95 Geniş Esneklik | 💼 Finans, Lojistik, E-Ticaret ve Teknoloji Sektörlerinde Üst Düzey Yöneticilik | 🎯 Veri Odaklı Karar Sistemleri"
+            },
+            insaat: {
+                title: "İnşaat Mühendisliği",
+                badge: "Yapı & Proje",
+                icon: "fa-compass-drafting",
+                overview: "İnşaat Mühendisliği; şehirlerin altyapılarını, gökdelenleri, köprüleri, tünelleri ve depreme dayanıklı modern yaşam alanlarını tasarlayan, inşa eden köklü yapı disiplinidir.",
+                subbranches: ["Yapı Statiği & Deprem Mühendisliği", "Geoteknik & Zemin Mekaniği", "Ulaştırma & Karayolu/Demiryolu", "Hidrolik & Su Yapıları", "Proje Yönetimi & BIM"],
+                tools: ["AutoCAD", "SAP2000", "ETABS", "Revit (BIM)", "Primavera P6", "MS Project", "GEO5"],
+                courses: ["Yapı Statiği I-II", "Betonarme", "Zemin Mekaniği", "Akışkanlar Mekaniği & Hidrolik", "Şantiye Yönetimi", "Çelik Yapılar"],
+                outlook: "🏗️ %88 Yüksek Proje Hacmi | 🌍 Uluslararası Yurtdışı Şantiye & Proje Yönetimi Fırsatları | 🏙️ Akıllı Bina Dönüşümü"
+            },
+            kimya: {
+                title: "Kimya Mühendisliği",
+                badge: "Proses & Malzeme",
+                icon: "fa-flask",
+                overview: "Kimya Mühendisliği; hammadde ve moleküllerin güvenli, sürdürülebilir ve yüksek katma değerli ürünlere (ilaç, batarya, kozmetik, polimer) dönüşmesini sağlayan proses disiplinidir.",
+                subbranches: ["Proses Tasarımı & Simülasyonu", "Batarya & Enerji Depolama", "Polimer & Nanoteknoloji", "Petrokimya & Rafineri", "İlaç & Biyoteknoloji Sanayii"],
+                tools: ["Aspen Plus / HYSYS", "ChemCAD", "MATLAB", "COMSOL Multiphysics", "Minitab", "LabVIEW"],
+                courses: ["Kütle ve Isı Transferi", "Kimyasal Reaksiyon Mühendisliği", "Termodinamik", "Proses Kontrol", "Akışkanlar Mekaniği", "Ayırma İşlemleri"],
+                outlook: "🧪 %90 Büyüyen Sektör | 🔋 Batarya Teknolojileri ve Yenilikçi Malzeme Patlaması | 💊 İlaç ve Kimya Devleri"
+            },
+            biyomedikal: {
+                title: "Biyomedikal Mühendisliği",
+                badge: "Sağlık & Medikal",
+                icon: "fa-heart-pulse",
+                overview: "Biyomedikal Mühendisliği; tıbbi teşhis ve tedavi cihazları, biyonik protezler, yapay organlar ve medikal yazılımlar geliştirerek insan yaşam kalitesini artıran disiplindir.",
+                subbranches: ["Tıbbi Görüntüleme Sistemleri", "Biyomekanik & Protez Tasarımı", "Biyosinyal İşleme & Yapay Zeka", "Klinik Mühendislik", "Doku Mühendisliği & Biyomateryal"],
+                tools: ["MATLAB / Simulink", "LabVIEW", "SolidWorks Medical", "Python (Medical AI)", "DICOM Viewers", "SPSS"],
+                courses: ["Biyomedikal Sinyal İşleme", "Tıbbi Cihaz Elektroniği", "Biyomekanik", "İnsan Anatomisi & Fizyolojisi", "Biyomateryaller"],
+                outlook: "🩺 %93 Medikal Teknoloji Devrimi | 🦾 Biyonik Protez & Yapay Organ Teknolojisi | 📈 Yüksek Global Yatırım"
+            },
+            havacilik: {
+                title: "Havacılık ve Uzay Müh.",
+                badge: "Savunma & Uzay",
+                icon: "fa-plane",
+                overview: "Havacılık ve Uzay Mühendisliği; uçak, helikopter, İHA/SİHA, uydu ve roketlerin aerodinamik, itki, kontrol ve yapısal tasarımlarını yapan yüksek teknolojili prestij alanıdır.",
+                subbranches: ["Aerodinamik & CFD Analizleri", "İtki Sistemleri & Jet Motorları", "Uçuş Dinamiği & Kontrol", "Aviyonik & Otonom Sistemler", "Uydu ve Uzay Yapıları"],
+                tools: ["OpenFOAM", "ANSYS Fluent", "CATIA V5/V6", "MATLAB / Simulink", "ROS (Robot Operating System)", "C++ / Python"],
+                courses: ["Aerodinamik I-II", "Uçuş Mekaniği", "İtki Sistemleri", "Gaz Dinamiği", "Uçak Yapı ve Malzemeleri", "Aviyonik Sistemler"],
+                outlook: "🚀 %96 Çok Yüksek Prestij | 🛡️ Yerli Savunma ve Uzay Sanayii (Baykar, TUSAŞ, Aselsan, Roketsan) | 🌌 Uzay Çağı Vizyonu"
+            },
+            gemi: {
+                title: "Gemi & Deniz Teknolojisi",
+                badge: "Denizcilik",
+                icon: "fa-ship",
+                overview: "Gemi ve Deniz Teknolojisi Mühendisliği; yük ve savaş gemilerinden lüks yatlara, açık deniz rüzgar platformlarından marinalara kadar tüm marin yapıları tasarlar ve yönetir.",
+                subbranches: ["Gemi Tasarımı & Hidrodinamik", "Tersane İmalat & Üretim Yönetimi", "Lüks Yat Tasarımı & İhracatı", "Offshore (Açık Deniz) Yapıları", "Marin Sevk Sistemleri"],
+                tools: ["Maxsurf", "Rhino 3D", "AutoCAD Marine", "ANSYS Hydrodynamics", "SolidWorks", "Python"],
+                courses: ["Gemi Hidrodinamiği", "Gemi Statiği ve Sevk", "Tersane Organizasyonu", "Deniz Yapıları", "Marin Motorlar ve Sevk"],
+                outlook: "⚓ %89 Küresel Sektör | 💵 Uluslararası Dolar/Euro Kazanç İmkânı | 🛳️ Türkiye'nin Dünya Lideri Yat İhracat Gücü"
+            }
+        };
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function openDisciplineDetail(key) {
+            const data = disciplineData[key];
+            if (!data) return;
+
+            document.getElementById('modalDisciplineIcon').innerHTML = `<i class="fa-solid ${data.icon}"></i>`;
+            document.getElementById('modalDisciplineTitle').innerText = data.title;
+            document.getElementById('modalDisciplineBadge').innerText = data.badge;
+            document.getElementById('modalDisciplineOverview').innerText = data.overview;
+            document.getElementById('modalDisciplineOutlook').innerText = data.outlook;
+
+            // Subbranches
+            const subContainer = document.getElementById('modalDisciplineSubbranches');
+            subContainer.innerHTML = data.subbranches.map(sb => `<span class="info-pill"><i class="fa-solid fa-check" style="color:#10b981;"></i> ${sb}</span>`).join('');
+
+            // Tools
+            const toolContainer = document.getElementById('modalDisciplineTools');
+            toolContainer.innerHTML = data.tools.map(tl => `<span class="info-pill"><i class="fa-solid fa-code" style="color:#06b6d4;"></i> ${tl}</span>`).join('');
+
+            // Courses
+            const courseContainer = document.getElementById('modalDisciplineCourses');
+            courseContainer.innerHTML = data.courses.map(c => `<div class="course-card-item"><i class="fa-solid fa-book"></i> ${c}</div>`).join('');
+
+            openModal('disciplineDetailModal');
+        }
+
+        function goToMentorsFromModal() {
+            closeModal('disciplineDetailModal');
+            openModal('authNoticeModal');
+        }
+
+        function switchTab(tabId, element) {
+            const tabContents = document.querySelectorAll('.showcase-tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabParam = urlParams.get('tab');
+            if (tabParam === 'disciplines') {
+                const btn = document.querySelector(".tab-btn[onclick*='disciplinesTab']");
+                if (btn) switchTab('disciplinesTab', btn);
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const adSoyad = document.getElementById('loginName').value;
+            const sifre = document.getElementById('loginPassword').value;
+
+            try {
+                const cevap = await fetch('http://127.0.0.1:3000/api/giris-yap', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ kullanici_adi: adSoyad, sifre: sifre })
+                });
+
+                const sonuc = await cevap.json();
+
+                if (cevap.ok) {
+                    alert(sonuc.message);
+                    localStorage.setItem('kullaniciDisiplin', sonuc.department);
+                    localStorage.setItem('kullaniciRolu', sonuc.rol);
+                    localStorage.setItem('kullaniciDurumu', sonuc.durum);
+                    localStorage.setItem('kullaniciAdi', adSoyad);
+                    localStorage.setItem('kullaniciOkul', sonuc.okul || '');
+                    localStorage.setItem('kullaniciBolum', sonuc.bolum || '');
+                    localStorage.setItem('kullaniciSinif', sonuc.sinif || '');
+                    localStorage.setItem('kullaniciIsYeri', sonuc.is_yeri || '');
+                    localStorage.setItem('kullaniciDeneyim', sonuc.deneyim || '');
+                    let hedefSayfa = 'dashboard-ogrenci.html';
+                    if (sonuc.rol === 'mentor') {
+                        hedefSayfa = 'dashboard-mentor.html';
+                    } else if (sonuc.durum === 'lise_ogrenci') {
+                        hedefSayfa = 'dashboard-aday.html';
+                    }
+                    window.location.replace(hedefSayfa);
+                } else {
+                    alert(sonuc.error);
+                }
+            } catch (hata) {
+                console.error("Hata: ", hata);
+                alert("Backend sunucusu açık mı? Kontrol et! ❌");
+            }
+        });
+    </script>
+</body>
+</html>

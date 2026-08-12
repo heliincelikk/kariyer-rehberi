@@ -1,4 +1,1668 @@
+<!DOCTYPE html>
+<html lang="tr">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EngineersPath - Mühendislik Kariyer Rehberi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #020617;
+            color: #ffffff;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 270px;
+            background-color: #0f172a;
+            border-right: 1px solid rgba(6, 182, 212, 0.15);
+            display: flex;
+            flex-direction: column;
+            padding: 25px 18px 45px 18px;
+            z-index: 10;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(6, 182, 212, 0.25);
+            border-radius: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar .brand {
+            font-size: 22px;
+            font-weight: bold;
+            color: #06b6d4;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+            margin-bottom: 25px;
+        }
+
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 18px;
+            color: #94a3b8;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            color: #ffffff;
+            background-color: rgba(6, 182, 212, 0.1);
+            border-left: 4px solid #06b6d4;
+        }
+
+        .logout-btn {
+            margin-top: 0;
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+        }
+
+        .profile-section {
+            margin-top: auto;
+            margin-bottom: 8px;
+        }
+
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .welcome-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 20px;
+        }
+
+        .welcome-bar h1 {
+            font-size: 28px;
+        }
+
+        .welcome-bar h1 span {
+            color: #06b6d4;
+        }
+
+        .user-badge {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #06b6d4;
+        }
+
+        .tab-content {
+            display: none !important;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block !important;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .premium-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-5px);
+            border-color: #06b6d4;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #06b6d4;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .premium-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .premium-card p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-link {
+            color: #06b6d4;
+            text-decoration: none !important;
+            font-weight: bold;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s ease;
+        }
+
+        .card-link:hover {
+            color: #22d3ee !important;
+            text-decoration: none !important;
+        }
+
+
+
+        /* ================= MENTÖRLÜK ALT-SEKME (YENİ) ================= */
+        .mentor-subnav {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .subnav-btn {
+            background: transparent;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: #94a3b8;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subnav-btn:hover {
+            color: #ffffff;
+        }
+
+        .subnav-btn.active {
+            background-color: #06b6d4;
+            color: #0f172a;
+            border-color: #06b6d4;
+        }
+
+        .mentor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .mentor-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .mentor-card:hover {
+            border-color: #06b6d4;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.15);
+        }
+
+        .mentor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4, #1e1b4b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 15px auto;
+            border: 3px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .mentor-card h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .mentor-company {
+            font-size: 13px;
+            color: #06b6d4;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .mentor-info {
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .mentor-badge {
+            background: rgba(6, 182, 212, 0.1);
+            color: #06b6d4;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .request-btn {
+            width: 100%;
+            background-color: transparent;
+            color: #06b6d4;
+            border: 2px solid #06b6d4;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .request-btn:hover {
+            background-color: #06b6d4;
+            color: #0f172a;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .request-btn.sent {
+            background-color: #10b981 !important;
+            color: white !important;
+            border-color: #10b981 !important;
+            cursor: default;
+            box-shadow: none !important;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alan-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .alan-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .alan-modal-box {
+            background: #1e293b;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 40px;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .alan-modal-overlay.active .alan-modal-box {
+            transform: scale(1);
+        }
+
+        .alan-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
+            color: #94a3b8;
+            cursor: pointer;
+        }
+
+        .alan-modal-close:hover {
+            color: #06b6d4;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-compass"></i> EngineersPath - Mühendislik Kariyer Rehberi
+        </div>
+        <div class="menu-items">
+            <div class="menu-item active" id="menu-panel" onclick="switchTab('panel')">
+                <i class="fa-solid fa-chart-pie"></i> Kişiselleştirilmiş Panel
+            </div>
+            <div class="menu-item" id="menu-school" onclick="switchTab('school')">
+                <i class="fa-solid fa-graduation-cap"></i> Okulunuzdan 🎓
+            </div>
+            <!-- MENTÖRLÜK AĞI TIKLANABİLİR SATIR VE AÇILIR MENÜ -->
+            <div class="menu-item" id="menu-mentornet-parent" onclick="toggleMentornetSidebarSubmenu()"
+                style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 15px;">
+                <span><i class="fa-solid fa-users-rectangle" style="color: #06b6d4;"></i> Mentörlük Ağı 🤝</span>
+                <i class="fa-solid fa-chevron-down" id="mentornetChevron"
+                    style="font-size: 12px; transition: transform 0.3s;"></i>
+            </div>
+            <div id="mentornetSidebarSubmenu"
+                style="display: none; flex-direction: column; gap: 4px; padding-left: 14px; margin-top: 2px; margin-bottom: 6px; border-left: 2px solid rgba(6, 182, 212, 0.3);">
+                <div class="menu-item" id="menu-mentor-sector" onclick="switchTab('mentor-sector')"
+                    style="font-size: 14px; font-weight: 600; padding: 11px 16px;">
+                    <i class="fa-solid fa-user-tie" style="color: #06b6d4;"></i> Sektör Mentörleri
+                </div>
+                <div class="menu-item" id="menu-mentor-candidates" onclick="switchTab('mentor-candidates')"
+                    style="font-size: 14px; font-weight: 600; padding: 11px 16px;">
+                    <i class="fa-solid fa-user-graduate" style="color: #a855f7;"></i> Aday İstekleri & Menteeler
+                </div>
+            </div>
+
+            <!-- SEKTÖR & FIRSAT AĞI TIKLANABİLİR SATIR VE AÇILIR MENÜ -->
+            <div class="menu-item" id="menu-industry-parent" onclick="toggleIndustrySidebarSubmenu()"
+                style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 15px;">
+                <span><i class="fa-solid fa-briefcase" style="color: #38bdf8;"></i> Sektör & Fırsat Ağı 🚀</span>
+                <i class="fa-solid fa-chevron-down" id="industryChevron"
+                    style="font-size: 12px; transition: transform 0.3s;"></i>
+            </div>
+            <div id="industrySidebarSubmenu"
+                style="display: none; flex-direction: column; gap: 4px; padding-left: 14px; margin-top: 2px; margin-bottom: 6px; border-left: 2px solid rgba(56, 189, 248, 0.3);">
+                <div class="menu-item" id="menu-jobs" onclick="switchTab('jobs')"
+                    style="font-size: 14px; font-weight: 600; padding: 11px 16px;">
+                    <i class="fa-solid fa-rocket" style="color: #38bdf8;"></i> Staj & Proje İlanları
+                </div>
+                <div class="menu-item" id="menu-companies" onclick="switchTab('companies')"
+                    style="font-size: 14px; font-weight: 600; padding: 11px 16px;">
+                    <i class="fa-solid fa-building" style="color: #06b6d4;"></i> Revaçta Şirketler
+                </div>
+            </div>
+
+            <div class="menu-item" id="menu-discover" onclick="switchTab('discover')">
+                <i class="fa-solid fa-globe"></i> Mühendislik Dallarını Keşfet 🌐
+            </div>
+            <div class="menu-item" id="menu-ai" onclick="switchTab('ai')">
+                <i class="fa-solid fa-robot"></i> AI Öğrenci Danışmanı 🤖
+            </div>
+
+            <div class="profile-section" id="menu-profile"
+                style="margin-top: 40px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; transition: 0.3s;"
+                onclick="switchTab('profile')">
+                <h4 style="font-size: 14px; color: #fff; margin-bottom: 5px;"><i class="fa-solid fa-user-graduate"></i>
+                    Profilim</h4>
+                <p id="userSchoolInfo" style="font-size: 12px; color: #94a3b8;">Bilgilerin</p>
+            </div>
+            <a href="index.html" class="menu-item logout-btn" onclick="localStorage.clear()">
+                <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
+            </a>
+
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <div class="welcome-bar">
+            <h1>Hoş Geldin, <span id="userNameSpan">Mühendis Adayı!</span> 👋</h1>
+            <div class="user-badge" id="userBadgeMode">Yükleniyor...</div>
+        </div>
+
+        <!-- SEKME 1: KİŞİSELLEŞTİRİLMİŞ PANEL -->
+        <div class="tab-content active" id="content-panel">
+            <div class="dashboard-grid">
+
+                <div class="premium-card">
+                    <div class="card-icon" id="cardIconStyle"><i class="fa-solid fa-robot"></i></div>
+                    <h3 id="cardTitleText">AI Öğrenci & Kariyer Danışmanı 🤖</h3>
+                    <p id="cardDescText">Staj mülakatları, CV hazırlama, GitHub projeleri ve ders tavsiyeleri için yapay
+                        zeka ile sohbet et.</p>
+                    <a href="#" onclick="switchTab('ai')" class="card-link" id="cardLinkBtn">Danışmana Sor ➔</a>
+                </div>
+
+                <div class="premium-card" onclick="switchTab('jobs')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-bullhorn" style="color:#06b6d4;"></i></div>
+                    <h3>Önerilen Staj Fırsatları 💼</h3>
+                    <p>Kendi mühendislik alanında aktif olan staj ve yetenek programı (Aselsan, Baykar, Trendyol vb.)
+                        ilanlarını incele.</p>
+                    <a href="javascript:void(0)" onclick="event.stopPropagation(); switchTab('jobs')"
+                        class="card-link">Staj & Proje İlanlarını Gör ➔</a>
+                </div>
+
+                <div class="premium-card" onclick="switchTab('mentor-sector')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-users-rectangle" style="color:#10b981;"></i></div>
+                    <h3>Sektör Mentörlerinden Destek Al 🤝</h3>
+                    <p>Google, Aselsan, Trendyol gibi şirketlerde çalışan kıdemli mühendislerden staj, kariyer ve
+                        mülakat tavsiyesi al.</p>
+                    <a href="javascript:void(0)" onclick="event.stopPropagation(); switchTab('mentor-sector')"
+                        class="card-link">Tüm Mentörler ➔</a>
+                </div>
+
+                <div class="premium-card" onclick="switchTab('mentor-candidates')" style="cursor:pointer;">
+                    <div class="card-icon"><i class="fa-solid fa-graduation-cap" style="color:#a855f7;"></i></div>
+                    <h3>Aday Öğrencilerle İletişime Geç 🎓</h3>
+                    <p>Mühendislik hedefleyen lise adaylarından sana gelen soruları yanıtla, geleceğin mühendislerine
+                        mentörlük yap.</p>
+                    <a href="javascript:void(0)" onclick="event.stopPropagation(); switchTab('mentor-candidates')"
+                        class="card-link">Aday Öğrenciler ➔</a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SEKME: OKULUNUZDAN -->
+        <div class="tab-content" id="content-school">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h2 style="font-size: 24px; color: #fff;"><i class="fa-solid fa-graduation-cap"
+                            style="color:#06b6d4;"></i> <span id="displaySchoolName">Okulunuz</span> Ağı & Toplulukları
+                        🎓</h2>
+                    <p style="color: #94a3b8; font-size: 14px; margin-top: 4px;">Okulunuzdaki diğer öğrencilerle
+                        doğrudan sohbet edin, kampüs duyurularını takip edin ve kulüplere katılın.</p>
+                </div>
+            </div>
+
+            <!-- Okul Alt Navigasyon (Subnav) -->
+            <div class="mentor-subnav" style="margin-bottom: 22px; display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="subnav-btn active" id="subnav-school-peers" onclick="switchSchoolView('peers')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">👥 Ağdaki öğrenci arkadaşların</button>
+                <button class="subnav-btn" id="subnav-school-announcements" onclick="switchSchoolView('announcements')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">📢 Duyurular & Etkinlikler</button>
+                <button class="subnav-btn" id="subnav-school-clubs" onclick="switchSchoolView('clubs')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">🏛️ Okul Toplulukları &
+                    Kulüpler</button>
+                <button class="subnav-btn" id="subnav-school-chat" onclick="switchSchoolView('chat')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 Okul Ağınız </button>
+            </div>
+
+            <!-- 1. Okuldaki Öğrenciler & Sohbet Ekranı -->
+            <div id="schoolPeersContainer">
+                <!-- VARYASYON 1: Konuşabileceklerimiz Listesi (Varsayılan Tam Izgara) -->
+                <div id="schoolPeersListView">
+                    <div
+                        style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #94a3b8; font-size: 14px; font-weight: 500;">💬 Dönem ve okul
+                            arkadaşlarından biriyle sohbet başlatmak için kartına tıkla:</span>
+                    </div>
+                    <div id="schoolPeersGrid"
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px;">
+                        <!-- JS ile yüklenecek kartlar -->
+                    </div>
+                </div>
+
+                <!-- VARYASYON 2: WhatsApp Tarzı Genişletilmiş Okul Sohbet Ekranı -->
+                <div id="schoolChatExpandedView"
+                    style="display: none; background: #0f172a; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 20px; overflow: hidden; height: 580px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
+
+                    <!-- SOL PANEL: WhatsApp Tipi Dikey Okul Arkadaşları Listesi -->
+                    <div
+                        style="width: 290px; background: rgba(30, 41, 59, 0.7); border-right: 1px solid rgba(255, 255, 255, 0.08); display: flex; flex-direction: column; flex-shrink: 0;">
+                        <!-- Sol Panel Üst Başlık & Çıkış -->
+                        <div
+                            style="padding: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #fff; font-weight: bold; font-size: 15px;"><i
+                                    class="fa-solid fa-comments" style="color: #06b6d4;"></i> Okul Ağınız </span>
+                            <button onclick="closeSchoolChatExpanded()"
+                                style="background: rgba(6, 182, 212, 0.15); border: 1px solid #06b6d4; color: #06b6d4; padding: 5px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s;"
+                                onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';"
+                                onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
+                                ⬅️ Çık
+                            </button>
+                        </div>
+                        <!-- WhatsApp Usulü Alt Alta Sıralanan Okul Arkadaşları -->
+                        <div id="schoolChatUserListSidebar"
+                            style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding: 8px;">
+                        </div>
+                    </div>
+
+                    <!-- SAĞ PANEL: Sohbet Seçilmemişken Gösterilecek Hoş Geldin Görünümü -->
+                    <div id="schoolChatPlaceholderRightPanel"
+                        style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; background: #0f172a;">
+                        <div
+                            style="width: 90px; height: 90px; border-radius: 50%; background: rgba(6, 182, 212, 0.1); border: 2px dashed #06b6d4; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 20px;">
+                            🎓
+                        </div>
+                        <h3 style="font-size: 22px; color: #ffffff; margin-bottom: 8px;">Sohbet Başlatmak İçin Bir Okul
+                            Arkadaşı Seçin</h3>
+                        <p
+                            style="color: #94a3b8; font-size: 14px; max-width: 400px; line-height: 1.5; margin-bottom: 25px;">
+                            Sol listeden bir dönem veya okul arkadaşınızı seçerek doğrudan mesajlaşabilir, ders
+                            projeleri ve kampüs etkinlikleri hakkında iletişim kurabilirsiniz.
+                        </p>
+                    </div>
+
+                    <!-- SAĞ PANEL: Bir Okul Arkadaşı Seçildiğinde Açılacak Aktif Sohbet Penceresi -->
+                    <div id="schoolChatActiveRightPanel"
+                        style="flex: 1; display: none; flex-direction: column; background: #0f172a;">
+                        <!-- Sağ Panel Üst Bar -->
+                        <div
+                            style="padding: 14px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(30, 41, 59, 0.4); display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <img id="schoolChatActiveImg"
+                                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Selin"
+                                    style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid #06b6d4; object-fit: cover; background: #1e293b;">
+                                <div>
+                                    <h4 id="schoolChatActiveUser"
+                                        style="font-size: 16px; color: #ffffff; margin: 0 0 2px 0; font-weight: bold;">—
+                                    </h4>
+                                    <span id="schoolChatActiveSub" style="color: #06b6d4; font-size: 12px;">—</span>
+                                </div>
+                            </div>
+                            <span
+                                style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 11px; font-weight: bold; padding: 5px 12px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3);">
+                                🟢 Okul Arkadaşı
+                            </span>
+                        </div>
+
+                        <!-- Mesajlaşma Geçmişi -->
+                        <div id="schoolDirectChatBox"
+                            style="flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+                        </div>
+
+                        <!-- Mesaj Yazma Girişi -->
+                        <div
+                            style="padding: 14px; background: rgba(30, 41, 59, 0.6); border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 10px;">
+                            <input type="text" id="schoolChatInput" placeholder="Okul arkadaşına mesaj yaz..."
+                                style="flex: 1; padding: 12px 16px; background: #0f172a; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 12px; color: #fff; outline: none; font-size: 14px;"
+                                onkeypress="if(event.key==='Enter') sendSchoolPeerMessage()">
+                            <button onclick="sendSchoolPeerMessage()"
+                                style="padding: 12px 24px; background: #06b6d4; color: #0f172a; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 14px;">Gönder
+                                🚀</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 2. Duyurular & Etkinlikler -->
+            <div class="dashboard-grid" id="schoolAnnouncementsGrid" style="display:none;">
+                <!-- Javascript ile dinamik yüklenecek -->
+            </div>
+
+            <!-- 3. Okul Ağı & Kulüpler -->
+            <div class="dashboard-grid" id="schoolClubsGrid" style="display:none;">
+                <!-- Javascript ile dinamik yüklenecek -->
+            </div>
+        </div>
+
+        <!-- SEKME: STAJ & PROJE İLANLARI -->
+        <div class="tab-content" id="content-jobs">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h2 style="font-size: 26px; color: #fff;"><i class="fa-solid fa-briefcase"
+                            style="color:#06b6d4;"></i> Staj & Proje Takımı İlanları 🚀</h2>
+                    <p style="color: #94a3b8; font-size: 15px; margin-top: 5px;">Projeniz için takım arkadaşı arayın
+                        veya aktif staj ilanlarına başvurun.</p>
+                </div>
+                <button onclick="openCreateJobModal()" class="create-job-btn"
+                    style="background: linear-gradient(135deg, #06b6d4, #2563eb); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);">
+                    <i class="fa-solid fa-plus"></i> Yeni İlan Oluştur
+                </button>
+            </div>
+
+            <!-- Staj & Proje İlanları Alt Navigasyon (Subnav) -->
+            <div class="mentor-subnav" style="margin-bottom: 22px; display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="subnav-btn active" id="subnav-jobs-all" onclick="switchJobsSubnav('all')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">🌐 Tüm İlanlar</button>
+                <button class="subnav-btn" id="subnav-jobs-mine" onclick="switchJobsSubnav('mine')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">📌 Yayınladığım İlanlarım &
+                    İstatistikler (<span id="myJobsCountBadge">0</span>)</button>
+                <button class="subnav-btn" id="subnav-jobs-chat" onclick="switchJobsSubnav('chat')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 İlan & Proje Sohbetleri</button>
+            </div>
+
+            <!-- 1. Tüm İlanlar Grid -->
+            <div class="dashboard-grid" id="jobsGrid">
+                <!-- Javascript ile dinamik ilanlar yüklenecek -->
+            </div>
+
+            <!-- 2. Yayınladığım İlanlarım Grid -->
+            <div class="dashboard-grid" id="myJobsGrid" style="display:none;">
+                <!-- Javascript ile dinamik ilanlar yüklenecek -->
+            </div>
+
+            <!-- 3. WhatsApp Tarzı Genişletilmiş İlan & Proje Sohbet Ekranı -->
+            <div id="jobsChatExpandedView"
+                style="display: none; background: #0f172a; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 20px; overflow: hidden; height: 580px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
+
+                <!-- SOL PANEL: WhatsApp Tipi Dikey İlan Sohbet Listesi -->
+                <div
+                    style="width: 330px; background: rgba(30, 41, 59, 0.7); border-right: 1px solid rgba(255, 255, 255, 0.08); display: flex; flex-direction: column; flex-shrink: 0;">
+                    <!-- Sol Panel Üst Başlık & Çıkış -->
+                    <div
+                        style="padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #fff; font-weight: bold; font-size: 15px;"><i class="fa-solid fa-comments"
+                                style="color: #06b6d4;"></i> İlan Sohbetleri</span>
+                        <button onclick="closeJobsChatExpanded()"
+                            style="background: rgba(6, 182, 212, 0.15); border: 1px solid #06b6d4; color: #06b6d4; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s;"
+                            onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';"
+                            onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
+                            ⬅️ Çık
+                        </button>
+                    </div>
+
+                    <!-- Sol Panel Filtre Butonları (Temiz & Kullanımı Kolay) -->
+                    <div
+                        style="display:flex; padding:8px; gap:6px; background:rgba(15,23,42,0.6); border-bottom:1px solid rgba(255,255,255,0.06);">
+                        <button onclick="setJobsChatFilter('my')" id="jobsChatFilter-my"
+                            style="flex:1; padding:8px 4px; background:#06b6d4; color:#0f172a; border:none; border-radius:8px; font-size:11px; font-weight:bold; cursor:pointer; text-align:center;">
+                            📌 Projemin Başvuruları
+                        </button>
+                        <button onclick="setJobsChatFilter('applied')" id="jobsChatFilter-applied"
+                            style="flex:1; padding:8px 4px; background:rgba(255,255,255,0.08); color:#94a3b8; border:none; border-radius:8px; font-size:11px; font-weight:bold; cursor:pointer; text-align:center;">
+                            📩 Başvurduğum İlanlar
+                        </button>
+                    </div>
+
+                    <!-- Alt Dikey İlan Sohbetleri Listesi -->
+                    <div id="jobsChatUserListSidebar"
+                        style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding: 8px;">
+                    </div>
+                </div>
+
+                <!-- SAĞ PANEL: Sohbet Seçilmemişken Gösterilecek Hoş Geldin Görünümü -->
+                <div id="jobsChatPlaceholderRightPanel"
+                    style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; background: #0f172a;">
+                    <div
+                        style="width: 90px; height: 90px; border-radius: 50%; background: rgba(6, 182, 212, 0.1); border: 2px dashed #06b6d4; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 20px;">
+                        🚀
+                    </div>
+                    <h3 style="font-size: 22px; color: #ffffff; margin-bottom: 8px;">Sohbet Başlatmak İçin Bir İlan
+                        Sohbeti Seçin</h3>
+                    <p
+                        style="color: #94a3b8; font-size: 14px; max-width: 420px; line-height: 1.5; margin-bottom: 25px;">
+                        Sol listeden projenize başvuran adaylarla veya başvurduğunuz ilan sahipleriyle doğrudan
+                        iletişime geçebilirsiniz. Her sohbetin hangi projeye ait olduğu rozetlerle gösterilmektedir.
+                    </p>
+                </div>
+
+                <!-- SAĞ PANEL: Bir Sohbet Seçildiğinde Açılacak Aktif Sohbet Penceresi -->
+                <div id="jobsChatActiveRightPanel"
+                    style="flex: 1; display: none; flex-direction: column; background: #0f172a;">
+                    <!-- Sağ Panel Üst Bar -->
+                    <div
+                        style="padding: 14px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(30, 41, 59, 0.4); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <img id="jobsChatActiveImg" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arda"
+                                style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid #06b6d4; object-fit: cover; background: #1e293b;">
+                            <div>
+                                <h4 id="jobsChatActiveUser"
+                                    style="font-size: 16px; color: #ffffff; margin: 0 0 2px 0; font-weight: bold;">—
+                                </h4>
+                                <span id="jobsChatActiveSub" style="color: #06b6d4; font-size: 12px;">—</span>
+                            </div>
+                        </div>
+                        <span id="jobsChatActiveTag"
+                            style="background: rgba(6, 182, 212, 0.15); color: #06b6d4; font-size: 11px; font-weight: bold; padding: 6px 14px; border-radius: 12px; border: 1px solid rgba(6, 182, 212, 0.3);">
+                            📌 Benim İlanım / Projem
+                        </span>
+                    </div>
+
+                    <!-- Mesajlaşma Geçmişi -->
+                    <div id="jobsDirectChatBox"
+                        style="flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+                    </div>
+
+                    <!-- Mesaj Yazma Girişi -->
+                    <div
+                        style="padding: 14px; background: rgba(30, 41, 59, 0.6); border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 10px;">
+                        <input type="text" id="jobsChatInput" placeholder="Proje sohbet mesajını yaz..."
+                            style="flex: 1; padding: 12px 16px; background: #0f172a; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 12px; color: #fff; outline: none; font-size: 14px;"
+                            onkeypress="if(event.key==='Enter') sendJobsPeerMessage()">
+                        <button onclick="sendJobsPeerMessage()"
+                            style="padding: 12px 24px; background: #06b6d4; color: #0f172a; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 14px;">Gönder
+                            🚀</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SEKME: REVAÇTA ŞİRKETLER & MENTÖRLERİ -->
+        <div class="tab-content" id="content-companies">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h2 style="font-size: 26px; color: #fff;"><i class="fa-solid fa-building"
+                            style="color:#06b6d4;"></i> Revaçta Şirketler & Staj Programları 🏢</h2>
+                    <p style="color: #94a3b8; font-size: 15px; margin-top: 5px;">Mühendislik öğrencilerine staj imkanı
+                        sunan lider şirketler ve bünyelerindeki mentörler.</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <label style="color:#06b6d4; font-size:13px; font-weight:600;"><i class="fa-solid fa-filter"></i>
+                        Sektör Filtrele:</label>
+                    <select id="companyCategoryFilter" onchange="renderCompaniesGrid()"
+                        style="padding:10px 16px; background:#0f172a; border:1px solid rgba(6,182,212,0.4); border-radius:12px; color:#fff; font-size:14px; font-weight:600; outline:none; cursor:pointer;">
+                        <option value="hepsi">🌐 Tüm Sektörler</option>
+                        <option value="teknoloji">💻 Teknoloji & E-Ticaret</option>
+                        <option value="global">🌐 Global Teknoloji Devleri</option>
+                        <option value="savunma">🛡️ Savunma Sanayii & Otonom</option>
+                        <option value="enerji">⚡ Enerji & Otomasyon</option>
+                        <option value="saglik">🏥 Sağlık Teknolojileri</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="dashboard-grid" id="companiesGrid"
+                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 22px;">
+                <!-- JS ile revactaSirketlerData dinamik yüklenecek -->
+            </div>
+        </div>
+
+        <!-- İLAN OLUŞTURMA MODAL -->
+        <div class="modal-overlay" id="createJobModal"
+            style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); z-index: 200; display: none; justify-content: center; align-items: center;">
+            <div
+                style="background: #1e293b; border: 2px solid rgba(6, 182, 212, 0.4); border-radius: 24px; width: 90%; max-width: 550px; padding: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.6); position: relative;">
+                <span onclick="closeCreateJobModal()"
+                    style="position: absolute; top: 20px; right: 25px; font-size: 28px; color: #94a3b8; cursor: pointer;">&times;</span>
+                <h2 style="color: #fff; font-size: 24px; margin-bottom: 20px; text-align: center;"><i
+                        class="fa-solid fa-rocket" style="color:#06b6d4;"></i> Proje / Takım İlanı <span
+                        style="color:#06b6d4;">Oluştur</span></h2>
+                <form id="createJobForm">
+                    <div style="margin-bottom: 15px;">
+                        <label
+                            style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">İlan
+                            Başlığı</label>
+                        <input type="text" id="jobTitle" placeholder="Örn: Otonom İHA Takımına Yazılımcı Aranıyor"
+                            required
+                            style="width: 100%; padding: 12px 16px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none;">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div>
+                            <label
+                                style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">İlan
+                                Türü</label>
+                            <select id="jobType"
+                                style="width: 100%; padding: 12px 16px; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none;">
+                                <option value="Proje Arkadaşı">Proje Arkadaşı</option>
+                                <option value="Takım Üyesi">Takım Üyesi</option>
+                                <option value="Staj / Aday">Staj / Aday</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label
+                                style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Disiplin
+                                / Alan</label>
+                            <select id="jobDomain"
+                                style="width: 100%; padding: 12px 16px; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none;">
+                                <option value="Yazılım / Bilgisayar">Yazılım / Bilgisayar</option>
+                                <option value="Elektrik-Elektronik">Elektrik-Elektronik</option>
+                                <option value="Makine Müh.">Makine Müh.</option>
+                                <option value="Endüstri Müh.">Endüstri Müh.</option>
+                                <option value="Havacılık ve Uzay">Havacılık ve Uzay</option>
+                                <option value="Genel / Tümü">Genel / Tümü</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label
+                            style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Aranan
+                            Beceriler & Teknolojiler</label>
+                        <input type="text" id="jobSkills" placeholder="Örn: Python, ROS2, OpenCV, Fusion360" required
+                            style="width: 100%; padding: 12px 16px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label
+                            style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">İlan
+                            Detayı / Açıklama</label>
+                        <textarea id="jobDesc" rows="3"
+                            placeholder="Projenizi ve aradığınız özellikleri kısaca açıklayın..." required
+                            style="width: 100%; padding: 12px 16px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none; resize: none;"></textarea>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label
+                            style="display: block; color: #94a3b8; font-size: 14px; font-weight: 600; margin-bottom: 6px;">İletişim
+                            Bilgisi (E-posta / Telefon / Discord)</label>
+                        <input type="text" id="jobContact" placeholder="Örn: ahmet@student.itu.edu.tr veya @ahmet_dev"
+                            required
+                            style="width: 100%; padding: 12px 16px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 15px; outline: none;">
+                    </div>
+                    <button type="submit"
+                        style="width: 100%; background: linear-gradient(135deg, #06b6d4, #2563eb); color: white; padding: 14px; border: none; border-radius: 14px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">İlanı
+                        Yayınla 🚀</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- SEKME 2: BÖLÜME ÖZEL KARİYER YOLLARI VE ALAN KEŞFİ -->
+        <div class="tab-content" id="content-discover">
+            <!-- Bölüm Seçim Başlığı & Filtre -->
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:25px; background:rgba(30,41,59,0.5); padding:18px 24px; border-radius:16px; border:1px solid rgba(6,182,212,0.2);">
+                <div>
+                    <h2 id="discoverHeaderTitle" style="font-size:22px; color:#fff;">Kariyer Rotaları & Alt Uzmanlık
+                        Alanları</h2>
+                    <p id="discoverHeaderSub" style="color:#94a3b8; font-size:13px; margin-top:4px;">Seçtiğin
+                        mühendislik disiplinine özel uzmanlık yollarını ve gerekli yetkinlikleri incele.</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <label style="color:#06b6d4; font-size:13px; font-weight:600;"><i class="fa-solid fa-filter"></i>
+                        Bölüm Değiştir:</label>
+                    <select id="bolumSecici" onchange="bolumKariyerYollariniGuncelle(this.value)"
+                        style="padding:10px 16px; background:#0f172a; border:1px solid rgba(6,182,212,0.4); border-radius:12px; color:#fff; font-size:14px; font-weight:600; outline:none; cursor:pointer;">
+                        <option value="bilgisayar">Bilgisayar / Yazılım Mühendisliği</option>
+                        <option value="elektrik">Elektrik-Elektronik Mühendisliği</option>
+                        <option value="makine">Makine Mühendisliği</option>
+                        <option value="endustri">Endüstri Mühendisliği</option>
+                        <option value="insaat">İnşaat Mühendisliği</option>
+                        <option value="kimya">Kimya / Biyomedikal Mühendislik</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Dinamik Kariyer Rotaları Grid Container -->
+            <div class="dashboard-grid" id="kariyerRotalariGrid">
+                <!-- JavaScript tarafından dinamik doldurulacak -->
+            </div>
+        </div>
+
+        <!-- SEKME 3-A: SEKTÖR MENTÖRLERİ -->
+        <div class="tab-content" id="content-mentor-sector">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; background: rgba(30, 41, 59, 0.5); padding: 18px 24px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.2);">
+                <div>
+                    <h2 style="font-size: 24px; color: #fff;"><i class="fa-solid fa-user-tie"
+                            style="color:#06b6d4;"></i> Sektör Mentörleri & Mentörlük Ağı 🤝</h2>
+                    <p style="color: #94a3b8; font-size: 14px; margin-top: 4px;">Sektördeki kıdemli mühendislerden
+                        danışmanlık alın, soru sorun ve birebir rehberlik edinin.</p>
+                </div>
+                <div id="mentorFilterWrapper" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                    <label style="color:#06b6d4; font-size:13px; font-weight:600;"><i class="fa-solid fa-filter"></i>
+                        Branş / Bölüm Filtrele:</label>
+                    <select id="mentorDepartmentFilter" onchange="filterSectorMentors(this.value)"
+                        style="padding:10px 16px; background:#0f172a; border:1px solid rgba(6,182,212,0.4); border-radius:12px; color:#fff; font-size:14px; font-weight:600; outline:none; cursor:pointer;">
+                        <option value="hepsi">🌐 Tüm Mühendislik Branşları</option>
+                        <option value="bilgisayar">💻 Bilgisayar & Yazılım Müh.</option>
+                        <option value="elektrik">⚡ Elektrik-Elektronik Müh.</option>
+                        <option value="makine">⚙️ Makine & Otomotiv Müh.</option>
+                        <option value="endustri">📊 Endüstri & Veri Müh.</option>
+                        <option value="havacilik">✈️ Havacılık & Uzay Müh.</option>
+                        <option value="biyomedikal">🏥 Biyomedikal & Sağlık Müh.</option>
+                        <option value="insaat">🏗️ İnşaat & Yapı Müh.</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mentor-subnav" style="margin-bottom: 20px; display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="subnav-btn active" id="subnav-mentor-all" onclick="switchMentorSubnav('all')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">👥 Tüm Mentörler</button>
+                <button class="subnav-btn" id="subnav-mentor-requests" onclick="switchMentorSubnav('requests')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">📩 Gönderilen İstekler (<span
+                        id="outgoingCount">0</span>)</button>
+                <button class="subnav-btn" id="subnav-mentor-mine" onclick="switchMentorSubnav('mine')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">✅ Mentörlerim </button>
+                <button class="subnav-btn" id="subnav-mentor-chat" onclick="switchMentorSubnav('chat')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 Mentör Sohbetleri</button>
+            </div>
+
+            <!-- Mentör Kartları Tam Izgara Görünümü (Varsayılan) -->
+            <div id="mentorSectorListView">
+                <div class="mentor-grid" id="mentorAllGrid"
+                    style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));"></div>
+                <div class="mentor-grid" id="mentorRequestsGrid"
+                    style="display:none; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));"></div>
+                <div class="mentor-grid" id="mentorMineGrid"
+                    style="display:none; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));"></div>
+            </div>
+
+            <!-- WhatsApp Tarzı Genişletilmiş Mentör Sohbet Ekranı -->
+            <div id="mentorChatExpandedView"
+                style="display: none; background: #0f172a; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 20px; overflow: hidden; height: 580px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
+
+                <!-- SOL PANEL: WhatsApp Tipi Dikey Mentör Sohbet Listesi -->
+                <div
+                    style="width: 290px; background: rgba(30, 41, 59, 0.7); border-right: 1px solid rgba(255, 255, 255, 0.08); display: flex; flex-direction: column; flex-shrink: 0;">
+                    <!-- Sol Panel Üst Başlık & Çıkış -->
+                    <div
+                        style="padding: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #fff; font-weight: bold; font-size: 15px;"><i class="fa-solid fa-comments"
+                                style="color: #06b6d4;"></i> Mentör Sohbetleri</span>
+                        <button onclick="closeMentorChatExpanded()"
+                            style="background: rgba(6, 182, 212, 0.15); border: 1px solid #06b6d4; color: #06b6d4; padding: 5px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s;"
+                            onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';"
+                            onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
+                            ⬅️ Çık
+                        </button>
+                    </div>
+                    <!-- WhatsApp Usulü Alt Alta Sıralanan Mentörler -->
+                    <div id="mentorChatUserListSidebar"
+                        style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding: 8px;">
+                    </div>
+                </div>
+
+                <!-- SAĞ PANEL: Sohbet Seçilmemişken Gösterilecek Hoş Geldin Görünümü -->
+                <div id="mentorChatPlaceholderRightPanel"
+                    style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; background: #0f172a;">
+                    <div
+                        style="width: 80px; height: 80px; border-radius: 50%; background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                        <i class="fa-solid fa-comments" style="font-size: 36px; color: #06b6d4;"></i>
+                    </div>
+                    <h3 style="font-size: 20px; color: #ffffff; margin-bottom: 8px;">💬 Sohbet Başlatmak İçin Bir Mentör
+                        Seçin</h3>
+                    <p style="color: #94a3b8; font-size: 14px; max-width: 420px; line-height: 1.6; margin: 0;">
+                        Sol taraftaki listeden bir mentöre tıklayarak mesajlaşmayı başlatabilir, kariyer hedefleriniz ve
+                        sorularınız için iletişime geçebilirsiniz.
+                    </p>
+                </div>
+
+                <!-- SAĞ PANEL: Bir Mentör Seçildiğinde Açılacak Aktif Sohbet Penceresi -->
+                <div id="mentorChatActiveRightPanel"
+                    style="flex: 1; display: none; flex-direction: column; background: #0f172a;">
+                    <!-- Sağ Panel Üst Bar -->
+                    <div
+                        style="padding: 14px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(30, 41, 59, 0.4); display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <img id="mentorChatActiveImg" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Helin"
+                                alt="Active Avatar"
+                                style="width: 42px; height: 42px; border-radius: 50%; border: 2px solid #06b6d4; object-fit: cover; background: #1e293b;">
+                            <div>
+                                <h4 id="mentorChatActiveUser"
+                                    style="font-size: 16px; color: #ffffff; margin: 0 0 2px 0; font-weight: bold;">—
+                                </h4>
+                                <span id="mentorChatActiveSub" style="color: #06b6d4; font-size: 12px;">—</span>
+                            </div>
+                        </div>
+                        <span
+                            style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 11px; font-weight: bold; padding: 5px 12px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3);">
+                            🟢 Çevrim İçi
+                        </span>
+                    </div>
+
+                    <!-- Mesajlaşma Geçmişi -->
+                    <div id="mentorDirectChatBox"
+                        style="flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+                    </div>
+
+                    <!-- Mesaj Yazma Girişi -->
+                    <div
+                        style="padding: 14px; background: rgba(30, 41, 59, 0.6); border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 10px;">
+                        <input type="text" id="mentorChatInput" placeholder="Mentörünüze mesajınızı yazın..."
+                            style="flex: 1; padding: 12px 16px; background: #0f172a; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 12px; color: #fff; outline: none; font-size: 14px;"
+                            onkeypress="if(event.key==='Enter') sendMentorDirectMessage()">
+                        <button onclick="sendMentorDirectMessage()"
+                            style="padding: 12px 22px; background: #06b6d4; color: #0f172a; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 14px;">Gönder
+                            🚀</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SEKME 3-B: ADAY ÖĞRENCİLER (MENTEELER) -->
+        <div class="tab-content" id="content-mentor-candidates">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h2 style="font-size: 24px; color: #fff;"><i class="fa-solid fa-user-graduate"
+                            style="color:#a855f7;"></i> Aday İstekleri & Rehberlik (Menteelerim) 🎓</h2>
+                    <p style="color: #94a3b8; font-size: 14px; margin-top: 4px;">Mühendislik hedefleyen lise
+                        öğrencilerine üniversite ve meslek deneyimlerinizi aktarın.</p>
+                </div>
+            </div>
+
+            <div class="mentor-subnav" style="margin-bottom: 20px; display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="subnav-btn active" id="subnav-gi-pending" onclick="switchGelenIstekView('pending')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">📥 Bekleyen Aday İstekleri</button>
+                <button class="subnav-btn" id="subnav-gi-accepted" onclick="switchGelenIstekView('accepted')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">✅ Menteelerim</button>
+                <button class="subnav-btn" id="subnav-gi-chat" onclick="switchGelenIstekView('chat')"
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 Aday Sohbetleri</button>
+            </div>
+
+            <!-- Aday Öğrenci Kartları Tam Izgara Görünümü (Varsayılan) -->
+            <div id="candidateListView">
+                <div class="mentor-grid" id="giPendingGrid"
+                    style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));"></div>
+                <div class="mentor-grid" id="giAcceptedGrid"
+                    style="display:none; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));"></div>
+            </div>
+
+            <!-- WhatsApp Tarzı Genişletilmiş Aday Sohbet Ekranı -->
+            <div id="candidateChatExpandedView"
+                style="display: none; background: #0f172a; border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 20px; overflow: hidden; height: 580px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
+
+                <!-- SOL PANEL: WhatsApp Tipi Dikey Aday Sohbet Listesi -->
+                <div
+                    style="width: 290px; background: rgba(30, 41, 59, 0.7); border-right: 1px solid rgba(255, 255, 255, 0.08); display: flex; flex-direction: column; flex-shrink: 0;">
+                    <!-- Sol Panel Üst Başlık & Çıkış -->
+                    <div
+                        style="padding: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #fff; font-weight: bold; font-size: 15px;"><i class="fa-solid fa-comments"
+                                style="color: #a855f7;"></i> Aday Sohbetleri</span>
+                        <button onclick="closeCandidateChatExpanded()"
+                            style="background: rgba(168, 85, 247, 0.15); border: 1px solid #a855f7; color: #c084fc; padding: 5px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s;"
+                            onmouseover="this.style.background='#a855f7'; this.style.color='#fff';"
+                            onmouseout="this.style.background='rgba(168,85,247,0.15)'; this.style.color='#c084fc';">
+                            ⬅️ Çık
+                        </button>
+                    </div>
+                    <!-- WhatsApp Usulü Alt Alta Sıralanan Adaylar -->
+                    <div id="candidateChatUserListSidebar"
+                        style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding: 8px;">
+                    </div>
+                </div>
+
+                <!-- SAĞ PANEL: Sohbet Seçilmemişken Gösterilecek Hoş Geldin Görünümü -->
+                <div id="candidateChatPlaceholderRightPanel"
+                    style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; background: #0f172a;">
+                    <div
+                        style="width: 80px; height: 80px; border-radius: 50%; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                        <i class="fa-solid fa-comments" style="font-size: 36px; color: #a855f7;"></i>
+                    </div>
+                    <h3 style="font-size: 20px; color: #ffffff; margin-bottom: 8px;">🎓 Sohbet Başlatmak İçin Bir Aday
+                        Seçin</h3>
+                    <p style="color: #94a3b8; font-size: 14px; max-width: 420px; line-height: 1.6; margin: 0;">
+                        Sol taraftaki listeden bir aday öğrenciye tıklayarak mesajlaşmayı başlatabilir ve rehberlik
+                        sağlayabilirsiniz.
+                    </p>
+                </div>
+
+                <!-- SAĞ PANEL: Bir Aday Seçildiğinde Açılacak Aktif Sohbet Penceresi -->
+                <div id="candidateChatActiveRightPanel"
+                    style="flex: 1; display: none; flex-direction: column; background: #0f172a;">
+                    <!-- Sağ Panel Üst Bar -->
+                    <div
+                        style="padding: 14px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(30, 41, 59, 0.4); display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span
+                                style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #a855f7, #6366f1); color: #fff; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; font-size: 18px;">🎓</span>
+                            <div>
+                                <h4 id="candidateChatActiveUser"
+                                    style="font-size: 16px; color: #ffffff; margin: 0 0 2px 0; font-weight: bold;">—
+                                </h4>
+                                <span id="candidateChatActiveSub" style="color: #a855f7; font-size: 12px;">—</span>
+                            </div>
+                        </div>
+                        <span
+                            style="background: rgba(168, 85, 247, 0.15); color: #c084fc; font-size: 11px; font-weight: bold; padding: 5px 12px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.3);">
+                            🎓 Mühendislik Adayı
+                        </span>
+                    </div>
+
+                    <!-- Mesajlaşma Geçmişi -->
+                    <div id="candidateDirectChatBox"
+                        style="flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+                    </div>
+
+                    <!-- Mesaj Yazma Girişi -->
+                    <div
+                        style="padding: 14px; background: rgba(30, 41, 59, 0.6); border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 10px;">
+                        <input type="text" id="candidateChatInput" placeholder="Aday öğrenciye rehberlik mesajı yaz..."
+                            style="flex: 1; padding: 12px 16px; background: #0f172a; border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; color: #fff; outline: none; font-size: 14px;"
+                            onkeypress="if(event.key==='Enter') sendCandidateDirectMessage()">
+                        <button onclick="sendCandidateDirectMessage()"
+                            style="padding: 12px 24px; background: #a855f7; color: #fff; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 14px;">Gönder
+                            🚀</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SEKME 4: YAPAY ZEKA ÖĞRENCİ DANIŞMANI -->
+        <div class="tab-content" id="content-ai">
+            <div class="premium-card" style="max-width: 850px; margin: 0 auto;">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                    <div class="card-icon" style="margin-bottom:0;"><i class="fa-solid fa-robot"></i></div>
+                    <div>
+                        <h3 style="margin-bottom: 4px;">AI Mühendislik Öğrenci Danışmanı 🤖</h3>
+                        <p style="margin-bottom:0; font-size:13px; color:#94a3b8;">Üniversite mühendislik öğrencilerine
+                            özel CV, Staj, Mülakat ve Proje Danışmanı</p>
+                    </div>
+                </div>
+
+                <!-- Hızlı Sorular -->
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+                    <button class="subnav-btn"
+                        onclick="aiSoruSor('Staj için etkili bir mühendislik CV\'si nasıl hazırlanır?')">📄 Mühendislik
+                        Staj CV'si</button>
+                    <button class="subnav-btn" onclick="aiSoruSor('GitHub portfolyomda hangi projeler olmalı?')">🚀
+                        GitHub & Portfolyo Projeleri</button>
+                    <button class="subnav-btn"
+                        onclick="aiSoruSor('Mühendislik mülakatlarında en çok hangi teknik sorular sorulur?')">💼
+                        Mülakat Soruları & Hazırlık</button>
+                </div>
+
+                <!-- Chat Mesajları -->
+                <div id="aiChatBox"
+                    style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 16px; padding: 20px; min-height: 260px; max-height: 400px; overflow-y: auto; margin-bottom: 20px; display:flex; flex-direction:column; gap:15px;">
+                    <div
+                        style="background: rgba(6, 182, 212, 0.1); border-left: 3px solid #06b6d4; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.6;">
+                        <strong style="color: #06b6d4;">🤖 AI Danışman:</strong> Selam! Mühendislik lisans eğitimin
+                        boyunca staj arama, CV hazırlama, teknik mülakatlar ve ders projeleri konularında yanındayım. 🚀
+                        Bana merak ettiğin her şeyi sorabilirsin!
+                    </div>
+                </div>
+
+                <!-- Input alanı -->
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="aiInput"
+                        placeholder="Staj, mülakat, proje fikirleri veya dersler hakkında sorunu yaz..."
+                        style="flex:1; padding:12px 18px; background:#0f172a; border:1px solid rgba(6, 182, 212, 0.3); border-radius:12px; color:#fff; font-size:14px; outline:none;"
+                        onkeypress="if(event.key==='Enter') aiMesajGonder()">
+                    <button onclick="aiMesajGonder()"
+                        style="padding:12px 24px; background:#06b6d4; color:#0f172a; border:none; border-radius:12px; font-weight:bold; cursor:pointer; transition:0.3s;"><i
+                            class="fa-solid fa-paper-plane"></i> Sor</button>
+                </div>
+            </div>
+        </div>
+        <!-- SEKME: MESAJLAR (CANLI SOHBET) -->
+        <div class="tab-content" id="content-chat">
+            <div
+                style="display:grid; grid-template-columns: 300px 1fr; gap:20px; height: 520px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 20px; overflow: hidden;">
+                <!-- Sol Kişi Listesi ve 2 Sekme -->
+                <div
+                    style="border-right: 1px solid rgba(255, 255, 255, 0.08); padding: 20px; display: flex; flex-direction: column; gap: 12px; background: rgba(30, 41, 59, 0.4);">
+                    <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+                        <button class="subnav-btn active" id="chat-tab-mentors"
+                            onclick="switchStudentChatTab('mentors')"
+                            style="padding: 8px 10px; font-size: 12px; flex: 1; text-align:center;">🤝
+                            Mentörlerim</button>
+                        <button class="subnav-btn" id="chat-tab-candidates" onclick="switchStudentChatTab('candidates')"
+                            style="padding: 8px 10px; font-size: 12px; flex: 1; text-align:center;">🎓
+                            Adaylarım</button>
+                    </div>
+
+                    <!-- Mentörler Listesi -->
+                    <div id="chatListMentors" style="display: flex; flex-direction: column; gap: 10px;">
+                        <div class="chat-user-card"
+                            onclick="openChatUser(this, 'Helin Çelik', 'Sektör Mentörü (Senior Frontend Dev)')"
+                            style="padding: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border-left: 3px solid transparent;">
+                            <strong style="color: #fff; font-size: 14px; display: block;">Helin Çelik</strong>
+                            <span style="color: #06b6d4; font-size: 12px;">Senior Frontend Dev</span>
+                        </div>
+                        <div class="chat-user-card"
+                            onclick="openChatUser(this, 'Murat Yılmaz', 'Sektör Mentörü (Cloud Architect)')"
+                            style="padding: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border-left: 3px solid transparent;">
+                            <strong style="color: #fff; font-size: 14px; display: block;">Murat Yılmaz</strong>
+                            <span style="color: #06b6d4; font-size: 12px;">Cloud Architect</span>
+                        </div>
+                    </div>
+
+                    <!-- Adaylar Listesi -->
+                    <div id="chatListCandidates" style="display: none; flex-direction: column; gap: 10px;">
+                        <div class="chat-user-card"
+                            onclick="openChatUser(this, 'Ayşe Demir', 'Mühendislik Adayı (Kadıköy Anadolu Lisesi)')"
+                            style="padding: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border-left: 3px solid transparent;">
+                            <strong style="color: #fff; font-size: 14px; display: block;">Ayşe Demir</strong>
+                            <span style="color: #a855f7; font-size: 12px;">YKS Adayı • 12. Sınıf</span>
+                        </div>
+                        <div class="chat-user-card"
+                            onclick="openChatUser(this, 'Can Yılmaz', 'Mühendislik Adayı (Atatürk Fen Lisesi)')"
+                            style="padding: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border-left: 3px solid transparent;">
+                            <strong style="color: #fff; font-size: 14px; display: block;">Can Yılmaz</strong>
+                            <span style="color: #a855f7; font-size: 12px;">YKS Adayı • 12. Sınıf</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sağ Sohbet Penceresi -->
+                <div style="display: flex; flex-direction: column; padding: 20px; position: relative;">
+                    <!-- Varsayılan Seçim Yapılmadı Ekranı -->
+                    <div id="emptyChatPlaceholder"
+                        style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; color: #94a3b8;">
+                        <i class="fa-solid fa-comments"
+                            style="font-size: 48px; color: #06b6d4; margin-bottom: 16px; opacity: 0.6;"></i>
+                        <h3 style="color: #ffffff; margin-bottom: 8px;">Sohbet Başlatmak İçin Bir Kişi Seçin</h3>
+                        <p style="font-size: 13px; max-width: 320px; line-height: 1.5;">Sol taraftaki mentörleriniz veya
+                            adaylarınız listesinden bir kişiye tıklayarak sohbeti başlatabilirsiniz.</p>
+                    </div>
+
+                    <!-- Aktif Sohbet İçeriği (Tıklanınca Açılır) -->
+                    <div id="activeChatContent" style="display: none; flex-direction: column; height: 100%;">
+                        <div
+                            style="padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h3 id="chatActiveUser" style="font-size: 18px; color: #ffffff;">—</h3>
+                                <span id="chatActiveSub" style="color: #06b6d4; font-size: 13px;">—</span>
+                            </div>
+                            <button onclick="closeActiveChat()"
+                                style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #94a3b8; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;"
+                                title="Sohbeti Kapat"
+                                onmouseover="this.style.color='#ef4444'; this.style.borderColor='#ef4444'"
+                                onmouseout="this.style.color='#94a3b8'; this.style.borderColor='rgba(255,255,255,0.15)'"><i
+                                    class="fa-solid fa-xmark" style="font-size: 16px;"></i></button>
+                        </div>
+                        <div id="directChatBox"
+                            style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 10px; margin-bottom: 15px;">
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="directChatInput" placeholder="Mesajını yaz..."
+                                style="flex: 1; padding: 12px 16px; background: #0f172a; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 12px; color: #fff; outline: none; font-size: 14px;"
+                                onkeypress="if(event.key==='Enter') sendDirectMessage()">
+                            <button onclick="sendDirectMessage()"
+                                style="padding: 12px 20px; background: #06b6d4; color: #0f172a; border: none; border-radius: 12px; font-weight: bold; cursor: pointer;">Gönder</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- SEKME 5: PROFİLİM -->
+        <div class="tab-content" id="content-profile">
+            <div class="premium-card profile-card" style="max-width: 580px; margin: 0 auto; text-align: center;">
+                <!-- Profil Fotoğrafı ve Avatar Alanı -->
+                <div style="position: relative; width: 105px; height: 105px; margin: 0 auto 18px auto;">
+                    <div id="profileAvatarCircle"
+                        style="width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 38px; font-weight: bold; color: #fff; border: 3px solid rgba(6, 182, 212, 0.5); box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); overflow: hidden;">
+                        <span id="profileAvatarInitials">🎓</span>
+                        <img id="profileAvatarImg" src=""
+                            style="display:none; width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <label for="avatarUploadInput"
+                        style="position: absolute; bottom: 0; right: 0; background: #06b6d4; color: #0f172a; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid #0f172a; transition: 0.2s;"
+                        title="Profil Fotoğrafı Yükle">
+                        <i class="fa-solid fa-camera" style="font-size: 14px;"></i>
+                    </label>
+                    <input type="file" id="avatarUploadInput" accept="image/*" style="display:none;"
+                        onchange="profileFotoYukle(event)">
+                </div>
+
+                <h3 id="profUserDisplayName" style="font-size: 22px; color: #fff; margin-bottom: 4px;">Öğrenci
+                    Kullanıcımız</h3>
+                <span class="user-badge" style="display: inline-block; margin-bottom: 22px;">🎓 Mühendislik Öğrencisi &
+                    Mentör</span>
+
+                <!-- 📌 Kişisel & Akademik Bilgiler Alanı -->
+                <div
+                    style="text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15); margin-bottom: 20px;">
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.06);">
+                        <h4
+                            style="color:#06b6d4; font-size:13px; font-weight:bold; margin:0; text-transform:uppercase;">
+                            👤 Kişisel & Akademik Bilgileriniz
+                        </h4>
+                        <button onclick="openEditProfileModal()"
+                            style="background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; padding:5px 12px; border-radius:10px; font-size:12px; font-weight:bold; cursor:pointer; transition:0.2s;"
+                            onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';"
+                            onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
+                            ✏️ Düzenle
+                        </button>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+                        <div>
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">Ad
+                                Soyad</label>
+                            <p id="profAd" style="color:#f1f5f9; font-size:14px; font-weight:bold; margin:0;">—</p>
+                        </div>
+                        <div>
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">Doğum
+                                Tarihi</label>
+                            <p id="profDogumTarihi" style="color:#f1f5f9; font-size:14px; font-weight:bold; margin:0;">
+                                14.06.2002</p>
+                        </div>
+                        <div style="grid-column: 1 / -1;">
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">E-Posta
+                                / İletişim</label>
+                            <p id="profEposta" style="color:#38bdf8; font-size:14px; font-weight:bold; margin:0;">—</p>
+                        </div>
+                        <div style="grid-column: 1 / -1;">
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">Üniversite
+                                / Okul</label>
+                            <p id="profOkul" style="color:#f1f5f9; font-size:14px; font-weight:bold; margin:0;">—</p>
+                        </div>
+                        <div>
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">Bölüm</label>
+                            <p id="profBolum" style="color:#c084fc; font-size:14px; font-weight:bold; margin:0;">—</p>
+                        </div>
+                        <div>
+                            <label
+                                style="display:block; color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; margin-bottom:2px;">Sınıf
+                                / Seviye</label>
+                            <p id="profSinif" style="color:#06b6d4; font-size:14px; font-weight:bold; margin:0;">—</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 📄 Özgeçmiş & CV Yükleme Widget'ı (Opsiyonel) -->
+                <div
+                    style="margin-bottom: 20px; text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <h4
+                            style="color:#06b6d4; font-size:13px; font-weight:bold; margin:0; text-transform:uppercase;">
+                            📄 Özgeçmiş / CV Dosyanız <span
+                                style="color:#94a3b8; font-size:11px; text-transform:none; font-weight:normal;">(Opsiyonel)</span>
+                        </h4>
+                        <span id="profileCvBadge"
+                            style="background:rgba(255,255,255,0.06); color:#94a3b8; font-size:11px; font-weight:600; padding:3px 10px; border-radius:12px;">Yüklenmedi</span>
+                    </div>
+
+                    <p style="color:#cbd5e1; font-size:13px; line-height:1.5; margin-bottom:14px;">
+                        Mentörlük isteklerinizde ve staj/proje başvurularınızda mentörlere iletilmek üzere CV dosyanızı
+                        (PDF) ekleyebilirsiniz.
+                    </p>
+
+                    <!-- CV Yüklenmişse Gösterilecek Alan -->
+                    <div id="profileCvUploadedContainer"
+                        style="display:none; background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.3); padding:12px 14px; border-radius:12px; margin-bottom:14px; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; align-items:center; gap:10px; overflow:hidden;">
+                            <i class="fa-solid fa-file-pdf" style="font-size:24px; color:#ef4444;"></i>
+                            <div style="overflow:hidden;">
+                                <strong id="profileCvFileName"
+                                    style="color:#fff; font-size:13px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">—</strong>
+                                <span id="profileCvFileSize" style="color:#94a3b8; font-size:11px;">PDF Dosyası</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:8px; flex-shrink:0;">
+                            <button onclick="previewProfileCv()"
+                                style="background:rgba(6,182,212,0.2); border:1px solid #06b6d4; color:#06b6d4; padding:6px 12px; border-radius:8px; font-size:12px; font-weight:bold; cursor:pointer;">👁️
+                                İncele</button>
+                            <button onclick="removeProfileCv()"
+                                style="background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; padding:6px 10px; border-radius:8px; font-size:12px; font-weight:bold; cursor:pointer;"
+                                title="CV'yi Kaldır">🗑️</button>
+                        </div>
+                    </div>
+
+                    <!-- Yükleme Butonu -->
+                    <label for="cvFileInput"
+                        style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer; transition:0.2s;"
+                        onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';"
+                        onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
+                        <i class="fa-solid fa-upload"></i> <span id="cvUploadBtnText">PDF CV Dosyası Yükle</span>
+                    </label>
+                    <input type="file" id="cvFileInput" accept=".pdf,.doc,.docx" style="display:none;"
+                        onchange="profileCvYukle(event)">
+                </div>
+
+                <!-- 📊 Öğrenci & Mentör İnteraktif İstatistik Kartları -->
+                <div
+                    style="text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15);">
+                    <h4
+                        style="color:#06b6d4; font-size:13px; font-weight:bold; margin:0 0 14px 0; text-transform:uppercase;">
+                        📊 Rehberlik & Etkileşim İstatistikleriniz (Tıklanabilir)
+                    </h4>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                        <!-- Liseli Öğrencilerim -->
+                        <div onclick="openMyMenteesListModal()"
+                            style="background:rgba(168,85,247,0.1); padding:12px 14px; border-radius:12px; border:1px solid rgba(168,85,247,0.3); cursor:pointer; transition:0.2s;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='rgba(168,85,247,0.18)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(168,85,247,0.1)';">
+                            <span
+                                style="color:#c084fc; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">🎓
+                                Rehberlik Edilen Aday Öğrenci</span>
+                            <strong id="profMenteesCount" style="color:#fff; font-size:15px; display:block;">2 Aday
+                                Mentee ➔</strong>
+                            <span style="color:#94a3b8; font-size:10px; display:block; margin-top:2px;">Öğrencilerimi
+                                Göster</span>
+                        </div>
+
+                        <!-- Liselilerden Aldığım Puan & Yorumlar -->
+                        <div onclick="openAnonymousReviewsModal()"
+                            style="background:rgba(245,158,11,0.1); padding:12px 14px; border-radius:12px; border:1px solid rgba(245,158,11,0.3); cursor:pointer; transition:0.2s;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='rgba(245,158,11,0.18)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(245,158,11,0.1)';">
+                            <span
+                                style="color:#f59e0b; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">⭐
+                                Adaylardan Aldığım Puan</span>
+                            <strong style="color:#f59e0b; font-size:15px; display:block;">⭐ 4.9 / 5.0 (6 Yorum)
+                                ➔</strong>
+                            <span style="color:#94a3b8; font-size:10px; display:block; margin-top:2px;">Anonim Yorumları
+                                İncele</span>
+                        </div>
+
+                        <!-- Talepleri Kabul Etme Oranım -->
+                        <div
+                            style="background:rgba(16,185,129,0.1); padding:12px 14px; border-radius:12px; border:1px solid rgba(16,185,129,0.3);">
+                            <span
+                                style="color:#10b981; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">📈
+                                Talepleri Kabul Oranım</span>
+                            <strong style="color:#10b981; font-size:15px; display:block;">%94 Kabul Oranı</strong>
+                            <span style="color:#94a3b8; font-size:10px; display:block; margin-top:2px;">Yüksek Aktiflik
+                                Puanı</span>
+                        </div>
+
+                        <!-- Başvurduğum İlanlar -->
+                        <div onclick="openMyAppliedJobsModal()"
+                            style="background:rgba(56,189,248,0.1); padding:12px 14px; border-radius:12px; border:1px solid rgba(56,189,248,0.3); cursor:pointer; transition:0.2s;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='rgba(56,189,248,0.18)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(56,189,248,0.1)';">
+                            <span
+                                style="color:#38bdf8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">💼
+                                Başvurduğum İlanlar</span>
+                            <strong id="profAppliedJobsCount" style="color:#fff; font-size:15px; display:block;">4 İlan
+                                & Proje ➔</strong>
+                            <span style="color:#94a3b8; font-size:10px; display:block; margin-top:2px;">Başvurularımı
+                                Listeleyin</span>
+                        </div>
+
+                        <!-- Aldığım Mentörlükler (Sektör Mentörlerim) -->
+                        <div onclick="switchTab('mentor-sector'); switchMentorSubnav('mine');"
+                            style="grid-column: 1 / -1; background:rgba(6,182,212,0.1); padding:12px 14px; border-radius:12px; border:1px solid rgba(6,182,212,0.3); cursor:pointer; transition:0.2s; display:flex; justify-content:space-between; align-items:center;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='rgba(6,182,212,0.18)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(6,182,212,0.1)';">
+                            <div>
+                                <span
+                                    style="color:#06b6d4; font-size:11px; font-weight:600; display:block; margin-bottom:2px;">🤝
+                                    Aldığım Mentörlük Sayısı</span>
+                                <strong id="profMyMentorsCount" style="color:#fff; font-size:15px;">2 Aktif Sektör
+                                    Mentörü</strong>
+                            </div>
+                            <span style="color:#06b6d4; font-size:12px; font-weight:bold;">Mentörlerime Git ➔</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Sektör Mentörü Detay Profil Modalı -->
+        <div class="alan-modal-overlay" id="sectorMentorModal" style="display:none;">
+            <div class="alan-modal-box" style="max-width: 550px; text-align: center;">
+                <span class="alan-modal-close" onclick="sectorMentorModalKapat()">&times;</span>
+
+                <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; font-size: 28px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; border: 3px solid rgba(6, 182, 212, 0.5); box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);"
+                    id="sectorModalAvatar">
+                    —
+                </div>
+
+                <h3 id="sectorModalName" style="font-size: 22px; color: #fff; margin-bottom: 4px;">—</h3>
+                <span id="sectorModalSub"
+                    style="color: #06b6d4; font-size: 14px; font-weight: 600; display: block; margin-bottom: 16px;">—</span>
+
+                <!-- Güven & İstatistik Metrikleri -->
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-bottom:20px;">
+                    <div
+                        style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
+                        <span
+                            style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">⭐
+                            Kabul Oranı</span>
+                        <strong id="sectorModalAcceptance" style="color:#10b981; font-size:14px;">%98 Kabul</strong>
+                    </div>
+                    <div
+                        style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
+                        <span
+                            style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">⏱️
+                            Yanıt Süresi</span>
+                        <strong id="sectorModalResponseTime" style="color:#06b6d4; font-size:14px;">~10 Dk</strong>
+                    </div>
+                    <div
+                        style="background:rgba(15,23,42,0.6); padding:10px; border-radius:12px; border:1px solid rgba(6,182,212,0.15); text-align:center;">
+                        <span
+                            style="color:#64748b; font-size:10px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:2px;">👥
+                            Mentee Sayısı</span>
+                        <strong id="sectorModalMentees" style="color:#f59e0b; font-size:14px;">35+ Öğrenci</strong>
+                    </div>
+                </div>
+
+                <div
+                    style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 14px; border: 1px solid rgba(6, 182, 212, 0.15); text-align: left; margin-bottom: 20px;">
+                    <span
+                        style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:6px;">💼
+                        Sektör Deneyimi & Biyografi</span>
+                    <p id="sectorModalBio" style="color:#e2e8f0; font-size:14px; line-height:1.6; margin:0;">
+                        "Yazılım mimarisi, staj ve iş mülakatı hazırlığı, yurt dışı kariyer fırsatları konularında
+                        mentörlük sağlıyorum."
+                    </p>
+                </div>
+
+                <div style="display:flex; gap:12px; justify-content:center;">
+                    <button id="sectorModalReqBtn" onclick="sendSectorMentorModalReq(this)"
+                        style="width:100%; padding:14px 20px; background:#06b6d4; color:#0f172a; border:none; border-radius:12px; font-weight:bold; font-size:14px; cursor:pointer; transition:0.3s; box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);">
+                        📩 Mentörlük İsteği Gönder
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Şirket Mentörleri Modalı -->
+        <div class="alan-modal-overlay" id="companyMentorsModal" style="display:none; z-index: 500;">
+            <div class="alan-modal-box" style="max-width: 600px;">
+                <span class="alan-modal-close" onclick="companyMentorsModalKapat()">&times;</span>
+                <div
+                    style="display:flex; align-items:center; gap:14px; margin-bottom:20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom:15px; text-align:left;">
+                    <div class="card-icon" style="margin:0;"><i class="fa-solid fa-building" style="color:#06b6d4;"></i>
+                    </div>
+                    <div>
+                        <h3 id="companyModalTitle" style="color:#fff; font-size:22px; margin:0;">—</h3>
+                        <span style="color:#06b6d4; font-size:13px;">Bu Şirkette Çalışan Aktif Sektör Mentörleri</span>
+                    </div>
+                </div>
+                <div id="companyMentorListContainer"
+                    style="display:flex; flex-direction:column; gap:14px; max-height:380px; overflow-y:auto; padding-right:5px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Mentörlük İsteği Özel Not Modalı -->
+        <div class="alan-modal-overlay" id="sendRequestNoteModal" style="display:none; z-index: 100000;">
+            <div class="alan-modal-box" style="max-width: 520px; text-align: left;">
+                <span class="alan-modal-close" onclick="sendRequestNoteModalKapat()">&times;</span>
+
+                <div
+                    style="display:flex; align-items:center; gap:12px; margin-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:12px;">
+                    <div style="width:45px; height:45px; border-radius:50%; background:linear-gradient(135deg,#06b6d4,#3b82f6); color:#fff; font-size:18px; font-weight:bold; display:flex; align-items:center; justify-content:center;"
+                        id="sendReqModalAvatar">
+                        👔
+                    </div>
+                    <div>
+                        <h3 id="sendReqModalMentorName" style="color:#fff; font-size:18px; margin:0 0 2px 0;">Mentöre
+                            İletilecek Not</h3>
+                        <span id="sendReqModalMentorSub" style="color:#06b6d4; font-size:12px; font-weight:bold;">Sektör
+                            Mentörü</span>
+                    </div>
+                </div>
+
+                <label style="color:#cbd5e1; font-size:13px; font-weight:bold; display:block; margin-bottom:8px;">
+                    ✍️ Mentöre Özel Notunuz (Opsiyonel - Max 500 Karakter):
+                </label>
+                <textarea id="sendReqNoteTextarea" maxlength="500"
+                    placeholder="Örn: Merhaba! Hikayenizi ve kariyer yolculuğunuzu okudum. Gelecekte ben de bu alanda çalışmak istiyorum, mentörlük sürecinde tavsiyelerinizi almak isterim..."
+                    style="width:100%; height:110px; background:#0f172a; border:1px solid rgba(6,182,212,0.3); border-radius:12px; color:#fff; padding:12px; font-size:13px; font-family:inherit; outline:none; resize:none; margin-bottom:4px;"
+                    oninput="updateReqNoteCharCount(this)"></textarea>
+                <span id="sendReqNoteCharCount" style="color:#64748b; font-size:11px; display:block; text-align:right; margin-bottom:12px;">0 / 500</span>
+
+                <!-- CV Eki Gösterim Alanı (Opsiyonel) -->
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px 14px; border-radius:12px; border:1px solid rgba(6,182,212,0.2); margin-bottom:16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:#cbd5e1; font-size:12px; font-weight:600;"><i class="fa-solid fa-paperclip"
+                                style="color:#06b6d4;"></i> CV Dosya Eki (Opsiyonel):</span>
+                        <span id="sendReqCvStatusBadge" style="font-size:11px; font-weight:bold; color:#10b981;">📄
+                            Yüklü CV Var</span>
+                    </div>
+                    <p id="sendReqCvDesc" style="color:#94a3b8; font-size:12px; margin-top:4px; line-height:1.4;">
+                        —
+                    </p>
+                </div>
+
+                <button id="sendReqConfirmBtn" onclick="confirmSendMentorRequestWithNote()"
+                    style="width:100%; padding:13px; background:#06b6d4; color:#0f172a; border:none; border-radius:12px; font-weight:bold; font-size:14px; cursor:pointer; transition:0.3s; box-shadow:0 4px 14px rgba(6,182,212,0.3);">
+                    🚀 İstek & Özel Notu Gönder
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
         function closeAllModals() {
             document.querySelectorAll('.alan-modal-overlay').forEach(modal => {
                 modal.classList.remove('active');
@@ -3471,4 +5135,746 @@
             });
         });
 
-    
+    </script>
+    <div class="alan-modal-overlay" id="alanModal">
+        <div class="alan-modal-box">
+            <span class="alan-modal-close" onclick="alanModalKapat()">&times;</span>
+            <div class="card-icon" style="margin-bottom:20px;"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h2 id="alanModalBaslik" style="color:#fff; font-size:26px; margin-bottom:16px;"></h2>
+            <p id="alanModalIcerik" style="color:#cbd5e1; font-size:15px; line-height:1.7; margin-bottom:20px;"></p>
+
+            <div style="margin-bottom:16px;">
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Aranan
+                    Beceriler</span>
+                <p id="alanModalBeceriler" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İş
+                    İmkanları</span>
+                <p id="alanModalIsImkanlari" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
+
+            <div>
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">Maaş
+                    Aralığı</span>
+                <p id="alanModalMaas" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
+            <div style="margin-top:16px;">
+                <span style="color:#06b6d4; font-weight:bold; font-size:13px; text-transform:uppercase;">İstihdam
+                    Oranı</span>
+                <p id="alanModalIstihdam" style="color:#e2e8f0; font-size:14px; margin-top:4px;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mentörlük İsteği ve Not Bırakma Modalı -->
+    <div class="alan-modal-overlay" id="mentorNoteModal" style="display:none;">
+        <div class="alan-modal-box"
+            style="max-width: 520px; text-align: left; background:#1e293b; border:2px solid rgba(6,182,212,0.4); border-radius:24px; padding:30px; position:relative;">
+            <span class="alan-modal-close" onclick="closeMentorNoteModal()"
+                style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
+
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+                <div id="modalTargetAvatar"
+                    style="width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg, #06b6d4, #2563eb); color:#fff; font-weight:bold; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                    HÇ</div>
+                <div>
+                    <h3 id="modalTargetName" style="color:#fff; font-size:19px; margin:0 0 2px 0;">—</h3>
+                    <span id="modalTargetTitle" style="color:#06b6d4; font-size:13px; font-weight:600;">—</span>
+                </div>
+            </div>
+
+            <h4 style="color:#fff; font-size:15px; margin-bottom:6px;"><i class="fa-solid fa-pen-to-square"
+                    style="color:#06b6d4;"></i> Mentörünüze Bir Not Bırakın</h4>
+            <p style="color:#94a3b8; font-size:13px; margin-bottom:15px; line-height:1.5;">Mentörünüzün talebinizi
+                değerlendirirken hedeflerinizi anlayabilmesi için kısa bir mesaj ekleyebilirsiniz (İsteğe bağlı):</p>
+
+            <textarea id="mentorNoteTextarea" rows="4"
+                placeholder="Örn: Merhaba, bilgisayar mühendisliği 3. sınıf öğrencisiyim. Frontend geliştirmede kendimi geliştiriyorum. Staj süreçleri ve tavsiyeleriniz için mentorluğunuza başvurmak istiyorum..."
+                style="width:100%; padding:14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:12px; color:#fff; font-size:14px; outline:none; resize:none; margin-bottom:20px;"></textarea>
+
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button onclick="closeMentorNoteModal()"
+                    style="padding:10px 18px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:10px; font-weight:bold; font-size:13px; cursor:pointer;">Vazgeç</button>
+                <button onclick="confirmSendMentorRequestWithNote()"
+                    style="padding:10px 22px; background:linear-gradient(135deg, #06b6d4, #2563eb); border:none; color:#fff; border-radius:10px; font-weight:bold; font-size:13px; cursor:pointer; box-shadow: 0 4px 15px rgba(6,182,212,0.3);">İsteği
+                    Not İle Gönder 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEKTÖR MENTÖRÜ DETAY MODALI -->
+    <div class="alan-modal-overlay" id="sectorMentorDetailsModal" style="display:none; z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 620px; text-align: left; background:#0f172a; border:1px solid rgba(6,182,212,0.3); border-radius:24px; padding:30px; position:relative; box-shadow: 0 25px 60px rgba(0,0,0,0.7);">
+            <span class="alan-modal-close" onclick="closeSectorMentorModal()"
+                style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
+
+            <!-- Mentör Üst Başlık & Profil -->
+            <div
+                style="display:flex; align-items:center; gap:18px; margin-bottom:22px; padding-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <img id="mentorDetailImg" src="" alt="Mentor Photo"
+                    style="width:75px; height:75px; border-radius:50%; border:3px solid #06b6d4; object-fit:cover; background:#1e293b; flex-shrink:0;">
+                <div>
+                    <h3 id="mentorDetailName" style="color:#fff; font-size:22px; margin:0 0 4px 0; font-weight:bold;">—
+                    </h3>
+                    <span id="mentorDetailTitle"
+                        style="color:#06b6d4; font-size:14px; font-weight:600; display:block; margin-bottom:4px;">—</span>
+                    <span id="mentorDetailField"
+                        style="color:#94a3b8; font-size:12px; background:rgba(255,255,255,0.05); padding:3px 10px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);">—</span>
+                </div>
+            </div>
+
+            <!-- Mentör İstatistik Kartları Grid -->
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-bottom:20px;">
+                <div
+                    style="background:rgba(30,41,59,0.7); padding:12px; border-radius:14px; border:1px solid rgba(6,182,212,0.2); text-align:center;">
+                    <span style="font-size:11px; color:#94a3b8; display:block; margin-bottom:4px;">👨‍🎓 Mentee
+                        Sayısı</span>
+                    <strong id="mentorDetailMentees" style="color:#fff; font-size:14px;">—</strong>
+                </div>
+                <div
+                    style="background:rgba(30,41,59,0.7); padding:12px; border-radius:14px; border:1px solid rgba(16,185,129,0.2); text-align:center;">
+                    <span style="font-size:11px; color:#94a3b8; display:block; margin-bottom:4px;">✅ Kabul &
+                        Yanıt</span>
+                    <strong id="mentorDetailAcceptance" style="color:#10b981; font-size:14px;">—</strong>
+                </div>
+                <div
+                    style="background:rgba(30,41,59,0.7); padding:12px; border-radius:14px; border:1px solid rgba(245,158,11,0.2); text-align:center;">
+                    <span style="font-size:11px; color:#94a3b8; display:block; margin-bottom:4px;">⭐
+                        Değerlendirme</span>
+                    <strong id="mentorDetailRating" style="color:#f59e0b; font-size:13px;">—</strong>
+                </div>
+            </div>
+
+            <!-- Biyografi / Hakkında -->
+            <div style="margin-bottom:18px;">
+                <h4
+                    style="color:#06b6d4; font-size:13px; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">
+                    <i class="fa-solid fa-user-gear"></i> Hakkında & Mentörlük Tarzı
+                </h4>
+                <p id="mentorDetailBio"
+                    style="color:#cbd5e1; font-size:13px; line-height:1.6; background:rgba(15,23,42,0.6); padding:14px; border-radius:14px; border:1px solid rgba(255,255,255,0.06); margin:0;">
+                </p>
+            </div>
+
+            <!-- Uzmanlık Becerileri (Tags) -->
+            <div style="margin-bottom:22px;">
+                <h4
+                    style="color:#06b6d4; font-size:13px; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:8px;">
+                    <i class="fa-solid fa-tags"></i> Uzmanlık Alanları
+                </h4>
+                <div id="mentorDetailSkills" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+            </div>
+
+            <!-- Modal Alt Aksiyon Butonu -->
+            <div id="mentorDetailActionArea"
+                style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- İLAN BAŞVURULARI VE İSTATİSTİK MODALI -->
+    <div class="alan-modal-overlay" id="jobApplicantsModal"
+        style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); z-index: 210; justify-content: center; align-items: center;">
+        <div class="alan-modal-box"
+            style="max-width: 600px; text-align: left; background:#0f172a; border:2px solid rgba(6,182,212,0.4); border-radius:24px; padding:30px; position:relative; box-shadow: 0 25px 60px rgba(0,0,0,0.7);">
+            <span class="alan-modal-close" onclick="closeJobApplicantsModal()"
+                style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
+            <div
+                style="display:flex; align-items:center; gap:12px; margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div
+                    style="width:46px; height:46px; border-radius:50%; background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; font-size:20px; display:flex; align-items:center; justify-content:center;">
+                    📩</div>
+                <div>
+                    <h3 id="jobApplicantsModalTitle" style="color:#fff; font-size:19px; margin:0 0 2px 0;">—</h3>
+                    <span style="color:#94a3b8; font-size:12px;">İlanınıza gelen aday başvuruları ve iletişim
+                        talepleri</span>
+                </div>
+            </div>
+            <div id="jobApplicantsListContainer" style="max-height:380px; overflow-y:auto; padding-right:6px;">
+                <!-- JS ile dinamik doldurulacak -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔔 ŞİRKET BİLDİRİM & GÜNCELLEME KISACA LİSTELEME MODALI -->
+    <div class="alan-modal-overlay" id="companyNoticeModal"
+        style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); z-index: 260; justify-content: center; align-items: center;">
+        <div class="alan-modal-box"
+            style="max-width: 550px; width: 90%; text-align: left; background:#0f172a; border:2px solid rgba(56,189,248,0.4); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 60px rgba(0,0,0,0.7);">
+            <span class="alan-modal-close" onclick="closeCompanyNoticeModal()"
+                style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
+
+            <div
+                style="display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div
+                    style="width:46px; height:46px; border-radius:50%; background:rgba(56,189,248,0.15); border:1px solid #38bdf8; color:#38bdf8; font-size:22px; display:flex; align-items:center; justify-content:center;">
+                    🔔</div>
+                <div>
+                    <h3 id="companyNoticeModalTitle" style="color:#fff; font-size:19px; margin:0 0 2px 0;">—</h3>
+                    <span style="color:#94a3b8; font-size:12px;">Aktif staj programı ve güncel pozisyon
+                        bildirimleri</span>
+                </div>
+            </div>
+
+            <div id="companyNoticeModalBody" style="margin-bottom:20px;">
+                <!-- JS dinamik içerik -->
+            </div>
+
+            <div id="companyNoticeModalFooter">
+                <!-- JS yönlendirme butonu -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 📄 ADAY BAŞVURU DETAYI & CV ÖNİZLEME MODALI -->
+    <div class="alan-modal-overlay" id="applicantCvModal"
+        style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); z-index: 280; justify-content: center; align-items: center;">
+        <div class="alan-modal-box"
+            style="max-width: 620px; width: 92%; text-align: left; background:#0f172a; border:2px solid rgba(6,182,212,0.4); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 60px rgba(0,0,0,0.7); max-height: 88vh; overflow-y: auto;">
+            <span class="alan-modal-close" onclick="closeApplicantCvModal()"
+                style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
+
+            <div
+                style="display:flex; align-items:center; gap:14px; margin-bottom:18px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <img id="applicantCvAvatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arda"
+                    style="width:52px; height:52px; border-radius:50%; border:2px solid #06b6d4; background:#1e293b; flex-shrink:0;">
+                <div>
+                    <h3 id="applicantCvName" style="color:#fff; font-size:20px; margin:0 0 2px 0;">—</h3>
+                    <span id="applicantCvDept" style="color:#06b6d4; font-size:13px; font-weight:600;">—</span>
+                </div>
+            </div>
+
+            <div id="applicantCvBody">
+                <!-- JS Dinamik CV & Bilgiler -->
+            </div>
+
+            <div id="applicantCvFooter"
+                style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;">
+                <!-- JS Dinamik Sohbet Başlat Butonu -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ℹ️ AKADEMİK DUYURU DETAY MODALI -->
+    <div class="alan-modal-overlay" id="schoolNoticeDetailModal"
+        style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); z-index: 290; justify-content: center; align-items: center;">
+        <div class="alan-modal-box"
+            style="max-width: 580px; width: 90%; text-align: left; background:#0f172a; border:2px solid rgba(6,182,212,0.4); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 60px rgba(0,0,0,0.7);">
+            <span class="alan-modal-close" onclick="closeSchoolNoticeDetailModal()"
+                style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
+
+            <div
+                style="display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div
+                    style="width:46px; height:46px; border-radius:50%; background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; font-size:22px; display:flex; align-items:center; justify-content:center;">
+                    📢</div>
+                <div>
+                    <h3 id="schoolNoticeDetailModalTitle" style="color:#fff; font-size:18px; margin:0 0 2px 0;">—</h3>
+                    <span style="color:#94a3b8; font-size:12px;">Kampüs duyuru detayları ve açıklama</span>
+                </div>
+            </div>
+
+            <div id="schoolNoticeDetailModalBody" style="margin-bottom:20px;">
+                <!-- JS dinamik detaylar -->
+            </div>
+
+            <button onclick="closeSchoolNoticeDetailModal()"
+                style="width:100%; padding:12px; background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;"
+                onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';"
+                onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
+                Anlaşıldı / Kapat ✖️
+            </button>
+        </div>
+    </div>
+
+    <!-- 🚀 İLAN DETAY & GENİŞLETİLMİŞ GÖRÜNÜM MODALI -->
+    <div class="alan-modal-overlay" id="jobDetailExpandedModal" style="display:none; z-index:320;">
+        <div class="alan-modal-box"
+            style="max-width: 680px; width:92%; text-align: left; background:#0f172a; border:2px solid rgba(6,182,212,0.4); border-radius:24px; padding:30px; position:relative; box-shadow: 0 25px 60px rgba(0,0,0,0.8); max-height:88vh; overflow-y:auto;">
+            <span class="alan-modal-close" onclick="closeJobDetailExpandedModal()"
+                style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
+
+            <!-- Üst İlan Başlığı ve Rozetler -->
+            <div
+                style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08); flex-wrap:wrap; gap:10px;">
+                <div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                        <span id="jobDetailTypeBadge"
+                            style="font-size:12px; font-weight:700; color:#38bdf8; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); padding:4px 12px; border-radius:12px;">Staj
+                            / Aday</span>
+                        <span id="jobDetailDomainBadge"
+                            style="font-size:12px; color:#a855f7; background:rgba(168,85,247,0.15); border:1px solid rgba(168,85,247,0.3); padding:4px 12px; border-radius:12px;">Yazılım
+                            Mühendisliği</span>
+                    </div>
+                    <h2 id="jobDetailTitle"
+                        style="color:#fff; font-size:22px; margin:0 0 6px 0; font-weight:bold; line-height:1.3;">—</h2>
+                    <span id="jobDetailCompany" style="color:#06b6d4; font-size:14px; font-weight:600;"><i
+                            class="fa-solid fa-building"></i> —</span>
+                </div>
+                <span id="jobDetailDate"
+                    style="color:#94a3b8; font-size:12px; background:rgba(255,255,255,0.05); padding:6px 12px; border-radius:12px;"><i
+                        class="fa-regular fa-clock"></i> Bugün</span>
+            </div>
+
+            <!-- AI CV Uyum Özeti Kartı -->
+            <div
+                style="background:linear-gradient(135deg, rgba(6,182,212,0.12), rgba(168,85,247,0.12)); border:1px solid rgba(6,182,212,0.3); border-radius:16px; padding:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <div>
+                    <span style="color:#94a3b8; font-size:12px; font-weight:bold; display:block; margin-bottom:4px;">🤖
+                        AI CV Uyum Puanınız</span>
+                    <strong id="jobDetailAiScoreText" style="color:#10b981; font-size:20px; font-weight:bold;">%88
+                        Mükemmel Uyum ✨</strong>
+                </div>
+                <button id="jobDetailAiAnalyzeBtn" onclick="openAiCvMatchModalFromDetail()"
+                    style="padding:10px 18px; background:linear-gradient(135deg, #a855f7, #6366f1); border:none; color:#fff; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer; box-shadow:0 4px 14px rgba(168,85,247,0.3); display:flex; align-items:center; gap:6px;">
+                    🤖 AI Analizini Göster ➔
+                </button>
+            </div>
+
+            <!-- İlan Detaylı Açıklaması -->
+            <div style="margin-bottom:20px;">
+                <h4 style="color:#fff; font-size:15px; margin-bottom:8px;"><i class="fa-solid fa-file-lines"
+                        style="color:#06b6d4;"></i> Pozisyon & Proje Detayları</h4>
+                <p id="jobDetailFullDesc"
+                    style="color:#cbd5e1; font-size:14px; line-height:1.6; background:rgba(15,23,42,0.6); padding:16px; border-radius:14px; border:1px solid rgba(255,255,255,0.06); margin:0;">
+                    —
+                </p>
+            </div>
+
+            <!-- Aranan Teknolojiler & Beceriler -->
+            <div style="margin-bottom:24px;">
+                <h4 style="color:#fff; font-size:15px; margin-bottom:10px;"><i class="fa-solid fa-code"
+                        style="color:#06b6d4;"></i> Aranan Beceriler & Teknolojiler</h4>
+                <div id="jobDetailSkillsContainer" style="display:flex; flex-wrap:wrap; gap:8px;">
+                    <!-- JS ile yüklenecek -->
+                </div>
+            </div>
+
+            <!-- İletişim & Alt Aksiyon Butonları -->
+            <div
+                style="border-top:1px solid rgba(255,255,255,0.08); padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <div style="font-size:12px; color:#94a3b8;">
+                    📧 İletişim / Yayınlayan: <strong id="jobDetailContact" style="color:#06b6d4;">—</strong>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button id="jobDetailApplyBtn" onclick="confirmApplyFromJobDetail()"
+                        style="padding:12px 24px; background:#06b6d4; color:#0f172a; border:none; border-radius:14px; font-weight:bold; font-size:14px; cursor:pointer; transition:0.2s; box-shadow:0 4px 15px rgba(6,182,212,0.3);">
+                        Başvur 🚀
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🤖 AI CV UYUM ANALİZİ MODALI -->
+    <div class="alan-modal-overlay" id="aiCvMatchModal" style="display:none; z-index:350;">
+        <div class="alan-modal-box"
+            style="max-width: 620px; width:92%; text-align: left; background:#0f172a; border:2px solid rgba(168,85,247,0.5); border-radius:24px; padding:30px; position:relative; box-shadow: 0 25px 65px rgba(168,85,247,0.3); max-height:88vh; overflow-y:auto;">
+            <span class="alan-modal-close" onclick="closeAiCvMatchModal()"
+                style="position:absolute; top:18px; right:22px; font-size:26px; color:#94a3b8; cursor:pointer;">&times;</span>
+
+            <!-- Üst Başlık -->
+            <div
+                style="display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div
+                    style="width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, #a855f7, #6366f1); color:#fff; font-size:24px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                    🤖
+                </div>
+                <div>
+                    <h3 style="color:#fff; font-size:20px; margin:0 0 2px 0; font-weight:bold;">Yapay Zeka CV Uyum
+                        Analizi</h3>
+                    <span id="aiMatchJobTitle" style="color:#a855f7; font-size:13px; font-weight:600;">—</span>
+                </div>
+            </div>
+
+            <!-- Dairesel / Bar Uyum Skoru -->
+            <div
+                style="background:rgba(30,41,59,0.7); border:1px solid rgba(168,85,247,0.3); border-radius:18px; padding:20px; text-align:center; margin-bottom:20px;">
+                <span
+                    style="color:#94a3b8; font-size:12px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:6px;">🎯
+                    CV & İlan Eşleşme Oranı</span>
+                <div style="font-size:36px; font-weight:900; color:#10b981; margin-bottom:8px;"
+                    id="aiMatchPercentageText">%88</div>
+
+                <!-- İlerleme Çubuğu -->
+                <div
+                    style="width:100%; height:12px; background:rgba(15,23,42,0.8); border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); margin-bottom:10px;">
+                    <div id="aiMatchProgressBar"
+                        style="width:88%; height:100%; background:linear-gradient(90deg, #10b981, #06b6d4); border-radius:10px; transition:width 0.8s ease;">
+                    </div>
+                </div>
+                <span id="aiMatchStatusLabel" style="color:#38bdf8; font-size:13px; font-weight:bold;">✨ Bu ilan için
+                    oldukça yüksek bir uyuma sahipsin!</span>
+            </div>
+
+            <!-- Eşleşen / Güçlü Yönler -->
+            <div style="margin-bottom:18px;">
+                <h4 style="color:#10b981; font-size:14px; margin-bottom:8px;"><i class="fa-solid fa-circle-check"></i>
+                    Eşleşen Yetkinliklerin (Güçlü Yönler)</h4>
+                <div id="aiMatchMatchedSkills" style="display:flex; flex-wrap:wrap; gap:6px;">
+                    <!-- JS ile yüklenecek -->
+                </div>
+            </div>
+
+            <!-- Eksik / Geliştirilebilir Beceriler -->
+            <div style="margin-bottom:20px;">
+                <h4 style="color:#f59e0b; font-size:14px; margin-bottom:8px;"><i class="fa-solid fa-lightbulb"></i>
+                    Geliştirilebilecek / İncenlenebilecek Beceriler</h4>
+                <div id="aiMatchMissingSkills" style="display:flex; flex-wrap:wrap; gap:6px;">
+                    <!-- JS ile yüklenecek -->
+                </div>
+            </div>
+
+            <!-- AI Tavsiyesi -->
+            <div
+                style="background:rgba(168,85,247,0.1); border-left:3px solid #a855f7; padding:14px 16px; border-radius:12px; margin-bottom:24px;">
+                <strong style="color:#a855f7; font-size:13px; display:block; margin-bottom:4px;">🤖 AI Danışman
+                    Tavsiyesi:</strong>
+                <p id="aiMatchAdviceText" style="color:#e2e8f0; font-size:13px; line-height:1.5; margin:0;">
+                    CV'nizdeki projeler ve teknik beceriler bu ilanın gereksinimleriyle büyük oranda örtüşüyor.
+                    Başvurunuzda projelerinizdeki katkılarınızı vurgulayarak öne geçebilirsiniz.
+                </p>
+            </div>
+
+            <!-- Aksiyon Butonları -->
+            <div style="display:flex; gap:10px;">
+                <button onclick="closeAiCvMatchModal()"
+                    style="flex:1; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">Kapat</button>
+                <button id="aiMatchApplyBtn" onclick="confirmApplyFromAiModal()"
+                    style="flex:2; padding:12px; background:linear-gradient(135deg, #06b6d4, #2563eb); border:none; color:#fff; border-radius:12px; font-weight:bold; font-size:14px; cursor:pointer; box-shadow:0 4px 15px rgba(6,182,212,0.3);">
+                    🚀 Bu CV ile İlana Başvur
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- 🎓 ADAY ÖĞRENCİ DETAYLI BÜYÜTME MODALI -->
+    <div class="alan-modal-overlay" id="candidateDetailModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 580px; width:90%; text-align: center; background:#0f172a; border:2px solid rgba(168,85,247,0.5); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(168,85,247,0.4);">
+            <span class="alan-modal-close" onclick="candidateDetailModalKapat()">&times;</span>
+
+            <div style="width: 95px; height: 95px; border-radius: 50%; background: linear-gradient(135deg, #a855f7, #3b82f6); color: #fff; font-size: 28px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; border: 3px solid rgba(168, 85, 247, 0.5); box-shadow: 0 0 25px rgba(168, 85, 247, 0.4); overflow:hidden;"
+                id="candidateModalAvatarContainer">
+                <img id="candidateModalImg" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+                <span id="candidateModalAvatar">—</span>
+            </div>
+
+            <h3 id="candidateModalName" style="font-size: 24px; color: #fff; margin-bottom: 4px; font-weight:bold;">—
+            </h3>
+            <span id="candidateModalSub"
+                style="color: #c084fc; font-size: 14px; font-weight: 600; display: block; margin-bottom: 18px;">—</span>
+
+            <!-- Deneme & YKS İstatistikleri -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:18px;">
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px; border-radius:14px; border:1px solid rgba(168,85,247,0.2); text-align:center;">
+                    <span
+                        style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:4px;">📈
+                        Güncel Deneme Netleri</span>
+                    <strong id="candidateModalNetler" style="color:#f59e0b; font-size:14px;">—</strong>
+                </div>
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px; border-radius:14px; border:1px solid rgba(168,85,247,0.2); text-align:center;">
+                    <span
+                        style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:4px;">🎯
+                        YKS Hedef Sıralaması</span>
+                    <strong id="candidateModalHedef" style="color:#10b981; font-size:14px;">—</strong>
+                </div>
+            </div>
+
+            <div
+                style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 14px; border: 1px solid rgba(168, 85, 247, 0.2); text-align: left; margin-bottom: 20px;">
+                <span
+                    style="color:#64748b; font-size:11px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:6px;">💬
+                    Adayın Danışma Mesajı & Notu</span>
+                <p id="candidateModalBio" style="color:#e2e8f0; font-size:14px; line-height:1.6; margin:0;">—</p>
+            </div>
+
+            <div style="display:flex; gap:12px; justify-content:center;">
+                <button id="candidateModalAcceptBtn"
+                    style="flex:1; padding:13px; background:#10b981; color:#ffffff; border:none; border-radius:12px; font-weight:bold; font-size:14px; cursor:pointer;">
+                    ✅ İsteği Kabul Et
+                </button>
+                <button id="candidateModalRejectBtn"
+                    style="flex:1; padding:13px; background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; border-radius:12px; font-weight:bold; font-size:14px; cursor:pointer;">
+                    ❌ Reddet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ⭐ MENTÖR PUANLAMA VE YORUM YAPMA MODALI -->
+    <div class="alan-modal-overlay" id="rateMentorModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 520px; width:90%; text-align: center; background:#0f172a; border:2px solid rgba(245,158,11,0.5); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(245,158,11,0.3);">
+            <span class="alan-modal-close" onclick="closeRateMentorModal()">&times;</span>
+
+            <div
+                style="width: 76px; height: 76px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; font-size: 32px; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px auto; border: 3px solid rgba(245, 158, 11, 0.4); box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);">
+                ⭐
+            </div>
+
+            <h3 id="rateModalMentorName" style="font-size: 22px; color: #fff; margin-bottom: 4px; font-weight:bold;">
+                Mentör Değerlendirme</h3>
+            <span id="rateModalMentorSub"
+                style="color: #06b6d4; font-size: 13px; font-weight: 600; display: block; margin-bottom: 20px;">Trendyol
+                • Senior Frontend Dev</span>
+
+            <!-- İnteraktif Yıldız Seçici -->
+            <div
+                style="background:rgba(15,23,42,0.6); padding:16px; border-radius:16px; border:1px solid rgba(245,158,11,0.2); margin-bottom:20px;">
+                <span
+                    style="color:#cbd5e1; font-size:13px; font-weight:600; display:block; margin-bottom:10px;">Mentörünüze
+                    Kaç Yıldız Veriyorsunuz?</span>
+                <div id="starRatingContainer"
+                    style="display:flex; justify-content:center; gap:12px; font-size:32px; cursor:pointer;">
+                    <span onclick="setMentorStarRating(1)" onmouseover="highlightStars(1)"
+                        onmouseout="resetStarHighlight()" data-star="1" style="color:#64748b; transition:0.2s;">★</span>
+                    <span onclick="setMentorStarRating(2)" onmouseover="highlightStars(2)"
+                        onmouseout="resetStarHighlight()" data-star="2" style="color:#64748b; transition:0.2s;">★</span>
+                    <span onclick="setMentorStarRating(3)" onmouseover="highlightStars(3)"
+                        onmouseout="resetStarHighlight()" data-star="3" style="color:#64748b; transition:0.2s;">★</span>
+                    <span onclick="setMentorStarRating(4)" onmouseover="highlightStars(4)"
+                        onmouseout="resetStarHighlight()" data-star="4" style="color:#64748b; transition:0.2s;">★</span>
+                    <span onclick="setMentorStarRating(5)" onmouseover="highlightStars(5)"
+                        onmouseout="resetStarHighlight()" data-star="5" style="color:#64748b; transition:0.2s;">★</span>
+                </div>
+                <span id="starRatingText"
+                    style="color:#f59e0b; font-size:13px; font-weight:bold; display:block; margin-top:8px;">Lütfen puan
+                    seçin (5 Yıldız = Mükemmel ✨)</span>
+            </div>
+
+            <!-- Yorum Metin Kutusu -->
+            <div style="text-align:left; margin-bottom:20px;">
+                <label style="color:#cbd5e1; font-size:12px; font-weight:600; display:block; margin-bottom:6px;">💬
+                    Mentörlük Deneyiminiz & Yorumunuz (İsteğe Bağlı):</label>
+                <textarea id="rateMentorCommentTextarea" rows="3"
+                    placeholder="Örn: Sorularıma çok samimi ve açıklayıcı yanıtlar verdi, kariyer haritamı belirlememde çok yardımcı oldu..."
+                    style="width:100%; padding:12px; background:rgba(15,23,42,0.8); border:1px solid rgba(245,158,11,0.3); border-radius:12px; color:#fff; font-size:13px; outline:none; resize:none;"></textarea>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+                <button onclick="closeRateMentorModal()"
+                    style="flex:1; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">Vazgeç</button>
+                <button onclick="submitMentorRating()"
+                    style="flex:2; padding:12px; background:linear-gradient(135deg, #f59e0b, #d97706); border:none; color:#fff; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer; box-shadow:0 4px 15px rgba(245,158,11,0.3);">
+                    ⭐ Puanı & Yorumu Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✏️ KİŞİSEL BİLGİLERİ DÜZENLEME MODALI -->
+    <div class="alan-modal-overlay" id="editProfileInfoModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 520px; width:90%; text-align: left; background:#0f172a; border:2px solid rgba(6,182,212,0.4); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(6,182,212,0.3);">
+            <span class="alan-modal-close" onclick="closeEditProfileModal()">&times;</span>
+
+            <h3 style="font-size: 20px; color: #fff; margin-bottom: 6px; font-weight:bold;"><i
+                    class="fa-solid fa-user-pen" style="color:#06b6d4;"></i> Kişisel Bilgilerinizi Düzenleyin</h3>
+            <p style="color:#94a3b8; font-size:12px; margin-bottom:20px;">Kayıt esnasında girilen kişisel ve
+                akademik bilgilerinizi buradan güncelleyebilirsiniz.</p>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:20px;">
+                <div style="grid-column: 1 / -1;">
+                    <label style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">👤
+                        Ad Soyad</label>
+                    <input type="text" id="editProfAd"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+                <div>
+                    <label style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">🎂
+                        Doğum Tarihi</label>
+                    <input type="text" id="editProfDogumTarihi" placeholder="Örn: 14.06.2002"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+                <div>
+                    <label style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">📧
+                        E-Posta Adresi</label>
+                    <input type="text" id="editProfEposta"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label
+                        style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">🏛️
+                        Okul / Üniversite</label>
+                    <input type="text" id="editProfOkul"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+                <div>
+                    <label style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">💻
+                        Bölüm</label>
+                    <input type="text" id="editProfBolum"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+                <div>
+                    <label style="color:#cbd5e1; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">📚
+                        Sınıf / Seviye</label>
+                    <input type="text" id="editProfSinif"
+                        style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+                <button onclick="closeEditProfileModal()"
+                    style="flex:1; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">Vazgeç</button>
+                <button onclick="saveProfileInfo()"
+                    style="flex:2; padding:12px; background:linear-gradient(135deg, #06b6d4, #2563eb); border:none; color:#fff; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer; box-shadow:0 4px 15px rgba(6,182,212,0.3);">
+                    💾 Bilgileri Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎓 REHBERLİK EDİLEN LİSELİ ÖĞRENCİLERİM MODALI -->
+    <div class="alan-modal-overlay" id="myMenteesListModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 540px; width:90%; text-align: left; background:#0f172a; border:2px solid rgba(168,85,247,0.5); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(168,85,247,0.3);">
+            <span class="alan-modal-close" onclick="closeMyMenteesListModal()">&times;</span>
+
+            <h3 style="font-size: 20px; color: #fff; margin-bottom: 6px; font-weight:bold;"><i
+                    class="fa-solid fa-user-graduate" style="color:#a855f7;"></i> Rehberlik Ettiğiniz Liseli
+                Öğrencileriniz</h3>
+            <p style="color:#94a3b8; font-size:12px; margin-bottom:18px;">Danışmanlık ve mentörlük talebini kabul
+                ettiğiniz aktif liseli mentee öğrencileriniz.</p>
+
+            <div id="myMenteesListModalBody"
+                style="max-height:360px; overflow-y:auto; margin-bottom:20px; padding-right:4px;">
+                <!-- JS Dinamik yükler -->
+            </div>
+
+            <button onclick="closeMyMenteesListModal()"
+                style="width:100%; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">
+                Kapat
+            </button>
+        </div>
+    </div>
+
+    <!-- ⭐ LİSELİ ÖĞRENCİLERDEN ALINAN ANONİM DEĞERLENDİRMELER MODALI -->
+    <div class="alan-modal-overlay" id="anonymousReviewsModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 560px; width:90%; text-align: left; background:#0f172a; border:2px solid rgba(245,158,11,0.5); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(245,158,11,0.3);">
+            <span class="alan-modal-close" onclick="closeAnonymousReviewsModal()">&times;</span>
+
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:14px;">
+                <div>
+                    <h3 style="font-size: 20px; color: #fff; margin:0 0 4px 0; font-weight:bold;">⭐ Liseli Öğrenci
+                        Değerlendirmeleri</h3>
+                    <span style="color:#f59e0b; font-size:13px; font-weight:bold;">Ortalama Puanınız: 4.9 / 5.0 (6
+                        Yorum)</span>
+                </div>
+                <span
+                    style="background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:12px;">🔒
+                    Anonim Öğrenci Geri Bildirimleri</span>
+            </div>
+
+            <div
+                style="max-height:360px; overflow-y:auto; margin-bottom:20px; display:flex; flex-direction:column; gap:12px; padding-right:4px;">
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:14px; border-radius:14px; border:1px solid rgba(245,158,11,0.2);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="color:#f59e0b; font-weight:bold; font-size:13px;">⭐⭐⭐⭐⭐ (5/5 Yıldız)</span>
+                        <span style="color:#64748b; font-size:11px;">10 Ağustos 2026</span>
+                    </div>
+                    <p style="color:#e2e8f0; font-size:13px; line-height:1.5; margin:0 0 6px 0;">"Tercih dönemimde
+                        Bilgisayar Mühendisliği ders yoğunluğu, hazırlık sınavı ve kampüs ortamı hakkında harika
+                        bilgiler verdi. Çok samimi bir abim/ablam."</p>
+                    <span style="color:#94a3b8; font-size:11px; font-style:italic;">— Anonim YKS Öğrencisi (12.
+                        Sınıf)</span>
+                </div>
+
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:14px; border-radius:14px; border:1px solid rgba(245,158,11,0.2);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="color:#f59e0b; font-weight:bold; font-size:13px;">⭐⭐⭐⭐⭐ (5/5 Yıldız)</span>
+                        <span style="color:#64748b; font-size:11px;">04 Ağustos 2026</span>
+                    </div>
+                    <p style="color:#e2e8f0; font-size:13px; line-height:1.5; margin:0 0 6px 0;">"YKS deneme
+                        netlerimi nasıl artırabileceğim konusunda çalışma programı taktiği verdi. Kendisine
+                        tavsiyeleri için çok teşekkür ederim."</p>
+                    <span style="color:#94a3b8; font-size:11px; font-style:italic;">— Anonim YKS Öğrencisi (Mezun
+                        Seviye)</span>
+                </div>
+
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:14px; border-radius:14px; border:1px solid rgba(245,158,11,0.2);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="color:#f59e0b; font-weight:bold; font-size:13px;">⭐⭐⭐⭐⭐ (4.8/5 Yıldız)</span>
+                        <span style="color:#64748b; font-size:11px;">28 Temmuz 2026</span>
+                    </div>
+                    <p style="color:#e2e8f0; font-size:13px; line-height:1.5; margin:0 0 6px 0;">"Mühendislik okumak
+                        isteyen adaylar için çok motivasyon verici konuşuyor. Sorularıma anında yanıt verdi."</p>
+                    <span style="color:#94a3b8; font-size:11px; font-style:italic;">— Anonim YKS Öğrencisi (11.
+                        Sınıf)</span>
+                </div>
+            </div>
+
+            <button onclick="closeAnonymousReviewsModal()"
+                style="width:100%; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">
+                Kapat
+            </button>
+        </div>
+    </div>
+
+    <!-- 💼 BAŞVURDUĞUM İLANLAR MODALI -->
+    <div class="alan-modal-overlay" id="myAppliedJobsModal" style="z-index:9999;">
+        <div class="alan-modal-box"
+            style="max-width: 560px; width:90%; text-align: left; background:#0f172a; border:2px solid rgba(56,189,248,0.5); border-radius:24px; padding:28px; position:relative; box-shadow: 0 25px 65px rgba(56,189,248,0.3);">
+            <span class="alan-modal-close" onclick="closeMyAppliedJobsModal()">&times;</span>
+
+            <h3 style="font-size: 20px; color: #fff; margin-bottom: 6px; font-weight:bold;"><i
+                    class="fa-solid fa-briefcase" style="color:#38bdf8;"></i> Başvurduğunuz İlanlar & Projeler</h3>
+            <p style="color:#94a3b8; font-size:12px; margin-bottom:18px;">Platform üzerinden staj veya proje takımı
+                için başvuru yaptığınız ilanlar.</p>
+
+            <div
+                style="max-height:360px; overflow-y:auto; margin-bottom:20px; display:flex; flex-direction:column; gap:10px; padding-right:4px;">
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px 14px; border-radius:14px; border:1px solid rgba(56,189,248,0.2); display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <strong style="color:#fff; font-size:14px; display:block;">Frontend Developer
+                            (React/Next)</strong>
+                        <span style="color:#38bdf8; font-size:12px;">Trendyol Gençlik Projesi</span>
+                    </div>
+                    <span
+                        style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:10px;">✅
+                        Başvuru Alındı</span>
+                </div>
+
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px 14px; border-radius:14px; border:1px solid rgba(56,189,248,0.2); display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <strong style="color:#fff; font-size:14px; display:block;">Yapay Zeka Staj Programı</strong>
+                        <span style="color:#38bdf8; font-size:12px;">ASELSAN Sanayi Geliştirme Programı</span>
+                    </div>
+                    <span
+                        style="background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:10px;">⏳
+                        İncelemede</span>
+                </div>
+
+                <div
+                    style="background:rgba(15,23,42,0.6); padding:12px 14px; border-radius:14px; border:1px solid rgba(56,189,248,0.2); display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <strong style="color:#fff; font-size:14px; display:block;">Backend Node.js
+                            Geliştirici</strong>
+                        <span style="color:#38bdf8; font-size:12px;">İTÜ Kulüpler Arası Yazılım Projesi</span>
+                    </div>
+                    <span
+                        style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); font-size:11px; font-weight:bold; padding:4px 10px; border-radius:10px;">✅
+                        Başvuru Alındı</span>
+                </div>
+            </div>
+
+            <button onclick="closeMyAppliedJobsModal()"
+                style="width:100%; padding:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">
+                Kapat
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>
