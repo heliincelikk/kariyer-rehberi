@@ -33,6 +33,30 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+.sidebar {
+  width: 270px;
+  background-color: #0f172a;
+  border-right: 1px solid rgba(6, 182, 212, 0.15);
+  display: flex;
+  flex-direction: column;
+  padding: 25px 18px 45px 18px;
+  z-index: 10;
+  overflow-y: auto;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  position: relative;
+  min-height: 100vh;
+}
+
+
 /* Navbar */
 header {
   display: flex;
