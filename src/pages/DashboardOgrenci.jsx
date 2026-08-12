@@ -2,21 +2,185 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-// 🎓 Sektör Mentörleri Veri Seti (Tüm Detaylarıyla)
-const initialSectorMentors = [
-  { id: 'm1', name: "Selin Çeliker", company: "Google", title: "Staff Software Engineer", exp: "8+ Yıl Deneyim", avatar: "SÇ", field: "Bilgisayar & Yazılım Müh.", activeMentees: 12, totalMentees: 34, acceptanceRate: "%98", responseTime: "< 1 Saat", rating: "4.9 ⭐ (24 Yorum)", bio: "Google EMEA bölgesinde sistem geliştirme ve mikroservis mimarisi üzerine çalışıyorum. YKS tercihlerinde ve teknik mülakatlarda mentörlük sunuyorum.", skills: ['React', 'TypeScript', 'System Design', 'Algorithms', 'Go'] },
-  { id: 'm2', name: "Barış Arslan", company: "Aselsan", title: "Gömülü Sistemler Ar-Ge Lideri", exp: "10+ Yıl Deneyim", avatar: "BA", field: "Elektrik-Elektronik Müh.", activeMentees: 15, totalMentees: 42, acceptanceRate: "%96", responseTime: "~10 Dk", rating: "5.0 ⭐ (30 Yorum)", bio: "Savunma sanayi otonom sistemleri, C/C++ ve RTOS konularında lisans öğrencilerine mentörlük sağlıyorum.", skills: ['C/C++', 'STM32', 'RTOS', 'FPGA', 'DSP'] },
-  { id: 'm3', name: "Zeynep Yılmaz", company: "Trendyol Tech", title: "Data Science Manager", exp: "6+ Yıl Deneyim", avatar: "ZY", field: "Endüstri & Veri Müh.", activeMentees: 8, totalMentees: 22, acceptanceRate: "%94", responseTime: "~15 Dk", rating: "4.8 ⭐ (18 Yorum)", bio: "Büyük veri işleme, Python ve makine öğrenmesi algoritmaları alanında kariyer tavsiyeleri sunuyorum.", skills: ['Python', 'PyTorch', 'Spark', 'SQL', 'Data Pipeline'] }
+// 🎓 100% BİREBİR SEKTÖR MENTÖRLERİ VERİ SETİ
+const sectorMentorsList = [
+  {
+    id: 'm1',
+    name: 'Helin Çelik',
+    company: 'Google / Trendyol',
+    title: 'Senior Frontend Dev & UI Mimarı',
+    exp: '7 Yıl Deneyim',
+    avatar: 'HÇ',
+    img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=HelinCelik',
+    field: 'Frontend & Web Teknolojileri',
+    dept: 'bilgisayar',
+    deptLabel: '💻 Bilgisayar & Yazılım',
+    activeMentees: 14,
+    totalMentees: 38,
+    acceptanceRate: '%98',
+    responseTime: '< 15 Dk',
+    rating: '5.0 ⭐ (32 Değerlendirme)',
+    skills: ['React', 'TypeScript', 'Next.js', 'Frontend Perf', 'UI/UX Design'],
+    bio: 'Yüksek ölçekli e-ticaret ve arama motoru frontend mimarilerinde 7 yıllık deneyime sahibim. Bilgisayar ve Yazılım öğrencilerine staj başvuruları, portfolyo inceleme ve modern JS/React ekosistemi üzerine danışmanlık sunuyorum.'
+  },
+  {
+    id: 'm2',
+    name: 'Murat Yılmaz',
+    company: 'AWS / Microsoft',
+    title: 'Principal Cloud & DevOps Architect',
+    exp: '11 Yıl Deneyim',
+    avatar: 'MY',
+    img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=MuratYilmaz',
+    field: 'Bulut Bilişim & Dağıtık Sistemler',
+    dept: 'bilgisayar',
+    deptLabel: '💻 Bulut & DevOps',
+    activeMentees: 11,
+    totalMentees: 29,
+    acceptanceRate: '%94',
+    responseTime: '~ 1 Saat',
+    rating: '4.9 ⭐ (27 Değerlendirme)',
+    skills: ['AWS', 'Kubernetes', 'Docker', 'Terraform', 'Microservices'],
+    bio: 'Küresel ölçekli bulut altyapıları, sunucusuz (serverless) mimariler ve CI/CD süreçlerini yönetiyorum. Mühendislik öğrencilerine Cloud ve DevOps kariyer haritası çizmeleri için mentörlük veriyorum.'
+  },
+  {
+    id: 'm3',
+    name: 'Dr. Ahmet Kaya',
+    company: 'ASELSAN Ar-Ge',
+    title: 'Kıdemli Gömülü Yazılım & Sinyal Lideri',
+    exp: '12 Yıl Deneyim',
+    avatar: 'AK',
+    img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=AhmetKaya',
+    field: 'Savunma Sanayi & Gömülü Sistemler',
+    dept: 'elektrik',
+    deptLabel: '⚡ Elektrik-Elektronik',
+    activeMentees: 16,
+    totalMentees: 45,
+    acceptanceRate: '%96',
+    responseTime: '< 30 Dk',
+    rating: '5.0 ⭐ (41 Değerlendirme)',
+    skills: ['C/C++', 'RTOS', 'ARM Architecture', 'DSP', 'FPGA'],
+    bio: 'ASELSAN bünyesinde kritik otonom haberleşme ve radar sinyal işleme projelerini yürütüyorum. Elektrik-Elektronik ve Haberleşme mühendisliği öğrencilerine savunma sanayi aday mühendislik hazırlığında yol gösteriyorum.'
+  },
+  {
+    id: 'm4',
+    name: 'Elif Şahin',
+    company: 'Baykar Teknoloji',
+    title: 'Otonom İHA Yapay Zeka Lideri',
+    exp: '8 Yıl Deneyim',
+    avatar: 'EŞ',
+    img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ElifSahin',
+    field: 'İHA Otonomi & Derin Öğrenme',
+    dept: 'bilgisayar',
+    deptLabel: '💻 Yapay Zeka & İHA',
+    activeMentees: 18,
+    totalMentees: 50,
+    acceptanceRate: '%99',
+    responseTime: '< 10 Dk',
+    rating: '5.0 ⭐ (46 Değerlendirme)',
+    skills: ['Python', 'PyTorch', 'ROS2', 'Computer Vision', 'CUDA'],
+    bio: 'Milli İHA ve SİHA platformlarında otonom uçuş algoritmaları ve görüntü işleme yapay zeka modelleri geliştiriyorum. Havacılık ve Yazılım tutkunu öğrencilere teknik mülakat hazırlığı sunuyorum.'
+  },
+  {
+    id: 'm5',
+    name: 'Canan Dağdeviren',
+    company: 'Google EMEA',
+    title: 'Staff AI Research Scientist',
+    exp: '10 Yıl Deneyim',
+    avatar: 'CD',
+    img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=CananDagdeviren',
+    field: 'Büyük Dil Modelleri & NLP',
+    dept: 'bilgisayar',
+    deptLabel: '🌐 Global AI & NLP',
+    activeMentees: 9,
+    totalMentees: 31,
+    acceptanceRate: '%92',
+    responseTime: '~ 2 Saat',
+    rating: '4.9 ⭐ (25 Değerlendirme)',
+    skills: ['LLM', 'Transformers', 'NLP', 'TensorFlow', 'Research'],
+    bio: 'Google Dublin merkezinde generative AI ve Türkçe dil modelleri üzerine araştırma ve ürün geliştirme liderliği yapıyorum. Yurt dışı yüksek lisans ve global staj hayali olan gençlere mentörlük yapıyorum.'
+  },
+  {
+    id: 'm6',
+    name: 'Volkan Kılıç',
+    company: 'TOGG / Mercedes-Benz',
+    title: 'Otomotiv Mekatronik & Batarya Lideri',
+    exp: '9 Yıl Deneyim',
+    avatar: 'VK',
+    img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=VolkanKilic',
+    field: 'Elektrikli Araçlar & BMS',
+    dept: 'makine',
+    deptLabel: '🏎️ Makine & Otomotiv',
+    activeMentees: 10,
+    totalMentees: 28,
+    acceptanceRate: '%95',
+    responseTime: '~ 45 Dk',
+    rating: '4.8 ⭐ (22 Değerlendirme)',
+    skills: ['BMS', 'SolidWorks', 'ANSYS', 'Elektrikli Araçlar', 'Mekatronik'],
+    bio: 'Yerli otomobil TOGG ve Mercedes ekosisteminde batarya yönetim sistemleri (BMS) ve araç mekaniği tasarlıyorum. Makine ve Otomotiv mühendisliği öğrencilerine sektördeki dönüşümü aktarıyorum.'
+  }
 ];
 
-// 🏫 Okul Arkadaşları Veri Seti
-const initialSchoolPeers = [
-  { id: 'p1', name: "Selin Yılmaz", dept: "Bilgisayar Müh.", classYear: "3. Sınıf", skills: "React, Node.js", bio: "Frontend geliştirme ve okul topluluklarında aktif." },
-  { id: 'p2', name: "Caner Demir", dept: "Makine Müh.", classYear: "4. Sınıf", skills: "SolidWorks, Ansys", bio: "Otonom araç projesinde mekatronik tasarımı yapıyor." },
-  { id: 'p3', name: "Merve Öztürk", dept: "Elektrik-Elektronik Müh.", classYear: "2. Sınıf", skills: "PCB, C++", bio: "Gömülü sistemler ve robotik kulübü üyesi." }
+// 🏫 100% BİREBİR OKUL ARKADAŞLARI VERİ SETİ
+const schoolPeersList = [
+  { name: "Selin Yılmaz", dept: "Bilgisayar Müh.", classYear: "3. Sınıf", skills: "React, Node.js", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Selin" },
+  { name: "Caner Demir", dept: "Makine Müh.", classYear: "4. Sınıf", skills: "SolidWorks, Ansys", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Caner" },
+  { name: "Merve Öztürk", dept: "Elektrik-Elektronik Müh.", classYear: "2. Sınıf", skills: "PCB, C++", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Merve" },
+  { name: "Barış Arslan", dept: "Havacılık Müh.", classYear: "3. Sınıf", skills: "Aerodinamik, ROS2", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Baris" },
+  { name: "Ege Kaya", dept: "Endüstri Müh.", classYear: "4. Sınıf", skills: "Python, SQL, BI", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=EgeKaya" }
 ];
 
-// 🏢 Revaçta Şirketler Veri Seti
+// 🏛️ KULÜPLER VERİ SETİ
+const clubsList = [
+  { name: "IEEE Öğrenci Kolu", members: "450+ Üye", field: "Yazılım, Robotik & Elektrik", desc: "Teknik atölyeler, robot yarışmaları ve sektör gezileri düzenleyen en aktif öğrenci topluluğu.", joined: true },
+  { name: "Formula Student Takımı", members: "85 Üye", field: "Otomotiv, Makine & Gömülü", desc: "Elektrikli ve benzinli yarış aracı tasarlayıp Avrupa yarışlarında üniversitemizi temsil ediyoruz.", joined: false },
+  { name: "Yazılım & Yapay Zeka Topluluğu", members: "320 Üye", field: "Yazılım, AI & Siber Güvenlik", desc: "Açık kaynak projeler, algoritma kulübü ve veri bilimi çalışma grupları.", joined: false }
+];
+
+// 📥 ADAY İSTEKLERİ VERİ SETİ (BEKLEYEN LİSE MENTEELERİ)
+const initialPendingCandidateRequests = [
+  {
+    id: 'c1',
+    name: 'Arda Yılmaz',
+    school: 'Atatürk Anadolu Lisesi (12. Sınıf)',
+    target: 'İTÜ Bilgisayar Mühendisliği (Hedef: İlk 2.000)',
+    nets: 'TYT: 98 Net • AYT: 72 Net',
+    avatar: 'AY',
+    img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ArdaYilmaz',
+    note: 'Merhaba abi, İTÜ Bilgisayar hazırlık ve ders yoğunluğu hakkında tavsiyelerinizi almak istiyorum. Mentee talebimi kabul edebilir misiniz?'
+  },
+  {
+    id: 'c2',
+    name: 'Selin Karaca',
+    school: 'Kadıköy Anadolu Lisesi (12. Sınıf)',
+    target: 'ODTÜ Elektrik-Elektronik Mühendisliği',
+    nets: 'TYT: 102 Net • AYT: 74 Net',
+    avatar: 'SK',
+    img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SelinKaraca',
+    note: 'Gömülü sistemler ve ODTÜ EEM laboratuvar imkanları konusunda bilgi almak istiyorum.'
+  },
+  {
+    id: 'c3',
+    name: 'Mert Aksoy',
+    school: 'Ankara Fen Lisesi (Mezun)',
+    target: 'Bilkent Endüstri Mühendisliği',
+    nets: 'TYT: 105 Net • AYT: 76 Net',
+    avatar: 'MA',
+    img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=MertAksoy',
+    note: 'Bilkent tam burslu endüstri hazırlık sınıfı ve çap imkanları hakkında danışmak istiyorum.'
+  }
+];
+
+// 💼 STAJ & PROJE İLANLARI VERİ SETİ
+const defaultUserJobs = [
+  {
+    id: "job_1", title: "Teknofest Otonom İHA Takımı Yazılımcısı", type: "Proje Arkadaşı", domain: "Havacılık ve Uzay", skills: "Python, ROS2, OpenCV", desc: "Sürü İHA algoritmaları üzerine çalışacak bilgisayar/yazılım öğrencisi arıyoruz.", author: "Ahmet K. (İTÜ 3. Sınıf) • Senin İlanın", isUserCreated: true, company: "İTÜ Takımı", contact: "ahmet@itu.edu.tr", date: "Bugün", viewsCount: 48
+  },
+  { id: "job_2", title: "Trendyol Talent Tech - Frontend & Cloud Stajyeri", type: "Staj / Aday", domain: "Yazılım / Bilgisayar", skills: "React, Node.js, Cloud, Docker", desc: "Trendyol Maslak kampüsünde yüksek ölçekli e-ticaret mikroservislerinde deneyim kazanacak yazılım stajyerleri arıyoruz.", author: "Trendyol HR & Tech Team", company: "Trendyol", contact: "tech-talent@trendyol.com", date: "Bugün", viewsCount: 142 },
+  { id: "job_3", title: "Google STEP 2026 Software Engineering Intern", type: "Staj / Aday", domain: "Yazılım / Bilgisayar", skills: "C++, Python, Java, Data Structures", desc: "Google mühendislik ekibiyle birlikte küresel altyapı ve yapay zeka projelerinde 12 haftalık ücretli yaz stajı.", author: "Google University Recruiting", company: "Google", contact: "step-recruiting@google.com", date: "Bugün", viewsCount: 230 },
+  { id: "job_4", title: "ASELSAN a-Yetenek Gömülü Sistemler Stajyer Mühendis", type: "Staj / Aday", domain: "Elektrik-Elektronik", skills: "C/C++, STM32, ARM, RTOS", desc: "ASELSAN Macunköy tesislerinde radar ve elektronik harp projelerinde uzun dönem aday mühendislik stajı.", author: "ASELSAN İnsan Kaynakları", company: "ASELSAN", contact: "a-yetenek@aselsan.com.tr", date: "Dün", viewsCount: 185 }
+];
+
+// 🏢 REVAÇTA ŞİRKETLER VERİ SETİ
 const revactaSirketlerData = [
   { id: 1, ad: "Aselsan", kategori: "savunma", logo: "🛡️", unvan: "Savunma Sanayii & Otonom Sistemler", konum: "Ankara / Türkiye", mentörSayisi: 12, ilanSayisi: 4, tanim: "Türkiye'nin lider savunma elektroniği ve otonom sistemler kuruluşu.", mentörler: [{ isim: "Murat Demir", unvan: "Kıdemli Gömülü Yazılım Mimarı", avatar: "MD" }, { isim: "Selin Kaya", unvan: "Sistem Tasarım Mühendisi", avatar: "SK" }] },
   { id: 2, ad: "Trendyol Tech", kategori: "teknoloji", logo: "🛍️", unvan: "E-Ticaret & Yüksek Ölçekli Yazılım", konum: "İstanbul / Remote", mentörSayisi: 18, ilanSayisi: 6, tanim: "Günde milyonlarca istek alan mikro-servis mimarisi ve veri analitiği merkezi.", mentörler: [{ isim: "Hande Erçel", unvan: "Lead Frontend Engineer", avatar: "HE" }, { isim: "Emre Arslan", unvan: "Backend Team Lead", avatar: "EA" }] },
@@ -24,28 +188,11 @@ const revactaSirketlerData = [
   { id: 4, ad: "Google Turkey / EMEA", kategori: "global", logo: "🌐", unvan: "Global Arama & Bulut Teknolojileri", konum: "İstanbul / Dublin / Remote", mentörSayisi: 8, ilanSayisi: 2, tanim: "Dünya çapında dağıtık sistemler ve yapay zeka altyapıları.", mentörler: [{ isim: "Canan Dağdeviren", unvan: "Senior Staff Software Engineer", avatar: "CD" }] }
 ];
 
-// 🌐 Bölümlere Özel Uzmanlık Rotaları
-const bolumRotalariData = {
-  bilgisayar: [
-    { title: "Yapay Zeka & Derin Öğrenme Mühendisliği", desc: "PyTorch, TensorFlow, LLM modelleri ve görüntü işleme algoritmaları.", skills: "Python, PyTorch, Linear Algebra, CUDA, OpenCV", icon: "fa-brain" },
-    { title: "Full-Stack & Bulut Yazılım Mimari", desc: "React, Node.js, Microservices, Docker, Kubernetes ve AWS.", skills: "TypeScript, React, Go/Node, PostgreSQL, Docker", icon: "fa-code" },
-    { title: "Siber Güvenlik & Penetrasyon Testi", desc: "Ağ güvenliği, kriz analizi, zararlı yazılım inceleme ve sızma testleri.", skills: "Linux, Wireshark, Python, Metasploit, Cryptography", icon: "fa-shield-halved" }
-  ],
-  elektrik: [
-    { title: "Gömülü Sistemler & IoT Tasarımı", desc: "Mikrodenetleyiciler, C/C++, RTOS ve PCB devre kartı tasarımı.", skills: "C/C++, STM32, ESP32, KiCAD, SPI/I2C", icon: "fa-microchip" },
-    { title: "Güç Elektroniği & Yenilenebilir Enerji", desc: "Elektrikli araç şarj istasyonları, inverters ve batarya yönetim sistemleri (BMS).", skills: "MATLAB, Simulink, PCB, HV Systems", icon: "fa-bolt" }
-  ],
-  makine: [
-    { title: "Otonom Araç & Robotik Tasarım", desc: "CAD/CAM simülasyonları, kinematik, SolidWorks ve ROS2 mekatronik kontrol.", skills: "SolidWorks, ANSYS, ROS2, C++", icon: "fa-robot" },
-    { title: "Termodinamik & Isıl Analiz Uzmanlığı", desc: "HVAC iklimlendirme, aerodinamik akışkanlar mekaniği ve motor tasarımları.", skills: "CFD, OpenFOAM, Thermodynamics, Heat Transfer", icon: "fa-fire-flame-curved" }
-  ]
-};
-
 export default function DashboardOgrenci() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // Ana Sekme State'i
+  // Ana Menü ve Alt Açılır Menü State'leri
   const [activeTab, setActiveTab] = useState('panel'); // 'panel', 'school', 'jobs', 'companies', 'discover', 'mentor-sector', 'mentor-candidates', 'ai', 'profile'
   const [mentornetOpen, setMentornetOpen] = useState(true);
   const [industryOpen, setIndustryOpen] = useState(true);
@@ -59,9 +206,10 @@ export default function DashboardOgrenci() {
   const [selectedBolumKey, setSelectedBolumKey] = useState('bilgisayar');
   const [selectedMentorDept, setSelectedMentorDept] = useState('hepsi');
 
-  // Mentör İstekleri State
+  // Mentör İçi Dinamik State'ler
   const [outgoingRequests, setOutgoingRequests] = useState([]);
-  const [acceptedMentors, setAcceptedMentors] = useState([]);
+  const [pendingCandidates, setPendingCandidates] = useState(initialPendingCandidateRequests);
+  const [acceptedCandidates, setAcceptedCandidates] = useState([]);
 
   // Modallar
   const [isCreateJobOpen, setIsCreateJobOpen] = useState(false);
@@ -74,7 +222,6 @@ export default function DashboardOgrenci() {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isMenteesModalOpen, setIsMenteesModalOpen] = useState(false);
   const [isReviewsModalOpen, setIsReviewsModalOpen] = useState(false);
-  const [isAppliedJobsModalOpen, setIsAppliedJobsModalOpen] = useState(false);
 
   // Profil Verileri
   const [profName, setProfName] = useState(user?.kullaniciAdi || 'Öğrenci Kullanıcımız');
@@ -86,10 +233,7 @@ export default function DashboardOgrenci() {
 
   // Form State (İlan Oluşturma)
   const [jobTitle, setJobTitle] = useState('');
-  const [jobType, setJobType] = useState('Proje Arkadaşı');
-  const [jobDomain, setJobDomain] = useState('Yazılım / Bilgisayar');
   const [jobSkills, setJobSkills] = useState('');
-  const [jobDesc, setJobDesc] = useState('');
   const [jobContact, setJobContact] = useState('');
 
   // AI Chat State
@@ -101,7 +245,7 @@ export default function DashboardOgrenci() {
   // Live WhatsApp Chat State
   const [chatActivePeer, setChatActivePeer] = useState(null);
   const [peerMessages, setPeerMessages] = useState([
-    { sender: 'them', text: 'Merhaba! Proje ve mentörlük hakkında konuşabiliriz.' }
+    { sender: 'them', text: 'Merhaba! Bölümünüz ve ders yoğunluğu hakkında konuşabilir miyiz?' }
   ]);
   const [peerChatInput, setPeerChatInput] = useState('');
 
@@ -116,9 +260,9 @@ export default function DashboardOgrenci() {
       let botReply = "Mühendislik eğitimin boyunca başarılar dilerim! Staj ararken LinkedIn profili, güncel bir GitHub portfolyosu ve sade bir PDF CV her zaman öne geçmeni sağlar.";
       const lower = text.toLowerCase();
       if (lower.includes('cv') || lower.includes('staj')) {
-        botReply = "📄 Mühendislik Staj CV İpuçları:\n1. Format: Tek sayfa, temiz ve sade bir tasarım kullan.\n2. Projeler: Okul ve şahsi projelerini detaylandır.\n3. GitHub & LinkedIn linklerini eklemeyi unutma!";
+        botReply = "📄 **Mühendislik Staj CV İpuçları:**\n1. Format: Tek sayfa, temiz ve sade bir LaTeX / PDF tasarım kullan.\n2. Projeler: Okul ve şahsi projelerini detaylandır.\n3. GitHub & LinkedIn profil bağlantılarını en üste ekle!";
       } else if (lower.includes('github') || lower.includes('proje')) {
-        botReply = "🚀 GitHub Portfolyo Tavsiyeleri:\n• Temiz bir README.md yaz.\n• 10 basit proje yerine veritabanı ve API entegrasyonu olan 2-3 tam proje koy.";
+        botReply = "🚀 **GitHub Portfolyo Tavsiyeleri:**\n• Her projenin ne iş yaptığını anlatan temiz bir README.md yaz.\n• 10 basit proje yerine veritabanı ve API entegrasyonu olan 2-3 tam proje yayınla.";
       }
       setAiChatMessages(prev => [...prev, { sender: 'ai', text: botReply }]);
     }, 600);
@@ -152,20 +296,19 @@ export default function DashboardOgrenci() {
     setSendReqNoteModalMentor(null);
   };
 
+  const handleAcceptCandidate = (candidate) => {
+    setPendingCandidates(prev => prev.filter(c => c.id !== candidate.id));
+    setAcceptedCandidates(prev => [...prev, candidate]);
+    alert(`✅ ${candidate.name} isimli aday öğrenci mentiniz olarak kabul edildi! Sohbet sekmesinden iletişim kurabilirsiniz.`);
+  };
+
   const handleCreateJobSubmit = (e) => {
     e.preventDefault();
     alert(`🚀 "${jobTitle}" başlıklı ilanınız başarıyla oluşturuldu! Proje takımı arayan öğrenciler size ulaşacaktır.`);
     setIsCreateJobOpen(false);
     setJobTitle('');
-    setJobDesc('');
     setJobSkills('');
     setJobContact('');
-  };
-
-  const handleSaveProfile = (e) => {
-    e.preventDefault();
-    alert("Profil bilgileriniz başarıyla güncellendi! ✅");
-    setIsEditProfileOpen(false);
   };
 
   const handleCvUpload = (e) => {
@@ -173,12 +316,12 @@ export default function DashboardOgrenci() {
     if (file) {
       setProfCvName(file.name);
       localStorage.setItem('kullaniciCVName', file.name);
-      alert(`✅ "${file.name}" dosyanız profilinize eklendi.`);
+      alert(`✅ "${file.name}" CV dosyanız yüklendi.`);
     }
   };
 
   const filteredCompanies = revactaSirketlerData.filter(c => companyCategory === 'hepsi' || c.kategori === companyCategory);
-  const filteredMentors = initialSectorMentors.filter(m => selectedMentorDept === 'hepsi' || m.field.toLowerCase().includes(selectedMentorDept));
+  const filteredMentors = sectorMentorsList.filter(m => selectedMentorDept === 'hepsi' || m.dept === selectedMentorDept);
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#020617', color: '#ffffff' }}>
@@ -308,17 +451,16 @@ export default function DashboardOgrenci() {
 
             {schoolSubtab === 'peers' && (
               <div className="dashboard-grid">
-                {initialSchoolPeers.map(peer => (
-                  <div key={peer.id} className="premium-card">
+                {schoolPeersList.map((peer, i) => (
+                  <div key={i} className="premium-card">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
-                      <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#06b6d4', color: '#0f172a', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>{peer.name.split(' ').map(n=>n[0]).join('')}</div>
+                      <img src={peer.img} alt={peer.name} style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#0f172a', border: '2px solid #06b6d4' }} />
                       <div>
                         <h3 style={{ margin: 0, fontSize: '17px' }}>{peer.name}</h3>
                         <span style={{ color: '#06b6d4', fontSize: '13px' }}>{peer.dept} ({peer.classYear})</span>
                       </div>
                     </div>
-                    <p style={{ fontSize: '14px', color: '#cbd5e1', marginBottom: '10px' }}>{peer.bio}</p>
-                    <span style={{ fontSize: '12px', color: '#94a3b8', display: 'block', marginBottom: '15px' }}>Yetkinlikler: {peer.skills}</span>
+                    <span style={{ fontSize: '13px', color: '#cbd5e1', display: 'block', marginBottom: '15px' }}>Yetkinlikler: <strong>{peer.skills}</strong></span>
                     <button onClick={() => { setSchoolSubtab('chat'); setChatActivePeer(peer.name); }} className="submit-btn" style={{ marginTop: 0, padding: '8px 16px', fontSize: '13px' }}>Sohbet Başlat 💬</button>
                   </div>
                 ))}
@@ -329,7 +471,7 @@ export default function DashboardOgrenci() {
               <div className="premium-card">
                 <h3 style={{ color: '#06b6d4', marginBottom: '15px' }}><i className="fa-solid fa-bullhorn"></i> Kampüs Duyuruları & Etkinlikler</h3>
                 <div style={{ background: 'rgba(15,23,42,0.6)', borderLeft: '4px solid #06b6d4', padding: '16px', borderRadius: '12px', marginBottom: '15px' }}>
-                  <strong style={{ color: '#fff', fontSize: '15px' }}>🏆 Mühendislik Hackathon & Proje Yarışması Başladı!</strong>
+                  <strong style={{ color: '#fff', fontSize: '15px' }}>🏆 Mühendislik Bitirme Projeleri Sergisi & Yarışması</strong>
                   <p style={{ color: '#cbd5e1', fontSize: '13.5px', marginTop: '6px' }}>Kampüs mühendislik kulüpleri ortaklığında düzenlenen hackathon için takımlar kuruluyor.</p>
                 </div>
               </div>
@@ -337,12 +479,14 @@ export default function DashboardOgrenci() {
 
             {schoolSubtab === 'clubs' && (
               <div className="dashboard-grid">
-                <div className="premium-card">
-                  <h3>IEEE Öğrenci Kulübü</h3>
-                  <span style={{ color: '#06b6d4', fontSize: '13px', display: 'block', marginBottom: '10px' }}>Yazılım, Siber Güvenlik & Otonom Komitesi</span>
-                  <p style={{ fontSize: '14px', color: '#cbd5e1', marginBottom: '15px' }}>Haftalık kodlama atölyeleri ve sektör söyleşileri düzenliyor.</p>
-                  <button onClick={() => alert("Kulüp WhatsApp grubuna katılım bağlantısı iletildi!")} className="submit-btn" style={{ marginTop: 0, padding: '8px 16px' }}>Kulübe Katıl 🤝</button>
-                </div>
+                {clubsList.map((club, i) => (
+                  <div key={i} className="premium-card">
+                    <h3>{club.name}</h3>
+                    <span style={{ color: '#06b6d4', fontSize: '13px', display: 'block', marginBottom: '6px' }}>👥 {club.members} • {club.field}</span>
+                    <p style={{ fontSize: '14px', color: '#cbd5e1', marginBottom: '15px' }}>{club.desc}</p>
+                    <button onClick={() => alert(`${club.name} topluluğuna katıldınız! 🎉`)} className="submit-btn" style={{ marginTop: 0, padding: '8px 16px' }}>{club.joined ? 'Üyesisiniz ✅' : 'Kulübe Katıl 🤝'}</button>
+                  </div>
+                ))}
               </div>
             )}
 
@@ -350,8 +494,8 @@ export default function DashboardOgrenci() {
               <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', height: '500px', background: '#0f172a', border: '1px solid rgba(6,182,212,0.3)', borderRadius: '20px', overflow: 'hidden' }}>
                 <div style={{ borderRight: '1px solid rgba(255,255,255,0.08)', padding: '15px', background: 'rgba(30,41,59,0.4)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <h4 style={{ color: '#06b6d4', fontSize: '14px', margin: '0 0 10px 0' }}><i className="fa-solid fa-comments"></i> Okul Arkadaşların</h4>
-                  {initialSchoolPeers.map(p => (
-                    <div key={p.id} onClick={() => setChatActivePeer(p.name)} style={{ padding: '12px', background: chatActivePeer === p.name ? 'rgba(6,182,212,0.2)' : 'rgba(255,255,255,0.03)', borderRadius: '10px', cursor: 'pointer', borderLeft: chatActivePeer === p.name ? '3px solid #06b6d4' : 'none' }}>
+                  {schoolPeersList.map((p, i) => (
+                    <div key={i} onClick={() => setChatActivePeer(p.name)} style={{ padding: '12px', background: chatActivePeer === p.name ? 'rgba(6,182,212,0.2)' : 'rgba(255,255,255,0.03)', borderRadius: '10px', cursor: 'pointer', borderLeft: chatActivePeer === p.name ? '3px solid #06b6d4' : 'none' }}>
                       <strong style={{ color: '#fff', fontSize: '14px', display: 'block' }}>{p.name}</strong>
                       <span style={{ color: '#94a3b8', fontSize: '12px' }}>{p.dept}</span>
                     </div>
@@ -401,7 +545,7 @@ export default function DashboardOgrenci() {
                 <option value="hepsi">🌐 Tüm Mühendislik Branşları</option>
                 <option value="bilgisayar">💻 Bilgisayar & Yazılım Müh.</option>
                 <option value="elektrik">⚡ Elektrik-Elektronik Müh.</option>
-                <option value="endustri">📊 Endüstri & Veri Müh.</option>
+                <option value="makine">🏎️ Makine & Otomotiv Müh.</option>
               </select>
             </div>
 
@@ -414,8 +558,8 @@ export default function DashboardOgrenci() {
               <div className="dashboard-grid">
                 {filteredMentors.map(m => (
                   <div key={m.id} className="premium-card" style={{ textAlign: 'center' }}>
-                    <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: 'linear-gradient(135deg, #06b6d4, #3b82f6)', color: '#fff', fontSize: '24px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px auto' }}>{m.avatar}</div>
-                    <h3 style={{ margin: 0, fontSize: '18px' }}>{m.isim}</h3>
+                    <img src={m.img} alt={m.name} style={{ width: '70px', height: '70px', borderRadius: '50%', background: '#0f172a', border: '2px solid #06b6d4', margin: '0 auto 12px auto', display: 'block' }} />
+                    <h3 style={{ margin: 0, fontSize: '18px' }}>{m.name}</h3>
                     <span style={{ color: '#06b6d4', fontSize: '13px', display: 'block', margin: '3px 0' }}>{m.company} • {m.title}</span>
                     <span style={{ fontSize: '12px', color: '#94a3b8', display: 'block', marginBottom: '12px' }}>{m.exp}</span>
                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
@@ -446,7 +590,63 @@ export default function DashboardOgrenci() {
           </div>
         )}
 
-        {/* TAB 4: REVAÇTA ŞİRKETLER */}
+        {/* TAB 4: ADAY İSTEKLERİ & MENTEELER */}
+        {activeTab === 'mentor-candidates' && (
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <div>
+                <h2 style={{ fontSize: '24px', color: '#fff' }}>
+                  <i className="fa-solid fa-user-graduate" style={{ color: '#a855f7', marginRight: '8px' }}></i>
+                  Aday İstekleri & Rehberlik (Menteelerim) 🎓
+                </h2>
+                <p style={{ color: '#94a3b8', fontSize: '14px' }}>Mühendislik hedefleyen lise öğrencilerine üniversite deneyimlerinizi aktarın.</p>
+              </div>
+            </div>
+
+            <div className="showcase-tabs" style={{ justifyContent: 'flex-start', marginBottom: '25px' }}>
+              <button className={`tab-btn ${candidateSubtab === 'pending' ? 'active' : ''}`} onClick={() => setCandidateSubtab('pending')}>📥 Bekleyen İstekler ({pendingCandidates.length})</button>
+              <button className={`tab-btn ${candidateSubtab === 'accepted' ? 'active' : ''}`} onClick={() => setCandidateSubtab('accepted')}>✅ Menteelerim ({acceptedCandidates.length})</button>
+            </div>
+
+            {candidateSubtab === 'pending' && (
+              <div className="dashboard-grid">
+                {pendingCandidates.map(cand => (
+                  <div key={cand.id} className="premium-card">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                      <img src={cand.img} alt={cand.name} style={{ width: '48px', height: '48px', borderRadius: '50%', border: '2px solid #a855f7' }} />
+                      <div>
+                        <h3 style={{ margin: 0, fontSize: '16px' }}>{cand.name}</h3>
+                        <span style={{ color: '#a855f7', fontSize: '12px' }}>{cand.school}</span>
+                      </div>
+                    </div>
+                    <span style={{ display: 'block', color: '#06b6d4', fontSize: '13px', fontWeight: 'bold', marginBottom: '4px' }}>{cand.target}</span>
+                    <span style={{ display: 'block', color: '#94a3b8', fontSize: '12px', marginBottom: '12px' }}>{cand.nets}</span>
+                    <p style={{ fontSize: '13.5px', color: '#cbd5e1', marginBottom: '15px' }}>"{cand.note}"</p>
+                    <button onClick={() => handleAcceptCandidate(cand)} className="submit-btn" style={{ marginTop: 0, padding: '10px', background: 'linear-gradient(135deg, #a855f7, #6366f1)' }}>Talebi Kabul Et & Rehber Ol ✅</button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {candidateSubtab === 'accepted' && (
+              <div className="dashboard-grid">
+                {acceptedCandidates.length === 0 ? (
+                  <p style={{ color: '#94a3b8' }}>Henüz kabul edilmiş bir menteeniz bulunmuyor.</p>
+                ) : (
+                  acceptedCandidates.map(cand => (
+                    <div key={cand.id} className="premium-card">
+                      <h3>{cand.name}</h3>
+                      <span style={{ color: '#a855f7', fontSize: '13px' }}>{cand.target}</span>
+                      <button onClick={() => { setActiveTab('school'); setSchoolSubtab('chat'); setChatActivePeer(cand.name); }} className="submit-btn" style={{ marginTop: '12px', padding: '8px 14px' }}>Sohbet Et 💬</button>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 5: REVAÇTA ŞİRKETLER */}
         {activeTab === 'companies' && (
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px', flexWrap: 'wrap', gap: '15px' }}>
@@ -482,7 +682,7 @@ export default function DashboardOgrenci() {
           </div>
         )}
 
-        {/* TAB 5: STAJ & PROJE İLANLARI */}
+        {/* TAB 6: STAJ & PROJE İLANLARI */}
         {activeTab === 'jobs' && (
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px', flexWrap: 'wrap', gap: '15px' }}>
@@ -499,44 +699,17 @@ export default function DashboardOgrenci() {
             </div>
 
             <div className="dashboard-grid">
-              <div className="premium-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                  <h3 style={{ margin: 0 }}>Yazılım & Yapay Zeka Stajyeri</h3>
-                  <span className="user-badge">Aselsan</span>
+              {defaultUserJobs.map(job => (
+                <div key={job.id} className="premium-card">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                    <h3 style={{ margin: 0, fontSize: '17px' }}>{job.title}</h3>
+                    <span className="user-badge">{job.company}</span>
+                  </div>
+                  <span style={{ color: '#06b6d4', fontSize: '13px', display: 'block', marginBottom: '10px' }}>📍 {job.domain}</span>
+                  <p style={{ fontSize: '14px', color: '#cbd5e1', marginBottom: '15px' }}>{job.desc}</p>
+                  <button onClick={() => alert("Başvurunuz İK birimine iletildi! 🚀")} className="submit-btn" style={{ marginTop: 0, padding: '10px' }}>Başvur & Özgeçmiş İlet 🚀</button>
                 </div>
-                <span style={{ color: '#06b6d4', fontSize: '13px', display: 'block', marginBottom: '10px' }}>📍 Ankara / Hibrit</span>
-                <p style={{ fontSize: '14px', color: '#cbd5e1', marginBottom: '15px' }}>Python, PyTorch ve C++ ile otonom sistemlerde görüntü işleme stajı.</p>
-                <button onClick={() => alert("Başvurunuz Aselsan İK birimine iletildi! 🚀")} className="submit-btn" style={{ marginTop: 0, padding: '10px' }}>Başvur & Özgeçmiş İlet 🚀</button>
-              </div>
-
-              <div className="premium-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                  <h3 style={{ margin: 0 }}>Otonom İHA Takım Arkadaşı</h3>
-                  <span className="user-badge" style={{ color: '#a855f7' }}>Öğrenci Projesi</span>
-                </div>
-                <span style={{ color: '#06b6d4', fontSize: '13px', display: 'block', marginBottom: '10px' }}>📍 İTÜ Teknokent / Kampüs</span>
-                <p style={{ fontSize: '14px', color: '#cbd5e1', marginBottom: '15px' }}>Teknofest yarışması için ROS2 ve C++ bilen yazılımcı aranıyor.</p>
-                <button onClick={() => alert("Proje liderine mesajınız gönderildi!")} className="submit-btn" style={{ marginTop: 0, padding: '10px' }}>Takıma Katıl İsteği Gönder 🤝</button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 6: ADAY İSTEKLERİ & MENTEELER */}
-        {activeTab === 'mentor-candidates' && (
-          <div>
-            <h2 style={{ fontSize: '24px', color: '#fff', marginBottom: '10px' }}>
-              <i className="fa-solid fa-user-graduate" style={{ color: '#a855f7', marginRight: '8px' }}></i>
-              Aday İstekleri & Rehberlik (Menteelerim) 🎓
-            </h2>
-            <p style={{ color: '#94a3b8', fontSize: '14px', marginBottom: '20px' }}>Mühendislik hedefleyen lise öğrencilerine üniversite deneyimlerinizi aktarın.</p>
-            <div className="dashboard-grid">
-              <div className="premium-card">
-                <h3>Ayşe Demir</h3>
-                <span className="user-badge" style={{ color: '#a855f7' }}>YKS Adayı • 12. Sınıf</span>
-                <p style={{ marginTop: '10px', fontSize: '14px', color: '#cbd5e1' }}>"Boğaziçi Bilgisayar ders yükü ve hazırlık muafiyeti hakkında soru sormak istiyorum."</p>
-                <button onClick={() => alert("Mentörlük talebini kabul ettiniz! 🤝")} className="submit-btn" style={{ marginTop: '15px', padding: '10px' }}>Talebi Kabul Et & Rehber Ol ✅</button>
-              </div>
+              ))}
             </div>
           </div>
         )}
@@ -675,7 +848,7 @@ export default function DashboardOgrenci() {
         <div className="modal-overlay active" onClick={() => setSelectedMentorDetailsModal(null)}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '560px', textAlign: 'center' }}>
             <span className="close-modal" onClick={() => setSelectedMentorDetailsModal(null)}>&times;</span>
-            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'linear-gradient(135deg, #06b6d4, #3b82f6)', color: '#fff', fontSize: '28px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 15px auto' }}>{selectedMentorDetailsModal.avatar}</div>
+            <img src={selectedMentorDetailsModal.img} alt={selectedMentorDetailsModal.name} style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#0f172a', border: '3px solid #06b6d4', margin: '0 auto 15px auto', display: 'block' }} />
             <h3 style={{ fontSize: '22px', color: '#fff', margin: 0 }}>{selectedMentorDetailsModal.name}</h3>
             <span style={{ color: '#06b6d4', fontSize: '14px', display: 'block', margin: '4px 0 16px 0' }}>{selectedMentorDetailsModal.company} • {selectedMentorDetailsModal.title}</span>
 
@@ -708,9 +881,7 @@ export default function DashboardOgrenci() {
           <div className="modal-box" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px', textAlign: 'left' }}>
             <span className="close-modal" onClick={() => setSendReqNoteModalMentor(null)}>&times;</span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px' }}>
-              <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: 'linear-gradient(135deg,#06b6d4,#3b82f6)', color: '#fff', fontSize: '18px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {sendReqNoteModalMentor.avatar || '👔'}
-              </div>
+              <img src={sendReqNoteModalMentor.img} alt={sendReqNoteModalMentor.name} style={{ width: '45px', height: '45px', borderRadius: '50%', border: '2px solid #06b6d4' }} />
               <div>
                 <h3 style={{ color: '#fff', fontSize: '18px', margin: '0 0 2px 0' }}>{sendReqNoteModalMentor.name}</h3>
                 <span style={{ color: '#06b6d4', fontSize: '12px', fontWeight: 'bold' }}>{sendReqNoteModalMentor.company} • {sendReqNoteModalMentor.title}</span>
@@ -745,7 +916,7 @@ export default function DashboardOgrenci() {
                     <strong style={{ color: '#fff', display: 'block' }}>{m.isim}</strong>
                     <span style={{ color: '#06b6d4', fontSize: '12px' }}>{m.unvan}</span>
                   </div>
-                  <button onClick={() => { handleOpenSendReqModal({ id: 'comp_m_' + idx, name: m.isim, company: selectedCompanyModal.ad, title: m.unvan, avatar: m.avatar }); setSelectedCompanyModal(null); }} className="submit-btn" style={{ marginTop: 0, padding: '6px 12px', fontSize: '12px' }}>İstek Gönder 🚀</button>
+                  <button onClick={() => { handleOpenSendReqModal({ id: 'comp_m_' + idx, name: m.isim, company: selectedCompanyModal.ad, title: m.unvan, img: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(m.isim)}` }); setSelectedCompanyModal(null); }} className="submit-btn" style={{ marginTop: 0, padding: '6px 12px', fontSize: '12px' }}>İstek Gönder 🚀</button>
                 </div>
               ))}
             </div>
@@ -784,7 +955,7 @@ export default function DashboardOgrenci() {
           <div className="modal-box" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '500px' }}>
             <span className="close-modal" onClick={() => setIsEditProfileOpen(false)}>&times;</span>
             <h2 style={{ textAlign: 'left', color: '#06b6d4', marginBottom: '20px' }}>Akademik Profil Düzenle ✏️</h2>
-            <form onSubmit={handleSaveProfile}>
+            <form onSubmit={(e) => { e.preventDefault(); alert("Profil güncellendi! ✅"); setIsEditProfileOpen(false); }}>
               <div style={{ marginBottom: '14px' }}>
                 <label style={{ display: 'block', color: '#94a3b8', fontSize: '13px', marginBottom: '6px' }}>Ad Soyad</label>
                 <input type="text" value={profName} onChange={(e) => setProfName(e.target.value)} required style={{ width: '100%', padding: '10px 14px', background: '#0f172a', border: '1px solid rgba(6,182,212,0.3)', borderRadius: '10px', color: '#fff', outline: 'none' }} />
