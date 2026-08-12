@@ -56,7 +56,7 @@ export default function DashboardMentor() {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#020617', color: '#ffffff' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#020617', color: '#ffffff', position: 'relative' }}>
       {/* SIDEBAR */}
       <aside className="sidebar">
         <div className="brand">

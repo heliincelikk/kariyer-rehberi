@@ -206,7 +206,7 @@ export default function DashboardOgrenci() {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#020617', color: '#ffffff' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#020617', color: '#ffffff', position: 'relative' }}>
       {/* 🌟 100% KAPLAYAN SIDEBAR */}
       <aside className="sidebar">
         <div className="brand">
@@ -544,7 +544,95 @@ export default function DashboardOgrenci() {
           </div>
         )}
 
-        {/* TAB 7: AI DANIŞMANI */}
+        {/* TAB 7: BÖLÜM ROTALARI & KEŞİF */}
+        {activeTab === 'discover' && (
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px', flexWrap: 'wrap', gap: '15px', background: 'rgba(30, 41, 59, 0.5)', padding: '20px 25px', borderRadius: '20px', border: '1px solid rgba(6, 182, 212, 0.2)' }}>
+              <div>
+                <h2 style={{ fontSize: '24px', color: '#fff', margin: 0 }}>
+                  <i className="fa-solid fa-globe" style={{ color: '#06b6d4', marginRight: '8px' }}></i>
+                  Bölüme Özel Kariyer Rotaları & Gelişim Haritası 🌐
+                </h2>
+                <p style={{ color: '#94a3b8', fontSize: '14px', margin: '4px 0 0 0' }}>Mühendislik dalınıza uygun en popüler uzmanlaşma alanları ve gerekli teknoloji altyapısı.</p>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <label style={{ color: '#06b6d4', fontWeight: 'bold', fontSize: '13px' }}>Bölüm Seçiniz:</label>
+                <select value={selectedBolumKey} onChange={(e) => setSelectedBolumKey(e.target.value)} style={{ padding: '10px 16px', background: '#0f172a', border: '1px solid #06b6d4', borderRadius: '12px', color: '#fff', fontWeight: 600, outline: 'none', cursor: 'pointer' }}>
+                  <option value="bilgisayar">💻 Bilgisayar / Yazılım Mühendisliği</option>
+                  <option value="elektrik">⚡ Elektrik-Elektronik Mühendisliği</option>
+                  <option value="makine">⚙️ Makine Mühendisliği</option>
+                  <option value="endustri">📊 Endüstri Mühendisliği</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="dashboard-grid">
+              {selectedBolumKey === 'bilgisayar' && (
+                <>
+                  <div className="premium-card">
+                    <div className="card-icon"><i className="fa-solid fa-code"></i></div>
+                    <h3 style={{ color: '#06b6d4' }}>1. Modern Frontend & Web Mimarisi</h3>
+                    <p style={{ fontSize: '14px', color: '#cbd5e1' }}>React.js, Next.js, TypeScript, TailwindCSS ve mikro-frontend altyapıları.</p>
+                    <span style={{ fontSize: '12px', color: '#10b981', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>💡 Popüler Şirketler: Trendyol, Hepsiburada, Getir, Google</span>
+                  </div>
+                  <div className="premium-card">
+                    <div className="card-icon"><i className="fa-solid fa-server"></i></div>
+                    <h3 style={{ color: '#06b6d4' }}>2. Backend & Mikroservis Mimarisi</h3>
+                    <p style={{ fontSize: '14px', color: '#cbd5e1' }}>Node.js, Go, Java Spring Boot, PostgreSQL, Kafka ve Docker konteyner yönetimi.</p>
+                    <span style={{ fontSize: '12px', color: '#10b981', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>💡 Popüler Şirketler: Trendyol, Amazon, Baykar</span>
+                  </div>
+                  <div className="premium-card">
+                    <div className="card-icon"><i className="fa-solid fa-brain"></i></div>
+                    <h3 style={{ color: '#06b6d4' }}>3. Yapay Zeka & Veri Mühendisliği</h3>
+                    <p style={{ fontSize: '14px', color: '#cbd5e1' }}>Python, PyTorch, LLM mimarileri, MLOps, Spark ve Veri Ambarı yönetimi.</p>
+                    <span style={{ fontSize: '12px', color: '#10b981', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>💡 Popüler Şirketler: ASELSAN, TÜBİTAK, Microsoft</span>
+                  </div>
+                </>
+              )}
+
+              {selectedBolumKey === 'elektrik' && (
+                <>
+                  <div className="premium-card">
+                    <div className="card-icon"><i className="fa-solid fa-microchip"></i></div>
+                    <h3 style={{ color: '#06b6d4' }}>1. Gömülü Sistemler & RTOS</h3>
+                    <p style={{ fontSize: '14px', color: '#cbd5e1' }}>C/C++, ARM Mimarisi, FreeRTOS, STM32 ve Otonom Sistemler.</p>
+                    <span style={{ fontSize: '12px', color: '#10b981', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>💡 Popüler Şirketler: ASELSAN, BAYKAR, HAVELSAN</span>
+                  </div>
+                  <div className="premium-card">
+                    <div className="card-icon"><i className="fa-solid fa-tower-cell"></i></div>
+                    <h3 style={{ color: '#06b6d4' }}>2. Savunma Radar & Sinyal İşleme</h3>
+                    <p style={{ fontSize: '14px', color: '#cbd5e1' }}>FPGA, Verilog, DSP, MATLAB/Simulink ve Haberleşme Protokolleri.</p>
+                    <span style={{ fontSize: '12px', color: '#10b981', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>💡 Popüler Şirketler: ROKETSAN, TUSAŞ</span>
+                  </div>
+                </>
+              )}
+
+              {selectedBolumKey === 'makine' && (
+                <>
+                  <div className="premium-card">
+                    <div className="card-icon"><i className="fa-solid fa-gear"></i></div>
+                    <h3 style={{ color: '#06b6d4' }}>1. CAD/CAM & Mekanik Tasarım</h3>
+                    <p style={{ fontSize: '14px', color: '#cbd5e1' }}>SolidWorks, CATIA, Ansys FEA ve Akışkanlar Mekaniği Simülasyonu.</p>
+                    <span style={{ fontSize: '12px', color: '#10b981', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>💡 Popüler Şirketler: Mercedes-Benz, TOGG, Ford Otosan</span>
+                  </div>
+                </>
+              )}
+
+              {selectedBolumKey === 'endustri' && (
+                <>
+                  <div className="premium-card">
+                    <div className="card-icon"><i className="fa-solid fa-chart-line"></i></div>
+                    <h3 style={{ color: '#06b6d4' }}>1. Lojistik & Yöneylem Araştırması</h3>
+                    <p style={{ fontSize: '14px', color: '#cbd5e1' }}>Python, Gurobi, Tedarik Zinciri Analitiği ve Süreç İyileştirme.</p>
+                    <span style={{ fontSize: '12px', color: '#10b981', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>💡 Popüler Şirketler: DHL, Trendyol Express, Unilever</span>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* TAB 8: AI DANIŞMANI */}
         {activeTab === 'ai' && (
           <div className="premium-card" style={{ maxWidth: '850px', margin: '0 auto' }}>
             <h3 style={{ margin: 0, marginBottom: '15px' }}>AI Öğrenci & Kariyer Danışmanı 🤖</h3>
@@ -637,6 +725,22 @@ export default function DashboardOgrenci() {
                 <button onClick={() => { setSendReqNoteModalMentor({ id: 'comp_' + idx, name: m.isim, company: selectedCompanyModal.ad }); setSelectedCompanyModal(null); }} className="submit-btn" style={{ marginTop: 0, padding: '6px 12px', fontSize: '12px' }}>İstek Gönder 🚀</button>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: YENİ İLAN OLUŞTUR */}
+      {isCreateJobOpen && (
+        <div className="modal-overlay active" onClick={() => setIsCreateJobOpen(false)}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '550px' }}>
+            <span className="close-modal" onClick={() => setIsCreateJobOpen(false)}>&times;</span>
+            <h2 style={{ color: '#06b6d4', marginBottom: '15px' }}><i className="fa-solid fa-plus-circle"></i> Yeni Staj veya Takım İlanı</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <input type="text" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} placeholder="İlan Başlığı (Örn: Teknofest İHA Takımına Yazılımcı Arıyoruz)" style={{ padding: '12px', background: '#0f172a', border: '1px solid rgba(6,182,212,0.3)', borderRadius: '10px', color: '#fff', outline: 'none' }} />
+              <input type="text" value={jobSkills} onChange={(e) => setJobSkills(e.target.value)} placeholder="Aranan Beceriler (Örn: React, Node.js, Python)" style={{ padding: '12px', background: '#0f172a', border: '1px solid rgba(6,182,212,0.3)', borderRadius: '10px', color: '#fff', outline: 'none' }} />
+              <input type="text" value={jobContact} onChange={(e) => setJobContact(e.target.value)} placeholder="İletişim / E-posta" style={{ padding: '12px', background: '#0f172a', border: '1px solid rgba(6,182,212,0.3)', borderRadius: '10px', color: '#fff', outline: 'none' }} />
+              <button onClick={() => { alert("İlanınız başarıyla yayınlandı! 🚀"); setIsCreateJobOpen(false); }} className="submit-btn" style={{ marginTop: '10px' }}>İlanı Yayınla 🚀</button>
+            </div>
           </div>
         </div>
       )}
