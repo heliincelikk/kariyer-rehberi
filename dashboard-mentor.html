@@ -1103,35 +1103,44 @@
                         style="color:#06b6d4; font-size:13px; font-weight:bold; margin:0 0 14px 0; text-transform:uppercase;">
                         📊 Mentörlük & Etkileşim İstatistikleriniz</h4>
 
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-                        <div
-                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom: 15px;">
+                        <div onclick="openMenteesModal()" title="Menteeleri Görmek İçin Tıklayın"
+                            style="background:rgba(255,255,255,0.04); padding:12px 14px; border-radius:12px; border:1px solid rgba(6,182,212,0.25); cursor:pointer; transition:all 0.3s ease;" onmouseover="this.style.borderColor='#06b6d4'; this.style.background='rgba(6,182,212,0.1)';" onmouseout="this.style.borderColor='rgba(6,182,212,0.25)'; this.style.background='rgba(255,255,255,0.04)';">
                             <span
                                 style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">🚀
                                 Bu Ay Rehberlik Edilen</span>
-                            <strong style="color:#fff; font-size:17px;">18 Öğrenci</strong>
+                            <strong style="color:#fff; font-size:17px; display:flex; align-items:center; gap:6px;">18 Öğrenci <i class="fa-solid fa-chevron-right" style="font-size:11px; color:#06b6d4;"></i></strong>
                         </div>
-                        <div
-                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+                        <div onclick="openDetailedStatsModal()" title="Sıralama Detayı İçin Tıklayın"
+                            style="background:rgba(255,255,255,0.04); padding:12px 14px; border-radius:12px; border:1px solid rgba(245,158,11,0.25); cursor:pointer; transition:all 0.3s ease;" onmouseover="this.style.borderColor='#f59e0b'; this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.borderColor='rgba(245,158,11,0.25)'; this.style.background='rgba(255,255,255,0.04)';">
                             <span
                                 style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">🏅
                                 Platform Sıralaması</span>
-                            <strong style="color:#f59e0b; font-size:15px;">Top #8 Mentör</strong>
+                            <strong style="color:#f59e0b; font-size:15px; display:flex; align-items:center; gap:6px;">Top #8 Mentör <i class="fa-solid fa-chevron-right" style="font-size:11px; color:#f59e0b;"></i></strong>
                         </div>
-                        <div
-                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+                        <div onclick="openDetailedStatsModal()" title="Yanıt Süresi İstatistikleri"
+                            style="background:rgba(255,255,255,0.04); padding:12px 14px; border-radius:12px; border:1px solid rgba(34,211,238,0.25); cursor:pointer; transition:all 0.3s ease;" onmouseover="this.style.borderColor='#22d3ee'; this.style.background='rgba(34,211,238,0.1)';" onmouseout="this.style.borderColor='rgba(34,211,238,0.25)'; this.style.background='rgba(255,255,255,0.04)';">
                             <span
                                 style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">⏱️
                                 Ortalama Yanıt Hızı</span>
-                            <strong style="color:#22d3ee; font-size:15px;">~12 Dakika</strong>
+                            <strong style="color:#22d3ee; font-size:15px; display:flex; align-items:center; gap:6px;">~12 Dakika <i class="fa-solid fa-chevron-right" style="font-size:11px; color:#22d3ee;"></i></strong>
                         </div>
-                        <div
-                            style="background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+                        <div onclick="openAnonymousReviewsModal()" title="Değerlendirmeleri Görmek İçin Tıklayın"
+                            style="background:rgba(255,255,255,0.04); padding:12px 14px; border-radius:12px; border:1px solid rgba(16,185,129,0.25); cursor:pointer; transition:all 0.3s ease;" onmouseover="this.style.borderColor='#10b981'; this.style.background='rgba(16,185,129,0.1)';" onmouseout="this.style.borderColor='rgba(16,185,129,0.25)'; this.style.background='rgba(255,255,255,0.04)';">
                             <span
                                 style="color:#94a3b8; font-size:11px; font-weight:600; display:block; margin-bottom:4px;">⭐
                                 İstek Kabul Oranı</span>
-                            <strong style="color:#10b981; font-size:15px;">%96 Kabul</strong>
+                            <strong style="color:#10b981; font-size:15px; display:flex; align-items:center; gap:6px;">%96 Kabul <i class="fa-solid fa-chevron-right" style="font-size:11px; color:#10b981;"></i></strong>
                         </div>
+                    </div>
+
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button onclick="openAnonymousReviewsModal()" style="flex:1; min-width:200px; padding:10px; background:rgba(245,158,11,0.15); border:1px solid #f59e0b; color:#f59e0b; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+                            ⭐ Anonim Yorum ve Puanlamalar (42 Oy)
+                        </button>
+                        <button onclick="openDetailedStatsModal()" style="flex:1; min-width:200px; padding:10px; background:rgba(6,182,212,0.15); border:1px solid #06b6d4; color:#06b6d4; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+                            📊 Detaylı Mentör İstatistikleri
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1285,6 +1294,188 @@
                         ❌ Kapat
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- 🎓 REHBERLİK EDİLEN MENTEELER MODALI -->
+        <div class="alan-modal-overlay" id="menteesListModal">
+            <div class="alan-modal-box" style="max-width: 620px; text-align: left; background: #0f172a; border: 2px solid rgba(6, 182, 212, 0.4); border-radius: 24px; padding: 28px; box-shadow: 0 25px 60px rgba(6, 182, 212, 0.25);">
+                <span class="alan-modal-close" onclick="closeMenteesModal()">&times;</span>
+                <h3 style="font-size: 20px; color: #fff; margin-bottom: 6px; font-weight: bold;">
+                    <i class="fa-solid fa-user-graduate" style="color: #06b6d4;"></i> Rehberlik Edilen Menteeleriniz (18 Öğrenci) 🎓
+                </h3>
+                <p style="color: #94a3b8; font-size: 13px; margin-bottom: 18px;">
+                    Platform üzerinden aktif mentörlük verdiğiniz, birebir rehberlik ettiğiniz üniversite & aday öğrencileriniz.
+                </p>
+
+                <div style="max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px;">
+                    <!-- Mentee 1 -->
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(6, 182, 212, 0.2); display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 15px; border: 2px solid rgba(6,182,212,0.4);">ZK</div>
+                            <div>
+                                <strong style="color: #fff; font-size: 15px; display: block;">Zeynep Kılıç</strong>
+                                <span style="color: #06b6d4; font-size: 12px;">İTÜ · Bilgisayar Müh. 2. Sınıf</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="closeMenteesModal(); switchTab('network'); openMenteeChat('Zeynep Kılıç', 'İTÜ · Bilgisayar Müh. 2. Sınıf');" style="background: rgba(6,182,212,0.15); border: 1px solid #06b6d4; color: #06b6d4; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer;">💬 Mesaj Gönder</button>
+                        </div>
+                    </div>
+
+                    <!-- Mentee 2 -->
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(6, 182, 212, 0.2); display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #06b6d4); color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 15px; border: 2px solid rgba(16,185,129,0.4);">EŞ</div>
+                            <div>
+                                <strong style="color: #fff; font-size: 15px; display: block;">Emre Şahin</strong>
+                                <span style="color: #10b981; font-size: 12px;">ODTÜ · Makine Müh. 3. Sınıf</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="closeMenteesModal(); switchTab('network'); openMenteeChat('Emre Şahin', 'ODTÜ · Makine Müh. 3. Sınıf');" style="background: rgba(6,182,212,0.15); border: 1px solid #06b6d4; color: #06b6d4; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer;">💬 Mesaj Gönder</button>
+                        </div>
+                    </div>
+
+                    <!-- Mentee 3 -->
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(6, 182, 212, 0.2); display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #ec4899); color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 15px; border: 2px solid rgba(245,158,11,0.4);">DA</div>
+                            <div>
+                                <strong style="color: #fff; font-size: 15px; display: block;">Deniz Aydın</strong>
+                                <span style="color: #f59e0b; font-size: 12px;">Boğaziçi · Elektrik-Elektronik Müh. 4. Sınıf</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="closeMenteesModal(); switchTab('network'); openMenteeChat('Deniz Aydın', 'Boğaziçi · Elektrik-Elektronik Müh. 4. Sınıf');" style="background: rgba(6,182,212,0.15); border: 1px solid #06b6d4; color: #06b6d4; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer;">💬 Mesaj Gönder</button>
+                        </div>
+                    </div>
+
+                    <!-- Mentee 4 -->
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(6, 182, 212, 0.2); display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #a855f7, #6366f1); color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 15px; border: 2px solid rgba(168,85,247,0.4);">MD</div>
+                            <div>
+                                <strong style="color: #fff; font-size: 15px; display: block;">Merve Demir</strong>
+                                <span style="color: #a855f7; font-size: 12px;">Yıldız Teknik · Endüstri Müh. 3. Sınıf</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="closeMenteesModal(); switchTab('network'); openMenteeChat('Merve Demir', 'Yıldız Teknik · Endüstri Müh. 3. Sınıf');" style="background: rgba(6,182,212,0.15); border: 1px solid #06b6d4; color: #06b6d4; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer;">💬 Mesaj Gönder</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="closeMenteesModal()" style="width: 100%; margin-top: 20px; padding: 12px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #cbd5e1; border-radius: 12px; font-weight: bold; cursor: pointer;">
+                    Pencereyi Kapat
+                </button>
+            </div>
+        </div>
+
+        <!-- ⭐ ANONİM YORUM VE PUANLAMALAR MODALI -->
+        <div class="alan-modal-overlay" id="anonymousReviewsModal">
+            <div class="alan-modal-box" style="max-width: 620px; text-align: left; background: #0f172a; border: 2px solid rgba(245, 158, 11, 0.4); border-radius: 24px; padding: 28px; box-shadow: 0 25px 60px rgba(245, 158, 11, 0.25);">
+                <span class="alan-modal-close" onclick="closeAnonymousReviewsModal()">&times;</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div>
+                        <h3 style="font-size: 20px; color: #fff; margin-bottom: 4px; font-weight: bold;">
+                            <i class="fa-solid fa-star" style="color: #f59e0b;"></i> Anonim Yorum & Değerlendirmeler ⭐
+                        </h3>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">Rehberlik ettiğiniz öğrencilerin mentörlüğünüz hakkında bıraktığı gerçek değerlendirmeler.</p>
+                    </div>
+                    <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; padding: 8px 14px; border-radius: 14px; text-align: center;">
+                        <strong style="color: #f59e0b; font-size: 18px; display: block;">5.0 / 5.0</strong>
+                        <span style="color: #cbd5e1; font-size: 11px;">42 Oy</span>
+                    </div>
+                </div>
+
+                <div style="max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; margin-top: 15px;">
+                    <!-- Review 1 -->
+                    <div style="background: rgba(30, 41, 59, 0.6); padding: 14px; border-radius: 14px; border: 1px solid rgba(245, 158, 11, 0.2);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="color: #f59e0b; font-weight: bold; font-size: 13px;">⭐⭐⭐⭐⭐ (5.0 / 5 Yıldız)</span>
+                            <span style="color: #64748b; font-size: 11px;">10 Ağustos 2026</span>
+                        </div>
+                        <p style="color: #e2e8f0; font-size: 13px; line-height: 1.5; margin: 0 0 6px 0;">"Mentörüm mülakat öncesi teknik soruları harika simüle etti. Trendyol staj kabulümü mentörümün tavsiyelerine borçluyum!"</p>
+                        <span style="color: #94a3b8; font-size: 11px; font-style: italic;">— Anonim İTÜ 3. Sınıf Bilgisayar Mühendisliği Öğrencisi</span>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div style="background: rgba(30, 41, 59, 0.6); padding: 14px; border-radius: 14px; border: 1px solid rgba(245, 158, 11, 0.2);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="color: #f59e0b; font-weight: bold; font-size: 13px;">⭐⭐⭐⭐⭐ (5.0 / 5 Yıldız)</span>
+                            <span style="color: #64748b; font-size: 11px;">5 Ağustos 2026</span>
+                        </div>
+                        <p style="color: #e2e8f0; font-size: 13px; line-height: 1.5; margin: 0 0 6px 0;">"Özgeçmişimdeki eksikleri doğrudan gösterip GitHub projelerimi nasıl öne çıkaracağımı anlattı. Harika bir rehber!"</p>
+                        <span style="color: #94a3b8; font-size: 11px; font-style: italic;">— Anonim ODTÜ Makine Mühendisliği Öğrencisi</span>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div style="background: rgba(30, 41, 59, 0.6); padding: 14px; border-radius: 14px; border: 1px solid rgba(245, 158, 11, 0.2);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="color: #f59e0b; font-weight: bold; font-size: 13px;">⭐⭐⭐⭐⭐ (5.0 / 5 Yıldız)</span>
+                            <span style="color: #64748b; font-size: 11px;">28 Temmuz 2026</span>
+                        </div>
+                        <p style="color: #e2e8f0; font-size: 13px; line-height: 1.5; margin: 0 0 6px 0;">"Sektördeki güncel teknolojiler (Go, Docker, Kafka) hakkında çizdiği yol haritası ufkumu açtı."</p>
+                        <span style="color: #94a3b8; font-size: 11px; font-style: italic;">— Anonim Boğaziçi Yazılım Öğrencisi</span>
+                    </div>
+                </div>
+
+                <button onclick="closeAnonymousReviewsModal()" style="width: 100%; margin-top: 20px; padding: 12px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #cbd5e1; border-radius: 12px; font-weight: bold; cursor: pointer;">
+                    Pencereyi Kapat
+                </button>
+            </div>
+        </div>
+
+        <!-- 📊 DETAYLI MENTÖR İSTATİSTİKLERİ MODALI -->
+        <div class="alan-modal-overlay" id="detailedStatsModal">
+            <div class="alan-modal-box" style="max-width: 620px; text-align: left; background: #0f172a; border: 2px solid rgba(56, 189, 248, 0.4); border-radius: 24px; padding: 28px; box-shadow: 0 25px 60px rgba(56, 189, 248, 0.25);">
+                <span class="alan-modal-close" onclick="closeDetailedStatsModal()">&times;</span>
+                <h3 style="font-size: 20px; color: #fff; margin-bottom: 6px; font-weight: bold;">
+                    <i class="fa-solid fa-chart-pie" style="color: #38bdf8;"></i> Detaylı Mentörlük & Etkileşim Performansı 📊
+                </h3>
+                <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">
+                    Platform üzerindeki mentörlük faaliyetleriniz, yanıt oranlarınız ve staja yerleştirme başarılarınız.
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 16px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.2);">
+                        <span style="color: #06b6d4; font-size: 12px; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 4px;">🚀 Toplam Rehberlik Edilen</span>
+                        <strong style="color: #fff; font-size: 22px;">18 Öğrenci</strong>
+                        <span style="color: #94a3b8; font-size: 11px; display: block; margin-top: 4px;">Bu ay aktif mentee sayısı</span>
+                    </div>
+
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 16px; border-radius: 16px; border: 1px solid rgba(245, 158, 11, 0.2);">
+                        <span style="color: #f59e0b; font-size: 12px; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 4px;">🏅 Platform Sıralaması</span>
+                        <strong style="color: #f59e0b; font-size: 22px;">Top #8 Mentör</strong>
+                        <span style="color: #94a3b8; font-size: 11px; display: block; margin-top: 4px;">Türkiye geneli mentörlük ağında</span>
+                    </div>
+
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 16px; border-radius: 16px; border: 1px solid rgba(34, 211, 238, 0.2);">
+                        <span style="color: #22d3ee; font-size: 12px; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 4px;">⏱️ Ortalama Yanıt Süresi</span>
+                        <strong style="color: #22d3ee; font-size: 22px;">~12 Dakika</strong>
+                        <span style="color: #94a3b8; font-size: 11px; display: block; margin-top: 4px;">İstek ve mesajlara geri dönüş</span>
+                    </div>
+
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 16px; border-radius: 16px; border: 1px solid rgba(16, 185, 129, 0.2);">
+                        <span style="color: #10b981; font-size: 12px; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 4px;">⭐ İstek Kabul Oranı</span>
+                        <strong style="color: #10b981; font-size: 22px;">%96 Kabul</strong>
+                        <span style="color: #94a3b8; font-size: 11px; display: block; margin-top: 4px;">34 Başvurudan 32'si onaylandı</span>
+                    </div>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.2); text-align: left;">
+                    <h4 style="color: #fff; font-size: 14px; margin: 0 0 10px 0;">🎯 Başarı İstatistikleriniz:</h4>
+                    <div style="display: flex; flex-direction: column; gap: 8px; color: #cbd5e1; font-size: 13px;">
+                        <div>• 💬 Toplam Birebir Mentörlük Saati: <strong style="color: #06b6d4;">48 Saat</strong></div>
+                        <div>• 📄 İncelemenen CV & Portfolyo: <strong style="color: #06b6d4;">28 Özgeçmiş</strong></div>
+                        <div>• 🏆 Staja/İşe Yerleşen Menteeler: <strong style="color: #10b981;">12 Öğrenci (Trendyol, ASELSAN, Google, THY)</strong></div>
+                    </div>
+                </div>
+
+                <button onclick="closeDetailedStatsModal()" style="width: 100%; margin-top: 20px; padding: 12px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #cbd5e1; border-radius: 12px; font-weight: bold; cursor: pointer;">
+                    Pencereyi Kapat
+                </button>
             </div>
         </div>
 
@@ -1837,6 +2028,65 @@
                     reader.readAsDataURL(file);
                 }
             }
+
+            // 🎓 Menteeler Modalı Fonksiyonları
+            function openMenteesModal() {
+                const modal = document.getElementById('menteesListModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                    modal.classList.add('active');
+                }
+            }
+            function closeMenteesModal() {
+                const modal = document.getElementById('menteesListModal');
+                if (modal) {
+                    modal.classList.remove('active');
+                    modal.style.display = 'none';
+                }
+            }
+
+            // ⭐ Anonim Yorumlar Modalı Fonksiyonları
+            function openAnonymousReviewsModal() {
+                const modal = document.getElementById('anonymousReviewsModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                    modal.classList.add('active');
+                }
+            }
+            function closeAnonymousReviewsModal() {
+                const modal = document.getElementById('anonymousReviewsModal');
+                if (modal) {
+                    modal.classList.remove('active');
+                    modal.style.display = 'none';
+                }
+            }
+
+            // 📊 Detaylı İstatistikler Modalı Fonksiyonları
+            function openDetailedStatsModal() {
+                const modal = document.getElementById('detailedStatsModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                    modal.classList.add('active');
+                }
+            }
+            function closeDetailedStatsModal() {
+                const modal = document.getElementById('detailedStatsModal');
+                if (modal) {
+                    modal.classList.remove('active');
+                    modal.style.display = 'none';
+                }
+            }
+
+            // Dışa Tıklama İle Modal Kapatma Desteği
+            window.addEventListener('click', function (event) {
+                ['menteesListModal', 'anonymousReviewsModal', 'detailedStatsModal'].forEach(id => {
+                    const m = document.getElementById(id);
+                    if (m && event.target === m) {
+                        m.classList.remove('active');
+                        m.style.display = 'none';
+                    }
+                });
+            });
 
             renderPending();
             renderAccepted();
