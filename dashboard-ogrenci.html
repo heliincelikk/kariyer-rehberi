@@ -3352,6 +3352,9 @@
 
             grid.innerHTML = acceptedMentorList.map(m => {
                 const userRating = ratings[m.id] || ratings[m.name];
+                const isUnreadAccepted = !!studentNotificationState.unreadMentorAccepted[m.id];
+                const cardClass = isUnreadAccepted ? "mentor-card unread-card" : "mentor-card";
+                const newTag = isUnreadAccepted ? `<span class="new-tag" style="background:#10b981; color:#020617;">🎉 İSTEK KABUL EDİLDİ</span>` : ``;
 
                 const ratingBadge = userRating ?
                     `<div style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.3); border-radius:12px; padding:8px 12px; margin-bottom:12px; text-align:left;">
@@ -3368,7 +3371,8 @@
                 const rateBtnText = userRating ? '⭐ Puanı & Yorumu Düzenle' : '⭐ Mentörü Puanla & Yorum Yap';
 
                 return `
-                    <div class="mentor-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:20px; text-align:center; border:1px solid rgba(16,185,129,0.3); transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div class="${cardClass}" style="display:flex; flex-direction:column; justify-content:space-between; padding:20px; text-align:center; border:1px solid rgba(16,185,129,0.3); transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        ${newTag}
                         <div>
                             <img src="${m.img || `https://api.dicebear.com/7.x/avataaars/svg?seed=${m.name.replace(/\s/g, '')}`}" alt="${m.name}" style="width:65px; height:65px; border-radius:50%; border:2px solid #10b981; margin: 0 auto 10px auto; object-fit:cover; background:#1e293b;">
                             <h3 style="font-size:17px; color:#fff; margin-bottom:4px;">${m.name}</h3>
@@ -3384,7 +3388,7 @@
                             <button onclick="openRateMentorModal('${m.id}', '${m.name.replace(/'/g, "\\'")}', '${m.company} • ${m.title.replace(/'/g, "\\'")}')" style="width:100%; padding:9px; background:rgba(245,158,11,0.15); border:1px solid #f59e0b; color:#f59e0b; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='#f59e0b'; this.style.color='#0f172a';" onmouseout="this.style.background='rgba(245,158,11,0.15)'; this.style.color='#f59e0b';">
                                 ${rateBtnText}
                             </button>
-                            <button onclick="openMentorChatUser('${m.name.replace(/'/g, "\\'")}', '${m.company} • ${m.title.replace(/'/g, "\\'")}', '${m.img || ''}')" style="width:100%; padding:10px; background:#06b6d4; color:#0f172a; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
+                            <button onclick="delete studentNotificationState.unreadMentorAccepted['${m.id}']; updateStudentNotificationBadges(); openMentorChatUser('${m.name.replace(/'/g, "\\'")}', '${m.company} • ${m.title.replace(/'/g, "\\'")}', '${m.img || ''}')" style="width:100%; padding:10px; background:#06b6d4; color:#0f172a; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
                                 💬 Doğrudan Mesaj Gönder
                             </button>
                         </div>
