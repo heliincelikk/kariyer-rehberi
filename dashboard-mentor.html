@@ -544,6 +544,47 @@
         .alan-modal-close:hover {
             color: #ef4444;
         }
+
+        /* ================= BİLDİRİM BALONCUĞU (INSTA / WP STYLE) ================= */
+        .nav-badge {
+            background: linear-gradient(135deg, #ef4444, #f43f5e);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 10px;
+            margin-left: auto;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+            animation: badgePulse 2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes badgePulse {
+            0% { transform: scale(1); box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+            50% { transform: scale(1.08); box-shadow: 0 0 14px rgba(239, 68, 68, 0.9); }
+            100% { transform: scale(1); box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+        }
+
+        .unread-card {
+            border: 2px solid #06b6d4 !important;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.35) !important;
+            background: linear-gradient(145deg, rgba(6, 182, 212, 0.12), rgba(15, 23, 42, 0.8)) !important;
+            position: relative;
+        }
+
+        .new-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #06b6d4;
+            color: #020617;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+        }
     </style>
 
 </head>
@@ -565,6 +606,7 @@
             <div class="menu-group-label">AĞIM & İLETİŞİM</div>
             <div class="menu-item" id="menu-network" onclick="switchTab('network')">
                 <i class="fa-solid fa-users-rectangle"></i> Mentörlük Ağım & Mesajlar 🤝
+                <span id="networkBadge" class="nav-badge">3</span>
             </div>
             <div class="menu-item" id="menu-company" onclick="switchTab('company')">
                 <i class="fa-solid fa-building"></i> Şirketinizden 💼
@@ -610,9 +652,12 @@
                     <a href="#" onclick="switchTab('ai')" class="card-link">Danışmana Sor ➔</a>
                 </div>
 
-                <div class="premium-card">
+                <div class="premium-card" style="position: relative;">
                     <div class="card-icon"><i class="fa-solid fa-inbox"></i></div>
-                    <h3>Gelen Mentörlük İstekleri 📥</h3>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h3 style="margin:0;">Gelen Mentörlük İstekleri 📥</h3>
+                        <span id="pendingBadgeCard" class="nav-badge" style="font-size:11px;">3 Yeni İstek</span>
+                    </div>
                     <p>Senden mentörlük almak isteyen üniversite ve aday öğrencilerin başvurularını incele ve onaylaş.
                     </p>
                     <a href="#" onclick="switchTab('network')" class="card-link">İstekleri İncele ➔</a>
@@ -1482,6 +1527,7 @@
             let pendingStudents = [
                 {
                     id: 1,
+                    okundu: false,
                     isim: "Zeynep Kılıç",
                     okul: "İTÜ · Bilgisayar Mühendisliği, 2. Sınıf",
                     not: "Yazılım alanında kariyer yapmak istiyor, staj sürecine dair sorular soracak.",
@@ -1492,6 +1538,7 @@
                 },
                 {
                     id: 2,
+                    okundu: false,
                     isim: "Emre Şahin",
                     okul: "ODTÜ · Makine Mühendisliği, 3. Sınıf",
                     not: "Üretim sektöründe kariyer hedefliyor, staj öncesi mülakat hazırlığı istiyor.",
@@ -1502,6 +1549,7 @@
                 },
                 {
                     id: 3,
+                    okundu: false,
                     isim: "Deniz Aydın",
                     okul: "Boğaziçi · Elektrik-Elektronik Mühendisliği, 4. Sınıf",
                     not: "Enerji sistemleri alanında iş görüşmelerine hazırlanıyor.",
@@ -1516,40 +1564,79 @@
                 { id: 101, isim: "Merve Demir", okul: "Yıldız Teknik · Endüstri Müh. 3. Sınıf", not: "Süreç optimizasyonu ve veri analitiği stajı üzerine mentörlük alıyor." }
             ];
 
+            function updateNotificationBadges() {
+                const unreadCount = pendingStudents.filter(s => !s.okundu).length;
+
+                const sidebarBadge = document.getElementById('networkBadge');
+                if (sidebarBadge) {
+                    if (unreadCount > 0) {
+                        sidebarBadge.textContent = unreadCount;
+                        sidebarBadge.style.display = 'inline-block';
+                    } else {
+                        sidebarBadge.style.display = 'none';
+                    }
+                }
+
+                const cardBadge = document.getElementById('pendingBadgeCard');
+                if (cardBadge) {
+                    if (unreadCount > 0) {
+                        cardBadge.textContent = `${unreadCount} Yeni İstek`;
+                        cardBadge.style.display = 'inline-block';
+                    } else {
+                        cardBadge.style.display = 'none';
+                    }
+                }
+            }
+
             function renderPending() {
                 const grid = document.getElementById('pendingGrid');
                 if (!grid) return;
                 if (pendingStudents.length === 0) {
                     grid.innerHTML = `<p class="empty-msg">Şu an bekleyen bir mentörlük isteği yok.</p>`;
+                    updateNotificationBadges();
                     return;
                 }
-                grid.innerHTML = pendingStudents.map(s => `
-                <div class="student-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:22px;">
-                    <div>
-                        <div class="student-avatar" style="margin:0 auto 12px auto;">${initials(s.isim)}</div>
-                        <h3 style="font-size:18px; color:#fff; margin-bottom:4px;">${s.isim}</h3>
-                        <span class="student-school" style="color:#06b6d4; font-size:13px; font-weight:bold; display:block; margin-bottom:12px;">${s.okul}</span>
-                        <p class="student-info" style="color:#cbd5e1; font-size:13px; line-height:1.5; background:rgba(15,23,42,0.5); padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.05); text-align:left; margin-bottom:15px;">
-                            "${s.not}"
-                        </p>
-                    </div>
+                grid.innerHTML = pendingStudents.map(s => {
+                    const isUnread = !s.okundu;
+                    const cardClass = isUnread ? "student-card unread-card" : "student-card";
+                    const newTagHTML = isUnread ? `<span class="new-tag">✨ YENİ İSTEK</span>` : ``;
 
-                    <div>
-                        <button onclick="openApplicantStudentModal(${s.id})" style="width:100%; padding:10px; margin-bottom:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#cbd5e1; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;" onmouseover="this.style.borderColor='#06b6d4'; this.style.color='#fff';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#cbd5e1';">
-                            👤 Öğrenci Profilini İncele
-                        </button>
-                        <div class="action-btn-group">
-                            <button class="accept-btn" onclick="respondRequest(${s.id}, true)" style="flex:1; padding:10px; background:#10b981; color:#fff; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">Kabul Et</button>
-                            <button class="reject-btn" onclick="respondRequest(${s.id}, false)" style="flex:1; padding:10px; background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">Reddet</button>
+                    return `
+                    <div class="${cardClass}" style="display:flex; flex-direction:column; justify-content:space-between; padding:22px;">
+                        ${newTagHTML}
+                        <div>
+                            <div class="student-avatar" style="margin:0 auto 12px auto;">${initials(s.isim)}</div>
+                            <h3 style="font-size:18px; color:#fff; margin-bottom:4px;">${s.isim}</h3>
+                            <span class="student-school" style="color:#06b6d4; font-size:13px; font-weight:bold; display:block; margin-bottom:12px;">${s.okul}</span>
+                            <p class="student-info" style="color:#cbd5e1; font-size:13px; line-height:1.5; background:rgba(15,23,42,0.5); padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.05); text-align:left; margin-bottom:15px;">
+                                "${s.not}"
+                            </p>
+                        </div>
+
+                        <div>
+                            <button onclick="openApplicantStudentModal(${s.id})" style="width:100%; padding:10px; margin-bottom:10px; background:${isUnread ? '#06b6d4' : 'rgba(255,255,255,0.06)'}; border:1px solid ${isUnread ? '#06b6d4' : 'rgba(255,255,255,0.15)'}; color:${isUnread ? '#020617' : '#cbd5e1'}; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;" onmouseover="this.style.opacity='0.9';" onmouseout="this.style.opacity='1';">
+                                👤 Öğrenci Profilini İncele ${isUnread ? '✨' : ''}
+                            </button>
+                            <div class="action-btn-group">
+                                <button class="accept-btn" onclick="respondRequest(${s.id}, true)" style="flex:1; padding:10px; background:#10b981; color:#fff; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">Kabul Et</button>
+                                <button class="reject-btn" onclick="respondRequest(${s.id}, false)" style="flex:1; padding:10px; background:rgba(239,68,68,0.15); border:1px solid #ef4444; color:#ef4444; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">Reddet</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+                }).join('');
+
+                updateNotificationBadges();
             }
 
             function openApplicantStudentModal(id) {
                 const s = pendingStudents.find(item => item.id === id);
                 if (!s) return;
+
+                // 👁️ İnceleme yapıldığında okundu olarak işaretle & bildirim sayısını güncelle
+                s.okundu = true;
+                updateNotificationBadges();
+                renderPending();
 
                 document.getElementById('applicantModalName').innerText = s.isim;
                 document.getElementById('applicantModalSub').innerText = s.okul;
