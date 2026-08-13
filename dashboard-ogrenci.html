@@ -417,6 +417,47 @@
         .alan-modal-close:hover {
             color: #06b6d4;
         }
+
+        /* ================= BİLDİRİM BALONCUĞU (INSTA / WP STYLE) ================= */
+        .nav-badge {
+            background: linear-gradient(135deg, #ef4444, #f43f5e);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 10px;
+            margin-left: auto;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+            animation: badgePulse 2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes badgePulse {
+            0% { transform: scale(1); box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+            50% { transform: scale(1.08); box-shadow: 0 0 14px rgba(239, 68, 68, 0.9); }
+            100% { transform: scale(1); box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+        }
+
+        .unread-card {
+            border: 2px solid #06b6d4 !important;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.35) !important;
+            background: linear-gradient(145deg, rgba(6, 182, 212, 0.12), rgba(15, 23, 42, 0.8)) !important;
+            position: relative;
+        }
+
+        .new-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #06b6d4;
+            color: #020617;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+        }
     </style>
 </head>
 
@@ -432,13 +473,17 @@
             </div>
             <div class="menu-item" id="menu-school" onclick="switchTab('school')">
                 <i class="fa-solid fa-graduation-cap"></i> Okulunuzdan 🎓
+                <span id="schoolSidebarBadge" class="nav-badge" style="margin-left:auto;">2</span>
             </div>
             <!-- MENTÖRLÜK AĞI TIKLANABİLİR SATIR VE AÇILIR MENÜ -->
             <div class="menu-item" id="menu-mentornet-parent" onclick="toggleMentornetSidebarSubmenu()"
                 style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 15px;">
                 <span><i class="fa-solid fa-users-rectangle" style="color: #06b6d4;"></i> Mentörlük Ağı 🤝</span>
-                <i class="fa-solid fa-chevron-down" id="mentornetChevron"
-                    style="font-size: 12px; transition: transform 0.3s;"></i>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span id="mentornetSidebarBadge" class="nav-badge">2</span>
+                    <i class="fa-solid fa-chevron-down" id="mentornetChevron"
+                        style="font-size: 12px; transition: transform 0.3s;"></i>
+                </div>
             </div>
             <div id="mentornetSidebarSubmenu"
                 style="display: none; flex-direction: column; gap: 4px; padding-left: 14px; margin-top: 2px; margin-bottom: 6px; border-left: 2px solid rgba(6, 182, 212, 0.3);">
@@ -456,8 +501,11 @@
             <div class="menu-item" id="menu-industry-parent" onclick="toggleIndustrySidebarSubmenu()"
                 style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 15px;">
                 <span><i class="fa-solid fa-briefcase" style="color: #38bdf8;"></i> Sektör & Fırsat Ağı 🚀</span>
-                <i class="fa-solid fa-chevron-down" id="industryChevron"
-                    style="font-size: 12px; transition: transform 0.3s;"></i>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span id="industrySidebarBadge" class="nav-badge">3</span>
+                    <i class="fa-solid fa-chevron-down" id="industryChevron"
+                        style="font-size: 12px; transition: transform 0.3s;"></i>
+                </div>
             </div>
             <div id="industrySidebarSubmenu"
                 style="display: none; flex-direction: column; gap: 4px; padding-left: 14px; margin-top: 2px; margin-bottom: 6px; border-left: 2px solid rgba(56, 189, 248, 0.3);">
@@ -559,12 +607,11 @@
                 <button class="subnav-btn active" id="subnav-school-peers" onclick="switchSchoolView('peers')"
                     style="font-size:14px; padding:10px 18px; font-weight:600;">👥 Ağdaki öğrenci arkadaşların</button>
                 <button class="subnav-btn" id="subnav-school-announcements" onclick="switchSchoolView('announcements')"
-                    style="font-size:14px; padding:10px 18px; font-weight:600;">📢 Duyurular & Etkinlikler</button>
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">📢 Duyurular & Etkinlikler <span id="subnavSchoolAnnouncementsBadge" class="nav-badge" style="margin-left:4px; font-size:10px;">1 Yeni</span></button>
                 <button class="subnav-btn" id="subnav-school-clubs" onclick="switchSchoolView('clubs')"
-                    style="font-size:14px; padding:10px 18px; font-weight:600;">🏛️ Okul Toplulukları &
-                    Kulüpler</button>
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">🏛️ Okul Toplulukları & Kulüpler</button>
                 <button class="subnav-btn" id="subnav-school-chat" onclick="switchSchoolView('chat')"
-                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 Okul Ağınız </button>
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 Okul Ağınız <span id="subnavSchoolChatBadge" class="nav-badge" style="margin-left:4px; font-size:10px; background:linear-gradient(135deg,#10b981,#06b6d4);">1</span></button>
             </div>
 
             <!-- 1. Okuldaki Öğrenciler & Sohbet Ekranı -->
@@ -696,12 +743,12 @@
             <!-- Staj & Proje İlanları Alt Navigasyon (Subnav) -->
             <div class="mentor-subnav" style="margin-bottom: 22px; display:flex; gap:10px; flex-wrap:wrap;">
                 <button class="subnav-btn active" id="subnav-jobs-all" onclick="switchJobsSubnav('all')"
-                    style="font-size:14px; padding:10px 18px; font-weight:600;">🌐 Tüm İlanlar</button>
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">🌐 Tüm İlanlar <span id="subnavJobsBadge" class="nav-badge" style="margin-left:4px; font-size:10px;">2 Yeni</span></button>
                 <button class="subnav-btn" id="subnav-jobs-mine" onclick="switchJobsSubnav('mine')"
                     style="font-size:14px; padding:10px 18px; font-weight:600;">📌 Yayınladığım İlanlarım &
                     İstatistikler (<span id="myJobsCountBadge">0</span>)</button>
                 <button class="subnav-btn" id="subnav-jobs-chat" onclick="switchJobsSubnav('chat')"
-                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 İlan & Proje Sohbetleri</button>
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 İlan & Proje Sohbetleri <span id="subnavJobsChatBadge" class="nav-badge" style="margin-left:4px; font-size:10px; background:linear-gradient(135deg,#10b981,#06b6d4);">1</span></button>
             </div>
 
             <!-- 1. Tüm İlanlar Grid -->
@@ -984,9 +1031,9 @@
                     style="font-size:14px; padding:10px 18px; font-weight:600;">📩 Gönderilen İstekler (<span
                         id="outgoingCount">0</span>)</button>
                 <button class="subnav-btn" id="subnav-mentor-mine" onclick="switchMentorSubnav('mine')"
-                    style="font-size:14px; padding:10px 18px; font-weight:600;">✅ Mentörlerim </button>
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">✅ Mentörlerim <span id="subnavMentorAcceptedBadge" class="nav-badge" style="margin-left:4px; font-size:10px; background:linear-gradient(135deg,#10b981,#3b82f6);">1 Kabul</span></button>
                 <button class="subnav-btn" id="subnav-mentor-chat" onclick="switchMentorSubnav('chat')"
-                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 Mentör Sohbetleri</button>
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 Mentör Sohbetleri <span id="subnavMentorChatBadge" class="nav-badge" style="margin-left:4px; font-size:10px; background:linear-gradient(135deg,#10b981,#06b6d4);">1</span></button>
             </div>
 
             <!-- Mentör Kartları Tam Izgara Görünümü (Varsayılan) -->
@@ -2370,6 +2417,108 @@
         }
 
 
+        // ================= 🔔 ÖĞRENCİ BİLDİRİM & ETKİLEŞİM SİSTEMİ =================
+        let studentNotifications = {
+            schoolAnnouncements: 1, // 1 Yeni Okul Duyurusu
+            schoolChat: 1,          // 1 Okul Arkadaşından Mesaj
+            mentorAccepted: 1,      // 1 Kabul Edilen Mentörlük İstegi
+            mentorChat: 1,          // 1 Mentörden Gelen Mesaj
+            newJobs: 2,             // 2 Yeni Staj İlanı
+            jobsChat: 1             // 1 İlan Başvuru Mesajı
+        };
+
+        function updateStudentNotificationBadges() {
+            // 1. Okulunuzdan Sidebar & Subnav
+            const schoolTotal = studentNotifications.schoolAnnouncements + studentNotifications.schoolChat;
+            const schoolSidebarBadge = document.getElementById('schoolSidebarBadge');
+            if (schoolSidebarBadge) {
+                if (schoolTotal > 0) {
+                    schoolSidebarBadge.textContent = schoolTotal;
+                    schoolSidebarBadge.style.display = 'inline-block';
+                } else {
+                    schoolSidebarBadge.style.display = 'none';
+                }
+            }
+            const schoolAnnounceBadge = document.getElementById('subnavSchoolAnnouncementsBadge');
+            if (schoolAnnounceBadge) {
+                if (studentNotifications.schoolAnnouncements > 0) {
+                    schoolAnnounceBadge.textContent = `${studentNotifications.schoolAnnouncements} Yeni`;
+                    schoolAnnounceBadge.style.display = 'inline-block';
+                } else {
+                    schoolAnnounceBadge.style.display = 'none';
+                }
+            }
+            const schoolChatBadge = document.getElementById('subnavSchoolChatBadge');
+            if (schoolChatBadge) {
+                if (studentNotifications.schoolChat > 0) {
+                    schoolChatBadge.textContent = studentNotifications.schoolChat;
+                    schoolChatBadge.style.display = 'inline-block';
+                } else {
+                    schoolChatBadge.style.display = 'none';
+                }
+            }
+
+            // 2. Mentörlük Ağı Sidebar & Subnav
+            const mentorTotal = studentNotifications.mentorAccepted + studentNotifications.mentorChat;
+            const mentornetSidebarBadge = document.getElementById('mentornetSidebarBadge');
+            if (mentornetSidebarBadge) {
+                if (mentorTotal > 0) {
+                    mentornetSidebarBadge.textContent = mentorTotal;
+                    mentornetSidebarBadge.style.display = 'inline-block';
+                } else {
+                    mentornetSidebarBadge.style.display = 'none';
+                }
+            }
+            const mentorAcceptedBadge = document.getElementById('subnavMentorAcceptedBadge');
+            if (mentorAcceptedBadge) {
+                if (studentNotifications.mentorAccepted > 0) {
+                    mentorAcceptedBadge.textContent = `${studentNotifications.mentorAccepted} Kabul`;
+                    mentorAcceptedBadge.style.display = 'inline-block';
+                } else {
+                    mentorAcceptedBadge.style.display = 'none';
+                }
+            }
+            const mentorChatBadge = document.getElementById('subnavMentorChatBadge');
+            if (mentorChatBadge) {
+                if (studentNotifications.mentorChat > 0) {
+                    mentorChatBadge.textContent = studentNotifications.mentorChat;
+                    mentorChatBadge.style.display = 'inline-block';
+                } else {
+                    mentorChatBadge.style.display = 'none';
+                }
+            }
+
+            // 3. Sektör & Fırsat Ağı Sidebar & Subnav
+            const jobsTotal = studentNotifications.newJobs + studentNotifications.jobsChat;
+            const industrySidebarBadge = document.getElementById('industrySidebarBadge');
+            if (industrySidebarBadge) {
+                if (jobsTotal > 0) {
+                    industrySidebarBadge.textContent = jobsTotal;
+                    industrySidebarBadge.style.display = 'inline-block';
+                } else {
+                    industrySidebarBadge.style.display = 'none';
+                }
+            }
+            const jobsBadge = document.getElementById('subnavJobsBadge');
+            if (jobsBadge) {
+                if (studentNotifications.newJobs > 0) {
+                    jobsBadge.textContent = `${studentNotifications.newJobs} Yeni`;
+                    jobsBadge.style.display = 'inline-block';
+                } else {
+                    jobsBadge.style.display = 'none';
+                }
+            }
+            const jobsChatBadge = document.getElementById('subnavJobsChatBadge');
+            if (jobsChatBadge) {
+                if (studentNotifications.jobsChat > 0) {
+                    jobsChatBadge.textContent = studentNotifications.jobsChat;
+                    jobsChatBadge.style.display = 'inline-block';
+                } else {
+                    jobsChatBadge.style.display = 'none';
+                }
+            }
+        }
+
         // ================= 🎓 OKUL SUBNAV & SOHBET MANTIĞI =================
         const schoolPeersList = [
             { name: "Selin Yılmaz", dept: "Bilgisayar Müh.", classYear: "3. Sınıf", skills: "React, Node.js", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Selin" },
@@ -2389,6 +2538,14 @@
             const expView = document.getElementById('schoolChatExpandedView');
             const announcementsGrid = document.getElementById('schoolAnnouncementsGrid');
             const clubsGrid = document.getElementById('schoolClubsGrid');
+
+            if (view === 'announcements') {
+                studentNotifications.schoolAnnouncements = 0;
+                updateStudentNotificationBadges();
+            } else if (view === 'chat') {
+                studentNotifications.schoolChat = 0;
+                updateStudentNotificationBadges();
+            }
 
             if (view === 'chat') {
                 if (peersContainer) peersContainer.style.display = 'block';
@@ -2903,6 +3060,14 @@
         }
 
         function switchMentorSubnav(sub) {
+            if (sub === 'mine') {
+                studentNotifications.mentorAccepted = 0;
+                updateStudentNotificationBadges();
+            } else if (sub === 'chat') {
+                studentNotifications.mentorChat = 0;
+                updateStudentNotificationBadges();
+            }
+
             document.querySelectorAll('#content-mentor-sector .subnav-btn').forEach(b => b.classList.remove('active'));
             const activeBtn = document.getElementById('subnav-mentor-' + sub);
             if (activeBtn) activeBtn.classList.add('active');
@@ -4305,6 +4470,14 @@
 
         function switchJobsSubnav(sub) {
             activeJobsSubnav = sub;
+            if (sub === 'all') {
+                studentNotifications.newJobs = 0;
+                updateStudentNotificationBadges();
+            } else if (sub === 'chat') {
+                studentNotifications.jobsChat = 0;
+                updateStudentNotificationBadges();
+            }
+
             document.querySelectorAll('#content-jobs .subnav-btn').forEach(b => b.classList.remove('active'));
             const activeBtn = document.getElementById('subnav-jobs-' + sub);
             if (activeBtn) activeBtn.classList.add('active');
@@ -5150,6 +5323,9 @@
                 switchJobsSubnav('mine');
                 alert('🎉 İlanınız başarıyla yayınlandı! "Yayınladığım İlanlarım & İstatistikler" sekmesinde ilan performansınızı ve gelen başvuruları görüntüleyebilirsiniz.');
             });
+
+            // 🔔 Sayfa yüklendiğinde öğrenci bildirim baloncuklarını güncelle
+            updateStudentNotificationBadges();
         });
 
     </script>
