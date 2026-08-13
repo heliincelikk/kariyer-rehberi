@@ -2620,15 +2620,32 @@
 
             sidebar.innerHTML = schoolPeersList.map(s => {
                 const isActive = activeName ? (s.name === activeName) : false;
-                const bg = isActive ? 'rgba(6, 182, 212, 0.2)' : 'rgba(255, 255, 255, 0.03)';
-                const border = isActive ? '1px solid #06b6d4' : '1px solid transparent';
+                const isUnread = !!studentNotificationState.unreadSchoolChat[s.name];
+
+                let bg = 'rgba(255, 255, 255, 0.03)';
+                let border = '1px solid transparent';
+                let boxShadow = 'none';
+
+                if (isActive) {
+                    bg = 'rgba(6, 182, 212, 0.2)';
+                    border = '1px solid #06b6d4';
+                } else if (isUnread) {
+                    bg = 'rgba(16, 185, 129, 0.12)';
+                    border = '1px solid #10b981';
+                    boxShadow = '0 0 12px rgba(16, 185, 129, 0.3)';
+                }
+
+                const unreadBadge = isUnread ? `<span class="nav-badge" style="margin-left:auto; font-size:9px; padding:2px 6px; background:linear-gradient(135deg,#10b981,#06b6d4);">1 YENİ MESAJ</span>` : ``;
 
                 return `
-                    <div onclick="openSchoolPeerChat('${s.name.replace(/'/g, "\\'")}', '${okul} - ${s.dept} • ${s.classYear}', '${s.img}')" style="display:flex; align-items:center; gap:12px; padding:12px; background:${bg}; border:${border}; border-radius:14px; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='rgba(6,182,212,0.15)'" onmouseout="this.style.background='${bg}'">
-                        <img src="${s.img}" alt="${s.name}" style="width:44px; height:44px; border-radius:50%; border:2px solid #06b6d4; object-fit:cover; flex-shrink:0; background:#1e293b;">
+                    <div onclick="openSchoolPeerChat('${s.name.replace(/'/g, "\\'")}', '${okul} - ${s.dept} • ${s.classYear}', '${s.img}')" style="display:flex; align-items:center; gap:12px; padding:12px; background:${bg}; border:${border}; box-shadow:${boxShadow}; border-radius:14px; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='rgba(6,182,212,0.15)'" onmouseout="this.style.background='${bg}'">
+                        <img src="${s.img}" alt="${s.name}" style="width:44px; height:44px; border-radius:50%; border:2px solid ${isUnread ? '#10b981' : '#06b6d4'}; object-fit:cover; flex-shrink:0; background:#1e293b;">
                         <div style="flex:1; overflow:hidden;">
-                            <h5 style="font-size:14px; color:#fff; margin:0 0 2px 0; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</h5>
-                            <span style="font-size:11px; color:#06b6d4; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.dept} • ${s.classYear}</span>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <h5 style="font-size:14px; color:#fff; margin:0 0 2px 0; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</h5>
+                                ${unreadBadge}
+                            </div>
+                            <span style="font-size:11px; color:${isUnread ? '#10b981' : '#06b6d4'}; font-weight:${isUnread ? 'bold' : 'normal'}; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${isUnread ? '💬 Yeni okul mesajı!' : `${s.dept} • ${s.classYear}`}</span>
                         </div>
                     </div>
                 `;
@@ -2636,6 +2653,9 @@
         }
 
         function openSchoolPeerChat(name, subInfo, imgUrl) {
+            delete studentNotificationState.unreadSchoolChat[name];
+            updateStudentNotificationBadges();
+
             const peersContainer = document.getElementById('schoolPeersContainer');
             const listView = document.getElementById('schoolPeersListView');
             const expView = document.getElementById('schoolChatExpandedView');
@@ -3576,16 +3596,33 @@
 
             sidebar.innerHTML = acceptedMentorList.map(m => {
                 const isActive = activeName ? (m.name === activeName) : false;
-                const bg = isActive ? 'rgba(6, 182, 212, 0.2)' : 'rgba(255, 255, 255, 0.03)';
-                const border = isActive ? '1px solid #06b6d4' : '1px solid transparent';
+                const isUnread = !!studentNotificationState.unreadMentorChat[m.name];
+
+                let bg = 'rgba(255, 255, 255, 0.03)';
+                let border = '1px solid transparent';
+                let boxShadow = 'none';
+
+                if (isActive) {
+                    bg = 'rgba(6, 182, 212, 0.2)';
+                    border = '1px solid #06b6d4';
+                } else if (isUnread) {
+                    bg = 'rgba(16, 185, 129, 0.12)';
+                    border = '1px solid #10b981';
+                    boxShadow = '0 0 12px rgba(16, 185, 129, 0.3)';
+                }
+
                 const imgUrl = m.img || `https://api.dicebear.com/7.x/avataaars/svg?seed=${m.name.replace(/\s/g, '')}`;
+                const unreadBadge = isUnread ? `<span class="nav-badge" style="margin-left:auto; font-size:9px; padding:2px 6px; background:linear-gradient(135deg,#10b981,#06b6d4);">1 YENİ MESAJ</span>` : ``;
 
                 return `
-                    <div onclick="openMentorChatUser('${m.name.replace(/'/g, "\\'")}', '${m.company} • ${m.title.replace(/'/g, "\\'")}', '${imgUrl}')" style="display:flex; align-items:center; gap:12px; padding:12px; background:${bg}; border:${border}; border-radius:14px; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='rgba(6,182,212,0.15)'" onmouseout="this.style.background='${bg}'">
-                        <img src="${imgUrl}" alt="${m.name}" style="width:44px; height:44px; border-radius:50%; border:2px solid #06b6d4; object-fit:cover; flex-shrink:0; background:#1e293b;">
+                    <div onclick="openMentorChatUser('${m.name.replace(/'/g, "\\'")}', '${m.company} • ${m.title.replace(/'/g, "\\'")}', '${imgUrl}')" style="display:flex; align-items:center; gap:12px; padding:12px; background:${bg}; border:${border}; box-shadow:${boxShadow}; border-radius:14px; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='rgba(6,182,212,0.15)'" onmouseout="this.style.background='${bg}'">
+                        <img src="${imgUrl}" alt="${m.name}" style="width:44px; height:44px; border-radius:50%; border:2px solid ${isUnread ? '#10b981' : '#06b6d4'}; object-fit:cover; flex-shrink:0; background:#1e293b;">
                         <div style="flex:1; overflow:hidden;">
-                            <h5 style="font-size:14px; color:#fff; margin:0 0 2px 0; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${m.name}</h5>
-                            <span style="font-size:11px; color:#06b6d4; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${m.company} • ${m.title}</span>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <h5 style="font-size:14px; color:#fff; margin:0 0 2px 0; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${m.name}</h5>
+                                ${unreadBadge}
+                            </div>
+                            <span style="font-size:11px; color:${isUnread ? '#10b981' : '#06b6d4'}; font-weight:${isUnread ? 'bold' : 'normal'}; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${isUnread ? '💬 Yeni mesajınız var!' : `${m.company} • ${m.title}`}</span>
                         </div>
                     </div>
                 `;
@@ -3600,6 +3637,9 @@
         }
 
         function openMentorChatUser(name, titleInfo, imgUrl) {
+            delete studentNotificationState.unreadMentorChat[name];
+            updateStudentNotificationBadges();
+
             document.getElementById('mentorSectorListView').style.display = 'none';
             const expView = document.getElementById('mentorChatExpandedView');
             expView.style.display = 'flex';
