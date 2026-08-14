@@ -27,11 +27,12 @@ const db = new sqlite3.Database('./kariyer_rehberi.db', (err) => {
     }
 });
 
-// 📌 Tablo oluşturma (profil sütunları eklendi 🎯)
+// 📌 Tablo oluşturma (email sütunu eklendi)
 db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS kullanicilar (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         kullanici_adi TEXT,
+        email TEXT UNIQUE,
         department TEXT,
         rol TEXT,
         durum TEXT,
@@ -42,49 +43,69 @@ db.serialize(() => {
         deneyim TEXT,
         sifre TEXT
     )`);
+    // Mevcut tabloya email sütunu ekle (eğer yoksa)
+    db.run(`ALTER TABLE kullanicilar ADD COLUMN email TEXT`, () => {});
 });
 
-// 🤵 KAYIT OL API KURALI (profil bilgileri de karşılanıyor 📦)
+// 🤵 KAYIT OL API KURALI
 app.post('/api/kayit-ol', (req, res) => {
-    const { kullanici_adi, department, rol, durum, okul, bolum, sinif, is_yeri, deneyim, sifre } = req.body;
+    const { kullanici_adi, email, department, rol, durum, okul, bolum, sinif, is_yeri, deneyim, sifre } = req.body;
     const sorgu = `INSERT INTO kullanicilar 
-        (kullanici_adi, department, rol, durum, okul, bolum, sinif, is_yeri, deneyim, sifre) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        (kullanici_adi, email, department, rol, durum, okul, bolum, sinif, is_yeri, deneyim, sifre) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    db.run(sorgu, [kullanici_adi, department, rol, durum, okul, bolum, sinif, is_yeri, deneyim, sifre], function(err) {
+    db.run(sorgu, [kullanici_adi, email, department, rol, durum, okul, bolum, sinif, is_yeri, deneyim, sifre], function(err) {
         if (err) {
-            return res.status(400).json({ error: "Bu kullanıcı adı zaten kapılmış ! ❌" });
+            return res.status(400).json({ error: "Bu e-posta adresi zaten kayıtlı! ❌" });
         }
         res.json({ message: "Harika! Başarıyla kayıt oldun. Aramıza hoşgeldin! 💾✨" });
     });
 });
-// 🔑 GİRİŞ YAP API KURALI (profil bilgileri de dışarı aktarılıyor 🚀)
+// 🔑 GİRİŞ YAP API KURALI (email ile giriş)
 app.post('/api/giris-yap', (req, res) => {
-    const { kullanici_adi, sifre } = req.body;
-    const sorgu = `SELECT * FROM kullanicilar WHERE kullanici_adi = ?`;
+    const { email, sifre } = req.body;
+    const sorgu = `SELECT * FROM kullanicilar WHERE email = ?`;
 
-    db.get(sorgu, [kullanici_adi], (err, row) => {
+    db.get(sorgu, [email], (err, row) => {
         if (err) {
             return res.status(500).json({ error: "Deftere bakarken hata çıktı! ❌" });
         }
         if (!row) {
-            return res.status(400).json({ error: "Böyle bir kullanıcı bulamadım, önce kayıt ol! ❌" });
+            return res.status(400).json({ error: "Bu e-posta ile kayıtlı bir hesap bulunamadı! ❌" });
         }
         if (row.sifre !== sifre) {
-            return res.status(400).json({ error: "Şifreni yanlış girdin , tekrar dene! ❌" });
+            return res.status(400).json({ error: "Şifreni yanlış girdin, tekrar dene! ❌" });
         }
-        // Giriş başarılı olduğunda tüm profil bilgilerini de gönderiyoruz
         res.json({
-    message: `Harika! Tekrar hoş geldin ${kullanici_adi}! Girişin onaylandı. 🔑✨`,
-    department: row.department,
-    rol: row.rol,
-    durum: row.durum,
-    okul: row.okul,
-    bolum: row.bolum,
-    sinif: row.sinif,
-    is_yeri: row.is_yeri,
-    deneyim: row.deneyim
+            message: `Harika! Tekrar hoş geldin ${row.kullanici_adi}! Girişin onaylandı. 🔑✨`,
+            kullanici_adi: row.kullanici_adi,
+            department: row.department,
+            rol: row.rol,
+            durum: row.durum,
+            okul: row.okul,
+            bolum: row.bolum,
+            sinif: row.sinif,
+            is_yeri: row.is_yeri,
+            deneyim: row.deneyim
+        });
+    });
 });
+
+// 🔓 ŞİFREMİ UNUTTUM API (email ile)
+app.post('/api/sifremi-unuttum', (req, res) => {
+    const { email } = req.body;
+    if (!email || email.trim() === '') {
+        return res.status(400).json({ error: 'E-posta adresi boş bırakılamaz! ❌' });
+    }
+    const sorgu = `SELECT kullanici_adi, sifre FROM kullanicilar WHERE email = ?`;
+    db.get(sorgu, [email.trim()], (err, row) => {
+        if (err) {
+            return res.status(500).json({ error: 'Veri tabanında hata oluştu! ❌' });
+        }
+        if (!row) {
+            return res.status(404).json({ error: 'Bu e-posta adresiyle kayıtlı bir hesap bulunamadı! ❌' });
+        }
+        res.json({ kullanici_adi: row.kullanici_adi, sifre: row.sifre });
     });
 });
 

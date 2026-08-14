@@ -545,7 +545,6 @@
             color: #ef4444;
         }
 
-        /* ================= BİLDİRİM BALONCUĞU (INSTA / WP STYLE) ================= */
         .nav-badge {
             background: linear-gradient(135deg, #ef4444, #f43f5e);
             color: #ffffff;
@@ -567,6 +566,37 @@
             display: inline-block;
             box-shadow: 0 0 10px #ef4444;
             animation: badgePulse 1.8s infinite;
+        }
+
+        /* Kaynak Bazlı İkili Badge */
+        .notif-split {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-left: auto;
+            align-items: flex-end;
+        }
+        .notif-pill {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 10px;
+            white-space: nowrap;
+            animation: badgePulse 2s infinite;
+        }
+        .notif-pill.request-pill {
+            background: linear-gradient(135deg, #ef4444, #f43f5e);
+            color: #fff;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+        }
+        .notif-pill.chat-pill {
+            background: linear-gradient(135deg, #10b981, #06b6d4);
+            color: #020617;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+            animation-delay: 0.3s;
         }
 
         @keyframes badgePulse {
@@ -616,7 +646,7 @@
             <div class="menu-group-label">AĞIM & İLETİŞİM</div>
             <div class="menu-item" id="menu-network" onclick="switchTab('network')">
                 <i class="fa-solid fa-users-rectangle"></i> Mentörlük Ağım & Mesajlar 🤝
-                <span id="networkBadge" class="nav-badge">3</span>
+                <span class="nav-dot" id="networkActivityDot" style="display:none; margin-left:auto;"></span>
             </div>
             <div class="menu-item" id="menu-company" onclick="switchTab('company')">
                 <i class="fa-solid fa-building"></i> Şirketinizden 💼
@@ -1583,17 +1613,12 @@
             function updateNotificationBadges() {
                 const unreadPendingCount = pendingStudents.filter(s => !s.okundu).length;
                 const unreadChatCount = Object.keys(chatUnreadMentees).length;
-                const totalUnreadCount = unreadPendingCount + unreadChatCount;
+                const totalUnread = unreadPendingCount + unreadChatCount;
 
-                // Sol Menü Bildirim Balonu (Toplam)
-                const sidebarBadge = document.getElementById('networkBadge');
-                if (sidebarBadge) {
-                    if (totalUnreadCount > 0) {
-                        sidebarBadge.textContent = totalUnreadCount;
-                        sidebarBadge.style.display = 'inline-block';
-                    } else {
-                        sidebarBadge.style.display = 'none';
-                    }
+                // SIDEBAR: Sadece animasyonlu nokta — "bir şeyler var" işareti
+                const dot = document.getElementById('networkActivityDot');
+                if (dot) {
+                    dot.style.display = totalUnread > 0 ? 'inline-block' : 'none';
                 }
 
                 // Alt Menü: Gelen İstekler Balonu
