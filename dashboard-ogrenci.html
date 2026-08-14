@@ -432,10 +432,265 @@
             display: inline-block;
         }
 
+        /* Kırmızı Nokta Badge (minimal) */
+        .notif-dot {
+            width: 9px;
+            height: 9px;
+            background: linear-gradient(135deg, #ef4444, #f43f5e);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+            animation: dotPulse 2s infinite;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        @keyframes dotPulse {
+            0% { box-shadow: 0 0 4px rgba(239,68,68,0.7); transform: scale(1); }
+            50% { box-shadow: 0 0 12px rgba(239,68,68,1); transform: scale(1.2); }
+            100% { box-shadow: 0 0 4px rgba(239,68,68,0.7); transform: scale(1); }
+        }
+
         @keyframes badgePulse {
             0% { transform: scale(1); box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
             50% { transform: scale(1.08); box-shadow: 0 0 14px rgba(239, 68, 68, 0.9); }
             100% { transform: scale(1); box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+        }
+
+        /* ================= BİLDİRİM ZİLİ ================= */
+        .notif-bell-wrapper {
+            position: relative;
+            cursor: pointer;
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.25s ease;
+        }
+        .notif-bell-wrapper:hover {
+            background: rgba(6,182,212,0.1);
+            border-color: rgba(6,182,212,0.3);
+        }
+        .notif-bell-icon {
+            font-size: 18px;
+            color: #94a3b8;
+            position: relative;
+            transition: color 0.2s;
+        }
+        .notif-bell-wrapper:hover .notif-bell-icon { color: #06b6d4; }
+        .notif-bell-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: linear-gradient(135deg, #ef4444, #f43f5e);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            box-shadow: 0 0 10px rgba(239,68,68,0.7);
+            animation: badgePulse 2s infinite;
+            border: 2px solid #0f172a;
+        }
+        .notif-bell-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #94a3b8;
+            flex: 1;
+        }
+        .notif-bell-wrapper:hover .notif-bell-label { color: #e2e8f0; }
+
+        /* ================= BİLDİRİM PANEL (DROPDOWN) ================= */
+        .notif-panel-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1500;
+            background: transparent;
+            display: none;
+        }
+        .notif-panel-overlay.active { display: block; }
+        .notif-panel {
+            position: fixed;
+            top: 50%; left: 270px;
+            transform: translateY(-50%) translateX(10px) scale(0.97);
+            width: 380px;
+            max-height: 520px;
+            background: #0f172a;
+            border: 1px solid rgba(6,182,212,0.35);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(6,182,212,0.1);
+            z-index: 1600;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .notif-panel.active {
+            transform: translateY(-50%) translateX(0) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .notif-panel-header {
+            padding: 18px 20px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(6,182,212,0.08), transparent);
+        }
+        .notif-panel-header h3 {
+            font-size: 16px;
+            color: #fff;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .notif-panel-header .notif-total-count {
+            background: linear-gradient(135deg, #ef4444, #f43f5e);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(239,68,68,0.5);
+        }
+        .notif-markall-btn {
+            background: transparent;
+            border: 1px solid rgba(6,182,212,0.3);
+            color: #06b6d4;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .notif-markall-btn:hover {
+            background: #06b6d4;
+            color: #0f172a;
+        }
+        .notif-list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 8px;
+        }
+        .notif-list::-webkit-scrollbar { width: 4px; }
+        .notif-list::-webkit-scrollbar-thumb { background: rgba(6,182,212,0.3); border-radius: 4px; }
+
+        /* Bildirim Satırı */
+        .notif-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            border: 1px solid transparent;
+        }
+        /* YENİ / OKUNMAMIŞ - Parlak glow efekti */
+        .notif-item.unread {
+            background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(239,68,68,0.05));
+            border-color: rgba(6,182,212,0.25);
+            box-shadow: 0 2px 12px rgba(6,182,212,0.15), inset 0 0 20px rgba(6,182,212,0.04);
+        }
+        .notif-item.unread:hover {
+            background: linear-gradient(135deg, rgba(6,182,212,0.18), rgba(239,68,68,0.08));
+            border-color: rgba(6,182,212,0.45);
+            box-shadow: 0 4px 20px rgba(6,182,212,0.25);
+            transform: translateX(3px);
+        }
+        /* OKUNMUŞ - Soluk */
+        .notif-item.read {
+            background: rgba(255,255,255,0.025);
+            border-color: transparent;
+            opacity: 0.65;
+        }
+        .notif-item.read:hover {
+            opacity: 1;
+            background: rgba(255,255,255,0.05);
+            transform: translateX(3px);
+        }
+        .notif-item-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .notif-item-body { flex: 1; min-width: 0; }
+        .notif-item-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 2px;
+            line-height: 1.3;
+        }
+        .notif-item.read .notif-item-title { color: #94a3b8; font-weight: 600; }
+        .notif-item-desc {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.4;
+        }
+        .notif-item.unread .notif-item-desc { color: #94a3b8; }
+        .notif-item-time {
+            font-size: 10px;
+            color: #475569;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        .notif-item.unread .notif-item-time { color: #06b6d4; }
+        /* Sol kenarda okunmamış glow çizgisi */
+        .notif-item.unread::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 8px; bottom: 8px;
+            width: 3px;
+            background: linear-gradient(to bottom, #06b6d4, #3b82f6);
+            border-radius: 3px;
+            box-shadow: 0 0 8px rgba(6,182,212,0.6);
+        }
+        /* Küçük kırmızı okunmamış nokta (sağ üst) */
+        .notif-item.unread .notif-unread-dot {
+            width: 7px; height: 7px;
+            background: #ef4444;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 0 6px rgba(239,68,68,0.8);
+            animation: dotPulse 2s infinite;
+            margin-top: 4px;
+        }
+        .notif-item.read .notif-unread-dot { display: none; }
+
+        /* Kategori Başlığı */
+        .notif-section-label {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #475569;
+            padding: 6px 14px 4px;
+        }
+        .notif-empty-state {
+            padding: 30px;
+            text-align: center;
+            color: #475569;
+            font-size: 13px;
         }
 
         .unread-card {
@@ -473,14 +728,14 @@
             </div>
             <div class="menu-item" id="menu-school" onclick="switchTab('school')">
                 <i class="fa-solid fa-graduation-cap"></i> Okulunuzdan 🎓
-                <span id="schoolSidebarBadge" class="nav-badge" style="margin-left:auto;">2</span>
+                <span id="schoolSidebarBadge" class="notif-dot" style="margin-left:auto; display:inline-block;"></span>
             </div>
             <!-- MENTÖRLÜK AĞI TIKLANABİLİR SATIR VE AÇILIR MENÜ -->
             <div class="menu-item" id="menu-mentornet-parent" onclick="toggleMentornetSidebarSubmenu()"
                 style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 15px;">
                 <span><i class="fa-solid fa-users-rectangle" style="color: #06b6d4;"></i> Mentörlük Ağı 🤝</span>
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <span id="mentornetSidebarBadge" class="nav-badge">2</span>
+                    <span id="mentornetSidebarBadge" class="notif-dot"></span>
                     <i class="fa-solid fa-chevron-down" id="mentornetChevron"
                         style="font-size: 12px; transition: transform 0.3s;"></i>
                 </div>
@@ -502,7 +757,7 @@
                 style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 15px;">
                 <span><i class="fa-solid fa-briefcase" style="color: #38bdf8;"></i> Sektör & Fırsat Ağı 🚀</span>
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <span id="industrySidebarBadge" class="nav-badge">3</span>
+                    <span id="industrySidebarBadge" class="notif-dot"></span>
                     <i class="fa-solid fa-chevron-down" id="industryChevron"
                         style="font-size: 12px; transition: transform 0.3s;"></i>
                 </div>
@@ -1726,7 +1981,247 @@
 
     </div>
 
+    <!-- ============================================================ -->
+    <!-- 🔔 BİLDİRİM PANEL (DROPDOWN) HTML -->
+    <!-- ============================================================ -->
+    <div class="notif-panel-overlay" id="notifPanelOverlay" onclick="closeNotifPanel()"></div>
+    <div class="notif-panel" id="notifPanel">
+        <div class="notif-panel-header">
+            <h3>
+                🔔 Bildirimler
+                <span class="notif-total-count" id="notifTotalCountBadge">5</span>
+            </h3>
+            <button class="notif-markall-btn" onclick="markAllNotifRead()">Tamamını Oku</button>
+        </div>
+        <div class="notif-list" id="notifList">
+            <!-- JS ile doldurulacak -->
+        </div>
+    </div>
+
     <script>
+        /* =====================================================
+           🔔 BİLDİRİM SİSTEMİ
+           ===================================================== */
+
+        // Bildirim verisi — gerçek uygulamada sunucudan gelir
+        let notifData = [
+            {
+                id: 'n1',
+                type: 'mentor_accept',
+                icon: '🤝',
+                iconBg: 'rgba(16,185,129,0.15)',
+                title: 'Mentörlük İsteğin Kabul Edildi!',
+                desc: 'Helin Çelik mentörlük isteğini kabul etti. Hemen sohbet başlatabilirsin.',
+                time: '2 dk önce',
+                read: false,
+                action: () => { switchTab('mentor-sector'); switchMentorSubnav('mine'); closeNotifPanel(); }
+            },
+            {
+                id: 'n2',
+                type: 'school_msg',
+                icon: '💬',
+                iconBg: 'rgba(6,182,212,0.12)',
+                title: 'Selin\'den Yeni Mesaj',
+                desc: 'Okul arkadaşın Selin sana mesaj gönderdi: "Proje grubumuzu oluşturduk..."',
+                time: '15 dk önce',
+                read: false,
+                action: () => { switchTab('school'); switchSchoolView('chat'); closeNotifPanel(); }
+            },
+            {
+                id: 'n3',
+                type: 'candidate_req',
+                icon: '🎓',
+                iconBg: 'rgba(168,85,247,0.12)',
+                title: 'Yeni Aday İsteği Geldi',
+                desc: 'Ayşe Demir (Atatürk Fen Lisesi) senden rehberlik talep ediyor.',
+                time: '1 saat önce',
+                read: false,
+                action: () => { switchTab('mentor-candidates'); switchGelenIstekView('pending'); closeNotifPanel(); }
+            },
+            {
+                id: 'n4',
+                type: 'job_new',
+                icon: '🚀',
+                iconBg: 'rgba(56,189,248,0.12)',
+                title: '2 Yeni Staj İlanı Eklendi',
+                desc: 'Baykar ve Trendyol alanına özel yeni staj fırsatları yayınlandı.',
+                time: '3 saat önce',
+                read: false,
+                action: () => { switchTab('jobs'); switchJobsSubnav('all'); closeNotifPanel(); }
+            },
+            {
+                id: 'n5',
+                type: 'school_announce',
+                icon: '📢',
+                iconBg: 'rgba(245,158,11,0.12)',
+                title: 'Okul Duyurusu: Kariyer Günleri',
+                desc: 'Üniversitenizin Kariyer Günleri etkinliği bu Cuma 13:00\'te başlıyor.',
+                time: '5 saat önce',
+                read: false,
+                action: () => { switchTab('school'); switchSchoolView('announcements'); closeNotifPanel(); }
+            },
+            {
+                id: 'n6',
+                type: 'mentor_msg',
+                icon: '💼',
+                iconBg: 'rgba(6,182,212,0.12)',
+                title: 'Mentörünüzden Mesaj',
+                desc: 'Murat Yılmaz: "CV\'ni inceledim, birkaç önerim var. Bu haftaki sesli toplantıya..."',
+                time: 'Dün',
+                read: true,
+                action: () => { switchTab('mentor-sector'); switchMentorSubnav('chat'); closeNotifPanel(); }
+            },
+            {
+                id: 'n7',
+                type: 'achievement',
+                icon: '⭐',
+                iconBg: 'rgba(245,158,11,0.12)',
+                title: 'Yeni Başarı Rozeti Kazandın!',
+                desc: '5 mentörlük isteği gönderdin. "Proaktif Öğrenci" rozetini kazandın.',
+                time: '2 gün önce',
+                read: true,
+                action: () => { closeNotifPanel(); }
+            }
+        ];
+
+        function getUnreadCount() {
+            return notifData.filter(n => !n.read).length;
+        }
+
+        function updateNotifUI() {
+            const count = getUnreadCount();
+
+            // Zil sayacı
+            const bellCount = document.getElementById('notifBellCount');
+            const bellLabel = document.getElementById('notifBellNewLabel');
+            const totalBadge = document.getElementById('notifTotalCountBadge');
+
+            if (bellCount) {
+                if (count > 0) {
+                    bellCount.style.display = 'flex';
+                    bellCount.textContent = count;
+                } else {
+                    bellCount.style.display = 'none';
+                }
+            }
+            if (bellLabel) {
+                bellLabel.textContent = count > 0 ? count + ' Yeni' : 'Hepsi Okundu';
+                bellLabel.style.color = count > 0 ? '#ef4444' : '#10b981';
+            }
+            if (totalBadge) {
+                totalBadge.textContent = count;
+                totalBadge.style.display = count > 0 ? 'inline-block' : 'none';
+            }
+
+            // Sidebar noktaları — ilgili kategoriye göre göster/gizle
+            const hasSchool = notifData.some(n => !n.read && (n.type === 'school_msg' || n.type === 'school_announce'));
+            const hasMentor = notifData.some(n => !n.read && (n.type === 'mentor_accept' || n.type === 'mentor_msg' || n.type === 'candidate_req'));
+            const hasIndustry = notifData.some(n => !n.read && (n.type === 'job_new'));
+
+            const schoolDot = document.getElementById('schoolSidebarBadge');
+            const mentorDot = document.getElementById('mentornetSidebarBadge');
+            const industryDot = document.getElementById('industrySidebarBadge');
+
+            if (schoolDot) schoolDot.style.display = hasSchool ? 'inline-block' : 'none';
+            if (mentorDot) mentorDot.style.display = hasMentor ? 'inline-block' : 'none';
+            if (industryDot) industryDot.style.display = hasIndustry ? 'inline-block' : 'none';
+        }
+
+        function renderNotifList() {
+            const list = document.getElementById('notifList');
+            if (!list) return;
+
+            const unread = notifData.filter(n => !n.read);
+            const read = notifData.filter(n => n.read);
+
+            let html = '';
+
+            if (unread.length === 0 && read.length === 0) {
+                html = '<div class="notif-empty-state">🔔<br>Bildirim yok</div>';
+            } else {
+                if (unread.length > 0) {
+                    html += `<div class="notif-section-label">🔴 Yeni (${unread.length})</div>`;
+                    html += unread.map(n => renderNotifItem(n)).join('');
+                }
+                if (read.length > 0) {
+                    html += `<div class="notif-section-label" style="margin-top:8px;">✔ Okunmuş</div>`;
+                    html += read.map(n => renderNotifItem(n)).join('');
+                }
+            }
+
+            list.innerHTML = html;
+        }
+
+        function renderNotifItem(n) {
+            const cls = n.read ? 'read' : 'unread';
+            return `
+                <div class="notif-item ${cls}" onclick="handleNotifClick('${n.id}')">
+                    <div class="notif-item-icon" style="background:${n.iconBg};">${n.icon}</div>
+                    <div class="notif-item-body">
+                        <div class="notif-item-title">${n.title}</div>
+                        <div class="notif-item-desc">${n.desc}</div>
+                        <div class="notif-item-time">${n.time}</div>
+                    </div>
+                    <div class="notif-unread-dot"></div>
+                </div>
+            `;
+        }
+
+        function handleNotifClick(id) {
+            const notif = notifData.find(n => n.id === id);
+            if (!notif) return;
+            // Okundu işaretle
+            notif.read = true;
+            updateNotifUI();
+            renderNotifList();
+            // Aksiyon yap
+            if (notif.action) notif.action();
+        }
+
+        function markAllNotifRead() {
+            notifData.forEach(n => n.read = true);
+            updateNotifUI();
+            renderNotifList();
+        }
+
+        let notifPanelOpen = false;
+
+        function toggleNotifPanel() {
+            if (notifPanelOpen) {
+                closeNotifPanel();
+            } else {
+                openNotifPanel();
+            }
+        }
+
+        function openNotifPanel() {
+            renderNotifList();
+            const panel = document.getElementById('notifPanel');
+            const overlay = document.getElementById('notifPanelOverlay');
+            if (panel) {
+                panel.classList.add('active');
+                overlay.classList.add('active');
+                notifPanelOpen = true;
+            }
+        }
+
+        function closeNotifPanel() {
+            const panel = document.getElementById('notifPanel');
+            const overlay = document.getElementById('notifPanelOverlay');
+            if (panel) {
+                panel.classList.remove('active');
+                overlay.classList.remove('active');
+                notifPanelOpen = false;
+            }
+        }
+
+        // Sayfa yüklenince bildirim UI'sini güncelle
+        document.addEventListener('DOMContentLoaded', () => {
+            updateNotifUI();
+        });
+
+        /* ===================================================== */
+
         function closeAllModals() {
             document.querySelectorAll('.alan-modal-overlay').forEach(modal => {
                 modal.classList.remove('active');
@@ -2433,7 +2928,6 @@
             const schoolSidebarBadge = document.getElementById('schoolSidebarBadge');
             if (schoolSidebarBadge) {
                 if (schoolTotal > 0) {
-                    schoolSidebarBadge.textContent = schoolTotal;
                     schoolSidebarBadge.style.display = 'inline-block';
                 } else {
                     schoolSidebarBadge.style.display = 'none';
@@ -2463,7 +2957,6 @@
             const mentornetSidebarBadge = document.getElementById('mentornetSidebarBadge');
             if (mentornetSidebarBadge) {
                 if (mentorTotal > 0) {
-                    mentornetSidebarBadge.textContent = mentorTotal;
                     mentornetSidebarBadge.style.display = 'inline-block';
                 } else {
                     mentornetSidebarBadge.style.display = 'none';
@@ -2493,7 +2986,6 @@
             const industrySidebarBadge = document.getElementById('industrySidebarBadge');
             if (industrySidebarBadge) {
                 if (jobsTotal > 0) {
-                    industrySidebarBadge.textContent = jobsTotal;
                     industrySidebarBadge.style.display = 'inline-block';
                 } else {
                     industrySidebarBadge.style.display = 'none';
@@ -2815,6 +3307,13 @@
                 modal.style.display = 'none';
             }
         }
+
+        // studentNotificationState — WhatsApp tipi kart başlığı için okunmamış setleri
+        let studentNotificationState = {
+            unreadSchoolChat: { 'Selin Yılmaz': true },
+            unreadMentorChat: { 'Helin Çelik': true },
+            unreadMentorAccepted: { 'm1': true }
+        };
 
         let unreadAnnouncements = { "sa1": true };
         let unreadJobs = { "j1": true, "j2": true };
@@ -4689,28 +5188,57 @@
 
             container.innerHTML = filteredChats.map(c => {
                 const isActive = (c.id === currentActiveJobsChatId);
-                const activeStyle = isActive ? 'background: rgba(6, 182, 212, 0.2); border: 1px solid #06b6d4;' : 'background: rgba(15, 23, 42, 0.5); border: 1px solid transparent;';
-                const lastMsg = c.messages.length > 0 ? c.messages[c.messages.length - 1] : 'Sohbet başlatıldı';
+                const isUnread = !isActive && (c.unread || false);
+                let bgStyle, borderStyle, boxShadowStyle;
+                if (isActive) {
+                    bgStyle = 'rgba(6, 182, 212, 0.2)';
+                    borderStyle = '1px solid #06b6d4';
+                    boxShadowStyle = 'none';
+                } else if (isUnread) {
+                    bgStyle = 'linear-gradient(135deg, rgba(16,185,129,0.14), rgba(6,182,212,0.08))';
+                    borderStyle = '1px solid rgba(16,185,129,0.5)';
+                    boxShadowStyle = '0 0 14px rgba(16,185,129,0.2)';
+                } else {
+                    bgStyle = 'rgba(15, 23, 42, 0.5)';
+                    borderStyle = '1px solid rgba(255,255,255,0.06)';
+                    boxShadowStyle = 'none';
+                }
+
+                const lastMsg = c.messages && c.messages.length > 0
+                    ? (typeof c.messages[c.messages.length - 1] === 'string'
+                        ? c.messages[c.messages.length - 1]
+                        : (c.messages[c.messages.length - 1].text || 'Sohbet başlatıldı'))
+                    : 'Sohbet başlatıldı';
+
+                const unreadDot = isUnread ? `<span style="width:9px;height:9px;background:#10b981;border-radius:50%;box-shadow:0 0 6px rgba(16,185,129,0.8);animation:dotPulse 2s infinite;flex-shrink:0;"></span>` : '';
+                const unreadMsgLabel = isUnread ? `<span style="font-size:11px; font-weight:800; color:#10b981;">Yeni mesaj</span>` : '';
 
                 return `
-                    <div onclick="openJobsPeerChat('${c.id}')" style="padding: 12px; border-radius: 12px; cursor: pointer; transition: 0.2s; ${activeStyle}" onmouseover="if('${c.id}' !== currentActiveJobsChatId) this.style.background='rgba(255,255,255,0.06)'" onmouseout="if('${c.id}' !== currentActiveJobsChatId) this.style.background='rgba(15, 23, 42, 0.5)'">
+                    <div onclick="openJobsPeerChat('${c.id}')" style="padding: 12px; border-radius: 14px; cursor: pointer; transition: 0.2s; background:${bgStyle}; border:${borderStyle}; box-shadow:${boxShadowStyle}; margin-bottom:4px; position:relative;" onmouseover="if('${c.id}' !== currentActiveJobsChatId) this.style.background='rgba(6,182,212,0.12)'" onmouseout="if('${c.id}' !== currentActiveJobsChatId) this.style.background='${bgStyle}'">
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
-                            <img src="${c.img}" style="width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid ${c.badgeColor}; flex-shrink: 0; background:#1e293b;">
+                            <div style="position:relative; flex-shrink:0;">
+                                <img src="${c.img}" style="width: 42px; height: 42px; border-radius: 50%; border: 2px solid ${isUnread ? '#10b981' : c.badgeColor}; background:#1e293b; display:block;">
+                                ${isUnread ? `<span style="position:absolute;bottom:0;right:0;width:11px;height:11px;background:#10b981;border-radius:50%;border:2px solid #0f172a;box-shadow:0 0 8px rgba(16,185,129,0.8);"></span>` : ''}
+                            </div>
                             <div style="flex: 1; min-width: 0;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                                    <h5 style="color: #fff; font-size: 14px; font-weight: bold; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${c.name}</h5>
+                                    <h5 style="color: #fff; font-size: 14px; font-weight: ${isUnread ? '800' : 'bold'}; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${c.name}</h5>
+                                    ${unreadDot}
                                 </div>
                                 <span style="font-size: 10px; font-weight: bold; color: ${c.badgeColor}; background: ${c.badgeColor}22; border: 1px solid ${c.badgeColor}44; padding: 2px 6px; border-radius: 8px; display: inline-block;">
                                     ${c.badgeText}
                                 </span>
                             </div>
                         </div>
-                        <div style="font-size: 11px; color: #94a3b8; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <div style="font-size: 11px; color: ${isUnread ? '#06b6d4' : '#94a3b8'}; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             📋 İlan: ${c.projectTitle}
                         </div>
-                        <p style="color: #cbd5e1; font-size: 12px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0.85;">
-                            ${lastMsg}
-                        </p>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <p style="color: ${isUnread ? '#cbd5e1' : '#64748b'}; font-size: 12px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex:1; font-weight:${isUnread ? '600' : 'normal'}">
+                                ${lastMsg}
+                            </p>
+                            ${unreadMsgLabel}
+                        </div>
                     </div>
                 `;
             }).join('');
