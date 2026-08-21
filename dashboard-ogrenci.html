@@ -443,6 +443,19 @@
             display: inline-block;
             flex-shrink: 0;
         }
+        .notif-dot.notif-category-count {
+            width: auto;
+            min-width: 19px;
+            height: 19px;
+            padding: 0 5px;
+            border-radius: 999px;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            line-height: 1;
+        }
 
         @keyframes dotPulse {
             0% { box-shadow: 0 0 4px rgba(239,68,68,0.7); transform: scale(1); }
@@ -507,6 +520,19 @@
             flex: 1;
         }
         .notif-bell-wrapper:hover .notif-bell-label { color: #e2e8f0; }
+        .welcome-bar .notif-bell-wrapper {
+            width: 44px;
+            height: 44px;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+            color: inherit;
+        }
+        .welcome-bar .notif-bell-wrapper:focus-visible {
+            outline: 3px solid rgba(6,182,212,.7);
+            outline-offset: 3px;
+        }
 
         /* ================= BİLDİRİM PANEL (DROPDOWN) ================= */
         .notif-panel-overlay {
@@ -520,10 +546,12 @@
         .notif-panel-overlay.active { display: block; }
         .notif-panel {
             position: fixed;
-            top: 50%; left: 270px;
-            transform: translateY(-50%) translateX(10px) scale(0.97);
-            width: 380px;
-            max-height: 520px;
+            top: 84px;
+            right: 32px;
+            left: auto;
+            transform: translateY(-10px) scale(0.97);
+            width: min(380px, calc(100vw - 32px));
+            max-height: min(520px, calc(100dvh - 108px));
             background: #0f172a;
             border: 1px solid rgba(6,182,212,0.35);
             border-radius: 20px;
@@ -535,7 +563,7 @@
             pointer-events: none;
         }
         .notif-panel.active {
-            transform: translateY(-50%) translateX(0) scale(1);
+            transform: translateY(0) scale(1);
             opacity: 1;
             pointer-events: auto;
         }
@@ -841,8 +869,9 @@
                     <i class="fa-solid fa-rocket" style="color: #38bdf8;"></i> Staj & Proje İlanları
                 </div>
                 <div class="menu-item" id="menu-companies" onclick="switchTab('companies')"
-                    style="font-size: 14px; font-weight: 600; padding: 11px 16px;">
-                    <i class="fa-solid fa-building" style="color: #06b6d4;"></i> Revaçta Şirketler
+                    style="font-size: 14px; font-weight: 600; padding: 11px 16px; display:flex; align-items:center; justify-content:space-between; gap:8px;">
+                    <span><i class="fa-solid fa-building" style="color: #06b6d4;"></i> Revaçta Şirketler</span>
+                    <span id="companiesSidebarBadge" class="notif-dot"></span>
                 </div>
             </div>
 
@@ -871,7 +900,13 @@
 
         <div class="welcome-bar">
             <h1>Hoş Geldin, <span id="userNameSpan">Mühendis Adayı!</span> 👋</h1>
-            <div class="user-badge" id="userBadgeMode">Yükleniyor...</div>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <button class="notif-bell-wrapper" type="button" onclick="toggleNotifPanel()" aria-label="Bildirimleri aç" aria-controls="notifPanel" aria-expanded="false" id="notifBellButton">
+                    <span style="position:relative; display:inline-flex;"><i class="fa-regular fa-bell notif-bell-icon" aria-hidden="true"></i><span class="notif-bell-count" id="notifBellCount" role="status" aria-live="polite" aria-atomic="true">5</span></span>
+                    <span class="notif-bell-label" id="notifBellNewLabel" style="display:none;">5 Yeni</span>
+                </button>
+                <div class="user-badge" id="userBadgeMode">Yükleniyor...</div>
+            </div>
         </div>
 
         <!-- SEKME 1: KİŞİSELLEŞTİRİLMİŞ PANEL -->
@@ -968,12 +1003,6 @@
                             style="padding: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center;">
                             <span style="color: #fff; font-weight: bold; font-size: 15px;"><i
                                     class="fa-solid fa-comments" style="color: #06b6d4;"></i> Okul Ağınız </span>
-                            <button onclick="closeSchoolChatExpanded()"
-                                style="background: rgba(6, 182, 212, 0.15); border: 1px solid #06b6d4; color: #06b6d4; padding: 5px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s;"
-                                onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';"
-                                onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
-                                ⬅️ Çık
-                            </button>
                         </div>
                         <!-- WhatsApp Usulü Alt Alta Sıralanan Okul Arkadaşları -->
                         <div id="schoolChatUserListSidebar"
@@ -1014,10 +1043,10 @@
                                     <span id="schoolChatActiveSub" style="color: #06b6d4; font-size: 12px;">—</span>
                                 </div>
                             </div>
-                            <span
-                                style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 11px; font-weight: bold; padding: 5px 12px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3);">
-                                🟢 Okul Arkadaşı
-                            </span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 11px; font-weight: bold; padding: 5px 12px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3);">🟢 Okul Arkadaşı</span>
+                                <button onclick="closeSchoolConversation()" aria-label="Konuşmayı kapat ve sohbet listesine dön" style="background:rgba(255,255,255,0.07); color:#cbd5e1; border:1px solid rgba(255,255,255,0.14); padding:6px 9px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">← Çık</button>
+                            </div>
                         </div>
 
                         <!-- Mesajlaşma Geçmişi -->
@@ -1075,7 +1104,7 @@
                     style="font-size:14px; padding:10px 18px; font-weight:600;">📌 Yayınladığım İlanlarım &
                     İstatistikler (<span id="myJobsCountBadge">0</span>)</button>
                 <button class="subnav-btn" id="subnav-jobs-chat" onclick="switchJobsSubnav('chat')"
-                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 İlan & Proje Sohbetleri <span id="subnavJobsChatBadge" class="nav-badge" style="margin-left:4px; font-size:10px; background:linear-gradient(135deg,#10b981,#06b6d4);">1</span></button>
+                    style="font-size:14px; padding:10px 18px; font-weight:600;">💬 İlan & Proje Sohbetleri <span id="subnavJobsChatBadge" class="nav-badge" style="margin-left:4px; font-size:10px; background:linear-gradient(135deg,#10b981,#06b6d4); display:none;" role="status" aria-atomic="true"></span></button>
             </div>
 
             <!-- 1. Tüm İlanlar Grid -->
@@ -1095,16 +1124,10 @@
                 <!-- SOL PANEL: WhatsApp Tipi Dikey İlan Sohbet Listesi -->
                 <div
                     style="width: 340px; background: #1f2c34; border-right: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; flex-shrink: 0;">
-                    <!-- Sol Panel Üst Başlık & Çıkış -->
+                    <!-- Sol Panel Üst Başlık -->
                     <div
                         style="padding: 14px 16px; background:#1f2c34; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center;">
                         <span style="color: #e9edef; font-weight: 700; font-size: 18px;">İlan Sohbetleri</span>
-                        <button onclick="closeJobsChatExpanded()"
-                            style="background: transparent; border: none; color: #8696a0; font-size: 20px; cursor: pointer; padding:4px 8px; border-radius:8px; transition:0.2s;"
-                            onmouseover="this.style.color='#06b6d4'; this.style.background='rgba(6,182,212,0.1)'"
-                            onmouseout="this.style.color='#8696a0'; this.style.background='transparent'">
-                            ✕
-                        </button>
                     </div>
 
                     <!-- Arama Barı -->
@@ -1166,10 +1189,10 @@
                                 <span id="jobsChatActiveSub" style="color: #8696a0; font-size: 12px;">—</span>
                             </div>
                         </div>
-                        <span id="jobsChatActiveTag"
-                            style="background: rgba(6, 182, 212, 0.12); color: #06b6d4; font-size: 11px; font-weight: bold; padding: 5px 12px; border-radius: 10px; border: 1px solid rgba(6, 182, 212, 0.25);">
-                            📌 Benim İlanım
-                        </span>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span id="jobsChatActiveTag" style="background: rgba(6, 182, 212, 0.12); color: #06b6d4; font-size: 11px; font-weight: bold; padding: 5px 12px; border-radius: 10px; border: 1px solid rgba(6, 182, 212, 0.25);">📌 Benim İlanım</span>
+                            <button onclick="closeJobsConversation()" aria-label="Konuşmayı kapat ve sohbet listesine dön" style="background:rgba(255,255,255,0.07); color:#cbd5e1; border:1px solid rgba(255,255,255,0.14); padding:6px 9px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">← Çık</button>
+                        </div>
                     </div>
 
                     <!-- Mesajlaşma Geçmişi -->
@@ -1215,7 +1238,7 @@
                 <button id="subnav-companies-chat" onclick="switchCompaniesView('chat')"
                     style="padding:10px 20px; background:rgba(255,255,255,0.08); color:#94a3b8; border:none; border-radius:12px; font-size:13px; font-weight:700; cursor:pointer; transition:0.2s; display:flex; align-items:center; gap:6px;">
                     💬 Şirket Sohbetleri
-                    <span id="companiesChatBadge" style="min-width:18px; height:18px; background:linear-gradient(135deg,#f59e0b,#fbbf24); color:#020617; border-radius:50%; font-size:10px; font-weight:900; display:flex; align-items:center; justify-content:center; padding:0 4px;">2</span>
+                    <span id="companiesChatBadge" style="min-width:18px; height:18px; background:linear-gradient(135deg,#f59e0b,#fbbf24); color:#020617; border-radius:50%; font-size:10px; font-weight:900; display:none; align-items:center; justify-content:center; padding:0 4px;" role="status" aria-atomic="true"></span>
                 </button>
             </div>
 
@@ -1271,7 +1294,10 @@
                                     <span id="companyChatActiveSub" style="color:#8696a0; font-size:12px;">—</span>
                                 </div>
                             </div>
-                            <span id="companyChatActiveTag" style="background:rgba(245,158,11,0.12); color:#f59e0b; font-size:11px; font-weight:bold; padding:5px 12px; border-radius:10px; border:1px solid rgba(245,158,11,0.25);">🏢 Şirket</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span id="companyChatActiveTag" style="background:rgba(245,158,11,0.12); color:#f59e0b; font-size:11px; font-weight:bold; padding:5px 12px; border-radius:10px; border:1px solid rgba(245,158,11,0.25);">🏢 Şirket</span>
+                                <button onclick="closeCompanyConversation()" aria-label="Konuşmayı kapat ve sohbet listesine dön" style="background:rgba(255,255,255,0.07); color:#cbd5e1; border:1px solid rgba(255,255,255,0.14); padding:6px 9px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">← Çık</button>
+                            </div>
                         </div>
                         <div id="companyChatBox" style="flex:1; overflow-y:auto; padding:16px 20px; display:flex; flex-direction:column; gap:4px; background:#0b141a;"></div>
                         <div style="padding:10px 14px; background:#1f2c34; border-top:1px solid rgba(255,255,255,0.06); display:flex; gap:8px; align-items:center;">
@@ -1450,17 +1476,11 @@
                 <!-- SOL PANEL: WhatsApp Tipi Dikey Mentör Sohbet Listesi -->
                 <div
                     style="width: 290px; background: rgba(30, 41, 59, 0.7); border-right: 1px solid rgba(255, 255, 255, 0.08); display: flex; flex-direction: column; flex-shrink: 0;">
-                    <!-- Sol Panel Üst Başlık & Çıkış -->
+                    <!-- Sol Panel Üst Başlık -->
                     <div
                         style="padding: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center;">
                         <span style="color: #fff; font-weight: bold; font-size: 15px;"><i class="fa-solid fa-comments"
                                 style="color: #06b6d4;"></i> Mentör Sohbetleri</span>
-                        <button onclick="closeMentorChatExpanded()"
-                            style="background: rgba(6, 182, 212, 0.15); border: 1px solid #06b6d4; color: #06b6d4; padding: 5px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s;"
-                            onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';"
-                            onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
-                            ⬅️ Çık
-                        </button>
                     </div>
                     <!-- WhatsApp Usulü Alt Alta Sıralanan Mentörler -->
                     <div id="mentorChatUserListSidebar"
@@ -1500,10 +1520,10 @@
                                 <span id="mentorChatActiveSub" style="color: #06b6d4; font-size: 12px;">—</span>
                             </div>
                         </div>
-                        <span
-                            style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 11px; font-weight: bold; padding: 5px 12px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3);">
-                            🟢 Çevrim İçi
-                        </span>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 11px; font-weight: bold; padding: 5px 12px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3);">🟢 Çevrim İçi</span>
+                            <button onclick="closeMentorConversation()" aria-label="Konuşmayı kapat ve sohbet listesine dön" style="background:rgba(255,255,255,0.07); color:#cbd5e1; border:1px solid rgba(255,255,255,0.14); padding:6px 9px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">← Çık</button>
+                        </div>
                     </div>
 
                     <!-- Mesajlaşma Geçmişi -->
@@ -1567,12 +1587,6 @@
                         style="padding: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center;">
                         <span style="color: #fff; font-weight: bold; font-size: 15px;"><i class="fa-solid fa-comments"
                                 style="color: #a855f7;"></i> Aday Sohbetleri</span>
-                        <button onclick="closeCandidateChatExpanded()"
-                            style="background: rgba(168, 85, 247, 0.15); border: 1px solid #a855f7; color: #c084fc; padding: 5px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s;"
-                            onmouseover="this.style.background='#a855f7'; this.style.color='#fff';"
-                            onmouseout="this.style.background='rgba(168,85,247,0.15)'; this.style.color='#c084fc';">
-                            ⬅️ Çık
-                        </button>
                     </div>
                     <!-- WhatsApp Usulü Alt Alta Sıralanan Adaylar -->
                     <div id="candidateChatUserListSidebar"
@@ -1611,10 +1625,10 @@
                                 <span id="candidateChatActiveSub" style="color: #a855f7; font-size: 12px;">—</span>
                             </div>
                         </div>
-                        <span
-                            style="background: rgba(168, 85, 247, 0.15); color: #c084fc; font-size: 11px; font-weight: bold; padding: 5px 12px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.3);">
-                            🎓 Mühendislik Adayı
-                        </span>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="background: rgba(168, 85, 247, 0.15); color: #c084fc; font-size: 11px; font-weight: bold; padding: 5px 12px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.3);">🎓 Mühendislik Adayı</span>
+                            <button onclick="closeCandidateConversation()" aria-label="Konuşmayı kapat ve sohbet listesine dön" style="background:rgba(255,255,255,0.07); color:#cbd5e1; border:1px solid rgba(255,255,255,0.14); padding:6px 9px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">← Çık</button>
+                        </div>
                     </div>
 
                     <!-- Mesajlaşma Geçmişi -->
@@ -1860,6 +1874,20 @@
                     </div>
                 </div>
 
+                <!-- 🤝 Adaylara Rehberlik Profili -->
+                <div style="margin-bottom:20px; text-align:left; background:rgba(168,85,247,0.08); padding:20px; border-radius:16px; border:1px solid rgba(168,85,247,0.28);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px;">
+                        <h4 style="color:#c084fc; font-size:13px; font-weight:bold; margin:0; text-transform:uppercase;">🤝 Adaylara rehberlik</h4>
+                        <div style="display:flex; align-items:center; gap:9px;">
+                            <span style="color:#94a3b8; font-size:11px;">Mentee profilinde görünür</span>
+                            <button onclick="openEditProfileModal(); setTimeout(() => document.getElementById('editProfGuidanceTopics')?.focus(), 50);"
+                                style="background:rgba(192,132,252,0.14); border:1px solid rgba(192,132,252,0.55); color:#e9d5ff; padding:5px 9px; border-radius:8px; font-size:11px; font-weight:bold; cursor:pointer;">✏️ Düzenle</button>
+                        </div>
+                    </div>
+                    <p style="color:#cbd5e1; font-size:13px; line-height:1.55; margin:0 0 12px;">Aday öğrencilerin senden hangi konularda destek alabileceğini belirt.</p>
+                    <div id="profGuidanceTopics" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+                </div>
+
                 <!-- 📄 Özgeçmiş & CV Yükleme Widget'ı (Opsiyonel) -->
                 <div
                     style="margin-bottom: 20px; text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15);">
@@ -1877,6 +1905,11 @@
                         Mentörlük isteklerinizde ve staj/proje başvurularınızda mentörlere iletilmek üzere CV dosyanızı
                         (PDF) ekleyebilirsiniz.
                     </p>
+
+                    <div style="margin:0 0 14px; padding:12px; border-radius:12px; background:rgba(168,85,247,0.07); border:1px solid rgba(168,85,247,0.2);">
+                        <span style="display:block; color:#c084fc; font-size:11px; font-weight:bold; margin-bottom:8px;">🤝 ADAYLARIN GÖRECEĞİ REHBERLİK KONULARI</span>
+                        <div id="profileCvGuidancePreview" style="display:flex; flex-wrap:wrap; gap:7px;"></div>
+                    </div>
 
                     <!-- CV Yüklenmişse Gösterilecek Alan -->
                     <div id="profileCvUploadedContainer"
@@ -2150,6 +2183,7 @@
             {
                 id: 'n1',
                 type: 'mentor_accept',
+                readOnView: true,
                 icon: '🤝',
                 iconBg: 'rgba(16,185,129,0.15)',
                 title: 'Mentörlük İsteğin Kabul Edildi!',
@@ -2161,13 +2195,14 @@
             {
                 id: 'n2',
                 type: 'school_msg',
+                person: 'Selin Yılmaz',
                 icon: '💬',
                 iconBg: 'rgba(6,182,212,0.12)',
                 title: 'Selin\'den Yeni Mesaj',
                 desc: 'Okul arkadaşın Selin sana mesaj gönderdi: "Proje grubumuzu oluşturduk..."',
                 time: '15 dk önce',
                 read: false,
-                action: () => { switchTab('school'); switchSchoolView('chat'); closeNotifPanel(); }
+                action: () => { switchTab('school'); switchSchoolView('chat'); openSchoolPeerChat('Selin Yılmaz', 'İTÜ - Bilgisayar Müh. • 3. Sınıf'); closeNotifPanel(); }
             },
             {
                 id: 'n3',
@@ -2183,17 +2218,31 @@
             {
                 id: 'n4',
                 type: 'job_new',
+                readOnView: true,
                 icon: '🚀',
                 iconBg: 'rgba(56,189,248,0.12)',
-                title: '2 Yeni Staj İlanı Eklendi',
-                desc: 'Baykar ve Trendyol alanına özel yeni staj fırsatları yayınlandı.',
+                title: 'Yeni Staj İlanı: Trendyol Talent Tech',
+                desc: 'Frontend, Cloud ve Docker odaklı Trendyol staj ilanı eklendi.',
                 time: '3 saat önce',
-                read: false,
-                action: () => { switchTab('jobs'); switchJobsSubnav('all'); closeNotifPanel(); }
+                read: true,
+                action: () => { switchTab('jobs'); openJobDetailModal('job_2'); closeNotifPanel(); }
+            },
+            {
+                id: 'n9',
+                type: 'job_new',
+                readOnView: true,
+                icon: '🚀',
+                iconBg: 'rgba(56,189,248,0.12)',
+                title: 'Yeni Staj İlanı: Google STEP 2026',
+                desc: 'Yazılım mühendisliği odaklı Google STEP staj ilanı eklendi.',
+                time: '3 saat önce',
+                read: true,
+                action: () => { switchTab('jobs'); openJobDetailModal('job_3'); closeNotifPanel(); }
             },
             {
                 id: 'n5',
                 type: 'school_announce',
+                readOnView: true,
                 icon: '📢',
                 iconBg: 'rgba(245,158,11,0.12)',
                 title: 'Okul Duyurusu: Kariyer Günleri',
@@ -2203,15 +2252,64 @@
                 action: () => { switchTab('school'); switchSchoolView('announcements'); closeNotifPanel(); }
             },
             {
+                id: 'n8',
+                type: 'jobs_chat',
+                chatId: 'jchat_1',
+                icon: '💬',
+                iconBg: 'rgba(56,189,248,0.12)',
+                title: 'Arda Yılmaz’dan Yeni Mesaj',
+                desc: 'Teknofest Otonom İHA Takımı ilanına yanıt verdi.',
+                time: '6 saat önce',
+                read: false,
+                action: () => { switchTab('jobs'); switchJobsSubnav('chat'); openJobsPeerChat('jchat_1'); closeNotifPanel(); }
+            },
+            {
                 id: 'n6',
                 type: 'mentor_msg',
+                person: 'Helin Çelik',
                 icon: '💼',
                 iconBg: 'rgba(6,182,212,0.12)',
-                title: 'Mentörünüzden Mesaj',
-                desc: 'Murat Yılmaz: "CV\'ni inceledim, birkaç önerim var. Bu haftaki sesli toplantıya..."',
-                time: 'Dün',
-                read: true,
-                action: () => { switchTab('mentor-sector'); switchMentorSubnav('chat'); closeNotifPanel(); }
+                title: 'Helin Çelik’ten Yeni Mesaj',
+                desc: 'React ve Next.js portfolyon için geri bildirim gönderdi.',
+                time: 'Bugün 10:15',
+                read: false,
+                action: () => { switchTab('mentor-sector'); switchMentorSubnav('chat'); openMentorChatUser('Helin Çelik', 'Trendyol • Senior Frontend Dev'); closeNotifPanel(); }
+            },
+            {
+                id: 'n10',
+                type: 'company_msg',
+                chatId: 'cchat_1',
+                icon: '💬',
+                iconBg: 'rgba(245,158,11,0.12)',
+                title: 'Trendyol İK Ekibinden Yeni Mesaj',
+                desc: 'Teknik mülakat takvimini seninle paylaştı.',
+                time: 'Bugün 14:10',
+                read: false,
+                action: () => { switchTab('companies'); switchCompaniesView('chat'); openCompanyChat('cchat_1'); closeNotifPanel(); }
+            },
+            {
+                id: 'n11',
+                type: 'company_msg',
+                chatId: 'cchat_2',
+                icon: '💬',
+                iconBg: 'rgba(16,185,129,0.12)',
+                title: 'Google Recruiting’den Yeni Mesaj',
+                desc: 'Google STEP 2026 başvurun hakkında seninle iletişime geçti.',
+                time: 'Bugün 09:30',
+                read: false,
+                action: () => { switchTab('companies'); switchCompaniesView('chat'); openCompanyChat('cchat_2'); closeNotifPanel(); }
+            },
+            {
+                id: 'n12',
+                type: 'jobs_chat',
+                chatId: 'jchat_3',
+                icon: '💬',
+                iconBg: 'rgba(56,189,248,0.12)',
+                title: 'Selin Karaca’dan Yeni Mesaj',
+                desc: 'Teknofest Otonom İHA Takımı ilanına katılmak istiyor.',
+                time: 'Bugün 09:51',
+                read: false,
+                action: () => { switchTab('jobs'); switchJobsSubnav('chat'); openJobsPeerChat('jchat_3'); closeNotifPanel(); }
             },
             {
                 id: 'n7',
@@ -2226,11 +2324,25 @@
             }
         ];
 
+        // Aynı tarayıcı oturumunda bildirimlerin tekrar "yeni" görünmesini engeller.
+        // Böylece zil, ilgili kart ve sohbet satırı aynı okunmuş durumunu paylaşır.
+        const STUDENT_NOTIFICATION_STATE_KEY = 'studentNotificationState_v3';
+
+        function hydrateNotificationState() {
+            // Backend yokken eski tarayıcı denemeleri yeni demo durumunu ezmemeli.
+            // Her sayfa yüklemesi, tanımlı bildirim senaryosundan başlar.
+        }
+
+        function persistNotificationState() {
+            // Gerçek kalıcılık backend aşamasında kullanıcı hesabına göre eklenecek.
+        }
+
         function getUnreadCount() {
             return notifData.filter(n => !n.read).length;
         }
 
         function updateNotifUI() {
+            persistNotificationState();
             const count = getUnreadCount();
 
             // Zil sayacı
@@ -2255,18 +2367,53 @@
                 totalBadge.style.display = count > 0 ? 'inline-block' : 'none';
             }
 
-            // Sidebar noktaları — ilgili kategoriye göre göster/gizle
-            const hasSchool = notifData.some(n => !n.read && (n.type === 'school_msg' || n.type === 'school_announce'));
-            const hasMentor = notifData.some(n => !n.read && (n.type === 'mentor_accept' || n.type === 'mentor_msg' || n.type === 'candidate_req'));
-            const hasIndustry = notifData.some(n => !n.read && (n.type === 'job_new'));
+            updateStudentNotificationBadges();
+        }
 
-            const schoolDot = document.getElementById('schoolSidebarBadge');
-            const mentorDot = document.getElementById('mentornetSidebarBadge');
-            const industryDot = document.getElementById('industrySidebarBadge');
+        function markNotificationTypesRead(types) {
+            let changed = false;
+            notifData.forEach(notification => {
+                if (!notification.read && types.includes(notification.type)) {
+                    notification.read = true;
+                    changed = true;
+                }
+            });
+            if (!changed) return;
+            updateNotifUI();
+            if (notifPanelOpen) renderNotifList();
+        }
 
-            if (schoolDot) schoolDot.style.display = hasSchool ? 'inline-block' : 'none';
-            if (mentorDot) mentorDot.style.display = hasMentor ? 'inline-block' : 'none';
-            if (industryDot) industryDot.style.display = hasIndustry ? 'inline-block' : 'none';
+        function markMessageNotificationRead(type, identity) {
+            const notification = notifData.find(item => !item.read && item.type === type && (item.person === identity || item.chatId === identity));
+            if (!notification) return;
+            notification.read = true;
+            updateNotifUI();
+            if (notifPanelOpen) renderNotifList();
+        }
+
+        let schoolAnnouncementReadTimer;
+        let mentorAcceptedReadTimer;
+
+        function scheduleSchoolAnnouncementRead() {
+            const hasUnreadNotification = notifData.some(notification => !notification.read && notification.type === 'school_announce');
+            if (!unreadAnnouncements.sa1 && !hasUnreadNotification) return;
+            clearTimeout(schoolAnnouncementReadTimer);
+            schoolAnnouncementReadTimer = setTimeout(() => markAnnouncementAsRead('sa1'), 7000);
+        }
+
+        function scheduleMentorAcceptanceRead() {
+            const hasUnreadAcceptance = notifData.some(notification => !notification.read && notification.type === 'mentor_accept');
+            if (!hasUnreadAcceptance) return;
+            clearTimeout(mentorAcceptedReadTimer);
+            mentorAcceptedReadTimer = setTimeout(() => {
+                markMentorAcceptanceRead();
+            }, 7000);
+        }
+
+        function markMentorAcceptanceRead() {
+            delete studentNotificationState.unreadMentorAccepted.m1;
+            markNotificationTypesRead(['mentor_accept']);
+            renderMentorMineGrid();
         }
 
         function renderNotifList() {
@@ -2312,7 +2459,7 @@
         function handleNotifClick(id) {
             const notif = notifData.find(n => n.id === id);
             if (!notif) return;
-            // Okundu işaretle
+            // Bildirimin hedefi açıldığında, o tek bildirim hemen okunmuş olur.
             notif.read = true;
             updateNotifUI();
             renderNotifList();
@@ -2344,6 +2491,7 @@
                 panel.classList.add('active');
                 overlay.classList.add('active');
                 notifPanelOpen = true;
+                document.getElementById('notifBellButton')?.setAttribute('aria-expanded', 'true');
             }
         }
 
@@ -2354,11 +2502,17 @@
                 panel.classList.remove('active');
                 overlay.classList.remove('active');
                 notifPanelOpen = false;
+                document.getElementById('notifBellButton')?.setAttribute('aria-expanded', 'false');
             }
         }
 
         // Sayfa yüklenince bildirim UI'sini güncelle
         document.addEventListener('DOMContentLoaded', () => {
+            hydrateNotificationState();
+            syncJobNotificationsFromUnreadJobs();
+            syncJobsChatNotifications();
+            syncCompanyChatNotifications();
+            syncNotificationVisualState();
             updateNotifUI();
         });
 
@@ -2825,7 +2979,7 @@
             if (tabName === 'school') switchSchoolView('peers');
             if (tabName === 'mentor-sector') { closeMentorChatExpanded(); switchMentorSubnav('all'); }
             if (tabName === 'mentor-candidates') { closeCandidateChatExpanded(); switchGelenIstekView('pending'); }
-            if (tabName === 'jobs') renderJobs();
+            if (tabName === 'jobs') switchJobsSubnav('all');
         }
 
 
@@ -3067,20 +3221,30 @@
         };
 
         function updateStudentNotificationBadges() {
+            const unreadByType = (type) => notifData.filter(notification => !notification.read && notification.type === type).length;
+            const schoolAnnouncements = unreadByType('school_announce');
+            const schoolChat = unreadByType('school_msg');
+            const mentorAccepted = unreadByType('mentor_accept');
+            const mentorChat = unreadByType('mentor_msg');
+            const candidateRequests = unreadByType('candidate_req');
+            const newJobs = unreadByType('job_new');
+            const jobsChat = unreadByType('jobs_chat');
+            const companyChat = unreadByType('company_msg');
+            const setSidebarCount = (element, count, label) => {
+                if (!element) return;
+                element.textContent = '';
+                element.style.display = count > 0 ? 'inline-block' : 'none';
+                element.setAttribute('aria-label', `${count} okunmamış ${label} bildirimi`);
+            };
+
             // 1. Okulunuzdan Sidebar & Subnav
-            const schoolTotal = studentNotifications.schoolAnnouncements + studentNotifications.schoolChat;
+            const schoolTotal = schoolAnnouncements + schoolChat;
             const schoolSidebarBadge = document.getElementById('schoolSidebarBadge');
-            if (schoolSidebarBadge) {
-                if (schoolTotal > 0) {
-                    schoolSidebarBadge.style.display = 'inline-block';
-                } else {
-                    schoolSidebarBadge.style.display = 'none';
-                }
-            }
+            setSidebarCount(schoolSidebarBadge, schoolTotal, 'okul');
             const schoolAnnounceBadge = document.getElementById('subnavSchoolAnnouncementsBadge');
             if (schoolAnnounceBadge) {
-                if (studentNotifications.schoolAnnouncements > 0) {
-                    schoolAnnounceBadge.textContent = `${studentNotifications.schoolAnnouncements} Yeni`;
+                if (schoolAnnouncements > 0) {
+                    schoolAnnounceBadge.textContent = `${schoolAnnouncements} Yeni`;
                     schoolAnnounceBadge.style.display = 'inline-block';
                 } else {
                     schoolAnnounceBadge.style.display = 'none';
@@ -3088,8 +3252,8 @@
             }
             const schoolChatBadge = document.getElementById('subnavSchoolChatBadge');
             if (schoolChatBadge) {
-                if (studentNotifications.schoolChat > 0) {
-                    schoolChatBadge.textContent = studentNotifications.schoolChat;
+                if (schoolChat > 0) {
+                    schoolChatBadge.textContent = schoolChat;
                     schoolChatBadge.style.display = 'inline-block';
                 } else {
                     schoolChatBadge.style.display = 'none';
@@ -3097,19 +3261,13 @@
             }
 
             // 2. Mentörlük Ağı Sidebar & Subnav
-            const mentorTotal = studentNotifications.mentorAccepted + studentNotifications.mentorChat;
+            const mentorTotal = mentorAccepted + mentorChat + candidateRequests;
             const mentornetSidebarBadge = document.getElementById('mentornetSidebarBadge');
-            if (mentornetSidebarBadge) {
-                if (mentorTotal > 0) {
-                    mentornetSidebarBadge.style.display = 'inline-block';
-                } else {
-                    mentornetSidebarBadge.style.display = 'none';
-                }
-            }
+            setSidebarCount(mentornetSidebarBadge, mentorTotal, 'mentörlük');
             const mentorAcceptedBadge = document.getElementById('subnavMentorAcceptedBadge');
             if (mentorAcceptedBadge) {
-                if (studentNotifications.mentorAccepted > 0) {
-                    mentorAcceptedBadge.textContent = `${studentNotifications.mentorAccepted} Kabul`;
+                if (mentorAccepted > 0) {
+                    mentorAcceptedBadge.textContent = `${mentorAccepted} Kabul`;
                     mentorAcceptedBadge.style.display = 'inline-block';
                 } else {
                     mentorAcceptedBadge.style.display = 'none';
@@ -3117,8 +3275,8 @@
             }
             const mentorChatBadge = document.getElementById('subnavMentorChatBadge');
             if (mentorChatBadge) {
-                if (studentNotifications.mentorChat > 0) {
-                    mentorChatBadge.textContent = studentNotifications.mentorChat;
+                if (mentorChat > 0) {
+                    mentorChatBadge.textContent = mentorChat;
                     mentorChatBadge.style.display = 'inline-block';
                 } else {
                     mentorChatBadge.style.display = 'none';
@@ -3126,19 +3284,15 @@
             }
 
             // 3. Sektör & Fırsat Ağı Sidebar & Subnav
-            const jobsTotal = studentNotifications.newJobs + studentNotifications.jobsChat;
+            const jobsTotal = newJobs + jobsChat + companyChat;
             const industrySidebarBadge = document.getElementById('industrySidebarBadge');
-            if (industrySidebarBadge) {
-                if (jobsTotal > 0) {
-                    industrySidebarBadge.style.display = 'inline-block';
-                } else {
-                    industrySidebarBadge.style.display = 'none';
-                }
-            }
+            setSidebarCount(industrySidebarBadge, jobsTotal, 'fırsat');
+            const companiesSidebarBadge = document.getElementById('companiesSidebarBadge');
+            setSidebarCount(companiesSidebarBadge, companyChat, 'şirket sohbeti');
             const jobsBadge = document.getElementById('subnavJobsBadge');
             if (jobsBadge) {
-                if (studentNotifications.newJobs > 0) {
-                    jobsBadge.textContent = `${studentNotifications.newJobs} Yeni`;
+                if (newJobs > 0) {
+                    jobsBadge.textContent = `${newJobs} Yeni`;
                     jobsBadge.style.display = 'inline-block';
                 } else {
                     jobsBadge.style.display = 'none';
@@ -3146,8 +3300,8 @@
             }
             const jobsChatBadge = document.getElementById('subnavJobsChatBadge');
             if (jobsChatBadge) {
-                if (studentNotifications.jobsChat > 0) {
-                    jobsChatBadge.textContent = studentNotifications.jobsChat;
+                if (jobsChat > 0) {
+                    jobsChatBadge.textContent = jobsChat;
                     jobsChatBadge.style.display = 'inline-block';
                 } else {
                     jobsChatBadge.style.display = 'none';
@@ -3165,6 +3319,12 @@
         ];
 
         function switchSchoolView(view) {
+            const wasViewingAnnouncements = document.getElementById('subnav-school-announcements')?.classList.contains('active');
+            const hasSchoolAnnouncementNotification = notifData.some(notification => !notification.read && notification.type === 'school_announce');
+            if (wasViewingAnnouncements && view !== 'announcements' && (unreadAnnouncements.sa1 || hasSchoolAnnouncementNotification)) {
+                clearTimeout(schoolAnnouncementReadTimer);
+                markAnnouncementAsRead('sa1');
+            }
             document.querySelectorAll('#content-school .subnav-btn').forEach(b => b.classList.remove('active'));
             const activeBtn = document.getElementById('subnav-school-' + view);
             if (activeBtn) activeBtn.classList.add('active');
@@ -3174,14 +3334,6 @@
             const expView = document.getElementById('schoolChatExpandedView');
             const announcementsGrid = document.getElementById('schoolAnnouncementsGrid');
             const clubsGrid = document.getElementById('schoolClubsGrid');
-
-            if (view === 'announcements') {
-                studentNotifications.schoolAnnouncements = 0;
-                updateStudentNotificationBadges();
-            } else if (view === 'chat') {
-                studentNotifications.schoolChat = 0;
-                updateStudentNotificationBadges();
-            }
 
             if (view === 'chat') {
                 if (peersContainer) peersContainer.style.display = 'block';
@@ -3211,6 +3363,7 @@
                 if (clubsGrid) clubsGrid.style.display = 'none';
 
                 renderSchoolAnnouncements();
+                scheduleSchoolAnnouncementRead();
             } else if (view === 'clubs') {
                 if (peersContainer) peersContainer.style.display = 'none';
                 if (expView) expView.style.display = 'none';
@@ -3223,6 +3376,14 @@
 
         function closeSchoolChatExpanded() {
             switchSchoolView('peers');
+        }
+
+        function closeSchoolConversation() {
+            const placeholder = document.getElementById('schoolChatPlaceholderRightPanel');
+            const activePanel = document.getElementById('schoolChatActiveRightPanel');
+            if (placeholder) placeholder.style.display = 'flex';
+            if (activePanel) activePanel.style.display = 'none';
+            renderSchoolChatUserList(null);
         }
 
         function renderSchoolPeers() {
@@ -3312,6 +3473,7 @@
 
         function openSchoolPeerChat(name, subInfo, imgUrl) {
             delete studentNotificationState.unreadSchoolChat[name];
+            markMessageNotificationRead('school_msg', name);
             updateStudentNotificationBadges();
 
             const peersContainer = document.getElementById('schoolPeersContainer');
@@ -3462,33 +3624,84 @@
         let unreadAnnouncements = { "sa1": true };
 
         // unreadJobs: localStorage'dan yükle, yoksa default (job_2 ve job_3 yeni)
-        const UNREAD_JOBS_KEY = 'unreadJobsMap_v2';
+        const UNREAD_JOBS_KEY = 'unreadJobsMap_v5';
         function loadUnreadJobs() {
-            try {
-                const saved = localStorage.getItem(UNREAD_JOBS_KEY);
-                return saved ? JSON.parse(saved) : { "job_2": true, "job_3": true };
-            } catch(e) { return { "job_2": true, "job_3": true }; }
+            return {};
         }
         function saveUnreadJobs() {
-            localStorage.setItem(UNREAD_JOBS_KEY, JSON.stringify(unreadJobs));
+            // Demo sayfasında yalnızca açık sayfanın durumu kullanılır.
         }
         let unreadJobs = loadUnreadJobs();
 
-        function markAnnouncementAsRead(id) {
-            if (unreadAnnouncements[id]) {
-                delete unreadAnnouncements[id];
-                studentNotifications.schoolAnnouncements = Object.keys(unreadAnnouncements).length;
-                updateStudentNotificationBadges();
-                renderSchoolAnnouncements();
-            }
+        function syncJobNotificationsFromUnreadJobs() {
+            const jobNotificationMap = { n4: 'job_2', n9: 'job_3' };
+            Object.entries(jobNotificationMap).forEach(([notificationId, jobId]) => {
+                const notification = notifData.find(item => item.id === notificationId);
+                if (notification) notification.read = !unreadJobs[jobId];
+            });
         }
 
-        function markJobAsRead(id) {
-            if (unreadJobs[id]) {
+        function syncJobsChatNotifications() {
+            const chats = getStoredJobsChats();
+            let changed = false;
+            notifData
+                .filter(notification => notification.type === 'jobs_chat')
+                .forEach(notification => {
+                    const chat = chats.find(item => item.id === notification.chatId);
+                    if (!chat) return;
+                    const isUnread = hasUnreadJobsChatMessages(chat);
+                    if (chat.unread !== isUnread) {
+                        chat.unread = isUnread;
+                        changed = true;
+                    }
+                    notification.read = !isUnread;
+                });
+            if (changed) saveStoredJobsChats(chats);
+        }
+
+        function syncNotificationVisualState() {
+            const unread = (id) => !!notifData.find(notification => notification.id === id && !notification.read);
+            studentNotificationState.unreadSchoolChat = unread('n2') ? { 'Selin Yılmaz': true } : {};
+            studentNotificationState.unreadMentorChat = unread('n6') ? { 'Helin Çelik': true } : {};
+            studentNotificationState.unreadMentorAccepted = unread('n1') ? { m1: true } : {};
+            unreadAnnouncements = unread('n5') ? { sa1: true } : {};
+        }
+
+        function markAllJobsAsRead() {
+            const hasUnreadNotification = notifData.some(notification => !notification.read && notification.type === 'job_new');
+            if (Object.keys(unreadJobs).length === 0 && !hasUnreadNotification) return;
+            unreadJobs = {};
+            saveUnreadJobs();
+            studentNotifications.newJobs = 0;
+            notifData.filter(notification => notification.type === 'job_new').forEach(notification => notification.read = true);
+            updateNotifUI();
+            if (notifPanelOpen) renderNotifList();
+            if (activeJobsSubnav === 'all') renderJobs();
+        }
+
+        function markAnnouncementAsRead(id) {
+            const wasUnread = !!unreadAnnouncements[id];
+            if (wasUnread) {
+                delete unreadAnnouncements[id];
+                studentNotifications.schoolAnnouncements = Object.keys(unreadAnnouncements).length;
+                renderSchoolAnnouncements();
+            }
+            markNotificationTypesRead(['school_announce']);
+        }
+
+        function markJobAsRead(id, notificationId) {
+            const mappedNotificationId = notificationId || (id === 'job_2' ? 'n4' : id === 'job_3' ? 'n9' : null);
+            const hasUnreadNotification = mappedNotificationId && notifData.some(notification => !notification.read && notification.id === mappedNotificationId);
+            if (unreadJobs[id] || hasUnreadNotification) {
                 delete unreadJobs[id];
                 saveUnreadJobs();
                 studentNotifications.newJobs = Object.keys(unreadJobs).length;
-                updateStudentNotificationBadges();
+                const jobNotification = mappedNotificationId
+                    ? notifData.find(notification => notification.id === mappedNotificationId)
+                    : null;
+                if (jobNotification) jobNotification.read = true;
+                updateNotifUI();
+                if (notifPanelOpen) renderNotifList();
                 renderJobs();
             }
         }
@@ -3789,6 +4002,7 @@
         ];
 
         let currentModalTargetMentor = null;
+        let activeMentorSubnav = 'all';
 
         function switchMentornetCategory(cat) {
             closeMentorChatExpanded();
@@ -3806,14 +4020,13 @@
         }
 
         function switchMentorSubnav(sub) {
-            if (sub === 'mine') {
-                studentNotifications.mentorAccepted = 0;
-                updateStudentNotificationBadges();
-            } else if (sub === 'chat') {
-                studentNotifications.mentorChat = 0;
-                updateStudentNotificationBadges();
+            // Kabul edilen mentörü en az bir kez gördükten sonra bu sekmeden çıkmak,
+            // kabul bildirimini de okundu yapar. Geri dönüldüğünde tekrar parlamaz.
+            if (activeMentorSubnav === 'mine' && sub !== 'mine') {
+                clearTimeout(mentorAcceptedReadTimer);
+                markMentorAcceptanceRead();
             }
-
+            activeMentorSubnav = sub;
             document.querySelectorAll('#content-mentor-sector .subnav-btn').forEach(b => b.classList.remove('active'));
             const activeBtn = document.getElementById('subnav-mentor-' + sub);
             if (activeBtn) activeBtn.classList.add('active');
@@ -3841,7 +4054,10 @@
 
                 if (sub === 'all') renderMentorAllGrid();
                 if (sub === 'requests') renderMentorRequestsGrid();
-                if (sub === 'mine') renderMentorMineGrid();
+                if (sub === 'mine') {
+                    renderMentorMineGrid();
+                    scheduleMentorAcceptanceRead();
+                }
             }
         }
 
@@ -4108,7 +4324,7 @@
                             <button onclick="openRateMentorModal('${m.id}', '${m.name.replace(/'/g, "\\'")}', '${m.company} • ${m.title.replace(/'/g, "\\'")}')" style="width:100%; padding:9px; background:rgba(245,158,11,0.15); border:1px solid #f59e0b; color:#f59e0b; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer; transition:0.2s;" onmouseover="this.style.background='#f59e0b'; this.style.color='#0f172a';" onmouseout="this.style.background='rgba(245,158,11,0.15)'; this.style.color='#f59e0b';">
                                 ${rateBtnText}
                             </button>
-                            <button onclick="delete studentNotificationState.unreadMentorAccepted['${m.id}']; updateStudentNotificationBadges(); openMentorChatUser('${m.name.replace(/'/g, "\\'")}', '${m.company} • ${m.title.replace(/'/g, "\\'")}', '${m.img || ''}')" style="width:100%; padding:10px; background:#06b6d4; color:#0f172a; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
+                            <button onclick="markMentorAcceptanceRead(); openMentorChatUser('${m.name.replace(/'/g, "\\'")}', '${m.company} • ${m.title.replace(/'/g, "\\'")}', '${m.img || ''}')" style="width:100%; padding:10px; background:#06b6d4; color:#0f172a; border:none; border-radius:10px; font-weight:bold; font-size:12px; cursor:pointer;">
                                 💬 Doğrudan Mesaj Gönder
                             </button>
                         </div>
@@ -4118,6 +4334,26 @@
         }
 
         // ================= 👤 PROFİL VERİLERİ & ETKİLEŞİM MODALLARI =================
+        function escapeProfileText(value) {
+            return String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
+        }
+
+        function getGuidanceTopics(rawTopics) {
+            return String(rawTopics || '').split(/[,;\n]+/).map(topic => topic.trim()).filter(Boolean).slice(0, 12);
+        }
+
+        function renderGuidanceTopics(rawTopics) {
+            const topics = getGuidanceTopics(rawTopics);
+            const profileTopics = document.getElementById('profGuidanceTopics');
+            const cvTopics = document.getElementById('profileCvGuidancePreview');
+            const emptyState = '<span style="color:#94a3b8; font-size:12px;">Henüz konu eklenmedi.</span>';
+            const profileMarkup = topics.map(topic => `<span style="padding:7px 10px; border-radius:999px; background:rgba(168,85,247,0.15); border:1px solid rgba(192,132,252,0.38); color:#e9d5ff; font-size:12px;">✓ ${escapeProfileText(topic)}</span>`).join('');
+            const cvMarkup = topics.map(topic => `<span style="padding:5px 8px; border-radius:999px; background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.26); color:#a5f3fc; font-size:11px;">${escapeProfileText(topic)}</span>`).join('');
+
+            if (profileTopics) profileTopics.innerHTML = profileMarkup || emptyState;
+            if (cvTopics) cvTopics.innerHTML = cvMarkup || emptyState;
+        }
+
         function loadProfileData() {
             const ad = localStorage.getItem('kullaniciAd') || 'Helin Çelik';
             const eposta = localStorage.getItem('kullaniciEposta') || 'helin.celik@itu.edu.tr';
@@ -4125,6 +4361,7 @@
             const okul = localStorage.getItem('kullaniciOkul') || 'İstanbul Teknik Üniversitesi';
             const bolum = localStorage.getItem('kullaniciBolum') || 'Bilgisayar Mühendisliği';
             const sinif = localStorage.getItem('kullaniciSinif') || '3. Sınıf (Lisans)';
+            const guidanceTopics = localStorage.getItem('kullaniciRehberlikKonulari') || 'YKS çalışma planı, Üniversite ve bölüm seçimi, Staj ve CV hazırlığı, GitHub portfolyosu, Teknik mülakat hazırlığı';
 
             if (document.getElementById('profAd')) document.getElementById('profAd').innerText = ad;
             if (document.getElementById('profUserDisplayName')) document.getElementById('profUserDisplayName').innerText = ad;
@@ -4133,6 +4370,7 @@
             if (document.getElementById('profOkul')) document.getElementById('profOkul').innerText = okul;
             if (document.getElementById('profBolum')) document.getElementById('profBolum').innerText = bolum;
             if (document.getElementById('profSinif')) document.getElementById('profSinif').innerText = sinif;
+            renderGuidanceTopics(guidanceTopics);
 
             if (document.getElementById('profMenteesCount')) {
                 document.getElementById('profMenteesCount').innerText = `${acceptedCandidateList.length || 2} Mentee ➔`;
@@ -4151,6 +4389,7 @@
             document.getElementById('editProfOkul').value = localStorage.getItem('kullaniciOkul') || 'İstanbul Teknik Üniversitesi';
             document.getElementById('editProfBolum').value = localStorage.getItem('kullaniciBolum') || 'Bilgisayar Mühendisliği';
             document.getElementById('editProfSinif').value = localStorage.getItem('kullaniciSinif') || '3. Sınıf (Lisans)';
+            document.getElementById('editProfGuidanceTopics').value = localStorage.getItem('kullaniciRehberlikKonulari') || 'YKS çalışma planı, Üniversite ve bölüm seçimi, Staj ve CV hazırlığı, GitHub portfolyosu, Teknik mülakat hazırlığı';
 
             const modal = document.getElementById('editProfileInfoModal');
             if (modal) {
@@ -4177,6 +4416,7 @@
             const okul = document.getElementById('editProfOkul').value.trim();
             const bolum = document.getElementById('editProfBolum').value.trim();
             const sinif = document.getElementById('editProfSinif').value.trim();
+            const guidanceTopics = document.getElementById('editProfGuidanceTopics').value.trim();
 
             if (!ad) {
                 alert('Lütfen ad soyad alanını doldurun.');
@@ -4189,6 +4429,7 @@
             localStorage.setItem('kullaniciOkul', okul);
             localStorage.setItem('kullaniciBolum', bolum);
             localStorage.setItem('kullaniciSinif', sinif);
+            localStorage.setItem('kullaniciRehberlikKonulari', guidanceTopics);
 
             loadProfileData();
             closeEditProfileModal();
@@ -4336,8 +4577,17 @@
             if (listView) listView.style.display = 'block';
         }
 
+        function closeMentorConversation() {
+            const placeholder = document.getElementById('mentorChatPlaceholderRightPanel');
+            const activePanel = document.getElementById('mentorChatActiveRightPanel');
+            if (placeholder) placeholder.style.display = 'flex';
+            if (activePanel) activePanel.style.display = 'none';
+            renderMentorChatUserList(null);
+        }
+
         function openMentorChatUser(name, titleInfo, imgUrl) {
             delete studentNotificationState.unreadMentorChat[name];
+            markMessageNotificationRead('mentor_msg', name);
             updateStudentNotificationBadges();
 
             document.getElementById('mentorSectorListView').style.display = 'none';
@@ -4657,6 +4907,14 @@
             if (listView) listView.style.display = 'block';
         }
 
+        function closeCandidateConversation() {
+            const placeholder = document.getElementById('candidateChatPlaceholderRightPanel');
+            const activePanel = document.getElementById('candidateChatActiveRightPanel');
+            if (placeholder) placeholder.style.display = 'flex';
+            if (activePanel) activePanel.style.display = 'none';
+            renderCandidateChatUserList(null);
+        }
+
         function renderCandidateChatUserList(activeName) {
             const sidebar = document.getElementById('candidateChatUserListSidebar');
             if (!sidebar) return;
@@ -4732,6 +4990,7 @@
         }
 
         function switchGelenIstekView(view) {
+            if (view === 'pending') markNotificationTypesRead(['candidate_req']);
             document.querySelectorAll('#content-mentor-candidates .subnav-btn').forEach(b => b.classList.remove('active'));
             const activeBtn = document.getElementById('subnav-gi-' + view);
             if (activeBtn) activeBtn.classList.add('active');
@@ -4951,6 +5210,14 @@
             const c = revactaSirketlerData.find(item => item.id === companyId);
             if (!c) return;
 
+            // Sadece gerçekten yeni ilanı olan şirketin vurgusu, ilan listesi görülünce kapanır.
+            const companyJobMap = { trendyol: { jobId: 'job_2', notificationId: 'n4' }, google: { jobId: 'job_3', notificationId: 'n9' } };
+            const newJob = companyJobMap[companyId];
+            if (newJob && notifData.some(notification => notification.id === newJob.notificationId && !notification.read)) {
+                markJobAsRead(newJob.jobId, newJob.notificationId);
+                if (activeCompaniesView === 'cards') renderCompaniesGrid();
+            }
+
             const titleEl = document.getElementById('companyNoticeModalTitle');
             if (titleEl) titleEl.innerText = c.isim + " · Aktif İlanlar (" + c.activeJobsCount + ")";
 
@@ -5035,16 +5302,23 @@
             }
 
             grid.innerHTML = filtered.map(c => `
-                <div class="premium-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:24px; border-top: 3px solid #06b6d4;">
+                ${(() => {
+                    const companyJobMap = { trendyol: 'n4', google: 'n9' };
+                    const companyChatMap = { trendyol: 'cchat_1', google: 'cchat_2' };
+                    const isNewCompanyJob = companyJobMap[c.id] && notifData.some(notification => notification.id === companyJobMap[c.id] && !notification.read);
+                    const hasNewCompanyMessage = companyChatMap[c.id] && notifData.some(notification => notification.type === 'company_msg' && notification.chatId === companyChatMap[c.id] && !notification.read);
+                    return `
+                <div class="premium-card" onclick="openCompanyNoticeModal('${c.id}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); openCompanyNoticeModal('${c.id}'); }" style="display:flex; flex-direction:column; justify-content:space-between; padding:24px; border-top: 3px solid #06b6d4; cursor:pointer;">
                     <div>
                         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;">
                             <div>
                                 <h3 style="font-size:20px; color:#fff; margin:0 0 4px 0;">${c.isim}</h3>
                                 <span style="color:#06b6d4; font-size:12px; font-weight:bold;">${c.sektorAd}</span>
                             </div>
-                            <span style="background:rgba(6,182,212,0.12); color:#06b6d4; font-size:11px; font-weight:bold; padding:4px 10px; border-radius:20px; border:1px solid rgba(6,182,212,0.3);">
-                                📍 ${c.lokasyon.split(' ')[0]}
-                            </span>
+                            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:5px;">
+                                <span style="background:rgba(6,182,212,0.12); color:#06b6d4; font-size:11px; font-weight:bold; padding:4px 10px; border-radius:20px; border:1px solid rgba(6,182,212,0.3);">📍 ${c.lokasyon.split(' ')[0]}</span>
+                                ${hasNewCompanyMessage ? '<span style="background:rgba(239,68,68,0.14); color:#f87171; border:1px solid rgba(239,68,68,0.45); border-radius:10px; padding:3px 8px; font-size:10px; font-weight:800;">● Yeni mesaj</span>' : ''}
+                            </div>
                         </div>
 
                         <p style="color:#cbd5e1; font-size:13px; line-height:1.5; background:rgba(15,23,42,0.5); padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.05); margin-bottom:15px;">
@@ -5069,7 +5343,7 @@
                         </div>
 
                         <!-- 🔔 AÇIK İLAN / BİLDİRİM KUTUSU - parlayan amber glow -->
-                        <div onclick="openCompanyNoticeModal('${c.id}')" class="company-notice-glow" style="padding: 10px 14px; border-radius: 12px; margin-bottom: 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                        <div onclick="event.stopPropagation(); openCompanyNoticeModal('${c.id}')" class="${isNewCompanyJob ? 'company-notice-glow' : ''}" style="padding: 10px 14px; border-radius: 12px; margin-bottom: 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; background:${isNewCompanyJob ? '' : 'rgba(15,23,42,0.5)'}; border:${isNewCompanyJob ? '' : '1px solid rgba(255,255,255,0.08)'};" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span style="font-size: 16px;">🔔</span>
                                 <div>
@@ -5077,19 +5351,20 @@
                                     <span style="color:#94a3b8; font-size:10px;">Tıkla, ilanları görüntüle ➔</span>
                                 </div>
                             </div>
-                            <span class="company-new-tag" style="position:relative; top:auto; right:auto; font-size:9px; padding:3px 8px;">YENİ</span>
+                            ${isNewCompanyJob ? '<span class="company-new-tag" style="position:relative; top:auto; right:auto; font-size:9px; padding:3px 8px;">YENİ</span>' : ''}
                         </div>
                     </div>
 
                     <div style="display: flex; gap: 8px; flex-direction: column;">
-                        <button onclick="openCompanyMentorsModal('${c.id}')" style="width:100%; padding:11px; background:rgba(6,182,212,0.15); border:1px solid rgba(6,182,212,0.4); color:#06b6d4; border-radius:12px; font-weight:bold; font-size:12px; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; gap:6px;" onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';" onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
+                        <button onclick="event.stopPropagation(); openCompanyMentorsModal('${c.id}')" style="width:100%; padding:11px; background:rgba(6,182,212,0.15); border:1px solid rgba(6,182,212,0.4); color:#06b6d4; border-radius:12px; font-weight:bold; font-size:12px; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; gap:6px;" onmouseover="this.style.background='#06b6d4'; this.style.color='#0f172a';" onmouseout="this.style.background='rgba(6,182,212,0.15)'; this.style.color='#06b6d4';">
                             👥 Şirketteki Mentörleri Gör (${c.mentorler.length})
                         </button>
-                        <button onclick="startCompanyChat('${c.id}')" style="width:100%; padding:11px; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.4); color:#f59e0b; border-radius:12px; font-weight:bold; font-size:12px; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; gap:6px;" onmouseover="this.style.background='#f59e0b'; this.style.color='#020617';" onmouseout="this.style.background='rgba(245,158,11,0.15)'; this.style.color='#f59e0b';">
+                        <button onclick="event.stopPropagation(); startCompanyChat('${c.id}')" style="width:100%; padding:11px; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.4); color:#f59e0b; border-radius:12px; font-weight:bold; font-size:12px; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; gap:6px;" onmouseover="this.style.background='#f59e0b'; this.style.color='#020617';" onmouseout="this.style.background='rgba(245,158,11,0.15)'; this.style.color='#f59e0b';">
                             💬 HR/Mentör ile Sohbet Başlat
                         </button>
                     </div>
-                </div>
+                </div>`;
+                })()}
             `).join('');
         }
 
@@ -5111,7 +5386,14 @@
                 if (chatPanel) chatPanel.style.display = 'block';
                 if (btnCards) { btnCards.style.background = 'rgba(255,255,255,0.08)'; btnCards.style.color = '#94a3b8'; }
                 if (btnChat) { btnChat.style.background = '#f59e0b'; btnChat.style.color = '#020617'; }
+                currentActiveCompanyChatId = null;
+                syncCompanyChatNotifications();
+                updateNotifUI();
                 renderCompanyChatUserList();
+                const placeholder = document.getElementById('companyChatPlaceholderRightPanel');
+                const activePanel = document.getElementById('companyChatActiveRightPanel');
+                if (placeholder) placeholder.style.display = 'flex';
+                if (activePanel) activePanel.style.display = 'none';
             } else {
                 if (grid) grid.style.display = 'grid';
                 if (filterBar) filterBar.style.display = 'flex';
@@ -5122,12 +5404,26 @@
             }
         }
 
+        function closeCompanyChatExpanded() {
+            currentActiveCompanyChatId = null;
+            switchCompaniesView('cards');
+        }
+
+        function closeCompanyConversation() {
+            currentActiveCompanyChatId = null;
+            const placeholder = document.getElementById('companyChatPlaceholderRightPanel');
+            const activePanel = document.getElementById('companyChatActiveRightPanel');
+            if (placeholder) placeholder.style.display = 'flex';
+            if (activePanel) activePanel.style.display = 'none';
+            renderCompanyChatUserList();
+        }
+
         // ─── Şirket Chat Veri ──────────────────────────────────────────────────
         const defaultCompanyChatList = [
             {
                 id: 'cchat_1',
                 name: 'Trendyol İK Ekibi',
-                companyId: 'c1',
+                companyId: 'trendyol',
                 companyName: 'Trendyol',
                 roleInfo: 'Talent Acquisition Lead',
                 badgeText: '💻 Teknoloji',
@@ -5144,7 +5440,7 @@
             {
                 id: 'cchat_2',
                 name: 'Google University Recruiting',
-                companyId: 'c2',
+                companyId: 'google',
                 companyName: 'Google',
                 roleInfo: 'University Programs',
                 badgeText: '🌐 Global',
@@ -5159,7 +5455,7 @@
             {
                 id: 'cchat_3',
                 name: 'ASELSAN a-Yetenek',
-                companyId: 'c3',
+                companyId: 'aselsan',
                 companyName: 'ASELSAN',
                 roleInfo: 'İnsan Kaynakları',
                 badgeText: '🛡️ Savunma',
@@ -5174,26 +5470,57 @@
             }
         ];
 
+        function getUnreadCompanyChatMessageCount(chat) {
+            if (!chat || !Array.isArray(chat.messages)) return 0;
+            return chat.messages.filter(message =>
+                typeof message === 'object' && message.sender === 'other' && message.read !== true
+            ).length;
+        }
+
+        function hasUnreadCompanyChatMessages(chat) {
+            return getUnreadCompanyChatMessageCount(chat) > 0;
+        }
+
+        function updateCompaniesChatBadge(chats = getStoredCompanyChats()) {
+            const badge = document.getElementById('companiesChatBadge');
+            if (!badge) return;
+            const totalUnread = chats.filter(hasUnreadCompanyChatMessages).length;
+            badge.textContent = totalUnread;
+            badge.style.display = totalUnread > 0 ? 'flex' : 'none';
+        }
+
+        function syncCompanyChatNotifications() {
+            const chats = getStoredCompanyChats();
+            let changed = false;
+            notifData
+                .filter(notification => notification.type === 'company_msg')
+                .forEach(notification => {
+                    const chat = chats.find(item => item.id === notification.chatId);
+                    if (!chat) return;
+                    const isUnread = hasUnreadCompanyChatMessages(chat);
+                    if (chat.unread !== isUnread) {
+                        chat.unread = isUnread;
+                        changed = true;
+                    }
+                    notification.read = !isUnread;
+                });
+            if (changed) saveStoredCompanyChats(chats);
+            updateCompaniesChatBadge(chats);
+        }
+
         function getStoredCompanyChats() {
-            const saved = localStorage.getItem('companyChatListStorage');
-            if (!saved) return defaultCompanyChatList;
-            try {
-                const parsed = JSON.parse(saved);
-                const isOld = parsed.length > 0 && (typeof parsed[0].messages[0] === 'string' || parsed[0].unread === undefined);
-                if (isOld) { localStorage.removeItem('companyChatListStorage'); return defaultCompanyChatList; }
-                return parsed;
-            } catch(e) { return defaultCompanyChatList; }
+            return defaultCompanyChatList;
         }
 
         function saveStoredCompanyChats(chats) {
-            localStorage.setItem('companyChatListStorage', JSON.stringify(chats));
+            // Demo sayfasında sohbet durumu sayfa yenilenene kadar bellekte tutulur.
         }
 
         function startCompanyChat(companyId) {
             const company = revactaSirketlerData.find(c => c.id === companyId);
             if (!company) return;
             let chats = getStoredCompanyChats();
-            let target = chats.find(c => c.companyId === companyId);
+            let target = chats.find(c => c.companyId === companyId || c.companyName === company.isim);
             if (!target) {
                 const now = new Date();
                 const timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
@@ -5229,8 +5556,8 @@
             }
             container.innerHTML = chats.map(c => {
                 const isActive = (c.id === currentActiveCompanyChatId);
-                const isUnread = !isActive && (c.unread || false);
-                const unreadCount = c.messages ? c.messages.filter(m => m.sender === 'other' && m.read === false).length : 0;
+                const unreadCount = getUnreadCompanyChatMessageCount(c);
+                const isUnread = !isActive && unreadCount > 0;
                 const bgStyle = isActive ? 'rgba(245,158,11,0.18)' : (isUnread ? 'rgba(30,41,59,0.85)' : 'rgba(15,23,42,0.5)');
                 const lastMsg = c.messages && c.messages.length > 0 ? (c.messages[c.messages.length-1].text || 'Sohbet başlatıldı') : 'Sohbet başlatıldı';
                 const lastSender = c.messages && c.messages.length > 0 ? c.messages[c.messages.length-1].sender : 'other';
@@ -5267,11 +5594,9 @@
             c.unread = false;
             c.messages.forEach(m => { if (typeof m === 'object') m.read = true; });
             saveStoredCompanyChats(chats);
+            markMessageNotificationRead('company_msg', chatId);
             renderCompanyChatUserList();
-            // Badge güncelle
-            const badge = document.getElementById('companiesChatBadge');
-            const totalUnread = getStoredCompanyChats().filter(ch => ch.unread).length;
-            if (badge) { badge.textContent = totalUnread; badge.style.display = totalUnread > 0 ? 'flex' : 'none'; }
+            updateCompaniesChatBadge(chats);
 
             document.getElementById('companyChatPlaceholderRightPanel').style.display = 'none';
             document.getElementById('companyChatActiveRightPanel').style.display = 'flex';
@@ -5512,6 +5837,19 @@
         let currentActiveJobsChatId = null;
         let activeChatCategoryFilter = 'my'; // 'my' = Projemin Başvuruları, 'applied' = Başvurduğum İlanlar
 
+        // WhatsApp mantığı: okunmamışlık, sohbet kartının eski bayrağından değil
+        // doğrudan karşı tarafın okunmamış mesajlarından hesaplanır.
+        function getUnreadJobsChatMessageCount(chat) {
+            if (!chat || !Array.isArray(chat.messages)) return 0;
+            return chat.messages.filter(message =>
+                typeof message === 'object' && message.sender === 'other' && message.read !== true
+            ).length;
+        }
+
+        function hasUnreadJobsChatMessages(chat) {
+            return getUnreadJobsChatMessageCount(chat) > 0;
+        }
+
         function isJobCreatedByUser(job) {
             if (!job) return false;
             if (job.isUserCreated) return true;
@@ -5540,37 +5878,17 @@
         }
 
         function getStoredJobsChats() {
-            const saved = localStorage.getItem('jobsChatListStorage');
-            if (!saved) return defaultJobsChatList;
-            try {
-                const parsed = JSON.parse(saved);
-                // Eski format kontrolü: mesajlar string ise veya 'unread' alanı yoksa resetle
-                const isOldFormat = parsed.length > 0 && (
-                    typeof parsed[0].messages[0] === 'string' ||
-                    parsed[0].unread === undefined
-                );
-                if (isOldFormat) {
-                    localStorage.removeItem('jobsChatListStorage');
-                    return defaultJobsChatList;
-                }
-                return parsed;
-            } catch(e) {
-                return defaultJobsChatList;
-            }
+            return defaultJobsChatList;
         }
 
         function saveStoredJobsChats(chats) {
-            localStorage.setItem('jobsChatListStorage', JSON.stringify(chats));
+            // Demo sayfasında sohbet durumu sayfa yenilenene kadar bellekte tutulur.
         }
 
         let activeJobsSubnav = 'all';
 
         function switchJobsSubnav(sub) {
             activeJobsSubnav = sub;
-            if (sub === 'chat') {
-                studentNotifications.jobsChat = 0;
-                updateStudentNotificationBadges();
-            }
 
             document.querySelectorAll('#content-jobs .subnav-btn').forEach(b => b.classList.remove('active'));
             const activeBtn = document.getElementById('subnav-jobs-' + sub);
@@ -5589,7 +5907,15 @@
                 if (allGrid) allGrid.style.display = 'none';
                 if (myGrid) myGrid.style.display = 'none';
                 if (chatExp) chatExp.style.display = 'flex';
+                currentActiveJobsChatId = null;
+                // Rozet ve zil, sohbet mesajlarının son durumuna göre sekme açılırken de eşitlenir.
+                syncJobsChatNotifications();
+                updateNotifUI();
                 renderJobsChatUserList();
+                const placeholder = document.getElementById('jobsChatPlaceholderRightPanel');
+                const activePanel = document.getElementById('jobsChatActiveRightPanel');
+                if (placeholder) placeholder.style.display = 'flex';
+                if (activePanel) activePanel.style.display = 'none';
             } else {
                 if (allGrid) allGrid.style.display = 'grid';
                 if (myGrid) myGrid.style.display = 'none';
@@ -5600,6 +5926,15 @@
 
         function closeJobsChatExpanded() {
             switchJobsSubnav('all');
+        }
+
+        function closeJobsConversation() {
+            currentActiveJobsChatId = null;
+            const placeholder = document.getElementById('jobsChatPlaceholderRightPanel');
+            const activePanel = document.getElementById('jobsChatActiveRightPanel');
+            if (placeholder) placeholder.style.display = 'flex';
+            if (activePanel) activePanel.style.display = 'none';
+            renderJobsChatUserList();
         }
 
         function filterJobsChat(query) {
@@ -5624,8 +5959,8 @@
             // Override render with filtered
             container.innerHTML = filtered.map(c => {
                 const isActive = (c.id === currentActiveJobsChatId);
-                const isUnread = !isActive && (c.unread || false);
-                const unreadCount = c.messages ? c.messages.filter(m => m.sender === 'other' && m.read === false).length : 0;
+                const unreadCount = getUnreadJobsChatMessageCount(c);
+                const isUnread = !isActive && unreadCount > 0;
                 const bgStyle = isActive ? 'rgba(6, 182, 212, 0.18)' : (isUnread ? 'rgba(30,41,59,0.85)' : 'rgba(15, 23, 42, 0.5)');
                 const lastMsg = c.messages && c.messages.length > 0 ? (typeof c.messages[c.messages.length-1] === 'string' ? c.messages[c.messages.length-1] : (c.messages[c.messages.length-1].text || 'Sohbet başlatıldı')) : 'Sohbet başlatıldı';
                 const lastSender = c.messages && c.messages.length > 0 && typeof c.messages[c.messages.length-1] !== 'string' ? c.messages[c.messages.length-1].sender : 'other';
@@ -5696,12 +6031,10 @@
 
             container.innerHTML = filteredChats.map(c => {
                 const isActive = (c.id === currentActiveJobsChatId);
-                const isUnread = !isActive && (c.unread || false);
+                const unreadCount = getUnreadJobsChatMessageCount(c);
+                const isUnread = !isActive && unreadCount > 0;
 
                 // Unread mesaj sayısını hesapla
-                const unreadCount = c.messages
-                    ? c.messages.filter(m => m.sender === 'other' && m.read === false).length
-                    : 0;
 
                 let bgStyle, borderStyle, boxShadowStyle;
                 if (isActive) {
@@ -5773,6 +6106,7 @@
             }
             c.lastTime = c.lastTime || '';
             saveStoredJobsChats(chats);
+            markMessageNotificationRead('jobs_chat', chatId);
 
             renderJobsChatUserList();
 
@@ -5949,7 +6283,8 @@
                 const jTitleEsc = job.title.replace(/'/g, "\\'");
                 const jContactEsc = (job.contact || job.author || '').replace(/'/g, "\\'");
 
-                const isUnread = !!unreadJobs[job.id] || !!unreadJobs[jId];
+                const hasMatchingNotification = (job.id === 'job_2' && notifData.some(notification => !notification.read && notification.id === 'n4')) || (job.id === 'job_3' && notifData.some(notification => !notification.read && notification.id === 'n9'));
+                const isUnread = !!unreadJobs[job.id] || !!unreadJobs[jId] || hasMatchingNotification;
                 const cardClass = isUnread ? "premium-card unread-card" : "premium-card";
                 const newTag = isUnread ? `<span class="new-tag">✨ YENİ İLAN</span>` : ``;
 
@@ -7143,6 +7478,12 @@
                         Sınıf / Seviye</label>
                     <input type="text" id="editProfSinif"
                         style="width:100%; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(6,182,212,0.3); border-radius:10px; color:#fff; font-size:13px; outline:none;">
+                </div>
+                <div style="grid-column:1 / -1;">
+                    <label style="color:#c084fc; font-size:11px; font-weight:bold; display:block; margin-bottom:4px;">🤝 Yardımcı olabileceğiniz konular</label>
+                    <textarea id="editProfGuidanceTopics" rows="3" placeholder="Örn: YKS çalışma planı, üniversite/bölüm seçimi, staj ve CV"
+                        style="box-sizing:border-box; width:100%; resize:vertical; padding:10px 14px; background:rgba(15,23,42,0.8); border:1px solid rgba(192,132,252,0.45); border-radius:10px; color:#fff; font:13px inherit; outline:none;"></textarea>
+                    <small style="display:block; margin-top:5px; color:#94a3b8; font-size:11px;">Konuları virgül, noktalı virgül veya yeni satırla ayırabilirsin. Adaylar profil/CV özetinde bunları görür.</small>
                 </div>
             </div>
 
