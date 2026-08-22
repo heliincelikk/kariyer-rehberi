@@ -568,6 +568,21 @@
             animation: badgePulse 1.8s infinite;
         }
 
+        /* Header notifications */
+        .mentor-header-actions { display:flex; align-items:center; gap:12px; position:relative; }
+        .mentor-notification-button { position:relative; width:42px; height:42px; border-radius:50%; border:1px solid rgba(6,182,212,.3); background:rgba(15,23,42,.72); color:#cbd5e1; cursor:pointer; font-size:17px; transition:.2s ease; }
+        .mentor-notification-button:hover, .mentor-notification-button[aria-expanded="true"] { color:#06b6d4; border-color:#06b6d4; background:rgba(6,182,212,.12); }
+        .mentor-notification-count { position:absolute; top:-6px; right:-7px; min-width:19px; height:19px; padding:0 5px; display:inline-flex; align-items:center; justify-content:center; border-radius:999px; background:#ef4444; color:#fff; font-size:10px; font-weight:800; border:2px solid #0f172a; }
+        .mentor-notification-panel { display:none; position:absolute; z-index:30; top:50px; right:0; width:min(360px, calc(100vw - 40px)); max-height:430px; overflow:auto; padding:12px; border:1px solid rgba(6,182,212,.3); border-radius:16px; background:#0f172a; box-shadow:0 18px 45px rgba(0,0,0,.45); }
+        .mentor-notification-panel.open { display:block; animation:fadeIn .2s ease forwards; }
+        .mentor-notification-heading { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:2px 4px 10px; }
+        .mentor-notification-item { width:100%; border:1px solid rgba(6,182,212,.18); border-left:3px solid #06b6d4; border-radius:12px; padding:12px; margin-top:7px; text-align:left; background:rgba(6,182,212,.07); color:#fff; cursor:pointer; transition:.2s ease; }
+        .mentor-notification-item.chat { border-left-color:#10b981; background:rgba(16,185,129,.07); }
+        .mentor-notification-item:hover { transform:translateX(2px); border-color:rgba(6,182,212,.6); }
+        .mentor-notification-item p { margin:4px 0 0; color:#cbd5e1; font-size:12px; line-height:1.45; }
+        .mentor-notification-time { display:block; margin-top:6px; color:#64748b; font-size:11px; }
+        .mentor-notification-empty { padding:24px 10px; text-align:center; color:#94a3b8; font-size:13px; }
+
         /* Kaynak Bazlı İkili Badge */
         .notif-split {
             display: flex;
@@ -627,6 +642,8 @@
         }
     </style>
 
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js"></script>
 </head>
 
 <body>
@@ -678,7 +695,20 @@
 
         <div class="welcome-bar">
             <h1>Hoş Geldin, <span id="userNameSpan">Değerli Mentör!</span> 👋</h1>
-            <div class="user-badge">Mentör Modu</div>
+            <div class="mentor-header-actions">
+                <button class="mentor-notification-button" id="mentorNotificationButton" type="button" onclick="toggleMentorNotifications()" aria-label="Bildirimleri aç" aria-expanded="false" aria-controls="mentorNotificationPanel">
+                    <i class="fa-solid fa-bell" aria-hidden="true"></i>
+                    <span class="mentor-notification-count" id="mentorNotificationCount" role="status" aria-live="polite">5</span>
+                </button>
+                <div class="mentor-notification-panel" id="mentorNotificationPanel" role="region" aria-label="Bildirimler">
+                    <div class="mentor-notification-heading">
+                        <strong style="font-size:14px;">Bildirimler</strong>
+                        <button type="button" onclick="markAllMentorNotificationsRead()" style="border:0; background:none; color:#06b6d4; cursor:pointer; font-size:12px; font-weight:700;">Tümünü okundu say</button>
+                    </div>
+                    <div id="mentorNotificationList"></div>
+                </div>
+                <div class="user-badge">Mentör Modu</div>
+            </div>
         </div>
 
         <!-- SEKME 1: KİŞİSELLEŞTİRİLMİŞ MENTÖR PANALİ -->
@@ -1182,6 +1212,28 @@
                     </div>
                 </div>
 
+                <!-- Öğrencilerin istek göndermeden önce gördüğü mentör tanıtımı -->
+                <div
+                    style="margin-top: 20px; text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15);">
+                    <h4 style="color:#06b6d4; font-size:13px; font-weight:bold; margin:0 0 14px 0; text-transform:uppercase;">
+                        <i class="fa-solid fa-address-card"></i> Öğrencilerle Paylaşılan Profil Bilgileri
+                    </h4>
+                    <label for="mentorAboutInput" style="display:block; color:#94a3b8; font-size:12px; font-weight:600; margin-bottom:6px;">Hakkımda</label>
+                    <textarea id="mentorAboutInput" maxlength="600"
+                        style="box-sizing:border-box; width:100%; min-height:100px; resize:vertical; background:rgba(15,23,42,0.72); color:#e2e8f0; border:1px solid rgba(6,182,212,0.28); border-radius:10px; padding:11px; font:inherit; font-size:13px; line-height:1.5; outline:none;"
+                        placeholder="Öğrencilerin sizi tanıması için kısa bir açıklama yazın."></textarea>
+                    <label for="mentorTopicsInput" style="display:block; color:#94a3b8; font-size:12px; font-weight:600; margin:14px 0 6px;">Yardımcı Olabileceğim Konular</label>
+                    <input id="mentorTopicsInput" type="text" maxlength="300"
+                        style="box-sizing:border-box; width:100%; background:rgba(15,23,42,0.72); color:#e2e8f0; border:1px solid rgba(6,182,212,0.28); border-radius:10px; padding:11px; font:inherit; font-size:13px; outline:none;"
+                        placeholder="Örn: CV, teknik mülakat, React, portfolyo">
+                    <p style="margin:7px 0 13px; color:#64748b; font-size:11px;">Konuları virgülle ayırın. Bu bilgiler öğrencinin istek önizlemesinde gösterilir.</p>
+                    <button type="button" onclick="saveMentorPublicProfile()"
+                        style="width:100%; padding:11px; border:1px solid #06b6d4; border-radius:10px; background:rgba(6,182,212,0.14); color:#22d3ee; font-weight:bold; cursor:pointer;">
+                        <i class="fa-solid fa-floppy-disk"></i> Bilgileri Kaydet
+                    </button>
+                    <p id="mentorProfileSaveStatus" aria-live="polite" style="display:none; margin:10px 0 0; color:#34d399; font-size:12px; font-weight:600;"></p>
+                </div>
+
                 <!-- Mentör Başarım & Etkileşim İstatistikleri -->
                 <div
                     style="margin-top: 20px; text-align: left; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.15);">
@@ -1609,6 +1661,79 @@
                 "Zeynep Kılıç": 1,
                 "Emre Şahin": 1
             };
+            let mentorNetworkView = 'pending';
+            let hasViewedPendingRequests = false;
+
+            function getMentorUnreadTotal() {
+                return pendingStudents.filter(student => !student.okundu).length + Object.keys(chatUnreadMentees).length;
+            }
+
+            function toggleMentorNotifications() {
+                const panel = document.getElementById('mentorNotificationPanel');
+                const button = document.getElementById('mentorNotificationButton');
+                if (!panel || !button) return;
+                const isOpen = panel.classList.toggle('open');
+                button.setAttribute('aria-expanded', String(isOpen));
+            }
+
+            function closeMentorNotifications() {
+                const panel = document.getElementById('mentorNotificationPanel');
+                const button = document.getElementById('mentorNotificationButton');
+                if (panel) panel.classList.remove('open');
+                if (button) button.setAttribute('aria-expanded', 'false');
+            }
+
+            function renderMentorNotifications() {
+                const list = document.getElementById('mentorNotificationList');
+                if (!list) return;
+                const unreadRequests = pendingStudents.filter(student => !student.okundu);
+                const unreadChats = Object.keys(chatUnreadMentees);
+                const items = [
+                    ...unreadRequests.map(student => `
+                        <button type="button" class="mentor-notification-item" onclick="openMentorRequestNotification(${student.id})">
+                            <strong><i class="fa-solid fa-user-plus"></i> Yeni mentörlük isteği</strong>
+                            <p>${student.isim} mentörlük ağına katılmak istiyor.</p>
+                            <span class="mentor-notification-time">Öğrenci profilini incelemek için tıkla</span>
+                        </button>`),
+                    ...unreadChats.map(name => `
+                        <button type="button" class="mentor-notification-item chat" onclick="openMentorChatNotification('${name}')">
+                            <strong><i class="fa-solid fa-comment-dots"></i> Yeni mesaj</strong>
+                            <p>${name} sana yeni bir mesaj gönderdi.</p>
+                            <span class="mentor-notification-time">Sohbeti açmak için tıkla</span>
+                        </button>`)
+                ];
+                list.innerHTML = items.length ? items.join('') : '<div class="mentor-notification-empty"><i class="fa-solid fa-check-circle"></i><br>Yeni bildirimin yok.</div>';
+            }
+
+            function openMentorRequestNotification(id) {
+                closeMentorNotifications();
+                switchTab('network');
+                switchNetworkView('pending');
+                openApplicantStudentModal(id);
+            }
+
+            function openMentorChatNotification(name) {
+                const mentee = [...acceptedStudents, ...pendingStudents].find(student => student.isim === name);
+                closeMentorNotifications();
+                switchTab('network');
+                openMenteeChat(name, mentee ? mentee.okul : 'Mentee');
+            }
+
+            function markAllMentorNotificationsRead() {
+                pendingStudents.forEach(student => { student.okundu = true; });
+                chatUnreadMentees = {};
+                renderPending();
+                renderNetworkChatUserList();
+                updateNotificationBadges();
+            }
+
+            function markPendingRequestsRead() {
+                if (!hasViewedPendingRequests) return;
+                const hasUnreadRequests = pendingStudents.some(student => !student.okundu);
+                if (!hasUnreadRequests) return;
+                pendingStudents.forEach(student => { student.okundu = true; });
+                renderPending();
+            }
 
             function updateNotificationBadges() {
                 const unreadPendingCount = pendingStudents.filter(s => !s.okundu).length;
@@ -1642,6 +1767,14 @@
                         subnavChatBadge.style.display = 'none';
                     }
                 }
+
+                const notificationCount = document.getElementById('mentorNotificationCount');
+                if (notificationCount) {
+                    notificationCount.textContent = totalUnread;
+                    notificationCount.style.display = totalUnread > 0 ? 'inline-flex' : 'none';
+                    notificationCount.setAttribute('aria-label', `${totalUnread} okunmamış bildirim`);
+                }
+                renderMentorNotifications();
             }
 
             function renderPending() {
@@ -1689,10 +1822,7 @@
                 const s = pendingStudents.find(item => item.id === id);
                 if (!s) return;
 
-                // 👁️ İnceleme yapıldığında okundu olarak işaretle & bildirim sayısını güncelle
-                s.okundu = true;
-                updateNotificationBadges();
-                renderPending();
+                // İstekler, mentör gelen istekler sekmesinden ayrıldığında okunmuş sayılır.
 
                 document.getElementById('applicantModalName').innerText = s.isim;
                 document.getElementById('applicantModalSub').innerText = s.okul;
@@ -1788,6 +1918,11 @@
             }
 
             function switchNetworkView(view) {
+                if (mentorNetworkView === 'pending' && view !== 'pending') {
+                    markPendingRequestsRead();
+                }
+                mentorNetworkView = view;
+                if (view === 'pending') hasViewedPendingRequests = true;
                 document.querySelectorAll('.subnav-btn').forEach(btn => btn.classList.remove('active'));
                 const activeBtn = document.getElementById('subnav-' + view);
                 if (activeBtn) activeBtn.classList.add('active');
@@ -1962,6 +2097,11 @@
             }
 
             window.addEventListener('click', function (event) {
+                const notificationPanel = document.getElementById('mentorNotificationPanel');
+                const notificationButton = document.getElementById('mentorNotificationButton');
+                if (notificationPanel && notificationButton && !notificationPanel.contains(event.target) && !notificationButton.contains(event.target)) {
+                    closeMentorNotifications();
+                }
                 const mentorModal = document.getElementById('mentorContactModal');
                 if (mentorModal && event.target === mentorModal) {
                     closeMentorContactModal();
@@ -2011,6 +2151,12 @@
             }
 
             function switchTab(tabName) {
+                if (tabName !== 'network' && mentorNetworkView === 'pending') {
+                    markPendingRequestsRead();
+                }
+                if (tabName === 'network' && mentorNetworkView === 'pending') {
+                    hasViewedPendingRequests = true;
+                }
                 document.querySelectorAll('.tab-content').forEach(c => {
                     c.classList.remove('active');
                 });
@@ -2160,12 +2306,33 @@
                 const deptEl = document.getElementById('profDepartment');
                 const workplaceEl = document.getElementById('profWorkplace');
                 const expEl = document.getElementById('profExperience');
+                const aboutInput = document.getElementById('mentorAboutInput');
+                const topicsInput = document.getElementById('mentorTopicsInput');
+                const defaultAbout = 'Sektörde edindiğim deneyimi paylaşarak öğrencilerin staj, kariyer ve teknik gelişim hedeflerinde somut adımlar atmasına yardımcı oluyorum.';
+                const defaultTopics = 'CV ve LinkedIn, Teknik mülakat, Staj başvuruları, Kariyer planı, Portfolyo geri bildirimi';
 
                 if (nameEl) nameEl.textContent = name;
                 if (schoolEl) schoolEl.textContent = okul;
                 if (deptEl) deptEl.textContent = bolum;
                 if (workplaceEl) workplaceEl.textContent = isYeri + ' - Kıdemli Mühendis';
                 if (expEl) expEl.textContent = deneyim;
+                if (aboutInput) aboutInput.value = localStorage.getItem('mentorProfileAbout') || defaultAbout;
+                if (topicsInput) topicsInput.value = localStorage.getItem('mentorProfileTopics') || defaultTopics;
+            }
+
+            function saveMentorPublicProfile() {
+                const about = (document.getElementById('mentorAboutInput')?.value || '').trim();
+                const topics = (document.getElementById('mentorTopicsInput')?.value || '').trim();
+                const status = document.getElementById('mentorProfileSaveStatus');
+
+                localStorage.setItem('mentorProfileAbout', about);
+                localStorage.setItem('mentorProfileTopics', topics);
+                localStorage.setItem('mentorProfileOwner', localStorage.getItem('kullaniciAd') || 'Ahmet Yılmaz');
+
+                if (status) {
+                    status.textContent = 'Paylaşılan profil bilgilerin kaydedildi.';
+                    status.style.display = 'block';
+                }
             }
 
             function profileFotoYukle(event) {
