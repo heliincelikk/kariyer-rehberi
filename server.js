@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const PORT = 3000;
@@ -15,7 +16,9 @@ app.use((req, res, next) => {
 
 // Gelen verileri sunucunun anlayabilmesi için mutfak ayarı
 app.use(express.json());
+
 // HTML, CSS ve JS dosyalarını tarayıcıda sunabilmek için statik dosya ayarı 🌐
+app.use(express.static(path.join(__dirname, 'react-app', 'dist')));
 app.use(express.static(__dirname));
 
 // VERİ TABANI BAĞLANTISI
@@ -107,6 +110,14 @@ app.post('/api/sifremi-unuttum', (req, res) => {
         }
         res.json({ kullanici_adi: row.kullanici_adi, sifre: row.sifre });
     });
+});
+
+// React SPA rotaları (ör. /kesfet) doğrudan açıldığında da uygulama kabuğunu
+// döndür; API uçları yukarıda tanımlandığı için bu kural onları etkilemez.
+// Kısa URL'leri, React'e geçiş sırasında sadeleştirilen eski tam ekranlara
+// bağla. Bu sayfalar tüm özgün sekme ve etkileşimleri korur.
+app.get('/{*splat}', (req, res) => {
+    res.sendFile(path.join(__dirname, 'react-app', 'dist', 'index.html'));
 });
 
 app.listen(PORT, () => {

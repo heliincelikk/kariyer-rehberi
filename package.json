@@ -4,10 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prestart": "npm run build",
     "start": "node server.js",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "cd react-app && vite",
+    "react:dev": "npm run dev",
+    "react:build": "npm run build",
+    "build": "cd react-app && vite build",
+    "preview": "cd react-app && vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
